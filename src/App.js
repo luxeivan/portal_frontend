@@ -30,19 +30,6 @@ export default function App() {
         //   colorBgContainer: 'red',
         //   colorBgElevated: 'red',
         // }
-        // token: {
-        //   // Seed Token
-        //   colorPrimary: '#0061aa',
-        //   borderRadius: 2,
-        //   colorText: '#e37021',
-        //   colorTextBase: '#e37021',
-
-
-        //   // Alias Token
-        //   //colorBgContainer: '#999',
-        //   bgColor: '#e',
-        //   //borderRadiusLG: 20
-        // },
       }}>
       <Layout>
 
@@ -59,6 +46,9 @@ export default function App() {
                 <Routes>
                   <Route path='/' element={<Main />} />
                   <Route path='/services' element={<Services />} />
+                  <Route path='/services/:level2' element={<Services />} />
+                  <Route path='/services/:level2/:level3' element={<Services />} />
+
                   <Route path='/about' element={<About />} />
                   <Route path='/calc' element={<Calc />} />
                 </Routes>

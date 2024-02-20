@@ -58,8 +58,9 @@ export default function AppHeader() {
       <Menu
         theme="light"
         mode="horizontal"
-        defaultSelectedKeys={['2']}
-        onSelect={(item, key) => {
+        selectable={false}
+        //defaultSelectedKeys={['2']}
+        onClick={(item, key) => {
           navigate(item.item.props.url)
           //console.log(item)
         }}
