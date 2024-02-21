@@ -1,6 +1,6 @@
-import axios from "axios";
 import create from "zustand";
 import config from "../config";
+import axios from "axios";
 
 const useStore = create((set) => ({
     services: [],
