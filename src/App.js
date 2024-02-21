@@ -12,6 +12,8 @@ import useStore from './stores/GlobalStore';
 import CabinetMenu from './components/Cabinet/CabinetMenu';
 import AuthModal from './components/Global/Auth/AuthModal';
 import CodeModal from './components/Global/Auth/CodeModal';
+import ServiceItem from './pages/ServiceItem';
+import Page404 from './pages/Page404';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -56,9 +58,12 @@ export default function App() {
                     <Route path='/services' element={<Services />} />
                     <Route path='/services/:level2' element={<Services />} />
                     <Route path='/services/:level2/:level3' element={<Services />} />
+                    <Route path='/services/:level2/:level3/:id' element={<ServiceItem />} />
 
                     <Route path='/about' element={<About />} />
                     <Route path='/calc' element={<Calc />} />
+                    <Route path='*' element={<Page404 />} />
+
                   </Routes>
                 </Content>
               </Layout>

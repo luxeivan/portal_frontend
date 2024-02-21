@@ -16,7 +16,7 @@ export default function Services() {
             fetchServices(level2, level3)
         }
     }, [level2, level3])
-    console.log(level2, level3)
+    //console.log(level2, level3)
     return (
         <>
             <AppHelmet title={'Услуги'} desc={'Услуги компании'} />
@@ -46,7 +46,6 @@ export default function Services() {
                                 <Link key={index} to={`/services/${serviceDetailsData.find(item => item.url === level2).url}/${item.title}`} className={styles.styleLink}>
                                     <Card className={styles.styleCard}>
                                         <Title level={4}>{item.title}</Title>
-                                        <Paragraph>123123</Paragraph>
                                         <Text>{item.content}</Text>
                                     </Card>
                                 </Link>
@@ -60,7 +59,7 @@ export default function Services() {
                         <Title level={1} className={styles.title}>{serviceDetailsData.find(item => item.url === level2).title} - {level3}</Title>
                         <Flex wrap="wrap" gap="large">
                             {services && services.map(item =>
-                                <Link key={item.id} to={`/services/`} className={styles.styleLink}>
+                                <Link key={item.id} to={`/services/${level2}/${level3}/${item.id}`} className={styles.styleLink}>
                                     <Card className={styles.styleCard}>
                                         <Title level={4}>{item.attributes.name}</Title>
                                         <Text>{item.attributes.shortDescription}</Text>

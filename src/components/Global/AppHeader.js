@@ -47,10 +47,10 @@ export default function AppHeader() {
   } = theme.useToken();
 
   const rightMenuArea = <Space size={'small'}>
-    <SunOutlined />
-    <Switch onChange={handlerDarkMode} />
-    <MoonOutlined />
-    <Button onClick={handlerChangeAuth}>Авторизоваться</Button>
+    <SunOutlined style={{fontSize:"12px"}}/>
+    <Switch size="small" onChange={handlerDarkMode} />
+    <MoonOutlined style={{fontSize:"12px"}}/>
+    <Button onClick={handlerChangeAuth}>Кабинет</Button>
   </Space>
   const itemsMobile = [
     {
