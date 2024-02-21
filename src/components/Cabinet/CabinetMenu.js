@@ -20,6 +20,7 @@ const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, i
 export default function CabinetMenu() {
   return (
     <Menu
+      inlineCollapsed={true}
       mode="inline"
       defaultSelectedKeys={['1']}
       defaultOpenKeys={['sub1']}

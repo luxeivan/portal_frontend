@@ -35,24 +35,27 @@ export default function App() {
 
         <BrowserRouter>
           <AppHeader />
-          <Content style={{ padding: '0 48px',  }}>
+          <Content style={{ padding: '0 48px', }}>
             <Layout style={{ padding: '24px 0', }}>
               {global.auth &&
-                <Sider style={{  }} width={200}>
-                  <CabinetMenu />
-                </Sider>
+                 <Sider style={{  }} width={200}>
+                <CabinetMenu />
+                 </Sider>
               }
-              <Content style={{ padding: '0 24px', minHeight: "calc(100vh - 180px)",}}>
-                <Routes>
-                  <Route path='/' element={<Main />} />
-                  <Route path='/services' element={<Services />} />
-                  <Route path='/services/:level2' element={<Services />} />
-                  <Route path='/services/:level2/:level3' element={<Services />} />
+              <Layout>
 
-                  <Route path='/about' element={<About />} />
-                  <Route path='/calc' element={<Calc />} />
-                </Routes>
-              </Content>
+                <Content style={{ padding: '0 24px', minHeight: "calc(100vh - 180px)", }}>
+                  <Routes>
+                    <Route path='/' element={<Main />} />
+                    <Route path='/services' element={<Services />} />
+                    <Route path='/services/:level2' element={<Services />} />
+                    <Route path='/services/:level2/:level3' element={<Services />} />
+
+                    <Route path='/about' element={<About />} />
+                    <Route path='/calc' element={<Calc />} />
+                  </Routes>
+                </Content>
+              </Layout>
             </Layout>
           </Content>
           <AppFooter />

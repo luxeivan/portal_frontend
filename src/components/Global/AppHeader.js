@@ -5,6 +5,7 @@ import logoWhite from '../../img/header/logoWhite.svg'
 import logoBlue from '../../img/header/logoBlue.svg'
 import useStore from '../../stores/GlobalStore';
 import { MoonOutlined, SunOutlined } from '@ant-design/icons';
+import styles from './AppHeader.module.css'
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -70,9 +71,8 @@ export default function AppHeader() {
           minWidth: 0,
         }}
       />
-      <div>
+      <div className={styles.rightMenu}>
         <Space size={'large'}>
-
           <Typography.Text><SunOutlined /></Typography.Text>
           <Switch onChange={handlerDarkMode} />
           <MoonOutlined />

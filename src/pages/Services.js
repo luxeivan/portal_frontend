@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import AppHelmet from '../components/Global/AppHelmet'
-import { Card, Flex, Typography } from 'antd'
+import { Card, Flex, Space, Typography } from 'antd'
 import config from '../config';
 import { Link, useParams } from 'react-router-dom';
 import useStore from '../stores/ServicesStore';
+import styles from './Services.module.css'
 const { Title, Paragraph, Text } = Typography;
 
 export default function Services() {
@@ -23,11 +24,11 @@ export default function Services() {
                 {/* <Title level={1}>Services</Title> */}
                 {!level2 && !level3 &&
                     <>
-                        <Title level={1}>Каталог услуг</Title>
+                        <Title level={1} className={styles.title}>Каталог услуг</Title>
                         <Flex wrap="wrap" gap="large">
                             {serviceDetailsData.map((item, index) =>
-                                <Link key={index} to={`/services/${item.url}`} style={styleLink}>
-                                    <Card style={styleCard}><Title level={4}>{item.title}</Title></Card>
+                                <Link key={index} to={`/services/${item.url}`} className={styles.styleLink}>
+                                    <Card className={styles.styleCard}><Title level={4}>{item.title}</Title></Card>
                                 </Link>
                             )}
 
@@ -36,11 +37,11 @@ export default function Services() {
                 }
                 {level2 && !level3 &&
                     <>
-                        <Title level={1}>{serviceDetailsData.find(item => item.url === level2).title}</Title>
+                        <Title level={1} className={styles.title}>{serviceDetailsData.find(item => item.url === level2).title}</Title>
                         <Flex wrap="wrap" gap="large">
                             {serviceDetailsData.find(item => item.url === level2).subServices.map((item, index) =>
-                                <Link key={index} to={`/services/${serviceDetailsData.find(item => item.url === level2).url}/${item.title}`} style={styleLink}>
-                                    <Card style={styleCard}><Title level={4}>{item.title}</Title></Card>
+                                <Link key={index} to={`/services/${serviceDetailsData.find(item => item.url === level2).url}/${item.title}`} className={styles.styleLink}>
+                                    <Card className={styles.styleCard}><Title level={4}>{item.title}</Title></Card>
                                 </Link>
                             )}
 
@@ -49,13 +50,16 @@ export default function Services() {
                 }
                 {level2 && level3 &&
                     <>
-                        <Title level={1}>{serviceDetailsData.find(item => item.url === level2).title} - {level3}</Title>
+                        <Title level={1} className={styles.title}>{serviceDetailsData.find(item => item.url === level2).title} - {level3}</Title>
                         <Flex wrap="wrap" gap="large">
+                        {/* <Space wrap > */}
+
 
                             {services && services.map(item =>
-                                <Link key={item.id} to={`/services/`} style={styleLink}>
-                                    <Card style={styleCard}><Title level={4}>{item.attributes.name}</Title></Card>
+                                <Link key={item.id} to={`/services/`} className={styles.styleLink}>
+                                    <Card className={styles.styleCard}><Title level={4}>{item.attributes.name}</Title></Card>
                                 </Link>)}
+                        {/* </Space> */}
                         </Flex>
                     </>
                 }
@@ -63,6 +67,7 @@ export default function Services() {
         </>
     )
 }
+
 
 const serviceDetailsData = [
     {
@@ -112,13 +117,3 @@ const serviceDetailsData = [
         ],
     },
 ];
-const styleLink = {
-    display: "block",
-    width: "30%",
-    height: 200,
-}
-const styleCard = {
-    display: "block",
-    width: "100%",
-    height: "100%"
-}

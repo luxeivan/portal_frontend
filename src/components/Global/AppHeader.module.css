@@ -1,0 +1,15 @@
+.rightMenu {
+    display: block;
+}
+
+@media (max-width: 1199px) {
+    .rightMenu {
+        display: block;
+    }
+}
+
+@media (max-width: 991px) {
+    .rightMenu {
+        display: none;
+    }
+}
