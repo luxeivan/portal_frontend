@@ -60,10 +60,8 @@ export default function AppHeader() {
         theme="light"
         mode="horizontal"
         selectable={false}
-        //defaultSelectedKeys={['2']}
         onClick={(item, key) => {
           navigate(item.item.props.url)
-          //console.log(item)
         }}
         items={items}
         style={{
@@ -76,7 +74,7 @@ export default function AppHeader() {
           <Typography.Text><SunOutlined /></Typography.Text>
           <Switch onChange={handlerDarkMode} />
           <MoonOutlined />
-          <Button onClick={handlerChangeAuth}>Сменить авторизацию</Button>
+          <Button onClick={handlerChangeAuth}>Авторизоваться</Button>
         </Space>
       </div>
     </Header>

@@ -6,7 +6,6 @@ const useStore = create((set) => ({
     },
     toggleAuth: () => {
         set((state) => {
-            //console.log('changeAuth',state.global)
             return {
                 global: {
                     ...state.global,
@@ -17,7 +16,6 @@ const useStore = create((set) => ({
     },
     toggleDarkMode: () => {
         set((state) => {
-            //console.log('changeAuth',state.global)
             return {
                 global: {
                     ...state.global,
@@ -26,16 +24,5 @@ const useStore = create((set) => ({
             }
         })
     }
-    // addPokemons: (pokemon) =>
-    //     set((state) => ({
-    //         pokemons: [
-    //             { name: pokemon.name, id: Math.random() * 100 },
-    //             ...state.pokemons,
-    //         ]
-    //     })),
-    // removePokemon: (id) =>
-    //     set((state) => ({
-    //         pokemons: state.pokemons.filter((pokemon) => pokemon.id !== id),
-    // })),
 }));
 export default useStore;
