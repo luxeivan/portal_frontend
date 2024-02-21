@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import useStore from '../stores/ServicesStore';
 import { Link, useParams } from 'react-router-dom';
-import { Collapse, Space, Typography } from 'antd';
+import { Collapse, Divider, Space, Typography } from 'antd';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 
 const { Title, Text, Paragraph } = Typography
@@ -21,7 +21,7 @@ export default function ServiceItem() {
 
                     <Title level={1}>{serviceItem.attributes.type} - {serviceItem.attributes.name}</Title>
                     <Text>{serviceItem.attributes.shortDescription}</Text>
-                    
+                    <Divider/>
                     <Collapse accordion items={[
                         {
                             key: '1',
