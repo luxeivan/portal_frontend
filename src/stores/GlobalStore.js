@@ -4,7 +4,8 @@ const useStore = create((set) => ({
     global: {
         auth: false,
         darkMode: false,
-        isAuthModalOpen: false, 
+        isAuthModalOpen: false,
+        isCodeModalOpen: false, 
     },
     toggleAuth: () => {
         set((state) => ({
@@ -35,6 +36,22 @@ const useStore = create((set) => ({
             global: {
                 ...state.global,
                 isAuthModalOpen: false
+            }
+        }))
+    },
+    openCodeModal: () => {
+        set((state) => ({
+            global: {
+                ...state.global,
+                isCodeModalOpen: true
+            }
+        }))
+    },
+    closeCodeModal: () => {
+        set((state) => ({
+            global: {
+                ...state.global,
+                isCodeModalOpen: false
             }
         }))
     }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Tabs } from "antd";
+import { Modal, Tabs } from "antd";
 import AuthLoginForm from "./AuthLoginForm";
 import AuthRegForm from "./AuthRegForm";
 import useStore from "../../../stores/GlobalStore";
@@ -13,7 +13,7 @@ const AuthModal = () => {
     return (
         <>
             <Modal
-                title="Basic Modal"
+                title=""
                 open={isModalOpen}
                 onOk={closeAuthModal}
                 onCancel={closeAuthModal}
