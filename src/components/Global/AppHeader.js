@@ -31,11 +31,13 @@ const items = [
 
 export default function AppHeader() {
   const toggleAuth = useStore((state) => state.toggleAuth)
+  const openAuthModal = useStore((state) => state.openAuthModal)
   const toggleDarkMode = useStore((state) => state.toggleDarkMode)
   const global = useStore((state) => state.global)
   const navigate = useNavigate()
+
   const handlerChangeAuth = () => {
-    toggleAuth()
+    openAuthModal();
   }
   const handlerDarkMode = () => {
     toggleDarkMode()
@@ -48,7 +50,7 @@ export default function AppHeader() {
     <SunOutlined />
     <Switch onChange={handlerDarkMode} />
     <MoonOutlined />
-    <Button onClick={handlerChangeAuth}>Сменить авторизацию</Button>
+    <Button onClick={handlerChangeAuth}>Авторизоваться</Button>
   </Space>
   const itemsMobile = [
     {

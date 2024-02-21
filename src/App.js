@@ -10,6 +10,7 @@ import About from './pages/About';
 import Services from './pages/Services';
 import useStore from './stores/GlobalStore';
 import CabinetMenu from './components/Cabinet/CabinetMenu';
+import AuthModal from './components/Global/Auth/AuthModal';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -36,6 +37,7 @@ export default function App() {
       <Layout>
 
         <BrowserRouter>
+        <AuthModal />
           <AppHeader />
           <Content  className='content'>
             <Layout style={{ padding: '24px 0', }}>

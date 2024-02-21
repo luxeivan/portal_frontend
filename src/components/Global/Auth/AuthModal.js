@@ -1,42 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Modal, Tabs } from "antd";
 import AuthLoginForm from "./AuthLoginForm";
 import AuthRegForm from "./AuthRegForm";
+import useStore from "../../../stores/GlobalStore";
+
 const { TabPane } = Tabs;
 
-const App = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+const AuthModal = () => {
+    const isModalOpen = useStore((state) => state.global.isAuthModalOpen);
+    const closeAuthModal = useStore((state) => state.closeAuthModal);
 
-  return (
-    <>
-      <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button>
-      <Modal
-        title="Basic Modal"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Tabs defaultActiveKey="1" centered>
-          <TabPane tab="Войти" key="1">
-            <AuthLoginForm />
-          </TabPane>
-          <TabPane tab="Регистрация" key="2">
-            <AuthRegForm />
-          </TabPane>
-        </Tabs>
-      </Modal>
-    </>
-  );
+    return (
+        <>
+            <Modal
+                title="Basic Modal"
+                open={isModalOpen}
+                onOk={closeAuthModal}
+                onCancel={closeAuthModal}
+                footer={null}
+                maskClosable={false}
+            >
+                <Tabs defaultActiveKey="1" centered>
+                    <TabPane tab="Войти" key="1">
+                        <AuthLoginForm />
+                    </TabPane>
+                    <TabPane tab="Регистрация" key="2">
+                        <AuthRegForm />
+                    </TabPane>
+                </Tabs>
+            </Modal>
+        </>
+    );
 };
-export default App;
+export default AuthModal;
