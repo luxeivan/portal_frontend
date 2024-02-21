@@ -10,6 +10,7 @@ import About from './pages/About';
 import Services from './pages/Services';
 import useStore from './stores/GlobalStore';
 import CabinetMenu from './components/Cabinet/CabinetMenu';
+import ServiceItem from './pages/ServiceItem';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -52,6 +53,7 @@ export default function App() {
                     <Route path='/services' element={<Services />} />
                     <Route path='/services/:level2' element={<Services />} />
                     <Route path='/services/:level2/:level3' element={<Services />} />
+                    <Route path='/services/:level2/:level3/:id' element={<ServiceItem />} />
 
                     <Route path='/about' element={<About />} />
                     <Route path='/calc' element={<Calc />} />
