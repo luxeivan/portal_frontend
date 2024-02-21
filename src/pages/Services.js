@@ -28,7 +28,10 @@ export default function Services() {
                         <Flex wrap="wrap" gap="large">
                             {serviceDetailsData.map((item, index) =>
                                 <Link key={index} to={`/services/${item.url}`} className={styles.styleLink}>
-                                    <Card className={styles.styleCard}><Title level={4}>{item.title}</Title></Card>
+                                    <Card className={styles.styleCard}>
+                                        <Title level={4}>{item.title}</Title>
+                                        <Text>{item.content}</Text>
+                                    </Card>
                                 </Link>
                             )}
 
@@ -41,7 +44,10 @@ export default function Services() {
                         <Flex wrap="wrap" gap="large">
                             {serviceDetailsData.find(item => item.url === level2).subServices.map((item, index) =>
                                 <Link key={index} to={`/services/${serviceDetailsData.find(item => item.url === level2).url}/${item.title}`} className={styles.styleLink}>
-                                    <Card className={styles.styleCard}><Title level={4}>{item.title}</Title></Card>
+                                    <Card className={styles.styleCard}>
+                                        <Title level={4}>{item.title}</Title>
+                                        <Text>{item.content}</Text>
+                                    </Card>
                                 </Link>
                             )}
 
@@ -52,14 +58,13 @@ export default function Services() {
                     <>
                         <Title level={1} className={styles.title}>{serviceDetailsData.find(item => item.url === level2).title} - {level3}</Title>
                         <Flex wrap="wrap" gap="large">
-                        {/* <Space wrap > */}
-
-
                             {services && services.map(item =>
                                 <Link key={item.id} to={`/services/`} className={styles.styleLink}>
-                                    <Card className={styles.styleCard}><Title level={4}>{item.attributes.name}</Title></Card>
+                                    <Card className={styles.styleCard}>
+                                        <Title level={4}>{item.attributes.name}</Title>
+                                        <Text>{item.attributes.shortDescription}</Text>
+                                    </Card>
                                 </Link>)}
-                        {/* </Space> */}
                         </Flex>
                     </>
                 }
