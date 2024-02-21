@@ -25,17 +25,19 @@ export default function App() {
     <ConfigProvider
       theme={{
         algorithm: global.darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
-        // token:{
-        //   colorPrimaryBg: 'red',
-        //   colorBgContainer: 'red',
-        //   colorBgElevated: 'red',
-        // }
+        token:{
+          fontSizeHeading1:"2.5rem",
+          fontSizeHeading2:"2.1rem",
+          fontSizeHeading3:"1.8rem",
+          fontSizeHeading4:"1.5rem",
+          //fontSize:"1rem"
+        }
       }}>
       <Layout>
 
         <BrowserRouter>
           <AppHeader />
-          <Content style={{ padding: '0 48px', }}>
+          <Content  className='content'>
             <Layout style={{ padding: '24px 0', }}>
               {global.auth &&
                  <Sider style={{  }} width={200}>
