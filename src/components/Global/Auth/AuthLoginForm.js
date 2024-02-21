@@ -2,19 +2,22 @@ import React from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import useStore from "../../../stores/GlobalStore";
 
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
+
 
 export default function AuthLoginForm() {
-  const openCodeModal = useStore((state) => state.openCodeModal)
+  const openCodeModal = useStore((state) => state.openCodeModal);
 
-  const handlerContinueAuth = () => {
+  // const handlerContinueAuth = () => {
+  //   openCodeModal();
+  // };
+
+  const onFinish = (values) => {
     openCodeModal();
-  }
+    console.log("Success:", values);
+  };
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
   return (
     <Form
@@ -41,7 +44,11 @@ export default function AuthLoginForm() {
         rules={[
           {
             required: true,
-            message: "Please input your username!",
+            message: "Это поля обязательно",
+          },
+          {
+            message: "Пожалуйста введите email",
+            type: "email",
           },
         ]}
       >
@@ -54,7 +61,11 @@ export default function AuthLoginForm() {
         rules={[
           {
             required: true,
-            message: "Please input your password!",
+            message: "Это поля обязательно",
+          },
+          {
+            min: 10,
+            message: "Минимальная длинна пароля 10 символов",
           },
         ]}
       >
@@ -78,7 +89,7 @@ export default function AuthLoginForm() {
           span: 16,
         }}
       >
-        <Button onClick={handlerContinueAuth} type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit">
           Продолжить
         </Button>
       </Form.Item>
