@@ -46,7 +46,6 @@ export default function Services() {
                                 <Link key={index} to={`/services/${serviceDetailsData.find(item => item.url === level2).url}/${item.title}`} className={styles.styleLink}>
                                     <Card className={styles.styleCard}>
                                         <Title level={4}>{item.title}</Title>
-                                        <Paragraph>123123</Paragraph>
                                         <Text>{item.content}</Text>
                                     </Card>
                                 </Link>

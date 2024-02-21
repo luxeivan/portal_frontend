@@ -8,7 +8,7 @@ export default function About() {
         <>
             <AppHelmet title={'О нас'} desc={'Информация о компании'} />
             <div>
-                <Title level={1}>About</Title>
+                <Title level={1}>О компании Мособлэнерго</Title>
             </div>
         </>
     )
