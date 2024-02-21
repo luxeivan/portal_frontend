@@ -10,7 +10,7 @@ export default function AppFooter() {
         textAlign: 'center',
       }}
     >
-      АО Мособлэнерго ©{new Date().getFullYear()} Создано Иван Шишкин
+      АО Мособлэнерго ©{new Date().getFullYear()} Создано Шишкин & Януть
     </Footer>
   )
 }
