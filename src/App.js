@@ -11,6 +11,7 @@ import Services from './pages/Services';
 import useStore from './stores/GlobalStore';
 import CabinetMenu from './components/Cabinet/CabinetMenu';
 import ServiceItem from './pages/ServiceItem';
+import Page404 from './pages/Page404';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -57,6 +58,8 @@ export default function App() {
 
                     <Route path='/about' element={<About />} />
                     <Route path='/calc' element={<Calc />} />
+                    <Route path='*' element={<Page404 />} />
+
                   </Routes>
                 </Content>
               </Layout>
