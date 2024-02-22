@@ -1,13 +1,19 @@
-import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Alert } from "antd";
-import axios from "axios";
+import React from "react";
+import { Button, Form, Input, Alert } from "antd";
+// import sha256 from "crypto-js/sha256";
 import useStore from "../../../stores/GlobalStore";
 
 export default function AuthLoginForm() {
-  const { login, global: { isCodeModalOpen, loginError } } = useStore();
+  const {
+    login,
+    global: { loginError },
+  } = useStore();
 
   const onFinish = (values) => {
     login(values.email, values.password);
+    // Ниже потом раскоментить, если сделаем хэш на регистрации, а выше законменить
+    // const passwordHash = sha256(values.password).toString();
+    // login(values.email, passwordHash);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -22,7 +28,11 @@ export default function AuthLoginForm() {
           type="error"
           showIcon
           closable
-          onClose={() => useStore.setState({ global: { ...useStore.getState().global, loginError: "" }})}
+          onClose={() =>
+            useStore.setState({
+              global: { ...useStore.getState().global, loginError: "" },
+            })
+          }
         />
       )}
       <Form
