@@ -4,30 +4,10 @@ import axios from "axios";
 import useStore from "../../../stores/GlobalStore";
 
 export default function AuthLoginForm() {
-  const openCodeModal = useStore((state) => state.openCodeModal);
-  const [loginError, setLoginError] = useState("");
+  const { login, global: { isCodeModalOpen, loginError } } = useStore();
 
-  const onFinish = async (values) => {
-    try {
-      const response = await axios.post(
-        "http://5.35.9.42:5000/api/auth/login",
-        values
-      );
-      if (response.data && response.status === 200) {
-        console.log("Login Success:", response.data);
-        setLoginError("");
-        openCodeModal();
-      }
-    } catch (error) {
-      if (error.response) {
-        setLoginError(
-          error.response.data.message || "Неверный логин или пароль."
-        );
-      } else {
-        setLoginError("Произошла ошибка при попытке входа.");
-      }
-      console.error("Login Error:", error);
-    }
+  const onFinish = (values) => {
+    login(values.email, values.password);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -42,7 +22,7 @@ export default function AuthLoginForm() {
           type="error"
           showIcon
           closable
-          onClose={() => setLoginError("")}
+          onClose={() => useStore.setState({ global: { ...useStore.getState().global, loginError: "" }})}
         />
       )}
       <Form
