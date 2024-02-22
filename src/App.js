@@ -29,26 +29,27 @@ export default function App() {
     <ConfigProvider
       theme={{
         algorithm: global.darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
-        token:{
-          fontSizeHeading1:"2.5rem",
-          fontSizeHeading2:"2.1rem",
-          fontSizeHeading3:"1.8rem",
-          fontSizeHeading4:"1.5rem",
+        token: {
+          fontSizeHeading1: "2.5rem",
+          fontSizeHeading2: "2.1rem",
+          fontSizeHeading3: "1.8rem",
+          fontSizeHeading4: "1.5rem",
           //fontSize:"1rem"
+          colorPrimary: "#0061aa"
         }
       }}>
       <Layout>
 
         <BrowserRouter>
-        <AuthModal />
-        <CodeModal />
+          <AuthModal />
+          <CodeModal />
           <AppHeader />
-          <Content  className='content'>
+          <Content className='content'>
             <Layout style={{ padding: '24px 0', }}>
               {global.auth &&
-                 <Sider style={{  }} width={200}>
-                <CabinetMenu />
-                 </Sider>
+                <Sider style={{}} width={200}>
+                  <CabinetMenu />
+                </Sider>
               }
               <Layout>
 
