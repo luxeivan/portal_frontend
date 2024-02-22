@@ -1,4 +1,5 @@
 import create from "zustand";
+import axios from "axios";
 
 const useStore = create((set) => ({
     global: {
@@ -54,7 +55,35 @@ const useStore = create((set) => ({
                 isCodeModalOpen: false
             }
         }))
-    }
+    },
+    login: async (email, password) => {
+        try {
+            const response = await axios.post(
+                "http://5.35.9.42:5000/api/auth/login",
+                { email, password }
+            );
+
+            if (response.data && response.status === 200) {
+                console.log("Login Success:", response.data);
+                set((state) => ({
+                    global: {
+                        ...state.global,
+                        auth: true,
+                        isCodeModalOpen: true,
+                        loginError: "",
+                    }
+                }));
+            }
+        } catch (error) {
+            console.error("Login Error:", error);
+            set((state) => ({
+                global: {
+                    ...state.global,
+                    loginError: error.response?.data?.message || "Неверный логин или пароль.",
+                }
+            }));
+        }
+    },
 }));
 
 export default useStore;
