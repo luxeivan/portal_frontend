@@ -18,7 +18,7 @@ const useStore = create((set) => ({
     },
     fetchServiceItem: async (url, id) => {
         set((state) => ({ serviceItem: null }))
-        const res = await axios.get(`${config.apiServer}/api/${url}/${id}`)
+        const res = await axios.get(`${config.apiServer}/api/${url}/${id}?populate[0]=fields`)
         //console.log(res.data.data)
         set((state) => {
             //console.log('changeAuth',state.global)

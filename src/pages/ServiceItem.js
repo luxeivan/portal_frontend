@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import useStore from '../stores/ServicesStore';
 import { Link, useParams } from 'react-router-dom';
-import { Collapse, Divider, Space, Typography } from 'antd';
+import { Button, Collapse, Divider, Flex, Space, Typography } from 'antd';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
+import ListDocs from '../components/ServiceItem/ListDocs';
 
 const { Title, Text, Paragraph } = Typography
 
@@ -21,7 +22,7 @@ export default function ServiceItem() {
 
                     <Title level={1}>{serviceItem.attributes.type} - {serviceItem.attributes.name}</Title>
                     <Text>{serviceItem.attributes.shortDescription}</Text>
-                    <Divider/>
+                    <Divider />
                     <Collapse accordion items={[
                         {
                             key: '1',
@@ -34,8 +35,10 @@ export default function ServiceItem() {
                         },
                         {
                             key: '2',
-                            label: 'Требуемые документы',
-                            children: <Paragraph>Здесь будут Требуемые документы</Paragraph>,
+                            label: 'Информация которая потребуется при подаче заявления',
+                            children: <Paragraph>
+                                {serviceItem.attributes.fields && <ListDocs list={serviceItem.attributes.fields} />}
+                            </Paragraph>,
                         },
                         {
                             key: '3',
@@ -43,7 +46,10 @@ export default function ServiceItem() {
                             children: <Paragraph>Здесь будут файлы и ссылки на официальные документы</Paragraph>,
                         },
                     ]} />
-                   
+
+                    <Flex  align="center" style={{ padding: "20px" }}>
+                        <Button type="primary" size="large">Подать заявку</Button>
+                    </Flex>
                 </>
             }
         </div>
