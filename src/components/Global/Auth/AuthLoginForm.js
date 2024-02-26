@@ -106,12 +106,16 @@ import { Button, Form, Input, Alert } from "antd";
 import useStore from "../../../stores/GlobalStore";
 
 export default function AuthLoginForm() {
-  const {
-    login,
-    global: { loginError },
-  } = useStore();
+  const login = useStore(state => state.login)
+  const loginError = useStore(state => state.global.loginError)
+  // const {
+  //   login,
+  //   global: { loginError },
+  // } = useStore();
 
   const onFinish = async (values) => {
+    console.log(values)
+
     try {
       useStore.setState({
         global: {
@@ -122,11 +126,12 @@ export default function AuthLoginForm() {
       });
       login(values.email, values.password);
     } catch (error) {
+      console.log(error)
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+  const onFinishFailed = ({ values, errorFields }) => {
+    console.log("Failed:", errorFields);
   };
 
   return (
@@ -161,6 +166,7 @@ export default function AuthLoginForm() {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
+
       >
         <Form.Item
           label="Почта"
