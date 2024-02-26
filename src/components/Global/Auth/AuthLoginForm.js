@@ -1,6 +1,5 @@
 // import React from "react";
 // import { Button, Form, Input, Alert } from "antd";
-// // import sha256 from "crypto-js/sha256";
 // import useStore from "../../../stores/GlobalStore";
 
 // export default function AuthLoginForm() {
@@ -9,11 +8,18 @@
 //     global: { loginError },
 //   } = useStore();
 
-//   const onFinish = (values) => {
-//     login(values.email, values.password);
-//     // Ниже потом раскоментить, если сделаем хэш на регистрации, а выше законменить
-//     // const passwordHash = sha256(values.password).toString();
-//     // login(values.email, passwordHash);
+//   const onFinish = async (values) => {
+//     try {
+//       useStore.setState({
+//         global: {
+//           ...useStore.getState().global,
+//           email: values.email,
+//           password: values.password,
+//         }
+//       });
+//       login(values.email, values.password);
+//     } catch (error) {
+//     }
 //   };
 
 //   const onFinishFailed = (errorInfo) => {
@@ -101,33 +107,18 @@
 //   );
 // }
 
+
 import React from "react";
 import { Button, Form, Input, Alert } from "antd";
 import useStore from "../../../stores/GlobalStore";
 
 export default function AuthLoginForm() {
-  const login = useStore(state => state.login)
-  const loginError = useStore(state => state.global.loginError)
-  // const {
-  //   login,
-  //   global: { loginError },
-  // } = useStore();
+  const login = useStore(state => state.login);
+  const toggleModal = useStore(state => state.toggleModal);
+  const loginError = useStore(state => state.global.loginError);
 
   const onFinish = async (values) => {
-    console.log(values)
-
-    try {
-      useStore.setState({
-        global: {
-          ...useStore.getState().global,
-          email: values.email,
-          password: values.password,
-        }
-      });
-      login(values.email, values.password);
-    } catch (error) {
-      console.log(error)
-    }
+    login(values.email, values.password);
   };
 
   const onFinishFailed = ({ values, errorFields }) => {
@@ -142,27 +133,12 @@ export default function AuthLoginForm() {
           type="error"
           showIcon
           closable
-          onClose={() =>
-            useStore.setState({
-              global: { ...useStore.getState().global, loginError: "" },
-            })
-          }
+          onClose={() => toggleModal('isAuthModalOpen', true)}
         />
       )}
       <Form
         name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 600,
-        }}
-        initialValues={{
-          remember: true,
-        }}
+        initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
