@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from 'zustand'
 import config from "../config";
 import axios from "axios";
 

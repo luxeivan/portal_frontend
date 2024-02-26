@@ -92,7 +92,7 @@
 // export default useStore;
 
 
-import create from "zustand";
+import { create } from 'zustand'
 import axios from "axios";
 
 const useStore = create((set) => ({
