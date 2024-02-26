@@ -33,9 +33,14 @@ export default function AppHeader() {
   const toggleAuth = useStore((state) => state.toggleAuth)
   const openAuthModal = useStore((state) => state.openAuthModal)
   const toggleDarkMode = useStore((state) => state.toggleDarkMode)
+  const logout = useStore((state) => state.logout);
+
   const global = useStore((state) => state.global)
   const navigate = useNavigate()
 
+  const handleLogout = () => {
+    logout();
+  };
  
   const { toggleModal } = useStore();
 
@@ -50,12 +55,28 @@ export default function AppHeader() {
     token: { colorBgContainer, borderRadiusLG, colorBgElevated, colorText },
   } = theme.useToken();
 
-  const rightMenuArea = <Space size={'small'}>
-    <SunOutlined style={{fontSize:"12px"}}/>
-    <Switch size="small" onChange={handlerDarkMode} />
-    <MoonOutlined style={{fontSize:"12px"}}/>
-    <Button onClick={handlerChangeAuth}>Кабинет</Button>
-  </Space>
+  // const rightMenuArea = <Space size={'small'}>
+  //   <SunOutlined style={{fontSize:"12px"}}/>
+  //   <Switch size="small" onChange={handlerDarkMode} />
+  //   <MoonOutlined style={{fontSize:"12px"}}/>
+  //   <Button onClick={handlerChangeAuth}>Кабинет</Button>
+  // </Space>
+
+  const rightMenuArea = global.auth ? (
+    <Space size={'small'}>
+      <SunOutlined style={{ fontSize: "12px" }} />
+      <Switch size="small" onChange={handlerDarkMode} />
+      <MoonOutlined style={{ fontSize: "12px" }} />
+      <Button onClick={handleLogout}>Выйти</Button>
+    </Space>
+  ) : (
+    <Space size={'small'}>
+      <SunOutlined style={{ fontSize: "12px" }} />
+      <Switch size="small" onChange={handlerDarkMode} />
+      <MoonOutlined style={{ fontSize: "12px" }} />
+      <Button onClick={handlerChangeAuth}>Кабинет</Button>
+    </Space>
+  );
   const itemsMobile = [
     {
       label: <Link to="/services">Услуги</Link>,

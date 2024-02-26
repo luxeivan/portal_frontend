@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ConfigProvider, Layout, theme } from 'antd';
 import './App.css';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
@@ -19,6 +19,19 @@ const { Content, Sider } = Layout;
 
 
 export default function App() {
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      useStore.setState({
+        global: {
+          ...useStore.getState().global,
+          auth: true,
+        }
+      });
+    }
+  }, []);
+
   const global = useStore((state) => state.global);
   const {
     token: { colorBgContainer, borderRadiusLG, colorBgElevated },

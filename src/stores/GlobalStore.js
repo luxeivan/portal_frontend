@@ -58,6 +58,30 @@ const useStore = create((set) => ({
             }));
         }
     },
+    // verifyPincode: async (pincode) => {
+    //     try {
+    //         const response = await axios.post("http://5.35.9.42:5000/api/auth/logincode", { pincode });
+    //         if (response.data && response.status === 200) {
+    //             localStorage.setItem('jwt', response.data.jwt);
+    //             set((state) => ({
+    //                 global: {
+    //                     ...state.global,
+    //                     auth: true,
+    //                     isCodeModalOpen: false,
+    //                     isAuthModalOpen: false,
+    //                     loginError: "",
+    //                 }
+    //             }));
+    //         }
+    //     } catch (error) {
+    //         set((state) => ({
+    //             global: {
+    //                 ...state.global,
+    //                 loginError: error.response?.data?.message || "Неверный пинкод.",
+    //             }
+    //         }));
+    //     }
+    // },
     verifyPincode: async (pincode) => {
         try {
             const response = await axios.post("http://5.35.9.42:5000/api/auth/logincode", { pincode });
@@ -72,16 +96,37 @@ const useStore = create((set) => ({
                         loginError: "",
                     }
                 }));
+            } else {
+                // Если статус ответа не 200, нужно обновить состояние с ошибкой
+                set((state) => ({
+                    global: {
+                        ...state.global,
+                        loginError: "Неверный пинкод.",
+                    }
+                }));
             }
         } catch (error) {
+            // Обработка ошибки, если запрос не удался
             set((state) => ({
                 global: {
                     ...state.global,
-                    loginError: error.response?.data?.message || "Неверный пинкод.",
+                    loginError: error.response?.data?.message || "Ошибка при подтверждении пинкода.",
                 }
             }));
         }
     },
+    
+    logout: () => {
+        localStorage.removeItem('jwt');
+        set((state) => ({
+          global: {
+            ...state.global,
+            auth: false,
+            email: '',
+            password: '',
+          }
+        }));
+      },
 }));
 
 export default useStore;
