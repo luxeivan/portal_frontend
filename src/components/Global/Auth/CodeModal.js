@@ -30,7 +30,8 @@ import CodeForm from './CodeForm';
 import useStore from "../../../stores/GlobalStore";
 
 const CodeModal = () => {
-    const { toggleModal, global: { isCodeModalOpen } } = useStore();
+    const toggleModal = useStore(state => state.toggleModal);
+    const isCodeModalOpen = useStore(state => state.global.isCodeModalOpen);
 
     return (
         <Modal

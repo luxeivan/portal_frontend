@@ -113,7 +113,9 @@ import { Button, Form, Input, Alert } from "antd";
 import useStore from "../../../stores/GlobalStore";
 
 export default function AuthLoginForm() {
-  const { login, toggleModal, global: { loginError } } = useStore();
+  const login = useStore(state => state.login);
+  const toggleModal = useStore(state => state.toggleModal);
+  const loginError = useStore(state => state.global.loginError);
 
   const onFinish = async (values) => {
     login(values.email, values.password);
@@ -125,7 +127,7 @@ export default function AuthLoginForm() {
 
   return (
     <>
-       {loginError && (
+      {loginError && (
         <Alert
           message={loginError}
           type="error"
@@ -135,11 +137,11 @@ export default function AuthLoginForm() {
         />
       )}
       <Form
-       name="basic"
-       initialValues={{ remember: true }}
-       onFinish={onFinish}
-       onFinishFailed={onFinishFailed}
-       autoComplete="off"
+        name="basic"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
       >
         <Form.Item
           label="Почта"

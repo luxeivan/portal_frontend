@@ -3,9 +3,9 @@ import { Button, Form, Input, notification } from "antd";
 import useStore from "../../../stores/GlobalStore";
 
 export default function CodeForm() {
-  const { login, global: { email, password } } = useStore();
+  const verifyPincode = useStore(store => store.verifyPincode);
   const onFinish = (values) => {
-    login(email, password, values.pincode);
+    verifyPincode(values.pincode);
   };
 
   const onFinishFailed = (errorInfo) => {
