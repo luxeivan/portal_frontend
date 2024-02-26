@@ -3,7 +3,8 @@ import { Button, Form, Input, notification } from "antd";
 import useStore from "../../../stores/GlobalStore";
 
 export default function CodeForm() {
-  const verifyPincode = useStore(store => store.verifyPincode);
+  const verifyPincode = useStore((store) => store.verifyPincode);
+  
   const onFinish = (values) => {
     verifyPincode(values.pincode);
   };
@@ -17,7 +18,7 @@ export default function CodeForm() {
 
   return (
     <Form
-      name="basic"
+      name="codeForm"
       labelCol={{
         span: 8,
       }}

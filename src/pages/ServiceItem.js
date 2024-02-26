@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import useStore from '../stores/ServicesStore';
-import { Link, useParams } from 'react-router-dom';
-import { Button, Collapse, Divider, Flex, Space, Typography } from 'antd';
+import { useParams } from 'react-router-dom';
+import { Button, Collapse, Divider, Flex, Typography } from 'antd';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import ListDocs from '../components/ServiceItem/ListDocs';
 

@@ -2,7 +2,7 @@ import React from 'react'
 import AppHelmet from '../components/Global/AppHelmet'
 import { Image, Typography } from 'antd'
 import imgCalc from '../img/calc/calculator.webp'
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title } = Typography;
 
 export default function Calc() {
     return (
