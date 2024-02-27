@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import axios from "axios";
+import config from '../config';
 
 const useStore = create((set) => ({
     global: {
@@ -37,7 +38,7 @@ const useStore = create((set) => ({
     },
     login: async (email, password) => {
         try {
-            const response = await axios.post("http://5.35.9.42:5000/api/auth/login", { email, password });
+            const response = await axios.post(`${config.backServer}/api/auth/login`, { email, password });
             if (response.data && response.status === 200) {
                 set((state) => ({
                     global: {
@@ -84,7 +85,7 @@ const useStore = create((set) => ({
     // },
     verifyPincode: async (pincode) => {
         try {
-            const response = await axios.post("http://5.35.9.42:5000/api/auth/logincode", { pincode });
+            const response = await axios.post(`${config.backServer}/api/auth/logincode`, { pincode });
             if (response.data && response.status === 200) {
                 localStorage.setItem('jwt', response.data.jwt);
                 set((state) => ({
