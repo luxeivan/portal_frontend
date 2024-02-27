@@ -14,6 +14,7 @@ import AuthModal from './components/Global/Auth/AuthModal';
 import CodeModal from './components/Global/Auth/CodeModal';
 import ServiceItem from './pages/ServiceItem';
 import Page404 from './pages/Page404';
+import PhoneVerification from './components/Global/Auth/PhoneVerification';
 
 const { Content, Sider } = Layout;
 
@@ -55,6 +56,7 @@ export default function App() {
           <AuthModal />
           <CodeModal />
           <AppHeader />
+          {/* <PhoneVerification /> */}
           <Content className='content'>
             <Layout style={{ padding: '24px 0', }}>
               {global.auth &&

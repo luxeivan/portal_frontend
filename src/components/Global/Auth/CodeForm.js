@@ -3,32 +3,17 @@ import { Button, Form, Input, notification } from "antd";
 import useStore from "../../../stores/GlobalStore";
 
 export default function CodeForm() {
-  // const verifyPincode = useStore(store => store.verifyPincode);
-  // const onFinish = (values) => {
-  //   verifyPincode(values.pincode);
-  // };
+  const verifyPincode = useStore(store => store.verifyPincode);
+  const onFinish = (values) => {
+    verifyPincode(values.pincode);
+  };
 
-  // const onFinishFailed = (errorInfo) => {
-  //   notification.error({
-  //     message: 'Ошибка ввода кода',
-  //     description: errorInfo.errorFields.map(field => field.errors).join(' '),
-  //   });
-  // };
-
-
-    const verifyPincode = useStore((state) => state.verifyPincode);
-    const loginError = useStore((state) => state.global.loginError);
-  
-    const onFinish = (values) => {
-      verifyPincode(values.pincode);
-    };
-  
-    const onFinishFailed = (errorInfo) => {
-      notification.error({
-        message: 'Ошибка ввода кода',
-        description: loginError || errorInfo.errorFields.map((field) => field.errors).join(' '),
-      });
-    };
+  const onFinishFailed = (errorInfo) => {
+    notification.error({
+      message: 'Ошибка ввода кода',
+      description: errorInfo.errorFields.map(field => field.errors).join(' '),
+    });
+  };
 
   return (
     <Form

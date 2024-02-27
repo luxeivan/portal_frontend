@@ -1,7 +1,44 @@
-import React from 'react'
+// import React from 'react';
+// import { Steps } from 'antd';
+// const App = () => (
+//   <Steps
+//     current={0}
+//     items={[
+//       {
+//         title: 'Проверка телефонного номера',
+//       },
+//       {
+//         title: 'Проверка почтового адреса',
+//       },
+//       {
+//         title: 'Ввод пароля',
+//       },
+//     ]}
+//   />
+// );
+// export default App;
 
-export default function AuthRegForm() {
+import React from 'react';
+import { Steps } from 'antd';
+import useRegistration from '../../../stores/useRegistration';
+import PhoneVerification from './PhoneVerification';
+import PhoneCodeVerification from './PhoneCodeVerification';
+const { Step } = Steps;
+
+const AuthRegForm = () => {
+  const registrationStep = useRegistration((state) => state.registrationStep);
   return (
-    <div>AuthRegForm</div>
-  )
-}
+    <div>
+      <Steps current={registrationStep}>
+        <Step title="Проверка телефонного номера" />
+        <Step title="Проверка пин-кода" />
+        <Step title="Ввод пароля" />
+      </Steps>
+      {registrationStep === 0 && <PhoneVerification />}
+      {registrationStep === 0 && <PhoneCodeVerification />}
+    </div>
+  );
+};
+
+export default AuthRegForm;
+
