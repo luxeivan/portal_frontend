@@ -2,7 +2,7 @@ import React from 'react'
 import AppHelmet from '../components/Global/AppHelmet'
 import { Flex, Typography } from 'antd'
 import { Anime } from '../components/Main/Anime';
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title } = Typography;
 
 export default function Main() {
     return (

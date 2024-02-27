@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import AppHelmet from '../components/Global/AppHelmet'
-import { Card, Flex, Space, Typography } from 'antd'
-import config from '../config';
+import { Card, Flex, Typography } from 'antd'
 import { Link, useParams } from 'react-router-dom';
 import useStore from '../stores/ServicesStore';
 import styles from './Services.module.css'
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 
 export default function Services() {
     const services = useStore(state => state.services)
@@ -16,12 +15,10 @@ export default function Services() {
             fetchServices(level2, level3)
         }
     }, [level2, level3])
-    //console.log(level2, level3)
     return (
         <>
             <AppHelmet title={'Услуги'} desc={'Услуги компании'} />
             <div>
-                {/* <Title level={1}>Services</Title> */}
                 {!level2 && !level3 &&
                     <>
                         <Title level={1} className={styles.title}>Каталог услуг</Title>
