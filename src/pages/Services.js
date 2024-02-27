@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import AppHelmet from '../components/Global/AppHelmet'
-import { Card, Flex, Space, Typography } from 'antd'
-import config from '../config';
+import { Card, Flex, Typography } from 'antd'
 import { Link, useParams } from 'react-router-dom';
 import useStore from '../stores/ServicesStore';
 import styles from './Services.module.css'
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 
 export default function Services() {
     const services = useStore(state => state.services)
@@ -16,19 +15,20 @@ export default function Services() {
             fetchServices(level2, level3)
         }
     }, [level2, level3])
-    console.log(level2, level3)
     return (
         <>
             <AppHelmet title={'Услуги'} desc={'Услуги компании'} />
             <div>
-                {/* <Title level={1}>Services</Title> */}
                 {!level2 && !level3 &&
                     <>
                         <Title level={1} className={styles.title}>Каталог услуг</Title>
                         <Flex wrap="wrap" gap="large">
                             {serviceDetailsData.map((item, index) =>
                                 <Link key={index} to={`/services/${item.url}`} className={styles.styleLink}>
-                                    <Card className={styles.styleCard}><Title level={4}>{item.title}</Title></Card>
+                                    <Card className={styles.styleCard}>
+                                        <Title level={4}>{item.title}</Title>
+                                        <Text>{item.content}</Text>
+                                    </Card>
                                 </Link>
                             )}
 
@@ -41,7 +41,10 @@ export default function Services() {
                         <Flex wrap="wrap" gap="large">
                             {serviceDetailsData.find(item => item.url === level2).subServices.map((item, index) =>
                                 <Link key={index} to={`/services/${serviceDetailsData.find(item => item.url === level2).url}/${item.title}`} className={styles.styleLink}>
-                                    <Card className={styles.styleCard}><Title level={4}>{item.title}</Title></Card>
+                                    <Card className={styles.styleCard}>
+                                        <Title level={4}>{item.title}</Title>
+                                        <Text>{item.content}</Text>
+                                    </Card>
                                 </Link>
                             )}
 
@@ -52,14 +55,13 @@ export default function Services() {
                     <>
                         <Title level={1} className={styles.title}>{serviceDetailsData.find(item => item.url === level2).title} - {level3}</Title>
                         <Flex wrap="wrap" gap="large">
-                        {/* <Space wrap > */}
-
-
                             {services && services.map(item =>
-                                <Link key={item.id} to={`/services/`} className={styles.styleLink}>
-                                    <Card className={styles.styleCard}><Title level={4}>{item.attributes.name}</Title></Card>
+                                <Link key={item.id} to={`/services/${level2}/${level3}/${item.id}`} className={styles.styleLink}>
+                                    <Card className={styles.styleCard}>
+                                        <Title level={4}>{item.attributes.name}</Title>
+                                        <Text>{item.attributes.shortDescription}</Text>
+                                    </Card>
                                 </Link>)}
-                        {/* </Space> */}
                         </Flex>
                     </>
                 }

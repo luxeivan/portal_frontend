@@ -1,0 +1,26 @@
+.mosoblikArea {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.textArea {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.textArea div div {
+    line-height: 2;
+    font-size: 1rem;
+    text-indent: 1.5em;
+}
+
+@media (max-width:1199px) {
+    .mosoblikArea {
+        display: none;
+    }
+}

@@ -1,5 +1,14 @@
+.mainMenu{
+
+}
 .rightMenu {
     display: block;
+}
+.mobileMenu{
+    display: none;
+}
+.header{
+
 }
 
 @media (max-width: 1199px) {
@@ -12,4 +21,16 @@
     .rightMenu {
         display: none;
     }
+    .mainMenu{
+        display: none;    
+    }
+    .mobileMenu{
+        display: block;
+    }
+    .header{
+    padding: 0 10px;
+    }
 }
+@media (max-width: 575px) {
+   
+  }

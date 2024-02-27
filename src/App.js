@@ -1,5 +1,5 @@
-import React from 'react';
-import { Breadcrumb, ConfigProvider, Layout, Menu, theme } from 'antd';
+import React, { useEffect } from 'react';
+import { ConfigProvider, Layout, theme } from 'antd';
 import './App.css';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import Main from './pages/Main';
@@ -10,35 +10,57 @@ import About from './pages/About';
 import Services from './pages/Services';
 import useStore from './stores/GlobalStore';
 import CabinetMenu from './components/Cabinet/CabinetMenu';
+import AuthModal from './components/Global/Auth/AuthModal';
+import CodeModal from './components/Global/Auth/CodeModal';
+import ServiceItem from './pages/ServiceItem';
+import Page404 from './pages/Page404';
+import PhoneVerification from './components/Global/Auth/PhoneVerification';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 
 export default function App() {
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      useStore.setState({
+        global: {
+          ...useStore.getState().global,
+          auth: true,
+        }
+      });
+    }
+  }, []);
+
   const global = useStore((state) => state.global);
-  //console.log(global.darkMode)
   const {
     token: { colorBgContainer, borderRadiusLG, colorBgElevated },
   } = theme.useToken();
-  //console.log(theme.useToken())
   return (
     <ConfigProvider
       theme={{
         algorithm: global.darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
-        // token:{
-        //   colorPrimaryBg: 'red',
-        //   colorBgContainer: 'red',
-        //   colorBgElevated: 'red',
-        // }
+        token: {
+          fontSizeHeading1: "2.5rem",
+          fontSizeHeading2: "2.1rem",
+          fontSizeHeading3: "1.8rem",
+          fontSizeHeading4: "1.5rem",
+          //fontSize:"1rem"
+          colorPrimary: "#0061aa"
+        }
       }}>
       <Layout>
 
         <BrowserRouter>
+          <AuthModal />
+          <CodeModal />
           <AppHeader />
-          <Content style={{ padding: '0 48px', }}>
+          {/* <PhoneVerification /> */}
+          <Content className='content'>
             <Layout style={{ padding: '24px 0', }}>
               {global.auth &&
-                 <Sider style={{  }} width={200}>
+                 <Sider style={{  }} width={200} >
                 <CabinetMenu />
                  </Sider>
               }
@@ -50,9 +72,12 @@ export default function App() {
                     <Route path='/services' element={<Services />} />
                     <Route path='/services/:level2' element={<Services />} />
                     <Route path='/services/:level2/:level3' element={<Services />} />
+                    <Route path='/services/:level2/:level3/:id' element={<ServiceItem />} />
 
                     <Route path='/about' element={<About />} />
                     <Route path='/calc' element={<Calc />} />
+                    <Route path='*' element={<Page404 />} />
+
                   </Routes>
                 </Content>
               </Layout>
