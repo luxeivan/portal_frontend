@@ -20,14 +20,11 @@ const { Content, Sider } = Layout;
 
 export default function App() {
   const { darkMode, toggleDarkMode } = useGlobal();
-  const { auth, logout } = useAuth();
+  const { auth, checkJWT } = useAuth();
 
   useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      toggleDarkMode(true);
-    }
-  }, [toggleDarkMode]);
+    checkJWT()
+  }, []);
 
   const { colorBgContainer, borderRadiusLG, colorBgElevated } = theme.useToken();
 
