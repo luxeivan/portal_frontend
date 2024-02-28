@@ -1,23 +1,3 @@
-// import React from 'react';
-// import { Steps } from 'antd';
-// const App = () => (
-//   <Steps
-//     current={0}
-//     items={[
-//       {
-//         title: 'Проверка телефонного номера',
-//       },
-//       {
-//         title: 'Проверка почтового адреса',
-//       },
-//       {
-//         title: 'Ввод пароля',
-//       },
-//     ]}
-//   />
-// );
-// export default App;
-
 import React from 'react';
 import { Steps } from 'antd';
 import useRegistration from '../../../stores/useRegistration';

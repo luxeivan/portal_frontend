@@ -1,16 +1,16 @@
-import React from 'react'
-import AppHelmet from '../components/Global/AppHelmet'
-import { Flex, Image, List, Typography } from 'antd'
-import styles from './About.module.css'
-import mosoblik from '../img/about/mosoblik.png'
-import mosoblikShadow from '../img/about/mosoblik_shadow.png'
-import useStore from '../stores/GlobalStore'
+import React from 'react';
+import AppHelmet from '../components/Global/AppHelmet';
+import { Flex, Image, List, Typography } from 'antd';
+import styles from './About.module.css';
+import mosoblik from '../img/about/mosoblik.png';
+import mosoblikShadow from '../img/about/mosoblik_shadow.png';
+import useGlobal from '../stores/useGlobal';
 
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title, Paragraph } = Typography;
 
 export default function About() {
-    const darkMode = useStore((state) => state.global.darkMode)
-    console.log(darkMode)
+    const { darkMode } = useGlobal();
+
     return (
         <>
             <AppHelmet title={'О нас'} desc={'Информация о компании'} />
