@@ -1,15 +1,11 @@
-.mainMenu{
 
-}
 .rightMenu {
     display: block;
 }
 .mobileMenu{
     display: none;
 }
-.header{
 
-}
 
 @media (max-width: 1199px) {
     .rightMenu {

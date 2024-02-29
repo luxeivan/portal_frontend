@@ -1,8 +1,9 @@
 import React from "react";
 import { Modal, Tabs } from "antd";
-import AuthLoginForm from "./AuthLoginForm";
-import AuthRegForm from "./AuthRegForm";
-import useAuth from "../../../stores/useAuth";
+import AuthLoginForm from "../AuthLoginForm";
+import AuthRegForm from "../AuthRegForm/AuthRegForm";
+import useAuth from "../../../../stores/useAuth";
+import styles from './AuthModal.module.css'
 
 const AuthModal = () => {
     const { isAuthModalOpen, toggleModal } = useAuth();
@@ -27,8 +28,11 @@ const AuthModal = () => {
             onCancel={() => toggleModal('isAuthModalOpen', false)}
             footer={null}
             maskClosable={false}
+            width = "50%"
+            className={styles.auth__modal}
+            // bodyStyle={{height: '50vh'}}
         >
-            <Tabs defaultActiveKey="1" items={tabItems} />
+            <Tabs defaultActiveKey="1" items={tabItems}/>
         </Modal>
     );
 };
