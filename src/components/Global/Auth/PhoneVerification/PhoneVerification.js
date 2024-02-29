@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { Input, Button, Form, Typography } from "antd";
 import useRegistration from "../../../../stores/useRegistration";
 import { PhoneOutlined } from "@ant-design/icons";
@@ -8,20 +8,35 @@ const { Paragraph } = Typography;
 const PhoneVerification = () => {
   const [form] = Form.useForm();
   const submitPhone = useRegistration((state) => state.submitPhone);
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
 
   const onFinish = (values) => {
-    submitPhone(values.phone);     
-  };
-  
-  const validatePhone = (_, value) => {
-    const regex = /^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/;
-    if (regex.test(value)) {
-      return Promise.resolve();
-    }
-    return Promise.reject(new Error('Введите номер телефона в формате +7(***)***-**-**'));
+    submitPhone(values.phone);
   };
 
-  const isPhoneValid = !form.getFieldError('phone').length && form.isFieldTouched('phone');
+  const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
+  const validatePhone = useCallback(
+    debounce((value) => {
+      const regex = /^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/;
+      setIsPhoneValid(regex.test(value));
+    }, 800),
+    []
+  );
+
+  const onPhoneChange = (event) => {
+    validatePhone(event.target.value);
+  };
 
   return (
     <div>
@@ -36,12 +51,13 @@ const PhoneVerification = () => {
               required: true,
               message: "Пожалуйста, введите ваш номер телефона!",
             },
-            {
-              validator: validatePhone,
-            },
           ]}
         >
-          <Input addonBefore={<PhoneOutlined />} placeholder="+7(***)***-**-**" />
+          <Input
+            addonBefore={<PhoneOutlined />}
+            placeholder="+7(***)***-**-**"
+            onChange={onPhoneChange}
+          />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" disabled={!isPhoneValid}>
@@ -55,3 +71,4 @@ const PhoneVerification = () => {
 };
 
 export default PhoneVerification;
+
