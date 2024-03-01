@@ -2,10 +2,10 @@ import React from "react";
 import { Modal, Tabs } from "antd";
 import AuthLoginForm from "./AuthLoginForm";
 import AuthRegForm from "./AuthRegForm";
-import useStore from "../../../stores/GlobalStore";
+import useAuth from "../../../stores/useAuth";
 
 const AuthModal = () => {
-    const { toggleModal, global: { isAuthModalOpen } } = useStore();
+    const { isAuthModalOpen, toggleModal } = useAuth();
 
     const tabItems = [
         {

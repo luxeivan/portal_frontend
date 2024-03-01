@@ -3,7 +3,8 @@ import { Button, Dropdown, Layout, Menu, Space, Switch, theme } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import logoWhite from '../../img/header/logoWhite.svg'
 import logoBlue from '../../img/header/logoBlue.svg'
-import useStore from '../../stores/GlobalStore';
+import useGlobal from '../../stores/useGlobal';
+import useAuth from '../../stores/useAuth';
 import { MenuOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
 import styles from './AppHeader.module.css'
 
@@ -30,20 +31,15 @@ const items = [
 
 
 export default function AppHeader() {
-  const toggleAuth = useStore((state) => state.toggleAuth)
-  const openAuthModal = useStore((state) => state.openAuthModal)
-  const toggleDarkMode = useStore((state) => state.toggleDarkMode)
-  const logout = useStore((state) => state.logout);
+  const { darkMode, toggleDarkMode } = useGlobal();
+  const { toggleAuth, auth, logout, toggleModal } = useAuth();
 
-  const global = useStore((state) => state.global)
   const navigate = useNavigate()
 
   const handleLogout = () => {
     logout();
   };
  
-  const { toggleModal } = useStore();
-
   const handlerChangeAuth = () => {
     toggleModal('isAuthModalOpen', true); 
   };
@@ -54,26 +50,14 @@ export default function AppHeader() {
   const {
     token: { colorBgContainer, borderRadiusLG, colorBgElevated, colorText },
   } = theme.useToken();
-
-  // const rightMenuArea = <Space size={'small'}>
-  //   <SunOutlined style={{fontSize:"12px"}}/>
-  //   <Switch size="small" onChange={handlerDarkMode} />
-  //   <MoonOutlined style={{fontSize:"12px"}}/>
-  //   <Button onClick={handlerChangeAuth}>Кабинет</Button>
-  // </Space>
-
-  const rightMenuArea = global.auth ? (
+  const rightMenuArea = auth ? (
     <Space size={'small'}>
-      {/* <SunOutlined style={{ fontSize: "12px" }} /> */}
-      <Switch  onChange={handlerDarkMode} checkedChildren={<SunOutlined style={{fontSize:"12px"}}/>} unCheckedChildren={<MoonOutlined style={{fontSize:"12px"}}/>} />
-      {/* <MoonOutlined style={{ fontSize: "12px" }} /> */}
+      <Switch onChange={toggleDarkMode} checkedChildren={<SunOutlined />} unCheckedChildren={<MoonOutlined />} />
       <Button onClick={handleLogout}>Выйти</Button>
     </Space>
   ) : (
     <Space size={'small'}>
-      {/* <SunOutlined style={{ fontSize: "12px" }} /> */}
-      <Switch  onChange={handlerDarkMode} checkedChildren={<SunOutlined style={{fontSize:"12px"}}/>} unCheckedChildren={<MoonOutlined style={{fontSize:"12px"}}/>} />
-      {/* <MoonOutlined style={{ fontSize: "12px" }} /> */}
+      <Switch onChange={toggleDarkMode} checkedChildren={<SunOutlined />} unCheckedChildren={<MoonOutlined />} />
       <Button onClick={handlerChangeAuth}>Кабинет</Button>
     </Space>
   );
@@ -111,7 +95,7 @@ export default function AppHeader() {
     >
       <div className="demo-logo" style={{ padding: 10, marginRight: 20 }}>
         <Link to={'/'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
-          <img src={global.darkMode ? logoWhite : logoBlue} height={40} alt="Логотип компании"/>
+          <img src={darkMode ? logoWhite : logoBlue} height={40} alt="Логотип компании"/>
         </Link>
       </div>
 

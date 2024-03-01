@@ -1,11 +1,10 @@
 import React from 'react';
 import { Modal } from "antd";
 import CodeForm from './CodeForm';
-import useStore from "../../../stores/GlobalStore";
+import useAuth from "../../../stores/useAuth";
 
 const CodeModal = () => {
-    const toggleModal = useStore(state => state.toggleModal);
-    const isCodeModalOpen = useStore(state => state.global.isCodeModalOpen);
+    const { toggleModal, isCodeModalOpen } = useAuth(); 
 
     return (
         <Modal

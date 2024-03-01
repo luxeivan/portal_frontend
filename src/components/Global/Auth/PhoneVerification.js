@@ -10,7 +10,6 @@ const PhoneVerification = () => {
   };
 
   return (
-    // <h1>1234567876543234567</h1>
     <Form onFinish={onFinish}>
       <Form.Item
         name="phone"
