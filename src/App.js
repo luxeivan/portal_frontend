@@ -26,7 +26,7 @@ export default function App() {
     checkJWT()
   }, []);
 
-  const { colorBgContainer, borderRadiusLG, colorBgElevated } = theme.useToken();
+  const {colorPrimary} = theme.useToken().token;
 
   return (
     <ConfigProvider
@@ -37,7 +37,10 @@ export default function App() {
           fontSizeHeading2: "2.1rem",
           fontSizeHeading3: "1.8rem",
           fontSizeHeading4: "1.5rem",
-          colorPrimary: "#0061aa"
+          colorPrimary: "#0061aa",
+          colorInfo: "#F37021",
+          myCustomColor:"#00ffff",
+          customfontSizeIcon: "16px"
         }
       }}
     >

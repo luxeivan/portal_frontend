@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react'
 import AppHelmet from '../components/Global/AppHelmet'
-import { Card, Flex, Typography } from 'antd'
+import { Card, Flex, Typography, Image } from 'antd'
 import { Link, useParams } from 'react-router-dom';
-import useStore from '../stores/ServicesStore';
+import useServices from '../stores/useServices';
 import styles from './Services.module.css'
+import config from '../config';
 const { Title, Text } = Typography;
 
 export default function Services() {
-    const services = useStore(state => state.services)
-    const fetchServices = useStore(state => state.fetchServices)
+    const services = useServices(state => state.services)
+    const fetchServices = useServices(state => state.fetchServices)
     const { level2, level3 } = useParams()
     useEffect(() => {
         if (level2 && level3) {
             fetchServices(level2, level3)
         }
     }, [level2, level3])
+    console.log(services)
     return (
         <>
             <AppHelmet title={'Услуги'} desc={'Услуги компании'} />
@@ -28,6 +30,7 @@ export default function Services() {
                                     <Card className={styles.styleCard}>
                                         <Title level={4}>{item.title}</Title>
                                         <Text>{item.content}</Text>
+
                                     </Card>
                                 </Link>
                             )}
@@ -58,8 +61,15 @@ export default function Services() {
                             {services && services.map(item =>
                                 <Link key={item.id} to={`/services/${level2}/${level3}/${item.id}`} className={styles.styleLink}>
                                     <Card className={styles.styleCard}>
-                                        <Title level={4}>{item.attributes.name}</Title>
-                                        <Text>{item.attributes.shortDescription}</Text>
+                                        <div className={styles.cardContent}>
+                                            <Title level={4}>{item.attributes.name}</Title>
+                                            <Text>{item.attributes.shortDescription}</Text>
+                                        </div>
+                                        {item.attributes.icon.data &&
+                                            <Flex justify="flex-end" gap={20} className={styles.cardImage}>
+                                                <Image style={{ textAlign: "center" }} width={"50%"} src={`${config.apiServer}${item.attributes.icon?.data?.attributes?.url}`} preview={false} />
+                                            </Flex>
+                                        }
                                     </Card>
                                 </Link>)}
                         </Flex>

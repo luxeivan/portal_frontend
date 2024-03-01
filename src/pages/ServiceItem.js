@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
-import useStore from '../stores/ServicesStore';
+import useServices from '../stores/useServices';
 import { useParams } from 'react-router-dom';
 import { Button, Collapse, Divider, Flex, Typography } from 'antd';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import ListDocs from '../components/ServiceItem/ListDocs';
+import StrapiRichText from '../components/StrapiRichText';
 
 const { Title, Text, Paragraph } = Typography
 
 export default function ServiceItem() {
-    const serviceItem = useStore(state => state.serviceItem)
-    const fetchServiceItem = useStore(state => state.fetchServiceItem)
+    const serviceItem = useServices(state => state.serviceItem)
+    const fetchServiceItem = useServices(state => state.fetchServiceItem)
     const { level2, level3, id } = useParams()
     useEffect(() => {
         fetchServiceItem(level2, id)
@@ -27,17 +28,13 @@ export default function ServiceItem() {
                         {
                             key: '1',
                             label: 'Описание',
-                            children: <BlocksRenderer
-                                blocks={{
-                                    paragraph: ({ children }) => <Paragraph className="text-neutral900 max-w-prose">{children}</Paragraph>,
-                                }}
-                                content={serviceItem.attributes.description} />,
+                            children: <StrapiRichText content={serviceItem.attributes.description}/>,
                         },
                         {
                             key: '2',
                             label: 'Информация которая потребуется при подаче заявления',
                             children: <Paragraph>
-                                {serviceItem.attributes.fields && <ListDocs list={serviceItem.attributes.fields} />}
+                                {serviceItem.attributes.fields && <ListDocs list={serviceItem.attributes.fields.filter(item=>item.common.showInSpecification)} />}
                             </Paragraph>,
                         },
                         {
