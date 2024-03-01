@@ -7,7 +7,7 @@ const { Paragraph } = Typography
 
 export default function ListDocs({ list }) {
     const {myCustomColor,colorInfo,customfontSizeIcon} = theme.useToken().token;
-    console.log(theme.useToken().token)
+    //console.log(theme.useToken().token)
     return (
 
         <List
@@ -21,8 +21,8 @@ export default function ListDocs({ list }) {
                             <>
                                 {item.displayName} {' '}
                                 {item.common.description ?
-                                    <Popover content={<StrapiRichText content={item.common.description} />} title="Описание">
-                                        <InfoCircleTwoTone  twoToneColor={myCustomColor} style={{fontSize:customfontSizeIcon}}/>
+                                    <Popover content={<StrapiRichText content={item.common.description} />}>
+                                        <InfoCircleTwoTone  twoToneColor={colorInfo} style={{fontSize:customfontSizeIcon,cursor:"pointer"}}/>
                                     </Popover>
                                     : false
                                 }

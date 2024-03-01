@@ -16,7 +16,7 @@ const useServices = create((set) => ({
     },
     fetchServiceItem: async (url, id) => {
         set((state) => ({ serviceItem: null }))
-        const res = await axios.get(`${config.apiServer}/api/${url}/${id}?populate[0]=fields&populate[1]=icon&populate[2]=fields.common`)
+        const res = await axios.get(`${config.apiServer}/api/${url}/${id}?populate[0]=fields&populate[1]=icon&populate[2]=fields.common&populate[3]=steps`)
         set((state) => {
             return {
                 serviceItem: res.data.data

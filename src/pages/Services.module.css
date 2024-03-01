@@ -1,6 +1,6 @@
  .styleLink {
      display: block;
-     width: 30%;
+     width: 23%;
      min-height: 200px;
      box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
      transition: transform ease .5s;
@@ -27,6 +27,7 @@
     z-index: 10;
     padding-bottom: 80px;
  }
+ 
  @media (max-width: 1199px) {
     .styleLink {
         width: 45%;
