@@ -78,7 +78,7 @@ export default function ServiceItem() {
                         open={open}
                         key="bottom"
                     >
-                        <p>Скоро механизм подачи заявок заработает</p>
+                        <Paragraph>Скоро механизм подачи заявок заработает</Paragraph>
                     </Drawer>
                 </>
             }
