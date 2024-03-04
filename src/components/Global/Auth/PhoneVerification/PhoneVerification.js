@@ -49,7 +49,6 @@ const PhoneVerification = () => {
           </Button>
         </Form.Item>
       </Form>
-      {/* <Button type="link">*Инструкция по регистрации</Button> */}
     </div>
   );
 };

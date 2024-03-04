@@ -83,6 +83,7 @@ const useAuth = create((set) => {
         password: "",
       }));
     },
+    
     checkJWT: async () => {
       let validJwt = false;
       if (localStorage.getItem("jwt")) {
