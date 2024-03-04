@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { Button, Form, Typography, Input } from "antd";
+import { Button, Form, Typography } from "antd";
 import useRegistration from "../../../../stores/useRegistration";
 import InputMask from "react-input-mask";
+import { PhoneOutlined } from "@ant-design/icons";
 
 const { Paragraph } = Typography;
 
 const PhoneVerification = () => {
   const [form] = Form.useForm();
-  const submitPhone = useRegistration((state) => state.submitPhone);
+  const { phone, setPhone, submitPhone } = useRegistration((state) => ({
+    phone: state.phone,
+    setPhone: state.setPhone,
+    submitPhone: state.submitPhone,
+  }));
   const [isPhoneValid, setIsPhoneValid] = useState(false);
 
   const onFinish = (values) => {
@@ -19,6 +24,7 @@ const PhoneVerification = () => {
     const value = event.target.value;
     const isComplete = value.includes("_") ? false : true;
     setIsPhoneValid(isComplete);
+    setPhone(value);
   };
 
   return (
@@ -36,8 +42,10 @@ const PhoneVerification = () => {
             },
           ]}
         >
+          {/* <PhoneOutlined /> */}
           <InputMask
             mask="+7(999)999-99-99"
+            value={phone || ''} 
             onChange={onPhoneChange}
             placeholder="+7(___)___-__-__"
             className="ant-input"
