@@ -3,21 +3,27 @@ import { Button, Form, Typography } from "antd";
 import useRegistration from "../../../../stores/useRegistration";
 import InputMask from "react-input-mask";
 import { PhoneOutlined } from "@ant-design/icons";
+import PhoneCodeVerification from "../PhoneCodeVerification";
 
 const { Paragraph } = Typography;
 
 const PhoneVerification = () => {
   const [form] = Form.useForm();
-  const { phone, setPhone, submitPhone } = useRegistration((state) => ({
+  const { phone, setPhone, submitPhone, codeRequested, setCodeRequested } = useRegistration((state) => ({
     phone: state.phone,
     setPhone: state.setPhone,
     submitPhone: state.submitPhone,
+    codeRequested: state.codeRequested,
+    setCodeRequested: state.setCodeRequested,
   }));
   const [isPhoneValid, setIsPhoneValid] = useState(false);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     const formattedPhone = values.phone.replace(/[^\d]/g, '');
-    submitPhone(formattedPhone);
+    const result = await submitPhone(formattedPhone); // Предположим, что submitPhone теперь возвращает результат
+    if (result === 'ok') {
+      setCodeRequested(true); // Обновляем состояние, чтобы показать компонент ввода пин-кода
+    }
   };
 
   const onPhoneChange = (event) => {
@@ -45,7 +51,7 @@ const PhoneVerification = () => {
           {/* <PhoneOutlined /> */}
           <InputMask
             mask="+7(999)999-99-99"
-            value={phone || ''} 
+            value={phone}
             onChange={onPhoneChange}
             placeholder="+7(___)___-__-__"
             className="ant-input"
@@ -57,6 +63,7 @@ const PhoneVerification = () => {
           </Button>
         </Form.Item>
       </Form>
+      {codeRequested && <PhoneCodeVerification />}
     </div>
   );
 };

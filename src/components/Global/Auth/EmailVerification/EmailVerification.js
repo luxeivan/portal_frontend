@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { Button, Form, Typography } from "antd";
-import useRegistration from "../../../../stores/useRegistration";
-
+import { Button, Form, Typography, Input } from "antd";
 const { Paragraph } = Typography;
 
 const EmailVerification = () => {
@@ -9,11 +6,9 @@ const EmailVerification = () => {
   return (
     <div>
       <Form>
-        <Paragraph>
-        Укажите электронную почту в формате **********@mail.ru. У вас должен быть постоянный доступ к почте.
-        </Paragraph>
-        <Form.Item
-          label="Email"
+      <Paragraph> Укажите электронную почту в формате **********@mail.ru. У вас должен быть постоянный доступ к почте.</Paragraph>
+      <Form.Item
+          label="Почта"
           name="email"
           rules={[
             {
@@ -26,13 +21,12 @@ const EmailVerification = () => {
             },
           ]}
         >
+          <Input />
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit">
             Получить код
           </Button>
-        </Form.Item>
-      </Form>
+        </Form>
     </div>
   );
 };
