@@ -19,7 +19,7 @@ const PhoneCodeVerification = () => {
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Подтвердить
+          Далее
         </Button>
       </Form.Item>
     </Form>
