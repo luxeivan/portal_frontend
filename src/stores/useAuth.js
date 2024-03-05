@@ -4,7 +4,7 @@ import config from "../config";
 
 const useAuth = create((set) => {
   return {
-    auth: false,
+    auth: true,
     isAuthModalOpen: false,
     isCodeModalOpen: false,
     loginError: "",
@@ -83,6 +83,7 @@ const useAuth = create((set) => {
         password: "",
       }));
     },
+    
     checkJWT: async () => {
       let validJwt = false;
       if (localStorage.getItem("jwt")) {
