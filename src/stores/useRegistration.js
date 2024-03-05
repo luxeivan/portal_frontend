@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import config from "../config";
+import useAuth from "./useAuth";
 
 const useRegistration = create((set, get) => ({
   registrationStep: 0,
@@ -12,7 +13,7 @@ const useRegistration = create((set, get) => ({
   phoneVerified: false,
   codeRequested: false,
   emailVerified: false,
-  codeRequestedEmail: false, 
+  codeRequestedEmail: false,
 
   setRegistrationStep: (step) => set(() => ({ registrationStep: step })),
   setPhone: (phone) => set(() => ({ phone })),
@@ -52,11 +53,11 @@ const useRegistration = create((set, get) => ({
         get().setPhoneVerified(true);
         set(() => ({
           registrationStep: 1,
-          codeRequested: false
+          codeRequested: false,
         }));
       } else {
         console.error("Неверный пин-код");
-      }      
+      }
     } catch (error) {
       console.error("Ошибка при подтверждении пин-кода", error);
     }
@@ -94,11 +95,11 @@ const useRegistration = create((set, get) => ({
         get().setEmailVerified(true);
         set(() => ({
           registrationStep: 2,
-          codeRequestedEmail: false
+          codeRequestedEmail: false,
         }));
       } else {
         console.error("Неверный пин-код");
-      }      
+      }
     } catch (error) {
       console.error("Ошибка при подтверждении пин-кода", error);
     }
@@ -109,24 +110,25 @@ const useRegistration = create((set, get) => ({
       console.error("Email или телефон не подтвержден.");
       return;
     }
+
     try {
-      const response = await axios.post(`${config.backServer}/api/registration/newuser`, {
-        email: get().email,
-        phone: get().phone,
-        password,
-      }, { withCredentials: true });
-  
-      if (response.data.status === "ok") {
-        console.log("Пользователь зарегистрирован:", response.data);
-        //Вот тут добавить дополнительные действия после регистрации, например переход на другую страницу или вывод сообщения об успешной регистрации
+      const registrationResponse = await axios.post(
+        `${config.backServer}/api/registration/newuser`,
+        { email: get().email, phone: get().phone, password },
+        { withCredentials: true }
+      );
+
+      if (registrationResponse.data.status === "ok") {
+        localStorage.setItem("jwt", registrationResponse.data.jwt);
+        useAuth.getState().toggleAuth(true);
+        useAuth.getState().toggleModal("isAuthModalOpen", false);
       } else {
-        console.error(response.data.message);
+        console.error(registrationResponse.data.message);
       }
     } catch (error) {
       console.error("Ошибка при регистрации пользователя", error);
     }
   },
-  
 }));
 
 export default useRegistration;
