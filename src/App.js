@@ -140,9 +140,9 @@ export default function App() {
                 <Content style={{ padding: '0 24px', minHeight: "calc(100vh - 120px)" }}>
                   <Routes>
                     <Route path='/' element={<Main />} />
-                    <Route path='/services' element={<Services />} />
-                    <Route path='/services/:level2' element={<Services />} />
-                    <Route path='/services/:level2/:level3' element={<Services />} />
+                    <Route path='/services' element={<Container><Services /></Container>} />
+                    <Route path='/services/:level2' element={<Container><Services /></Container>} />
+                    <Route path='/services/:level2/:level3' element={<Container><Services /></Container>} />
                     <Route path='/services/:level2/:level3/:id' element={<Container><ServiceItem /></Container>} />
                     <Route path='/about' element={<About />} />
                     <Route path='/calc' element={<Calc />} />

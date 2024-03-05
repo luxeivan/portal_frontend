@@ -31,7 +31,7 @@ export default function ServiceItem() {
                 <>
 
                     <Title level={1}>{serviceItem.attributes.type} - {serviceItem.attributes.name}</Title>
-                    <Text>{serviceItem.attributes.shortDescription}</Text>
+                    <Paragraph>{serviceItem.attributes.shortDescription}</Paragraph>
                     <Divider />
 
                     <Collapse
@@ -40,7 +40,12 @@ export default function ServiceItem() {
                             {
                                 key: '1',
                                 label: 'Описание',
-                                children: <StrapiRichText content={serviceItem.attributes.description} />,
+                                children: <div>
+                                    <StrapiRichText content={serviceItem.attributes.description} />
+                                    <Paragraph><b>Срок подготовки документов:</b> {serviceItem.attributes.periodPreparationDocuments}</Paragraph>
+                                    <Paragraph><b>Срок оказания услуги:</b> {serviceItem.attributes.periodServiceProvision}</Paragraph>
+                                    <Paragraph><b>Стоимость:</b> {serviceItem.attributes.price}</Paragraph>
+                                </div>,
                             },
                             {
                                 key: '2',
