@@ -1,12 +1,11 @@
-import React, { useEffect,useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import useServices from '../stores/useServices';
 import { useParams } from 'react-router-dom';
 import { Button, Collapse, Divider, Drawer, Flex, Steps, Typography, theme } from 'antd';
-import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import ListDocs from '../components/ServiceItem/ListDocs';
 import StrapiRichText from '../components/StrapiRichText';
-import { UserOutlined } from '@ant-design/icons';
 import styles from './ServicesItem.module.css'
+import { motion } from "framer-motion"
 
 const { Title, Text, Paragraph } = Typography
 
@@ -21,10 +20,10 @@ export default function ServiceItem() {
     }, [level2, level3, id])
     const showDrawer = () => {
         setOpen(true);
-      };
-      const onClose = () => {
+    };
+    const onClose = () => {
         setOpen(false);
-      };
+    };
     // console.log(serviceItem)
     return (
         <div>
@@ -32,44 +31,59 @@ export default function ServiceItem() {
                 <>
 
                     <Title level={1}>{serviceItem.attributes.type} - {serviceItem.attributes.name}</Title>
-                    <Text>{serviceItem.attributes.shortDescription}</Text>
+                    <Paragraph>{serviceItem.attributes.shortDescription}</Paragraph>
                     <Divider />
-                    <Steps
-                        style={{ marginBottom: "20px" }}
-                        // size="small"
-                        // type="inline"
-                        current={100}
-                        items={serviceItem.attributes.steps.map(item => ({
-                            icon: <div className={styles.icon} style={{ border: `2px solid ${colorPrimary}` }}><Text className={styles.iconText}>{item.id}</Text></div>,
-                            title: item.name,
-                            description: item.shortDescription,
-                            subTitle: `${item.planDays} дней`,
-                        }))}
-                    />
-                    <Collapse accordion items={[
-                        {
-                            key: '1',
-                            label: 'Описание',
-                            children: <StrapiRichText content={serviceItem.attributes.description} />,
-                        },
-                        {
-                            key: '2',
-                            label: 'Информация которая потребуется при подаче заявления',
-                            children: <Paragraph>
-                                {serviceItem.attributes.fields && <ListDocs list={serviceItem.attributes.fields.filter(item => item.common.showInSpecification)} />}
-                            </Paragraph>,
-                        },
-                        {
-                            key: '3',
-                            label: 'Нормативные акты и законодательство',
-                            children: <Paragraph>Здесь будут файлы и ссылки на официальные документы</Paragraph>,
-                        },
-                    ]} />
 
-                    <Flex align="center" style={{ padding: "20px" }}>
-                        <Button type="primary" size="large" onClick={showDrawer}>Подать заявку</Button>
+                    <Collapse
+                        defaultActiveKey={['1']}
+                        items={[
+                            {
+                                key: '1',
+                                label: 'Описание',
+                                children: <div>
+                                    <StrapiRichText content={serviceItem.attributes.description} />
+                                    <Paragraph><b>Срок подготовки документов:</b> {serviceItem.attributes.periodPreparationDocuments}</Paragraph>
+                                    <Paragraph><b>Срок оказания услуги:</b> {serviceItem.attributes.periodServiceProvision}</Paragraph>
+                                    <Paragraph><b>Стоимость:</b> {serviceItem.attributes.price}</Paragraph>
+                                </div>,
+                            },
+                            {
+                                key: '2',
+                                label: 'Этапы',
+                                children: <Steps
+
+                                    // size="small"
+                                    direction="vertical"
+                                    current={100}
+                                    items={serviceItem.attributes.steps.map(item => ({
+                                        icon: <div className={styles.icon} style={{ border: `2px solid ${colorPrimary}` }}><Text className={styles.iconText}>{item.id}</Text></div>,
+                                        title: item.name,
+                                        description: item.shortDescription,
+                                        subTitle: `${item.planDays} ${item.typeDay} дн.`,
+                                    }))}
+                                />,
+                            },
+                            {
+                                key: '3',
+                                label: 'Информация которая потребуется при подаче заявления',
+                                children: <Paragraph>
+                                    {serviceItem.attributes.fields && <ListDocs list={serviceItem.attributes.fields.filter(item => item.common.showInSpecification)} />}
+                                </Paragraph>,
+                            },
+                            {
+                                key: '4',
+                                label: 'Нормативные акты и законодательство',
+                                children: <Paragraph>Здесь будут файлы и ссылки на официальные документы</Paragraph>,
+                            },
+                        ]} />
+
+                    <Flex align="center" justify="center" style={{ padding: "20px" }}>
+                        <motion.div whileHover={{ scale: 1.1 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
+
+                            <Button type="primary" size="large" onClick={showDrawer}>Подать заявку</Button>
+                        </motion.div>
                     </Flex>
-                    
+
                     <Drawer
                         title="Вы почти подали заявку"
                         placement="bottom"
@@ -78,7 +92,7 @@ export default function ServiceItem() {
                         open={open}
                         key="bottom"
                     >
-                        <p>Скоро механизм подачи заявок заработает</p>
+                        <Paragraph>Скоро механизм подачи заявок заработает</Paragraph>
                     </Drawer>
                 </>
             }
