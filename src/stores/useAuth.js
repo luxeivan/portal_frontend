@@ -4,7 +4,7 @@ import config from "../config";
 
 const useAuth = create((set) => {
   return {
-    auth: false,
+    auth: true,
     isAuthModalOpen: false,
     isCodeModalOpen: false,
     loginError: "",
