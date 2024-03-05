@@ -3,6 +3,7 @@ import { Steps, Button } from "antd";
 import useRegistration from "../../../../stores/useRegistration";
 import PhoneVerification from "../PhoneVerification/PhoneVerification";
 import EmailVerification from "../EmailVerification/EmailVerification";
+import PasswordRegForm from "../PasswordRegForm";
 
 const { Step } = Steps;
 
@@ -20,6 +21,7 @@ const AuthRegForm = () => {
       </Steps>
       {registrationStep === 0 && <PhoneVerification />}
       {registrationStep === 1 && <EmailVerification />}
+      {registrationStep === 2 && <PasswordRegForm />}
       <Button type="link">*Инструкция по регистрации</Button>
     </div>
   );

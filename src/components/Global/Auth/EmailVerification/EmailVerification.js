@@ -1,13 +1,42 @@
+import useRegistration from "../../../../stores/useRegistration";
 import { Button, Form, Typography, Input } from "antd";
+import EmailCodeVerification from "../EmailCodeVerification";
 const { Paragraph } = Typography;
 
 const EmailVerification = () => {
+  const [form] = Form.useForm();
+  const {
+    email,
+    setEmail,
+    submitEmail,
+    codeRequestedEmail,
+  } = useRegistration((state) => ({
+    email: state.email,
+    setEmail: state.setEmail,
+    submitEmail: state.submitEmail,
+    codeRequestedEmail: state.codeRequestedEmail,
+  }));
+
+  const onFinish = async (values) => {
+    const result = await submitEmail(values.email);
+    if (result && result.status === "ok") {
+    }
+  };
+
+  const onEmailChange = (event) => {
+    const value = event.target.value;
+    setEmail(value);
+  };
 
   return (
     <div>
-      <Form>
-      <Paragraph> Укажите электронную почту в формате **********@mail.ru. У вас должен быть постоянный доступ к почте.</Paragraph>
-      <Form.Item
+      <Form form={form} onFinish={onFinish}>
+        <Paragraph>
+          {" "}
+          Укажите электронную почту в формате **********@mail.ru. У вас должен
+          быть постоянный доступ к почте.
+        </Paragraph>
+        <Form.Item
           label="Почта"
           name="email"
           rules={[
@@ -21,12 +50,15 @@ const EmailVerification = () => {
             },
           ]}
         >
-          <Input />
+          <Input value={email} onChange={onEmailChange} />
         </Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
             Получить код
           </Button>
-        </Form>
+        </Form.Item>
+      </Form>
+      {codeRequestedEmail && <EmailCodeVerification />}
     </div>
   );
 };

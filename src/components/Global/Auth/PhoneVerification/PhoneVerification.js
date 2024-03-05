@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, Form, Typography } from "antd";
 import useRegistration from "../../../../stores/useRegistration";
 import InputMask from "react-input-mask";
-import { PhoneOutlined } from "@ant-design/icons";
 import PhoneCodeVerification from "../PhoneCodeVerification";
 
 const { Paragraph } = Typography;
@@ -20,9 +19,9 @@ const PhoneVerification = () => {
 
   const onFinish = async (values) => {
     const formattedPhone = values.phone.replace(/[^\d]/g, '');
-    const result = await submitPhone(formattedPhone); // Предположим, что submitPhone теперь возвращает результат
+    const result = await submitPhone(formattedPhone);
     if (result === 'ok') {
-      setCodeRequested(true); // Обновляем состояние, чтобы показать компонент ввода пин-кода
+      setCodeRequested(true);
     }
   };
 

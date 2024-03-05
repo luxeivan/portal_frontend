@@ -10,12 +10,15 @@ const useRegistration = create((set, get) => ({
   emailCode: "",
   password: "",
   phoneVerified: false,
-  timer: null,
-  codeRequested: false, 
+  codeRequested: false,
+  emailVerified: false,
+  codeRequestedEmail: false, 
 
   setRegistrationStep: (step) => set(() => ({ registrationStep: step })),
   setPhone: (phone) => set(() => ({ phone })),
+  setEmail: (email) => set(() => ({ email })),
   setPhoneVerified: (verified) => set(() => ({ phoneVerified: verified })),
+  setEmailVerified: (verified) => set(() => ({ emailVerified: verified })),
 
   submitPhone: async (phone) => {
     try {
@@ -50,6 +53,51 @@ const useRegistration = create((set, get) => ({
         set(() => ({
           registrationStep: 1,
           codeRequested: false
+        }));
+      } else {
+        console.error("Неверный пин-код");
+      }      
+    } catch (error) {
+      console.error("Ошибка при подтверждении пин-кода", error);
+    }
+  },
+
+  submitEmail: async (email) => {
+    try {
+      const response = await axios.post(
+        `${config.backServer}/api/registration/email`,
+        { email },
+        { withCredentials: true }
+      );
+      if (response.data.status === "ok") {
+        set(() => ({
+          email,
+          emailSubmitted: true,
+          codeRequestedEmail: true,
+        }));
+        // return response.data;
+      } else {
+        console.error(response.data.message);
+        // return response.data;
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке email", error);
+      // return { status: 'error', message: "Ошибка при отправке email" };
+    }
+  },
+
+  submitEmailCode: async (emailCode) => {
+    try {
+      const response = await axios.post(
+        `${config.backServer}/api/registration/emailcode`,
+        { emailCode },
+        { withCredentials: true }
+      );
+      if (response.data.status === "ok") {
+        get().setEmailVerified(true);
+        set(() => ({
+          registrationStep: 2,
+          codeRequestedEmail: false
         }));
       } else {
         console.error("Неверный пин-код");
