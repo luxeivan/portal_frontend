@@ -93,6 +93,7 @@ import AuthModal from './components/Global/Auth/AuthModal/AuthModal';
 import CodeModal from './components/Global/Auth/CodeModal';
 import ServiceItem from './pages/ServiceItem';
 import Page404 from './pages/Page404';
+import Container from './components/Container';
 
 const { Content, Sider } = Layout;
 
@@ -142,7 +143,7 @@ export default function App() {
                     <Route path='/services' element={<Services />} />
                     <Route path='/services/:level2' element={<Services />} />
                     <Route path='/services/:level2/:level3' element={<Services />} />
-                    <Route path='/services/:level2/:level3/:id' element={<ServiceItem />} />
+                    <Route path='/services/:level2/:level3/:id' element={<Container><ServiceItem /></Container>} />
                     <Route path='/about' element={<About />} />
                     <Route path='/calc' element={<Calc />} />
                     <Route path='*' element={<Page404 />} />
