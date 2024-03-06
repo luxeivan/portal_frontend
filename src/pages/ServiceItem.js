@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useServices from '../stores/useServices';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Button, Collapse, Divider, Drawer, Flex, Steps, Typography, theme } from 'antd';
 import ListDocs from '../components/ServiceItem/ListDocs';
 import StrapiRichText from '../components/StrapiRichText';
@@ -79,8 +79,9 @@ export default function ServiceItem() {
 
                     <Flex align="center" justify="center" style={{ padding: "20px" }}>
                         <motion.div whileHover={{ scale: 1.1 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
-
-                            <Button type="primary" size="large" onClick={showDrawer}>Подать заявку</Button>
+                            <Link to={`/cabinet/new-claim/${level2}/${serviceItem.id}`}>
+                                <Button type="primary" size="large" onClick={showDrawer}>Подать заявку</Button>
+                            </Link>
                         </motion.div>
                     </Flex>
 

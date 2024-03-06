@@ -16,6 +16,7 @@ import CodeModal from './components/Global/Auth/Login/CodeModal';
 import ServiceItem from './pages/ServiceItem';
 import Page404 from './pages/Page404';
 import Container from './components/Container';
+import NewClaim from './pages/Cabinet/NewClaim';
 
 const { Content, Sider } = Layout;
 
@@ -27,7 +28,7 @@ export default function App() {
     checkJWT()
   }, []);
 
-  const {colorPrimary} = theme.useToken().token;
+  const { colorPrimary } = theme.useToken().token;
 
   return (
     <ConfigProvider
@@ -40,7 +41,7 @@ export default function App() {
           fontSizeHeading4: "1.5rem",
           colorPrimary: "#0061aa",
           colorInfo: "#F37021",
-          myCustomColor:"#00ffff",
+          myCustomColor: "#00ffff",
           customfontSizeIcon: "16px"
         }
       }}
@@ -50,8 +51,8 @@ export default function App() {
           <AuthModal />
           <CodeModal />
           <AppHeader />
-            <Layout >
-              <Flex>
+          <Layout >
+            <Flex>
 
               {auth && (
                 // <Sider collapsed={true}>
@@ -59,21 +60,24 @@ export default function App() {
                 // </Sider>
               )}
               {/* <Layout > */}
-                <Content style={{ padding: '0 24px', minHeight: "calc(100vh - 120px)" }}>
-                  <Routes>
-                    <Route path='/' element={<Main />} />
-                    <Route path='/services' element={<Container><Services /></Container>} />
-                    <Route path='/services/:level2' element={<Container><Services /></Container>} />
-                    <Route path='/services/:level2/:level3' element={<Container><Services /></Container>} />
-                    <Route path='/services/:level2/:level3/:id' element={<Container><ServiceItem /></Container>} />
-                    <Route path='/about' element={<About />} />
-                    <Route path='/calc' element={<Calc />} />
-                    <Route path='*' element={<Page404 />} />
-                  </Routes>
-                </Content>
+              <Content style={{ padding: '0 24px', minHeight: "calc(100vh - 120px)" }}>
+                <Routes>
+                  <Route path='/' element={<Main />} />
+                  <Route path='/services' element={<Container><Services /></Container>} />
+                  <Route path='/services/:level2' element={<Container><Services /></Container>} />
+                  <Route path='/services/:level2/:level3' element={<Container><Services /></Container>} />
+                  <Route path='/services/:level2/:level3/:id' element={<Container><ServiceItem /></Container>} />
+                  <Route path='/about' element={<About />} />
+                  <Route path='/calc' element={<Calc />} />
+                  {/* ----------------------------------------- */}
+                  <Route path='/cabinet/new-claim/:url/:id' element={auth ? <Container><NewClaim /></Container> : <Calc />} />
+                  {/* ----------------------------------------- */}
+                  <Route path='*' element={<Page404 />} />
+                </Routes>
+              </Content>
               {/* </Layout> */}
-                </Flex>
-            </Layout>
+            </Flex>
+          </Layout>
           <AppFooter />
         </BrowserRouter>
       </Layout>

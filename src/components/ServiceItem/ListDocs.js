@@ -1,4 +1,4 @@
-import { InfoCircleTwoTone } from '@ant-design/icons'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import { List, Avatar, Space, Popover, Typography,theme } from 'antd'
 import React from 'react'
 import StrapiRichText from '../StrapiRichText'
@@ -22,7 +22,7 @@ export default function ListDocs({ list }) {
                                 {item.displayName} {' '}
                                 {item.common.description ?
                                     <Popover content={<StrapiRichText content={item.common.description} />}>
-                                        <InfoCircleTwoTone  twoToneColor={colorInfo} style={{fontSize:customfontSizeIcon,cursor:"pointer"}}/>
+                                        <QuestionCircleOutlined style={{ color: colorInfo, fontSize: customfontSizeIcon, cursor: "pointer" }} />
                                     </Popover>
                                     : false
                                 }
