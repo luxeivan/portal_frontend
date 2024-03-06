@@ -6,11 +6,7 @@ import StrapiRichText from '../StrapiRichText'
 export default function TextInput({ displayName, name, shortDescription, required, description, depends }) {
     const { colorInfo, customfontSizeIcon } = theme.useToken().token;
     const form = Form.useFormInstance();
-    const check = Form.useWatch(depends?.showIf.nameField, form);
-    let show = true
-    if (depends && depends.showIf) {
-        show = check
-    }
+    const show = Form.useWatch(depends?.showIf.nameField, form);
     if (show)
         return (
             <Form.Item
