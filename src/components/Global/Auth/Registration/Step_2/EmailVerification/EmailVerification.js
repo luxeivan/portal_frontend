@@ -1,21 +1,18 @@
-import useRegistration from "../../../../stores/useRegistration";
+import useRegistration from "../../../../../../stores/useRegistration";
 import { Button, Form, Typography, Input } from "antd";
 import EmailCodeVerification from "../EmailCodeVerification";
 const { Paragraph } = Typography;
 
 const EmailVerification = () => {
   const [form] = Form.useForm();
-  const {
-    email,
-    setEmail,
-    submitEmail,
-    codeRequestedEmail,
-  } = useRegistration((state) => ({
-    email: state.email,
-    setEmail: state.setEmail,
-    submitEmail: state.submitEmail,
-    codeRequestedEmail: state.codeRequestedEmail,
-  }));
+  const { email, setEmail, submitEmail, codeRequestedEmail } = useRegistration(
+    (state) => ({
+      email: state.email,
+      setEmail: state.setEmail,
+      submitEmail: state.submitEmail,
+      codeRequestedEmail: state.codeRequestedEmail,
+    })
+  );
 
   const onFinish = async (values) => {
     const result = await submitEmail(values.email);

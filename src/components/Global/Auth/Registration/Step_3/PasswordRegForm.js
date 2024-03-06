@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Form, Input, Typography } from "antd";
-import useRegistration from "../../../stores/useRegistration";
+import useRegistration from "../../../../../stores/useRegistration";
 
 const { Paragraph } = Typography;
 

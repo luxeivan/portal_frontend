@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Typography } from "antd";
-import useRegistration from "../../../../stores/useRegistration";
+import useRegistration from"../../../../../../stores/useRegistration"
 import InputMask from "react-input-mask";
 import PhoneCodeVerification from "../PhoneCodeVerification";
 
@@ -8,19 +8,20 @@ const { Paragraph } = Typography;
 
 const PhoneVerification = () => {
   const [form] = Form.useForm();
-  const { phone, setPhone, submitPhone, codeRequested, setCodeRequested } = useRegistration((state) => ({
-    phone: state.phone,
-    setPhone: state.setPhone,
-    submitPhone: state.submitPhone,
-    codeRequested: state.codeRequested,
-    setCodeRequested: state.setCodeRequested,
-  }));
+  const { phone, setPhone, submitPhone, codeRequested, setCodeRequested } =
+    useRegistration((state) => ({
+      phone: state.phone,
+      setPhone: state.setPhone,
+      submitPhone: state.submitPhone,
+      codeRequested: state.codeRequested,
+      setCodeRequested: state.setCodeRequested,
+    }));
   const [isPhoneValid, setIsPhoneValid] = useState(false);
 
   const onFinish = async (values) => {
-    const formattedPhone = values.phone.replace(/[^\d]/g, '');
+    const formattedPhone = values.phone.replace(/[^\d]/g, "");
     const result = await submitPhone(formattedPhone);
-    if (result === 'ok') {
+    if (result === "ok") {
       setCodeRequested(true);
     }
   };
@@ -58,7 +59,7 @@ const PhoneVerification = () => {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" disabled={!isPhoneValid}>
-            Получить код
+            Потвердить
           </Button>
         </Form.Item>
       </Form>
@@ -68,4 +69,3 @@ const PhoneVerification = () => {
 };
 
 export default PhoneVerification;
-
