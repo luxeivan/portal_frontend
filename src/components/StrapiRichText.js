@@ -3,6 +3,7 @@ import Paragraph from 'antd/es/typography/Paragraph'
 import React from 'react'
 
 export default function StrapiRichText({content}) {
+    if(content)
     return (
         
         <BlocksRenderer
@@ -11,4 +12,5 @@ export default function StrapiRichText({content}) {
             }}
             content={content} />
     )
+    return false
 }
