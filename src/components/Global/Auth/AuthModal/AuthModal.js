@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Tabs } from "antd";
-import AuthLoginForm from "../AuthLoginForm";
-import AuthRegForm from "../AuthRegForm/AuthRegForm";
+import AuthLoginForm from "../Login/AuthLoginForm";
+import AuthRegForm from "../Registration/AuthRegForm/AuthRegForm";
 import useAuth from "../../../../stores/useAuth";
 import styles from './AuthModal.module.css'
 

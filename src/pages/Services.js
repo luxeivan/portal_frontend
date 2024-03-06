@@ -16,7 +16,7 @@ export default function Services() {
             fetchServices(level2, level3)
         }
     }, [level2, level3])
-    console.log(services)
+    //console.log(services)
     return (
         <>
             <AppHelmet title={'Услуги'} desc={'Услуги компании'} />

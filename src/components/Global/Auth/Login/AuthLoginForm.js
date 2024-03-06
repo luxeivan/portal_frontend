@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Form, Input, Alert } from "antd";
-import useAuth from "../../../stores/useAuth";
+import useAuth from "../../../../stores/useAuth";
 
 export default function AuthLoginForm() {
   const { login, toggleModal, loginError } = useAuth();

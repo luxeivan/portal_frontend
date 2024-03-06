@@ -1,6 +1,6 @@
-import React from 'react';
-import { Form, Input, Button } from 'antd';
-import useRegistration from '../../../stores/useRegistration';
+import React from "react";
+import { Form, Input, Button } from "antd";
+import useRegistration from "../../../../../stores/useRegistration";
 
 const EmailCodeVerification = () => {
   const submitEmailCode = useRegistration((state) => state.submitEmailCode);
@@ -13,7 +13,7 @@ const EmailCodeVerification = () => {
     <Form onFinish={onFinish}>
       <Form.Item
         name="emailCode"
-        rules={[{ required: true, message: 'Пожалуйста, введите пин-код!' }]}
+        rules={[{ required: true, message: "Пожалуйста, введите пин-код!" }]}
       >
         <Input placeholder="Пин-код" />
       </Form.Item>
