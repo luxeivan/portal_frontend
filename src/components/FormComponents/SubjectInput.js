@@ -7,11 +7,7 @@ export default function SubjectInput({ displayName, name, shortDescription, requ
     const [value, setValue] = useState()
     const [selectedSubject, setSelectedSubject] = useState()
     const form = Form.useFormInstance();
-    const check = Form.useWatch(depends?.showIf.nameField, form);
-    let show = check
-    useEffect(() => {
-        // console.log(initialValue)
-    }, [])
+    const show = Form.useWatch(depends?.showIf.nameField, form);
     const toggleShowModal = () => {
         setShowModal(!showModal)
     }
@@ -26,30 +22,21 @@ export default function SubjectInput({ displayName, name, shortDescription, requ
         return (
             <>
                 <Form.Item
-                    //  initialValue={initialValue}
-                    // valuePropName="value"
-                    //  validateStatus='error'
                     name={name}
                     label={displayName}
                     rules={[
                         {
-                            required: true,
+                            required,
                             message: "Выберите субъект"
                         }
                     ]}
                 >
-                    <Input
-                        // name='value'               
-                        type='hidden'
-                    //value={initialValue}
-                    // style={{display:"none"}} 
-                    />
-                    <Button style={{ width: 200, height: 200 }} type="dashed" onClick={toggleShowModal}>{selectedSubject?selectedSubject:<PlusOutlined />}</Button>
+                    <Input type='hidden' />
+                    <Button style={{ width: 200, height: 200 }} type="dashed" onClick={toggleShowModal}>{selectedSubject ? selectedSubject : <PlusOutlined />}</Button>
                 </Form.Item>
 
                 <Modal title="Выбрать заявителя" open={showModal} onOk={changeSubject} onCancel={() => setShowModal(false)}>
-                    <Input value={value} onChange={(event)=>{setValue(event.target.value)}}/>
-                   
+                    <Input value={value} onChange={(event) => { setValue(event.target.value) }} />
                 </Modal>
             </>
         )
