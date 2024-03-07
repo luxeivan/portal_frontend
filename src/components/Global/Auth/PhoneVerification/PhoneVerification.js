@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Button, Form, Typography } from "antd";
+import { Button, Form, Typography, theme } from "antd";
 import useRegistration from "../../../../stores/useRegistration";
 import InputMask from "react-input-mask";
 import PhoneCodeVerification from "../PhoneCodeVerification";
-
+import styles from './PhoneVerification.module.css'
 const { Paragraph } = Typography;
 
 const PhoneVerification = () => {
+  const { colorBorderBg, colorText } = theme.useToken().token;
+
   const [form] = Form.useForm();
   const { phone, setPhone, submitPhone, codeRequested, setCodeRequested } = useRegistration((state) => ({
     phone: state.phone,
@@ -35,9 +37,9 @@ const PhoneVerification = () => {
   return (
     <div>
       <Form form={form} onFinish={onFinish}>
-        <Paragraph>
+        {/* <Paragraph>
           Укажите номер мобильного телефона в формате +7(XXX)XXX-XX-XX.
-        </Paragraph>
+        </Paragraph> */}
         <Form.Item
           name="phone"
           rules={[
@@ -52,8 +54,9 @@ const PhoneVerification = () => {
             mask="+7(999)999-99-99"
             value={phone}
             onChange={onPhoneChange}
-            placeholder="+7(___)___-__-__"
-            className="ant-input"
+            placeholder="+7(xxx)xxx-xx-xx"
+            className={styles.inputMask}
+            style={{ backgroundColor: colorBorderBg, color: colorText }}
           />
         </Form.Item>
         <Form.Item>

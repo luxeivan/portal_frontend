@@ -31,11 +31,11 @@ const EmailVerification = () => {
   return (
     <div>
       <Form form={form} onFinish={onFinish}>
-        <Paragraph>
+        {/* <Paragraph>
           {" "}
           Укажите электронную почту в формате **********@mail.ru. У вас должен
           быть постоянный доступ к почте.
-        </Paragraph>
+        </Paragraph> */}
         <Form.Item
           label="Почта"
           name="email"
