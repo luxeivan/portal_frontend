@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Flex, Menu, Typography } from "antd";
+// import { Flex, Menu, Typography } from "antd";
+import { Button, Flex, Menu, Typography, ConfigProvider } from "antd";
 import {
   UserOutlined,
   ProfileOutlined,
@@ -7,6 +8,8 @@ import {
   CheckCircleOutlined,
   FolderOpenOutlined,
   DownOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined
 } from "@ant-design/icons";
 import styles from "./CabinetMenu.module.css";
 
@@ -27,12 +30,7 @@ const menuItems = [
   {
     key: "representatives",
     icon: <UserOutlined />,
-    label: "Заявитель",
-  },
-  {
-    key: "sub_presentatives",
-    icon: <UserOutlined />,
-    label: "Представители",
+    label: "Заявители/Представители",
   },
   {
     key: "connection_objects",
@@ -52,7 +50,7 @@ const menuItems = [
   {
     key: "submenu",
     icon: <DownOutlined />,
-    label: "Заявки",
+    label: 'Заявки от:',
     children: [
       {
         key: "sub1",
@@ -69,8 +67,23 @@ const menuItems = [
     ],
   },
 ];
+const menuItemsMobile = menuItems.map(item => ({
+  key: item.key,
+  label: <Flex vertical align="center" justify="center" className={styles.menuItem}>
+    <div>
+      <Text>{item.icon}</Text>
+    </div>
+    <Text>{item.label}</Text>
+  </Flex>,
+  children: item.children,
+}))
 
 export default function CabinetMenu() {
+  // let mobile = false;
+  // if (
+  //   /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+  //   mobile = true;
+  // }
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
@@ -78,16 +91,66 @@ export default function CabinetMenu() {
   };
 
   return (
-    <div className={styles.menuContainer}>
-      <Flex vertical>
-        <Menu
-          inlineCollapsed={collapsed}
-          mode="horizontal"
-          items={menuItems}
-          onClick={toggleCollapsed}
-        />
-      </Flex>
-    </div>
+    <ConfigProvider
+      theme={{
+        components: {
+          Menu: {
+            itemHeight: 60,
+          },
+        },
+      }}
+    >
+      
+      <div className={styles.menuContainer}>
+
+        <div className={styles.desktop}>
+          <Button
+            type="secondary"
+            onClick={toggleCollapsed}
+            style={{
+              marginBottom: 16,
+            }}
+          >
+            {collapsed ? (
+              <Text>
+                <MenuUnfoldOutlined />
+                Развернуть
+              </Text>
+            ) : (
+              <Text>
+                <MenuFoldOutlined />
+                Свернуть
+              </Text>
+            )}
+          </Button>
+        </div>
+
+        {/* <div className={`${styles.menuContainer} ${collapsed ? "" : styles.active}`}      >
+
+      </div> */}
+        <div className={styles.mobile}>
+
+          <Flex vertical >
+            <Menu
+              inlineCollapsed={collapsed}
+              mode={"horizontal"}
+              items={menuItemsMobile}
+            // onClick={toggleCollapsed}
+            />
+          </Flex>
+        </div>
+        <div className={styles.desktop}>
+          <Flex vertical className={styles.menuItem}>
+            <Menu
+              inlineCollapsed={collapsed}
+              mode={"inline"}
+              items={menuItems}
+            // onClick={toggleCollapsed}
+            />
+          </Flex>
+        </div>
+      </div>
+    </ConfigProvider>
   );
 }
 
@@ -153,29 +216,29 @@ export default function CabinetMenu() {
 //   }
 
 //   return (
-//     <div className={styles.menuContainer}>
-//       <Button
-//         type="secondary"
-//         onClick={toggleCollapsed}
-//         style={{
-//           marginBottom: 16,
-//         }}
-//       >
-//         {collapsed ? (
-//           <Text>
-//             <MenuUnfoldOutlined />
-//             Развернуть
-//           </Text>
-//         ) : (
-//           <Text>
-//             <MenuFoldOutlined />
-//             Свернуть
-//           </Text>
-//         )}
-//       </Button>
-//       <div
-//         className={`${styles.menuContainer} ${collapsed ? "" : styles.active}`}
-//       >
+// <div className={styles.menuContainer}>
+//   <Button
+//     type="secondary"
+//     onClick={toggleCollapsed}
+//     style={{
+//       marginBottom: 16,
+//     }}
+//   >
+//     {collapsed ? (
+//       <Text>
+//         <MenuUnfoldOutlined />
+//         Развернуть
+//       </Text>
+//     ) : (
+//       <Text>
+//         <MenuFoldOutlined />
+//         Свернуть
+//       </Text>
+//     )}
+//   </Button>
+//   <div
+//     className={`${styles.menuContainer} ${collapsed ? "" : styles.active}`}
+//   >
 //         <Menu
 //           inlineCollapsed={collapsed}
 //           mode="horizontal"
