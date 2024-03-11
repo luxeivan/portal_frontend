@@ -9,47 +9,48 @@ import {
   FolderOpenOutlined,
   DownOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  MenuOutlined
 } from "@ant-design/icons";
 import styles from "./CabinetMenu.module.css";
 
 const { Text } = Typography;
-
+const styleForIcon = { fontSize: "2rem" }
 // Иконки и пункты меню для нижней навигации
 const menuItems = [
   {
     key: "apply",
-    icon: <FileTextOutlined />,
+    icon: <FileTextOutlined style={styleForIcon} />,
     label: "Подать заявку",
   },
   {
     key: "profile",
-    icon: <ProfileOutlined />,
+    icon: <ProfileOutlined style={styleForIcon} />,
     label: "Профиль",
   },
   {
     key: "representatives",
-    icon: <UserOutlined />,
-    label: "Заявители/Представители",
+    icon: <UserOutlined style={styleForIcon} />,
+    label: "Субъекты",
   },
   {
     key: "connection_objects",
-    icon: <UserOutlined />,
-    label: "Объекты Подключения",
+    icon: <UserOutlined style={styleForIcon} />,
+    label: "Объекты",
   },
   {
     key: "drafts",
-    icon: <FolderOpenOutlined />,
+    icon: <FolderOpenOutlined style={styleForIcon} />,
     label: "Черновики",
   },
   {
     key: "checking",
-    icon: <CheckCircleOutlined />,
-    label: "Заявки на проверке",
+    icon: <CheckCircleOutlined style={styleForIcon} />,
+    label: "На проверке",
   },
   {
     key: "submenu",
-    icon: <DownOutlined />,
+    icon: <DownOutlined style={styleForIcon} />,
     label: 'Заявки от:',
     children: [
       {
@@ -100,7 +101,7 @@ export default function CabinetMenu() {
         },
       }}
     >
-      
+
       <div className={styles.menuContainer}>
 
         <div className={styles.desktop}>
@@ -132,9 +133,11 @@ export default function CabinetMenu() {
 
           <Flex vertical >
             <Menu
+              selectable={false}
               inlineCollapsed={collapsed}
               mode={"horizontal"}
               items={menuItemsMobile}
+              overflowedIndicator={<MenuOutlined />}
             // onClick={toggleCollapsed}
             />
           </Flex>
@@ -142,6 +145,7 @@ export default function CabinetMenu() {
         <div className={styles.desktop}>
           <Flex vertical className={styles.menuItem}>
             <Menu
+              selectable={false}
               inlineCollapsed={collapsed}
               mode={"inline"}
               items={menuItems}
