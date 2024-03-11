@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Button, Form, Typography, Space } from "antd";
+import { Button, Form, Typography, Space,theme } from "antd";
 import useRegistration from "../../../../../../stores/useRegistration";
 import InputMask from "react-input-mask";
 import PhoneCodeVerification from "../PhoneCodeVerification";
-import './PhoneVerification.module.css';
+
+import styles from './PhoneVerification.module.css'
 
 const { Paragraph } = Typography;
 
 const PhoneVerification = React.memo(({ submitPhoneCode }) => {
+  const { colorBorderBg, colorText } = theme.useToken().token;
   const [form] = Form.useForm();
   const { phone, setPhone, submitPhone, codeRequested, setCodeRequested } = useRegistration((state) => ({
     phone: state.phone,
@@ -57,9 +59,9 @@ const PhoneVerification = React.memo(({ submitPhoneCode }) => {
   return (
     <div>
       <Form form={form} onFinish={onFinish}>
-        <Paragraph>
+        {/* <Paragraph>
           Укажите номер мобильного телефона в формате +7(XXX)XXX-XX-XX.
-        </Paragraph>
+        </Paragraph> */}
         <Form.Item
           name="phone"
           rules={[{ required: true, message: "Пожалуйста, введите ваш номер телефона!" }]}
@@ -68,8 +70,9 @@ const PhoneVerification = React.memo(({ submitPhoneCode }) => {
             mask="+7(999)999-99-99"
             value={phone}
             onChange={onPhoneChange}
-            placeholder="+7(___)___-__-__"
-            className="ant-input"
+            placeholder="+7(xxx)xxx-xx-xx"
+            className={styles.inputMask}
+            style={{ backgroundColor: colorBorderBg, color: colorText }}
           />
         </Form.Item>
         <Form.Item>
@@ -77,7 +80,7 @@ const PhoneVerification = React.memo(({ submitPhoneCode }) => {
             <Button type="primary" htmlType="submit" disabled={!isPhoneValid || timer > 0}>
               {buttonText}
             </Button>
-            {timer > 0 && <span className="timer">{timer} сек.</span>}
+            {timer > 0 && <span className={styles.timer}>{timer} сек.</span>}
           </Space>
         </Form.Item>
       </Form>

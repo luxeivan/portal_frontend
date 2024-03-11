@@ -1,7 +1,8 @@
 import * as React from "react";
+import { TypeAnimation } from 'react-type-animation';
 import { motion } from "framer-motion";
 import styles from './Anime.module.css'
-import { Typography } from "antd";
+import { Typography, theme } from "antd";
 const arr = [
   "M24.01,0 27.42,9.4 26.27,9.4 24.01,4.14 21.75,9.4 20.6,9.4 z",
   "M12.72,3.76 19.15,10.04 18.22,10.49 14.34,7.11 14.57,12.23 13.64,12.68 z",
@@ -33,39 +34,68 @@ const icon = {
   },
 };
 
-export const Anime = () => (
-  <>
-    <div className={styles.container}>
-      <motion.svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 48.2 52.62"
-        className={styles.item}
-        height={300}
-        width={500}
+export const Anime = () => {
+  const { colorPrimary } = theme.useToken().token;
+
+  return (
+    <>
+      <div className={styles.container}>
+        <motion.svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 48.2 52.62"
+          className={styles.item}
+          height={300}
+          width={500}
+        >
+          {arr.map((item, index) => (
+            <motion.path
+              key={index}
+              d={item}
+              variants={icon}
+              initial="hidden"
+              animate="visible"
+              transition={{
+                default: { duration: 3, ease: "easeInOut" },
+                fill: { duration: 3, ease: [1, 0, 0.8, 1] },
+              }}
+            />
+          ))}
+        </motion.svg>
+      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ease: "easeOut", duration: 1, delay: 2.5 }}
       >
-        {arr.map((item, index) => (
-          <motion.path
-            key={index}
-            d={item}
-            variants={icon}
-            initial="hidden"
-            animate="visible"
-            transition={{
-              default: { duration: 3, ease: "easeInOut" },
-              fill: { duration: 3, ease: [1, 0, 0.8, 1] },
-            }}
+        <Typography.Title style={{ textTransform: "uppercase", color: colorPrimary, textAlign: "center" }}>
+          Портал цифровых услуг
+        </Typography.Title>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ease: "easeOut", duration: 1, delay: 3.5 }}
+      >
+        <Typography.Title style={{ textTransform: "uppercase", color: colorPrimary, textAlign: "center",marginTop:"-20px" }}>
+
+          <TypeAnimation
+            sequence={[
+              // Same substring at the start will only be typed once, initially
+              'Технологическое присоединение',
+              1000,
+              'Коммерческие услуги',
+              1000,
+              'Учёт электрической энергии',
+              1000,
+              'Сервисные услуги',
+              1000,
+            ]}
+            speed={50}
+            style={{ textTransform: "uppercase", color: colorPrimary, fontSize: "1.5rem" }}
+            repeat={Infinity}
           />
-        ))}
-      </motion.svg>
-    </div>
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{opacity: 1 , y: 0 }}
-      transition={{ ease: "easeOut", duration: 1, delay: 2.5 }}
-    >
-      <Typography.Title>
-        АО Мособлэнерго
-      </Typography.Title>
-    </motion.div>
-  </>
-);
+        </Typography.Title>
+      </motion.div>
+    </>
+  )
+};
