@@ -12,7 +12,7 @@ import useGlobal from './stores/useGlobal';
 import useAuth from './stores/useAuth';
 import CabinetMenu from './components/Cabinet/CabinetMenu';
 import AuthModal from './components/Global/Auth/AuthModal/AuthModal';
-import CodeModal from './components/Global/Auth/CodeModal';
+import CodeModal from './components/Global/Auth/Login/CodeModal';
 import ServiceItem from './pages/ServiceItem';
 import Page404 from './pages/Page404';
 import Container from './components/Container';

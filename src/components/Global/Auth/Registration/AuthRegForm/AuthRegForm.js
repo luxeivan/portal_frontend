@@ -1,9 +1,9 @@
 import React from "react";
 import { Steps, Button } from "antd";
-import useRegistration from "../../../../stores/useRegistration";
-import PhoneVerification from "../PhoneVerification/PhoneVerification";
-import EmailVerification from "../EmailVerification/EmailVerification";
-import PasswordRegForm from "../PasswordRegForm";
+import useRegistration from "../../../../../stores/useRegistration";
+import PhoneVerification from "../Step_1/PhoneVerification/PhoneVerification";
+import EmailVerification from "../Step_2/EmailVerification/EmailVerification";
+import PasswordRegForm from "../Step_3/PasswordRegForm";
 import styles from "./AuthRegForm.module.css"
 import { LockTwoTone, MailTwoTone, PhoneTwoTone } from "@ant-design/icons";
 
@@ -16,7 +16,7 @@ const AuthRegForm = () => {
 
   return (
     <div>
-      <Steps current={registrationStep} className={styles.steps}>
+       <Steps current={registrationStep} className={styles.steps}>
         <Step title="Номер мобильного телефона" icon={<PhoneTwoTone />} status={registrationStep === 0 ? "process" : "finish"} />
         <Step title="Электронная почта" icon={<MailTwoTone />} status={registrationStep === 1 ? "process" : registrationStep <= 1 ? "wait" : "finish"} />
         <Step title="Пароль" icon={<LockTwoTone />} status={registrationStep === 2 ? "process" : "wait"} />
