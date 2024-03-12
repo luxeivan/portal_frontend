@@ -77,10 +77,6 @@ export default function AuthLoginForm() {
         </Form.Item>
 
         <Form.Item
-          // wrapperCol={{
-          //   offset: 8,
-          //   span: 16,
-          // }}
         >
           <Space>
             <Button
