@@ -10,6 +10,8 @@ const useAuth = create((set) => {
     loginError: "",
     email: "",
     password: "",
+    isCodeRequested: false,
+    authTimer: 0,
 
     toggleAuth: (value) => {
       set((state) => ({
@@ -24,6 +26,19 @@ const useAuth = create((set) => {
       }));
     },
 
+    startAuthTimer: () => {
+      set({ authTimer: 10 });
+      const timerId = setInterval(() => {
+        set((state) => {
+          if (state.authTimer <= 0) {
+            clearInterval(timerId);
+            return { authTimer: 0 };
+          }
+          return { authTimer: state.authTimer - 1 };
+        });
+      }, 1000);
+    },
+
     login: async (email, password) => {
       try {
         const response = await axios.post(
@@ -35,7 +50,8 @@ const useAuth = create((set) => {
           set(() => ({
             email,
             password,
-            isCodeModalOpen: true,
+            // isCodeModalOpen: true,
+            isCodeRequested: true,
             loginError: "",
           }));
         }
@@ -99,6 +115,9 @@ const useAuth = create((set) => {
         }));
       }
     },
+    resetCodeRequest: () => {
+      set({ isCodeRequested: false });
+    }
   };
 });
 

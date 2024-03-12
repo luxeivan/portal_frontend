@@ -1,12 +1,22 @@
-import React from "react";
-import { Button, Form, Input, Alert } from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, Alert, Space } from "antd";
 import useAuth from "../../../../stores/useAuth";
+import CodeForm from "./CodeForm";
+import styles from "./AuthLoginForm.module.css";
 
 export default function AuthLoginForm() {
-  const { login, toggleModal, loginError } = useAuth();
+  const {
+    login,
+    toggleModal,
+    loginError,
+    isCodeRequested,
+    authTimer,
+    startAuthTimer,
+  } = useAuth();
 
   const onFinish = async (values) => {
     login(values.email, values.password);
+    startAuthTimer();
   };
 
   const onFinishFailed = ({ values, errorFields }) => {
@@ -21,10 +31,11 @@ export default function AuthLoginForm() {
           type="error"
           showIcon
           closable
-          onClose={() => toggleModal('isAuthModalOpen', false)}
+          onClose={() => toggleModal("isAuthModalOpen", false)}
         />
       )}
       <Form
+        className={styles.formContainer}
         name="basic"
         initialValues={{ remember: true }}
         onFinish={onFinish}
@@ -66,16 +77,24 @@ export default function AuthLoginForm() {
         </Form.Item>
 
         <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
+          // wrapperCol={{
+          //   offset: 8,
+          //   span: 16,
+          // }}
         >
-          <Button type="primary" htmlType="submit">
-            Продолжить
-          </Button>
+          <Space>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={styles.submitButton}
+              disabled={authTimer > 0}
+            >
+              {authTimer > 0 ? `Отправить код повторно через ${authTimer} секунд(ы)` : 'Отправить код'}
+            </Button>
+          </Space>
         </Form.Item>
       </Form>
+      {isCodeRequested && <CodeForm />}
     </>
   );
 }
