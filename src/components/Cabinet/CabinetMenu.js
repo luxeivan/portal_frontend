@@ -4,7 +4,9 @@ import { Button, Flex, Menu, Typography, ConfigProvider } from "antd";
 import {
   UserOutlined,
   ProfileOutlined,
-  FileTextOutlined,
+  EnvironmentOutlined,
+  PlusSquareOutlined,
+  RetweetOutlined,
   CheckCircleOutlined,
   FolderOpenOutlined,
   DownOutlined,
@@ -13,56 +15,62 @@ import {
   MenuOutlined
 } from "@ant-design/icons";
 import styles from "./CabinetMenu.module.css";
+import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
-const styleForIcon = { fontSize: "2rem" }
 // Иконки и пункты меню для нижней навигации
+// const styleForIcon = { fontSize: "2rem" }
 const menuItems = [
   {
-    key: "apply",
-    icon: <FileTextOutlined style={styleForIcon} />,
-    label: "Подать заявку",
+    key: "/services",
+    icon: <PlusSquareOutlined className={styles.icon} />,
+    label: "Новая",
   },
   {
-    key: "profile",
-    icon: <ProfileOutlined style={styleForIcon} />,
+    key: "/cabinet/profile",
+    icon: <ProfileOutlined className={styles.icon} />,
     label: "Профиль",
   },
   {
-    key: "representatives",
-    icon: <UserOutlined style={styleForIcon} />,
+    key: "/cabinet/subjects",
+    icon: <UserOutlined className={styles.icon} />,
     label: "Субъекты",
   },
   {
-    key: "connection_objects",
-    icon: <UserOutlined style={styleForIcon} />,
+    key: "/cabinet/relations",
+    icon: <RetweetOutlined  className={styles.icon} />,
+    label: "Доверенности",
+  },
+  {
+    key: "/cabinet/objects",
+    icon: <EnvironmentOutlined  className={styles.icon} />,
     label: "Объекты",
   },
   {
-    key: "drafts",
-    icon: <FolderOpenOutlined style={styleForIcon} />,
+    key: "/cabinet/drafts",
+    icon: <FolderOpenOutlined className={styles.icon} />,
     label: "Черновики",
   },
   {
-    key: "checking",
-    icon: <CheckCircleOutlined style={styleForIcon} />,
+    key: "/cabinet/checking",
+    icon: <CheckCircleOutlined className={styles.icon} />,
     label: "На проверке",
   },
   {
     key: "submenu",
-    icon: <DownOutlined style={styleForIcon} />,
+    icon: <DownOutlined className={styles.icon} />,
     label: 'Заявки от:',
     children: [
       {
-        key: "sub1",
+        key: "/cabinet/claimer/1",
         label: "Иванов Иван Иванович",
       },
       {
-        key: "sub2",
+        key: "/cabinet/claimer/2",
         label: "ИП Гослинг Райан",
       },
       {
-        key: "sub3",
+        key: "/cabinet/claimer/3",
         label: "ООО Драйв",
       },
     ],
@@ -85,63 +93,90 @@ export default function CabinetMenu() {
   //   /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
   //   mobile = true;
   // }
+  const navigator = useNavigate()
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
+  const handlerMenu = ({ item, key, keyPath, domEvent }) => {
+    // console.log(key)
+    navigator(key)
+  }
 
   return (
-    <ConfigProvider
-      theme={{
-        components: {
-          Menu: {
-            itemHeight: 60,
+
+
+    <div className={styles.menuContainer}>
+
+      <div className={styles.desktop}>
+        <Button
+          type="secondary"
+          onClick={toggleCollapsed}
+          style={{
+            marginBottom: 16,
+          }}
+        >
+          {collapsed ? (
+            <Text>
+              <MenuUnfoldOutlined />
+              Развернуть
+            </Text>
+          ) : (
+            <Text>
+              <MenuFoldOutlined />
+              Свернуть
+            </Text>
+          )}
+        </Button>
+      </div>
+      {/* ----------------------------------------------------------------------- */}
+      <ConfigProvider
+        theme={{
+          components: {
+            Menu: {
+              itemHeight: 60,
+              iconSize: 30,
+              itemPaddingInline: 10,
+              dropdownWidth: 100
+            },
           },
-        },
-      }}
-    >
-
-      <div className={styles.menuContainer}>
-
-        <div className={styles.desktop}>
-          <Button
-            type="secondary"
-            onClick={toggleCollapsed}
-            style={{
-              marginBottom: 16,
-            }}
-          >
-            {collapsed ? (
-              <Text>
-                <MenuUnfoldOutlined />
-                Развернуть
-              </Text>
-            ) : (
-              <Text>
-                <MenuFoldOutlined />
-                Свернуть
-              </Text>
-            )}
-          </Button>
-        </div>
-
-        {/* <div className={`${styles.menuContainer} ${collapsed ? "" : styles.active}`}      >
-
-      </div> */}
+        }}
+      >
         <div className={styles.mobile}>
-
           <Flex vertical >
             <Menu
+              style={{ justifyContent: "space-between" }}
               selectable={false}
               inlineCollapsed={collapsed}
               mode={"horizontal"}
               items={menuItemsMobile}
-              overflowedIndicator={<MenuOutlined />}
-            // onClick={toggleCollapsed}
+              overflowedIndicator={<Flex vertical align="center" justify="center" className={styles.menuItem}>
+                <div>
+                  <Text><MenuOutlined /></Text>
+                </div>
+                <Text>Еще</Text>
+              </Flex>}
+              onClick={handlerMenu}
             />
           </Flex>
         </div>
+      </ConfigProvider>
+      {/* ----------------------------------------------------------------------- */}
+      <ConfigProvider
+        theme={{
+          components: {
+            Menu: {
+              itemHeight: 50,
+              iconSize: 24,
+              collapsedWidth: 60,
+              collapsedIconSize: 24,
+              itemPaddingInline: 10,
+            },
+          },
+        }}
+      >
+
         <div className={styles.desktop}>
           <Flex vertical className={styles.menuItem}>
             <Menu
@@ -149,12 +184,12 @@ export default function CabinetMenu() {
               inlineCollapsed={collapsed}
               mode={"inline"}
               items={menuItems}
-            // onClick={toggleCollapsed}
-            />
+              onClick={handlerMenu}
+              />
           </Flex>
         </div>
-      </div>
-    </ConfigProvider>
+      </ConfigProvider>
+    </div>
   );
 }
 

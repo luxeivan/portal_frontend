@@ -72,9 +72,9 @@ export const Anime = () => {
         </Typography.Title>
       </motion.div>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ ease: "easeOut", duration: 1, delay: 3.5 }}
+        transition={{ ease: "easeOut", duration: 3, delay: 3.5 }}
       >
         <Typography.Title style={{ textTransform: "uppercase", color: colorPrimary, textAlign: "center",marginTop:"-20px" }}>
 
