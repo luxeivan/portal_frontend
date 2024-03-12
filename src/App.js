@@ -17,6 +17,13 @@ import ServiceItem from './pages/ServiceItem';
 import Page404 from './pages/Page404';
 import Container from './components/Container';
 import NewClaim from './pages/Cabinet/NewClaim';
+import Profile from './components/Cabinet/Profile/Profile';
+import Subjects from './components/Cabinet/Subjects/Subjects';
+import Objects from './components/Cabinet/Objects/Objects';
+import Relations from './components/Cabinet/Relations/Relations';
+import Drafts from './components/Cabinet/Drafts/Drafts';
+import Checking from './components/Cabinet/Checking/Checking';
+import Claims from './components/Cabinet/Claims/Claims';
 
 const { Content, Sider } = Layout;
 
@@ -71,6 +78,13 @@ export default function App() {
                   <Route path='/calc' element={<Calc />} />
                   {/* ----------------------------------------- */}
                   <Route path='/cabinet/new-claim/:url/:id' element={auth ? <Container><NewClaim /></Container> : <Calc />} />
+                  <Route path='/cabinet/profile' element={<Profile />} />
+                  <Route path='/cabinet/subjects' element={<Subjects />} />
+                  <Route path='/cabinet/relations' element={<Relations />} />
+                  <Route path='/cabinet/objects' element={<Objects />} />
+                  <Route path='/cabinet/drafts' element={<Drafts />} />
+                  <Route path='/cabinet/checking' element={<Checking />} />
+                  <Route path='/cabinet/claimer/:id' element={<Claims />} />
                   {/* ----------------------------------------- */}
                   <Route path='*' element={<Page404 />} />
                 </Routes>

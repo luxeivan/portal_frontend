@@ -1,8 +1,12 @@
 .menuItem {
-  line-height: 25px;
+  line-height: 15px;
   /* gap: 10px; */
   padding: 5px 0;
 }
+.icon {
+  font-size: 1.5rem;
+}
+
 
 .mobile {
   display: none;
@@ -13,6 +17,10 @@
 }
 
 @media only screen and (max-width: 575px) {
+  .icon {
+    font-size: 2rem;
+  }
+
   .mobile {
     display: block;
   }
