@@ -27,26 +27,6 @@ const menuItems = [
     label: "Новая",
   },
   {
-    key: "/cabinet/profile",
-    icon: <ProfileOutlined className={styles.icon} />,
-    label: "Профиль",
-  },
-  {
-    key: "/cabinet/subjects",
-    icon: <UserOutlined className={styles.icon} />,
-    label: "Субъекты",
-  },
-  {
-    key: "/cabinet/relations",
-    icon: <RetweetOutlined  className={styles.icon} />,
-    label: "Доверенности",
-  },
-  {
-    key: "/cabinet/objects",
-    icon: <EnvironmentOutlined  className={styles.icon} />,
-    label: "Объекты",
-  },
-  {
     key: "/cabinet/drafts",
     icon: <FolderOpenOutlined className={styles.icon} />,
     label: "Черновики",
@@ -59,7 +39,7 @@ const menuItems = [
   {
     key: "submenu",
     icon: <DownOutlined className={styles.icon} />,
-    label: 'Заявки от:',
+    label: 'Заявки',
     children: [
       {
         key: "/cabinet/claimer/1",
@@ -75,17 +55,48 @@ const menuItems = [
       },
     ],
   },
+  {
+    type: 'divider',
+  },
+  {
+    key: "/cabinet/subjects",
+    icon: <UserOutlined className={styles.icon} />,
+    label: "Субъекты",
+  },
+  {
+    key: "/cabinet/relations",
+    icon: <RetweetOutlined className={styles.icon} />,
+    label: "Доверенности",
+  },
+  {
+    key: "/cabinet/objects",
+    icon: <EnvironmentOutlined className={styles.icon} />,
+    label: "Объекты",
+  },
+  {
+    type: 'divider',
+  },
+  {
+    key: "/cabinet/profile",
+    icon: <ProfileOutlined className={styles.icon} />,
+    label: "Профиль",
+  },
 ];
-const menuItemsMobile = menuItems.map(item => ({
-  key: item.key,
-  label: <Flex vertical align="center" justify="center" className={styles.menuItem}>
-    <div>
-      <Text>{item.icon}</Text>
-    </div>
-    <Text>{item.label}</Text>
-  </Flex>,
-  children: item.children,
-}))
+const menuItemsMobile = menuItems.map(item => {
+  if (!item.type) {
+
+    return ({
+      key: item.key,
+      label: <Flex vertical align="center" justify="center" className={styles.menuItem}>
+        <div>
+          <Text>{item.icon}</Text>
+        </div>
+        <Text>{item.label}</Text>
+      </Flex>,
+      children: item.children,
+    })
+  }
+})
 
 export default function CabinetMenu() {
   // let mobile = false;
@@ -185,7 +196,7 @@ export default function CabinetMenu() {
               mode={"inline"}
               items={menuItems}
               onClick={handlerMenu}
-              />
+            />
           </Flex>
         </div>
       </ConfigProvider>
