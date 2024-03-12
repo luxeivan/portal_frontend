@@ -9,7 +9,7 @@ export default function Calc() {
         <>
             <AppHelmet title={'Калькулятор'} desc={'Калькулятор мощности'} />
             <div>
-                <Title level={1}>Калькулятор</Title>
+                <Title level={1}>Калькулятор мощности</Title>
                 
                 <Image
                      width={300}
