@@ -1,0 +1,16 @@
+.subjectCard {
+    /* transition: border 0.5s ease, box-shadow 0.5s ease;
+    transition: color 0.5s ease, box-shadow 0.5s ease; */
+    cursor: pointer;
+    transition-property: color, border, box-shadow;
+    transition-duration: .2s;
+    transition-timing-function: linear;
+    /* border: 1px dashed gray; */
+}
+
+.subjectCard:hover {
+    /* color: #1d7ab8;
+    border-color: #1d7ab8; */
+    /* transform: translateY(-10px);
+    box-shadow: 0px 20px 30px -5px rgba(0,0,0,0.2);  */
+}

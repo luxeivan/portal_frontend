@@ -17,13 +17,13 @@ import ServiceItem from './pages/ServiceItem';
 import Page404 from './pages/Page404';
 import Container from './components/Container';
 import NewClaim from './pages/Cabinet/NewClaim';
-import Profile from './components/Cabinet/Profile/Profile';
-import Subjects from './components/Cabinet/Subjects/Subjects';
-import Objects from './components/Cabinet/Objects/Objects';
-import Relations from './components/Cabinet/Relations/Relations';
-import Drafts from './components/Cabinet/Drafts/Drafts';
-import Checking from './components/Cabinet/Checking/Checking';
-import Claims from './components/Cabinet/Claims/Claims';
+import Profile from './pages/Cabinet/Profile/Profile';
+import Subjects from './pages/Cabinet/Subjects/Subjects';
+import Objects from './pages/Cabinet/Objects/Objects';
+import Relations from './pages/Cabinet/Relations/Relations';
+import Drafts from './pages/Cabinet/Drafts/Drafts';
+import Checking from './pages/Cabinet/Checking/Checking';
+import Claims from './pages/Cabinet/Claims/Claims';
 
 const { Content } = Layout;
 
