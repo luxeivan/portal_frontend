@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { Flex, Menu, Typography } from "antd";
 import { Button, Flex, Menu, Typography, ConfigProvider } from "antd";
 import {
   UserOutlined,
@@ -18,8 +17,8 @@ import styles from "./CabinetMenu.module.css";
 import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
-// Иконки и пункты меню для нижней навигации
-// const styleForIcon = { fontSize: "2rem" }
+
+
 const menuItems = [
   {
     key: "/services",
@@ -99,11 +98,6 @@ const menuItemsMobile = menuItems.map(item => {
 })
 
 export default function CabinetMenu() {
-  // let mobile = false;
-  // if (
-  //   /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-  //   mobile = true;
-  // }
   const navigator = useNavigate()
   const [collapsed, setCollapsed] = useState(false);
 
@@ -111,7 +105,6 @@ export default function CabinetMenu() {
     setCollapsed(!collapsed);
   };
   const handlerMenu = ({ item, key, keyPath, domEvent }) => {
-    // console.log(key)
     navigator(key)
   }
 
@@ -203,156 +196,3 @@ export default function CabinetMenu() {
     </div>
   );
 }
-
-
-//Второй вариант
-// import React, { useState } from "react";
-// import { Button, Flex, Menu, Typography } from "antd";
-// import {
-//   LaptopOutlined,
-//   NotificationOutlined,
-//   UserOutlined,
-//   MenuFoldOutlined,
-//   MenuUnfoldOutlined,
-// } from "@ant-design/icons";
-// import styles from "./CabinetMenu.module.css";
-
-// const { Text } = Typography;
-
-// const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-//   (icon, index) => {
-//     // const key = String(index + 1);
-//     return {
-//       // key: `sub${key}`,
-//       // icon: React.createElement(icon),
-//       label: (
-//         <Flex
-//           vertical
-//           align="center"
-//           justify="center"
-//           style={{ lineHeight: "25px" }}
-//         >
-//           <div>
-//             <UserOutlined />
-//           </div>
-//           <Text>Подать заявку</Text>
-//         </Flex>
-
-//       ),
-//       children: new Array(4).fill(null).map((_, j) => {
-//         const subKey = index * 4 + j + 1;
-//         return {
-//           key: subKey,
-//           label: `Опция ${subKey}`,
-//         };
-//       }),
-//     };
-//   }
-// );
-
-// export default function CabinetMenu() {
-//   const [collapsed, setCollapsed] = useState(false);
-//   const toggleCollapsed = () => {
-//     setCollapsed(!collapsed);
-//   };
-
-//   let mobile = false;
-//   if (
-//     /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(
-//       navigator.userAgent
-//     )
-//   ) {
-//     mobile = true;
-//   }
-
-//   return (
-// <div className={styles.menuContainer}>
-//   <Button
-//     type="secondary"
-//     onClick={toggleCollapsed}
-//     style={{
-//       marginBottom: 16,
-//     }}
-//   >
-//     {collapsed ? (
-//       <Text>
-//         <MenuUnfoldOutlined />
-//         Развернуть
-//       </Text>
-//     ) : (
-//       <Text>
-//         <MenuFoldOutlined />
-//         Свернуть
-//       </Text>
-//     )}
-//   </Button>
-//   <div
-//     className={`${styles.menuContainer} ${collapsed ? "" : styles.active}`}
-//   >
-//         <Menu
-//           inlineCollapsed={collapsed}
-//           mode="horizontal"
-//           defaultSelectedKeys={["1"]}
-//           defaultOpenKeys={["sub1"]}
-//           style={{
-//             height: "100%",
-//           }}
-//           items={items2}
-//         />
-//       </div>
-//     </div>
-//   );
-// }
-
-//Старый вариант до моих правок
-// import React, { useState } from 'react'
-// import { Button, Menu, Typography } from 'antd';
-// import { LaptopOutlined, NotificationOutlined, UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined, } from '@ant-design/icons';
-
-// const {Text} = Typography
-
-// const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
-//   const key = String(index + 1);
-//   return {
-//     key: `sub${key}`,
-//     icon: React.createElement(icon),
-//     label: `Меню ${key}`,
-//     children: new Array(4).fill(null).map((_, j) => {
-//       const subKey = index * 4 + j + 1;
-//       return {
-//         key: subKey,
-//         label: `Опция ${subKey}`,
-//       };
-//     }),
-//   };
-// });
-// export default function CabinetMenu() {
-//   const [collapsed, setCollapsed] = useState(false);
-//   const toggleCollapsed = () => {
-//     setCollapsed(!collapsed);
-//   };
-//   return (
-//     <div>
-//       <Button
-//         type="secondary"
-//         onClick={toggleCollapsed}
-//         style={{
-//           marginBottom: 16,
-//         }}
-//       >
-//         {collapsed ? <Text><MenuUnfoldOutlined />Развернуть</Text> : <Text><MenuFoldOutlined />Свернуть</Text>}
-//       </Button>
-
-//       <Menu
-//         inlineCollapsed={collapsed}
-//         mode="inline"
-//         defaultSelectedKeys={['1']}
-//         defaultOpenKeys={['sub1']}
-//         style={{
-//           height: '100%',
-//         }}
-//         items={items2}
-//       />
-//     </div>
-//   )
-// }
