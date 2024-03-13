@@ -25,10 +25,10 @@ import Drafts from './components/Cabinet/Drafts/Drafts';
 import Checking from './components/Cabinet/Checking/Checking';
 import Claims from './components/Cabinet/Claims/Claims';
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 export default function App() {
-  const { darkMode, toggleDarkMode } = useGlobal();
+  const { darkMode } = useGlobal();
   const { auth, checkJWT } = useAuth();
 
   useEffect(() => {
