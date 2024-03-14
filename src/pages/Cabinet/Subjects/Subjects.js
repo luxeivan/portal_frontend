@@ -17,6 +17,10 @@ import useRegistration from "../../../stores/useRegistration";
 import styles from "./Subjects.module.css";
 import { PlusOutlined } from "@ant-design/icons";
 import Paragraph from "antd/es/skeleton/Paragraph";
+import {SettingOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons'
+import Item from "antd/es/list/Item";
+import SceletonCard from "../../../components/SceletonCard";
+
 
 const { Title, Text } = Typography;
 const { Meta } = Card;
@@ -26,6 +30,7 @@ const stylesForCard = {
   body: {
     height: "100%",
     width: 250,
+    minHeight: 250
   },
   actions: { marginTop: "-20px" },
   header: { backgroundColor: "red" },
@@ -60,7 +65,11 @@ export default function Subjects() {
   }, [fetchSubjects]);
 
   if (isLoadingSubjects) {
-    return <Skeleton active />;
+    return <>
+      <Title level={1}>Субъекты</Title>
+      <SceletonCard />
+      {/* <Skeleton active />; */}
+    </>
   }
 
   if (error) {
@@ -120,6 +129,7 @@ export default function Subjects() {
   return (
     <div>
       <Title level={1}>Субъекты</Title>
+
       <Flex wrap="wrap" gap="large">
         {subjects.map((subject) => (
           <Card
@@ -127,11 +137,10 @@ export default function Subjects() {
             key={subject.id}
             styles={stylesForCard}
             className={styles.subjectCard}
-            onTabChange={handlerShowModalView}
             onClick={() => {
-              console.log(subject.id);
-              fetchSubjectItem(subject.id);
-              setShowModalView(true);
+              // console.log(subject.id)
+              fetchSubjectItem(subject.id)
+              setShowModalView(true)
             }}
           >
             <Typography.Text>{subject.attributes.name}</Typography.Text>
@@ -239,20 +248,9 @@ export default function Subjects() {
 
       {/* ------------------------------------------------- */}
 
-      <Modal
-        title={subject && subject.attributes.name}
-        open={showModalView}
-        onOk={handleOkModalView}
-        onCancel={handleCancelModalView}
-      >
-        <Typography.Paragraph>
-          {subject && subject.attributes.type}
-        </Typography.Paragraph>
-        <Typography.Paragraph>
-          Паспорт:{" "}
-          {subject && subject.attributes.counterparty[0].serialPassport}{" "}
-          {subject && subject.attributes.counterparty[0].numberPassport}
-        </Typography.Paragraph>
+      <Modal title={subject && subject.attributes.name} open={showModalView} onOk={handleOkModalView} onCancel={handleCancelModalView}>
+        <Typography.Paragraph>{subject && subject.attributes.type}</Typography.Paragraph>
+        <Typography.Paragraph>Паспорт: {subject && subject.attributes.counterparty[0].serialPassport} {subject && subject.attributes.counterparty[0].numberPassport}</Typography.Paragraph>
       </Modal>
     </div>
   );
