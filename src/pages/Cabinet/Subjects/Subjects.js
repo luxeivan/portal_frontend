@@ -17,6 +17,7 @@ import useRegistration from "../../../stores/useRegistration";
 import styles from "./Subjects.module.css";
 import { PlusOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
+import { formItemLayout, tailFormItemLayout } from '../../../components/configSizeForm'
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -184,9 +185,9 @@ export default function Subjects() {
         visible={showCategoryModal}
         onCancel={() => setShowCategoryModal(false)}
         footer={null}
-        width={400}
+        width={650}
       >
-        <Flex>
+        <Flex gap="large">
           <Button onClick={() => handleCategorySelect("individual")}>
             Физическое лицо
           </Button>
@@ -200,20 +201,21 @@ export default function Subjects() {
       </Modal>
 
       <Modal
-        title="Новый субъект"
+        title="Добавить физическое лицо"
         visible={showModalAdd}
         onOk={handleOkModalAdd}
         onCancel={handleCancelModalAdd}
         width={650}
       >
-        <Form>
-          <Form.Item label="Фамилия Заявителя">
+        <Form
+        {...formItemLayout}>
+          <Form.Item label="Фамилия">
             <Input />
           </Form.Item>
-          <Form.Item label="Имя Заявителя">
+          <Form.Item label="Имя">
             <Input />
           </Form.Item>
-          <Form.Item label="Отчество Заявителя">
+          <Form.Item label="Отчество">
             <Input />
           </Form.Item>
           <Form.Item label="Подтверждающий документ">
