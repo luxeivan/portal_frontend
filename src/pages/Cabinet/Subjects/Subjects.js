@@ -17,10 +17,17 @@ import useRegistration from "../../../stores/useRegistration";
 import styles from "./Subjects.module.css";
 import { PlusOutlined } from "@ant-design/icons";
 import Paragraph from "antd/es/skeleton/Paragraph";
-import {SettingOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons'
+import {
+  SettingOutlined,
+  EditOutlined,
+  EllipsisOutlined,
+} from "@ant-design/icons";
 import Item from "antd/es/list/Item";
 import SceletonCard from "../../../components/SceletonCard";
-
+import {
+  formItemLayout,
+  tailFormItemLayout,
+} from "../../../../src/components/configSizeForm";
 
 const { Title, Text } = Typography;
 const { Meta } = Card;
@@ -30,7 +37,7 @@ const stylesForCard = {
   body: {
     height: "100%",
     width: 250,
-    minHeight: 250
+    minHeight: 250,
   },
   actions: { marginTop: "-20px" },
   header: { backgroundColor: "red" },
@@ -65,11 +72,13 @@ export default function Subjects() {
   }, [fetchSubjects]);
 
   if (isLoadingSubjects) {
-    return <>
-      <Title level={1}>Субъекты</Title>
-      <SceletonCard />
-      {/* <Skeleton active />; */}
-    </>
+    return (
+      <>
+        <Title level={1}>Субъекты</Title>
+        <SceletonCard />
+        {/* <Skeleton active />; */}
+      </>
+    );
   }
 
   if (error) {
@@ -88,6 +97,7 @@ export default function Subjects() {
   const handlerShowModalView = (id) => {
     console.log(id);
   };
+
   const handleCancelModalView = () => {
     setShowModalView(false);
   };
@@ -114,17 +124,18 @@ export default function Subjects() {
   };
 
   const handlePhoneChange = (e) => {
-    // Тут может быть логика для обновления номера телефона в состоянии приложения, если нужно
     console.log("Новый номер телефона:", e.target.value);
   };
 
   const handleEmailChange = (e) => {
-    // Тут может быть логика для обновления email в состоянии приложения, если нужно
     console.log("Новый email:", e.target.value);
   };
 
   const userPhone = authState.phone || registrationState.phone;
   const userEmail = authState.email || registrationState.email;
+
+  console.log("Телефон:", userPhone);
+  console.log("Email:", userEmail);
 
   return (
     <div>
@@ -139,8 +150,8 @@ export default function Subjects() {
             className={styles.subjectCard}
             onClick={() => {
               // console.log(subject.id)
-              fetchSubjectItem(subject.id)
-              setShowModalView(true)
+              fetchSubjectItem(subject.id);
+              setShowModalView(true);
             }}
           >
             <Typography.Text>{subject.attributes.name}</Typography.Text>
@@ -169,6 +180,7 @@ export default function Subjects() {
         visible={showModalAdd}
         onOk={handleOkModalAdd}
         onCancel={handleCancelModalAdd}
+        width={650}
       >
         <Form>
           <Form.Item label="Фамилия Заявителя">
@@ -248,9 +260,20 @@ export default function Subjects() {
 
       {/* ------------------------------------------------- */}
 
-      <Modal title={subject && subject.attributes.name} open={showModalView} onOk={handleOkModalView} onCancel={handleCancelModalView}>
-        <Typography.Paragraph>{subject && subject.attributes.type}</Typography.Paragraph>
-        <Typography.Paragraph>Паспорт: {subject && subject.attributes.counterparty[0].serialPassport} {subject && subject.attributes.counterparty[0].numberPassport}</Typography.Paragraph>
+      <Modal
+        title={subject && subject.attributes.name}
+        open={showModalView}
+        onOk={handleOkModalView}
+        onCancel={handleCancelModalView}
+      >
+        <Typography.Paragraph>
+          {subject && subject.attributes.type}
+        </Typography.Paragraph>
+        <Typography.Paragraph>
+          Паспорт:{" "}
+          {subject && subject.attributes.counterparty[0].serialPassport}{" "}
+          {subject && subject.attributes.counterparty[0].numberPassport}
+        </Typography.Paragraph>
       </Modal>
     </div>
   );
