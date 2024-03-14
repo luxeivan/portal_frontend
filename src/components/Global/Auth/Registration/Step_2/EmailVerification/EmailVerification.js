@@ -1,7 +1,6 @@
 import useRegistration from "../../../../../../stores/useRegistration";
-import { Button, Form, Typography, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import EmailCodeVerification from "../EmailCodeVerification";
-const { Paragraph } = Typography;
 
 const EmailVerification = () => {
   const [form] = Form.useForm();
@@ -28,11 +27,6 @@ const EmailVerification = () => {
   return (
     <div>
       <Form form={form} onFinish={onFinish}>
-        {/* <Paragraph>
-          {" "}
-          Укажите электронную почту в формате **********@mail.ru. У вас должен
-          быть постоянный доступ к почте.
-        </Paragraph> */}
         <Form.Item
           label="Почта"
           name="email"
