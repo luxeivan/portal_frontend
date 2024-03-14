@@ -34,7 +34,7 @@ const useSubjects = create((set) => ({
           Authorization: `Bearer ${token}`
         }
       });
-      console.log(response.data);
+      // console.log(response.data);
       set({ subject: response.data, isLoadingSubjectItem: false });
     } catch (error) {
       console.log(error); 
