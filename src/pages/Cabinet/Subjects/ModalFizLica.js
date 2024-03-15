@@ -25,6 +25,9 @@ export default function ModalFizLica() {
   const [documentType, setDocumentType] = useState("passport");
   const [manualAddressInput, setManualAddressInput] = useState(false);
   const [autoCompleteData, setAutoCompleteData] = useState([]);
+  const [registrationAddress, setRegistrationAddress] = useState("");
+  const [isAddressSame, setIsAddressSame] = useState(false);
+  const [residenceAddress, setResidenceAddress] = useState("");
 
   const onDocumentTypeChange = (value) => {
     setDocumentType(value);
@@ -82,6 +85,20 @@ export default function ModalFizLica() {
 
   const handleEmailChange = (e) => {
     console.log("Новый email:", e.target.value);
+  };
+
+  const handleRegistrationAddressChange = (value) => {
+    setRegistrationAddress(value);
+    if (isAddressSame) {
+      setResidenceAddress(value);
+    }
+  };
+
+  const handleAddressCheckboxChange = (e) => {
+    setIsAddressSame(e.target.checked);
+    if (e.target.checked) {
+      setResidenceAddress(registrationAddress);
+    }
   };
 
   const userPhone = authState.phone || registrationState.phone;
@@ -148,35 +165,20 @@ export default function ModalFizLica() {
         <Input />
       </Form.Item>
       <Divider orientation="center">Адрес</Divider>
-
-      <Form.Item label="Адрес по месту регистрации">
+      <Form.Item label="Место регистрации">
         {manualAddressInput ? (
-          <Input />
-        ) : (
-          <AutoComplete
-            options={autoCompleteData}
-            onSearch={handleAddressSearch}
-            placeholder="Введите адрес"
+          <Input
+            value={registrationAddress}
+            onChange={(e) => handleRegistrationAddressChange(e.target.value)}
           />
-        )}
-      </Form.Item>
-      <Form.Item>
-        <Checkbox
-          checked={manualAddressInput}
-          onChange={handleManualAddressCheckbox}
-        >
-          Ввести адрес по полям вручную
-        </Checkbox>
-      </Form.Item>
-      {/* <Divider orientation="center">Адрес проживания</Divider> */}
-      <Form.Item label="Адрес проживания">
-        {manualAddressInput ? (
-          <Input />
         ) : (
           <AutoComplete
+            value={registrationAddress}
             options={autoCompleteData}
             onSearch={handleAddressSearch}
-            placeholder="Введите адрес"
+            onSelect={handleRegistrationAddressChange}
+            onInputConfirm={handleRegistrationAddressChange}
+            placeholder="Начните вводить"
           />
         )}
       </Form.Item>
@@ -189,7 +191,35 @@ export default function ModalFizLica() {
         </Checkbox>
       </Form.Item>
       <Form.Item>
-        <Checkbox>Совпадает с адресом по месту регистрации</Checkbox>
+        <Checkbox
+          checked={isAddressSame}
+          onChange={handleAddressCheckboxChange}
+        >
+          Совпадает с адресом по месту регистрации
+        </Checkbox>
+      </Form.Item>
+      <Form.Item label="Место проживания">
+        {manualAddressInput ? (
+          <Input
+            value={isAddressSame ? registrationAddress : residenceAddress}
+            onChange={(e) => setResidenceAddress(e.target.value)}
+          />
+        ) : (
+          <AutoComplete
+            value={isAddressSame ? registrationAddress : residenceAddress}
+            options={autoCompleteData}
+            onSearch={handleAddressSearch}
+            placeholder="Начните вводить"
+          />
+        )}
+      </Form.Item>
+      <Form.Item>
+        <Checkbox
+          checked={manualAddressInput}
+          onChange={handleManualAddressCheckbox}
+        >
+          Ввести адрес по полям вручную
+        </Checkbox>
       </Form.Item>
       <Divider orientation="center">Другое</Divider>
       <Form.Item label="Мобильный номер телефона">
