@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import config from "../../../config";
 
 import {
   Flex,
@@ -106,23 +107,22 @@ export default function ModalFizLica() {
 
   const fetchAddresses = async (searchText) => {
     try {
-      const response = await axios.get("https://luxeivan.ru:5443/api/cabinet/get-fias", {
+      const token = localStorage.getItem("jwt");
+      const response = await axios.get(`${config.backServer}/api/cabinet/get-fias`, {
         params: { searchString: searchText },
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
-      console.log("data.data", response.data.data);
-      return response.data.data.map((item) => item.unrestricted_value);
+      console.log(response.data.data)
+      let preparingData = response.data.data.map(item => ({ value: item.value }))
+      return preparingData
     } catch (error) {
       console.error("Ошибка при получении адресов: ", error);
       return [];
     }
   };
-  
-  const mockVal = (str, repeat = 1) => ({
-    value: str.repeat(repeat),
-  });
 
   const onSelect = (data) => {
     console.log("onSelect", data);
@@ -193,7 +193,7 @@ export default function ModalFizLica() {
         <Input />
       </Form.Item>
       <Divider orientation="center">Место регистрации</Divider>
-      <Form.Item label="Адрес">
+      <Form.Item label="Адрес" name={"registration"}>
         {manualAddressInput ? (
           <Input
           // value={registrationAddress}
@@ -201,9 +201,11 @@ export default function ModalFizLica() {
           />
         ) : (
           <AutoComplete
-          options={options}
-          onSelect={onSelect}
-          onSearch={(text) => setOptions(fetchAddresses(text))}
+            options={options}
+            onSelect={onSelect}
+            onSearch={async (text) => {
+              setOptions(await fetchAddresses(text))
+            }}
             placeholder="Начните вводить"
           />
         )}
