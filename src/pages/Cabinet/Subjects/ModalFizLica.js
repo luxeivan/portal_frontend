@@ -161,11 +161,12 @@ export default function ModalFizLica() {
           <Button icon={<UploadOutlined />}></Button>
         </Upload>
       </Form.Item>
-      <Form.Item label="СНИЛС">
+      <Divider orientation="center">СНИЛС</Divider>
+      <Form.Item label="Номер">
         <Input />
       </Form.Item>
-      <Divider orientation="center">Адрес</Divider>
-      <Form.Item label="Место регистрации">
+      <Divider orientation="center">Место регистрации</Divider>
+      <Form.Item label="Адрес">
         {manualAddressInput ? (
           <Input
             value={registrationAddress}
@@ -190,6 +191,7 @@ export default function ModalFizLica() {
           Ввести адрес по полям вручную
         </Checkbox>
       </Form.Item>
+      <Divider orientation="center">Место проживания</Divider>
       <Form.Item>
         <Checkbox
           checked={isAddressSame}
@@ -198,7 +200,7 @@ export default function ModalFizLica() {
           Совпадает с адресом по месту регистрации
         </Checkbox>
       </Form.Item>
-      <Form.Item label="Место проживания">
+      <Form.Item label="Адрес">
         {manualAddressInput ? (
           <Input
             value={isAddressSame ? registrationAddress : residenceAddress}
