@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  Typography,
-  Card,
-  Flex,
-  Modal,
-  Button,
-} from "antd";
+import { Typography, Card, Flex, Modal, Button } from "antd";
 
 import useSubjects from "../../../stores/Cabinet/useSubjects";
 
 import styles from "./Subjects.module.css";
 
-import { PlusOutlined} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 
 import SceletonCard from "../../../components/SceletonCard";
 
@@ -29,7 +23,6 @@ const stylesForCard = {
   actions: { marginTop: "-20px" },
   header: { backgroundColor: "red" },
 };
-
 
 export default function Subjects() {
   const [showModalAdd, setShowModalAdd] = useState(false);
@@ -150,7 +143,7 @@ export default function Subjects() {
         </Flex>
       </Modal>
 
-{/* Модалка для Физ.Лиц */}
+      {/* Модалка для Физ.Лиц */}
       <Modal
         title="Добавить физическое лицо"
         visible={showModalAdd}
