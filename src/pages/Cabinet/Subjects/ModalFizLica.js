@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from 'axios';
+
 import {
   Flex,
   Input,
@@ -28,6 +30,7 @@ export default function ModalFizLica() {
   const [registrationAddress, setRegistrationAddress] = useState("");
   const [isAddressSame, setIsAddressSame] = useState(false);
   const [residenceAddress, setResidenceAddress] = useState("");
+  const [options, setOptions] = useState([]);
 
   const onDocumentTypeChange = (value) => {
     setDocumentType(value);
@@ -101,6 +104,30 @@ export default function ModalFizLica() {
     }
   };
 
+  const fetchAddresses = async (searchText) => {
+    try {
+      const response = await axios.get("https://luxeivan.ru:5443/api/cabinet/get-fias", {
+        params: { searchString: searchText },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("data.data", response.data.data);
+      return response.data.data.map((item) => item.unrestricted_value);
+    } catch (error) {
+      console.error("Ошибка при получении адресов: ", error);
+      return [];
+    }
+  };
+  
+  const mockVal = (str, repeat = 1) => ({
+    value: str.repeat(repeat),
+  });
+
+  const onSelect = (data) => {
+    console.log("onSelect", data);
+  };
+
   const userPhone = authState.phone || registrationState.phone;
   const userEmail = authState.email || registrationState.email;
 
@@ -169,16 +196,14 @@ export default function ModalFizLica() {
       <Form.Item label="Адрес">
         {manualAddressInput ? (
           <Input
-            value={registrationAddress}
-            onChange={(e) => handleRegistrationAddressChange(e.target.value)}
+          // value={registrationAddress}
+          // onChange={(e) => handleRegistrationAddressChange(e.target.value)}
           />
         ) : (
           <AutoComplete
-            value={registrationAddress}
-            options={autoCompleteData}
-            onSearch={handleAddressSearch}
-            onSelect={handleRegistrationAddressChange}
-            onInputConfirm={handleRegistrationAddressChange}
+          options={options}
+          onSelect={onSelect}
+          onSearch={(text) => setOptions(fetchAddresses(text))}
             placeholder="Начните вводить"
           />
         )}
@@ -203,14 +228,14 @@ export default function ModalFizLica() {
       <Form.Item label="Адрес">
         {manualAddressInput ? (
           <Input
-            value={isAddressSame ? registrationAddress : residenceAddress}
-            onChange={(e) => setResidenceAddress(e.target.value)}
+          // value={isAddressSame ? registrationAddress : residenceAddress}
+          // onChange={(e) => setResidenceAddress(e.target.value)}
           />
         ) : (
           <AutoComplete
-            value={isAddressSame ? registrationAddress : residenceAddress}
-            options={autoCompleteData}
-            onSearch={handleAddressSearch}
+            // value={isAddressSame ? registrationAddress : residenceAddress}
+            // options={autoCompleteData}
+            // onSearch={handleAddressSearch}
             placeholder="Начните вводить"
           />
         )}
