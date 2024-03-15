@@ -10,14 +10,24 @@ import {
   AutoComplete,
   Checkbox,
   Button,
+  message,
+  Upload,
+  Space,
 } from "antd";
 import useSubjects from "../../../stores/Cabinet/useSubjects";
 import useAuth from "../../../stores/useAuth";
 import useRegistration from "../../../stores/useRegistration";
+
 import styles from "./Subjects.module.css";
-import { PlusOutlined } from "@ant-design/icons";
+
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+
 import SceletonCard from "../../../components/SceletonCard";
-import { formItemLayout, tailFormItemLayout } from '../../../components/configSizeForm'
+
+import {
+  formItemLayout,
+  tailFormItemLayout,
+} from "../../../components/configSizeForm";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -31,6 +41,24 @@ const stylesForCard = {
   },
   actions: { marginTop: "-20px" },
   header: { backgroundColor: "red" },
+};
+
+const props = {
+  name: "file",
+  action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+  headers: {
+    authorization: "authorization-text",
+  },
+  onChange(info) {
+    if (info.file.status !== "uploading") {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  },
 };
 
 export default function Subjects() {
@@ -207,8 +235,7 @@ export default function Subjects() {
         onCancel={handleCancelModalAdd}
         width={650}
       >
-        <Form
-        {...formItemLayout}>
+        <Form {...formItemLayout}>
           <Form.Item label="Фамилия">
             <Input />
           </Form.Item>
@@ -226,18 +253,25 @@ export default function Subjects() {
           </Form.Item>
           {documentType === "passport" && (
             <>
-              <Form.Item label="Серия паспорта">
-                <Input maxLength={4} pattern="\d*" />
-              </Form.Item>
-              <Form.Item label="Номер паспорта">
-                <Input maxLength={6} pattern="\d*" />
-              </Form.Item>
-              <Form.Item label="Код подразделения">
-                <Input maxLength={6} pattern="\d*" />
-              </Form.Item>
-              <Form.Item label="Кем выдан">
-                <Input />
-              </Form.Item>
+              <Flex gap="middle" vertical>
+                <Form.Item label="Серия паспорта">
+                  <Input maxLength={4} pattern="\d*" />
+                </Form.Item>
+                <Form.Item label="Номер паспорта">
+                  <Input maxLength={6} pattern="\d*" />
+                </Form.Item>
+                <Form.Item label="Код подразделения">
+                  <Input maxLength={6} pattern="\d*" />
+                </Form.Item>
+                <Form.Item label="Кем выдан">
+                  <Input />
+                </Form.Item>
+                <Form.Item label="Загрузить файл">
+                  <Upload {...props}>
+                    <Button icon={<UploadOutlined />}></Button>
+                  </Upload>
+                </Form.Item>
+              </Flex>
             </>
           )}
           {documentType === "other" && (
@@ -316,6 +350,7 @@ export default function Subjects() {
 //   Select,
 //   AutoComplete,
 //   Checkbox,
+//   Button,
 // } from "antd";
 // import useSubjects from "../../../stores/Cabinet/useSubjects";
 // import useAuth from "../../../stores/useAuth";
@@ -323,6 +358,7 @@ export default function Subjects() {
 // import styles from "./Subjects.module.css";
 // import { PlusOutlined } from "@ant-design/icons";
 // import SceletonCard from "../../../components/SceletonCard";
+// import { formItemLayout, tailFormItemLayout } from '../../../components/configSizeForm'
 
 // const { Title } = Typography;
 // const { Meta } = Card;
@@ -339,12 +375,12 @@ export default function Subjects() {
 // };
 
 // export default function Subjects() {
-
 //   const [showModalAdd, setShowModalAdd] = useState(false);
 //   const [showModalView, setShowModalView] = useState(false);
 //   const [documentType, setDocumentType] = useState("passport");
 //   const [autoCompleteData, setAutoCompleteData] = useState([]);
 //   const [manualAddressInput, setManualAddressInput] = useState(false);
+//   const [showCategoryModal, setShowCategoryModal] = useState(false);
 
 //   const subject = useSubjects((state) => state.subject);
 //   const subjects = useSubjects((state) => state.subjects);
@@ -434,8 +470,18 @@ export default function Subjects() {
 //   const userPhone = authState.phone || registrationState.phone;
 //   const userEmail = authState.email || registrationState.email;
 
-//   console.log("Телефон:", userPhone);
-//   console.log("Email:", userEmail);
+//   const handleAddClick = () => {
+//     setShowCategoryModal(true);
+//   };
+
+//   const handleCategorySelect = (category) => {
+//     setShowCategoryModal(false);
+//     if (category === "individual") {
+//       setShowModalAdd(true);
+//     } else {
+//       // Здесь будет логика для ИП или Юр.Лицо, мы её обязательно добавим. Когда-нибудь... Когда-нибудь...
+//     }
+//   };
 
 //   return (
 //     <div>
@@ -462,7 +508,7 @@ export default function Subjects() {
 //           hoverable
 //           styles={stylesForCard}
 //           className={styles.subjectCard}
-//           onClick={toggleShowModalAdd}
+//           onClick={handleAddClick}
 //         >
 //           <Flex
 //             align="stretch"
@@ -476,20 +522,41 @@ export default function Subjects() {
 //       {subjects.length === 0 && <p>Субъекты не найдены</p>}
 
 //       <Modal
-//         title="Новый субъект"
+//         title=""
+//         visible={showCategoryModal}
+//         onCancel={() => setShowCategoryModal(false)}
+//         footer={null}
+//         width={650}
+//       >
+//         <Flex gap="large">
+//           <Button onClick={() => handleCategorySelect("individual")}>
+//             Физическое лицо
+//           </Button>
+//           <Button onClick={() => handleCategorySelect("soleProprietor")}>
+//             ИП
+//           </Button>
+//           <Button onClick={() => handleCategorySelect("legalEntity")}>
+//             Юр.Лицо
+//           </Button>
+//         </Flex>
+//       </Modal>
+
+//       <Modal
+//         title="Добавить физическое лицо"
 //         visible={showModalAdd}
 //         onOk={handleOkModalAdd}
 //         onCancel={handleCancelModalAdd}
 //         width={650}
 //       >
-//         <Form>
-//           <Form.Item label="Фамилия Заявителя">
+//         <Form
+//         {...formItemLayout}>
+//           <Form.Item label="Фамилия">
 //             <Input />
 //           </Form.Item>
-//           <Form.Item label="Имя Заявителя">
+//           <Form.Item label="Имя">
 //             <Input />
 //           </Form.Item>
-//           <Form.Item label="Отчество Заявителя">
+//           <Form.Item label="Отчество">
 //             <Input />
 //           </Form.Item>
 //           <Form.Item label="Подтверждающий документ">

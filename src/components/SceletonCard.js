@@ -1,15 +1,16 @@
-import React from 'react'
-import {  Card,  Flex,  } from "antd";
+import React from "react";
+import { Card, Flex } from "antd";
 
 export default function SceletonCard({ width = 250, height = "100%" }) {
-    return (
-        <Flex wrap="wrap" gap="large">
-            {[1, 2, 3].map(Item =>
-                <Card
-                    loading={true}
-                    styles={{ body: { width, height } }}
-                ></Card>
-            )}
-        </Flex>
-    )
+  return (
+    <Flex wrap="wrap" gap="large">
+      {[1, 2, 3].map((Item) => (
+        <Card
+          key={Item.uniqueId}
+          loading={true}
+          styles={{ body: { width, height } }}
+        ></Card>
+      ))}
+    </Flex>
+  );
 }
