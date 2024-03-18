@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Alert, Space } from "antd";
+import { Button, Form, Input, Alert, Space, Flex } from "antd";
 import useAuth from "../../../../stores/useAuth";
 import CodeForm from "./CodeForm";
 import styles from "./AuthLoginForm.module.css";
+import { formItemLayout, tailFormItemLayout } from '../../../../components/configSizeForm'
 
 export default function AuthLoginForm() {
   const {
@@ -35,6 +36,7 @@ export default function AuthLoginForm() {
         />
       )}
       <Form
+        {...formItemLayout}
         className={styles.formContainer}
         name="basic"
         initialValues={{ remember: true }}
@@ -77,17 +79,16 @@ export default function AuthLoginForm() {
         </Form.Item>
 
         <Form.Item
+          {...tailFormItemLayout}
         >
-          <Space>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className={styles.submitButton}
-              disabled={authTimer > 0}
-            >
-              {authTimer > 0 ? `Отправить код повторно через ${authTimer} секунд(ы)` : 'Отправить код'}
-            </Button>
-          </Space>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className={styles.submitButton}
+            disabled={authTimer > 0}
+          >
+            {authTimer > 0 ? `Повторить через ${authTimer} секунд(ы)` : 'Вход'}
+          </Button>
         </Form.Item>
       </Form>
       {isCodeRequested && <CodeForm />}

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Button, Form, Typography, Space,theme } from "antd";
+import { Button, Form, Typography, Space, theme } from "antd";
 import useRegistration from "../../../../../../stores/useRegistration";
 import InputMask from "react-input-mask";
 import PhoneCodeVerification from "../PhoneCodeVerification";
-
+import { formItemLayout, tailFormItemLayout } from '../../../../../../components/configSizeForm'
 import styles from './PhoneVerification.module.css'
 
 const { Paragraph } = Typography;
@@ -44,10 +44,10 @@ const PhoneVerification = React.memo(({ submitPhoneCode }) => {
     setCodeRequested(false);
     await submitPhone(formattedPhone);
     setCodeRequested(true);
-    setTimer(10); 
+    setTimer(10);
     setHasAttempted(true);
-  }, [submitPhone]); 
-  
+  }, [submitPhone]);
+
 
   const onPhoneChange = useCallback((event) => {
     const value = event.target.value;
@@ -58,11 +58,15 @@ const PhoneVerification = React.memo(({ submitPhoneCode }) => {
 
   return (
     <div>
-      <Form form={form} onFinish={onFinish}>
+      <Form
+        {...formItemLayout}
+        form={form}
+        onFinish={onFinish} >
         {/* <Paragraph>
           Укажите номер мобильного телефона в формате +7(XXX)XXX-XX-XX.
         </Paragraph> */}
         <Form.Item
+        label="Номер"
           name="phone"
           rules={[{ required: true, message: "Пожалуйста, введите ваш номер телефона!" }]}
         >
@@ -75,7 +79,9 @@ const PhoneVerification = React.memo(({ submitPhoneCode }) => {
             style={{ backgroundColor: colorBorderBg, color: colorText }}
           />
         </Form.Item>
-        <Form.Item>
+        <Form.Item
+          {...tailFormItemLayout}
+        >
           <Space>
             <Button type="primary" htmlType="submit" disabled={!isPhoneValid || timer > 0}>
               {buttonText}
