@@ -76,17 +76,19 @@ export default function ModalFizLica() {
   const uploadProps = {
     name: "file",
     headers: {
-      authorization: "authorization-text", 
+      authorization: "authorization-text",
     },
     customRequest({ file, onSuccess, onError }) {
       const formData = new FormData();
       formData.append("file", file); // Так сервер ожидает файл
-
+      const token = localStorage.getItem("jwt");
       axios
         .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
+          withCredentials: true
         })
         .then((response) => {
           console.log("Ответ сервера", response.data);
