@@ -77,7 +77,7 @@ const useSubjects = create((set) => ({
         }));
         return response.data.subject;
       } else {
-        throw new Error(response.data.message || 'Произошла ошибка при создании субъекта');
+        // throw new Error(response.data.message || 'Произошла ошибка при создании субъекта');
       }
     } catch (error) {
       throw error;
