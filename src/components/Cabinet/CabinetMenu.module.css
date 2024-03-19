@@ -2,6 +2,7 @@
   line-height: 15px;
   /* gap: 10px; */
   padding: 10px 0;
+  height: 100%;
 }
 
 .icon {
@@ -15,14 +16,28 @@
 
 .desktop {
   display: block;
+  width: 300px;
+  height: 100%;
+}
+
+.menuContainer {
+  height: 88vh;
 }
 
 @media only screen and (max-width: 575px) {
 
   @keyframes pulseShadow {
-    0% { box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); }
-    50% { box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); }
-    100% { box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); }
+    0% {
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    50% {
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    100% {
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
   }
 
   .icon {
@@ -43,11 +58,14 @@
     left: 0;
     right: 0;
     width: 100%;
+    height: inherit;
     background-color: #fff;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     z-index: 100;
     animation: pulseShadow 1s infinite ease-in-out;
   }
-
+  .menuItem {
+    height: inherit;
+  }
 
 }

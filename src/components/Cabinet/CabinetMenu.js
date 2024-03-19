@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Flex, Menu, Typography, ConfigProvider } from "antd";
+import { Button, Flex, Menu, Typography, ConfigProvider, theme } from "antd";
 import {
   UserOutlined,
   ProfileOutlined,
@@ -18,26 +18,30 @@ import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
-
+export default function CabinetMenu() {
+  const { colorPrimaryText } = theme.useToken().token
+const iconStyle = {
+  color: "rgb(227, 112, 33)"
+}
 const menuItems = [
   {
     key: "/services",
-    icon: <PlusSquareOutlined className={styles.icon} />,
+    icon: <PlusSquareOutlined className={styles.icon} style={iconStyle} />,
     label: "Новая",
   },
   {
     key: "/cabinet/drafts",
-    icon: <FolderOpenOutlined className={styles.icon} />,
+    icon: <FolderOpenOutlined className={styles.icon} style={iconStyle}  />,
     label: "Черновики",
   },
   {
     key: "/cabinet/checking",
-    icon: <CheckCircleOutlined className={styles.icon} />,
+    icon: <CheckCircleOutlined className={styles.icon} style={iconStyle}  />,
     label: "На проверке",
   },
   {
     key: "submenu",
-    icon: <DownOutlined className={styles.icon} />,
+    icon: <DownOutlined className={styles.icon} style={iconStyle}  />,
     label: 'Заявки',
     children: [
       {
@@ -59,17 +63,17 @@ const menuItems = [
   },
   {
     key: "/cabinet/subjects",
-    icon: <UserOutlined className={styles.icon} />,
+    icon: <UserOutlined className={styles.icon} style={iconStyle}  />,
     label: "Субъекты",
   },
   {
     key: "/cabinet/relations",
-    icon: <RetweetOutlined className={styles.icon} />,
+    icon: <RetweetOutlined className={styles.icon} style={iconStyle}  />,
     label: "Доверенности",
   },
   {
     key: "/cabinet/objects",
-    icon: <EnvironmentOutlined className={styles.icon} />,
+    icon: <EnvironmentOutlined className={styles.icon} style={iconStyle}  />,
     label: "Объекты",
   },
   {
@@ -77,7 +81,7 @@ const menuItems = [
   },
   {
     key: "/cabinet/profile",
-    icon: <ProfileOutlined className={styles.icon} />,
+    icon: <ProfileOutlined className={styles.icon} style={iconStyle}  />,
     label: "Профиль",
   },
 ];
@@ -97,10 +101,9 @@ const menuItemsMobile = menuItems.map(item => {
   }
 })
 
-export default function CabinetMenu() {
   const navigator = useNavigate()
   const [collapsed, setCollapsed] = useState(false);
-
+  
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
@@ -113,26 +116,7 @@ export default function CabinetMenu() {
 
     <div className={styles.menuContainer}>
 
-      <div className={styles.desktop}>
-        <Button
-          type="secondary"
-          onClick={toggleCollapsed}
-          style={{
-            marginBottom: 16,
-          }}
-        >
-          {collapsed ? (
-            <Text>
-              <MenuUnfoldOutlined />
-              Развернуть
-            </Text>
-          ) : (
-            <Text>
-              <MenuFoldOutlined />
-              Свернуть
-            </Text>
-          )}
-        </Button>
+      <div >
       </div>
       {/* ----------------------------------------------------------------------- */}
       <ConfigProvider
@@ -157,7 +141,7 @@ export default function CabinetMenu() {
               items={menuItemsMobile}
               overflowedIndicator={<Flex vertical align="center" justify="center" className={styles.menuItem}>
                 <div>
-                  <Text><MenuOutlined /></Text>
+                  <Text><MenuOutlined style={iconStyle}/></Text>
                 </div>
                 <Text>Еще</Text>
               </Flex>}
@@ -183,12 +167,32 @@ export default function CabinetMenu() {
 
         <div className={styles.desktop}>
           <Flex vertical className={styles.menuItem}>
+              {/* <Button
+                type="secondary"
+                onClick={toggleCollapsed}
+                style={{
+                  marginBottom: 16,
+                }}
+              >
+                {collapsed ? (
+                  <Text>
+                    <MenuUnfoldOutlined />
+                    Развернуть
+                  </Text>
+                ) : (
+                  <Text>
+                    <MenuFoldOutlined />
+                    Свернуть
+                  </Text>
+                )}
+              </Button> */}
             <Menu
               selectable={false}
               inlineCollapsed={collapsed}
               mode={"inline"}
               items={menuItems}
               onClick={handlerMenu}
+              style={{height:"100%"}}
             />
           </Flex>
         </div>
