@@ -21,28 +21,29 @@ const { Text } = Typography;
 export default function CabinetMenu() {
   const { colorPrimaryText } = theme.useToken().token
 const iconStyle = {
-  color: "rgb(227, 112, 33)"
+  // color: "rgb(227, 112, 33)"
+  color: "gray"
 }
 const menuItems = [
   {
     key: "/services",
     icon: <PlusSquareOutlined className={styles.icon} style={iconStyle} />,
-    label: "Новая",
+    label: <Text className={styles.labelSizeMobile}>Новая</Text>,
   },
   {
     key: "/cabinet/drafts",
     icon: <FolderOpenOutlined className={styles.icon} style={iconStyle}  />,
-    label: "Черновики",
+    label: <Text className={styles.labelSizeMobile}>Черновики</Text>,
   },
   {
     key: "/cabinet/checking",
     icon: <CheckCircleOutlined className={styles.icon} style={iconStyle}  />,
-    label: "На проверке",
+    label: <Text className={styles.labelSizeMobile}>На проверке</Text>,
   },
   {
     key: "submenu",
     icon: <DownOutlined className={styles.icon} style={iconStyle}  />,
-    label: 'Заявки',
+    label: <Text className={styles.labelSizeMobile}>Заявки</Text>,
     children: [
       {
         key: "/cabinet/claimer/1",
@@ -64,17 +65,17 @@ const menuItems = [
   {
     key: "/cabinet/subjects",
     icon: <UserOutlined className={styles.icon} style={iconStyle}  />,
-    label: "Субъекты",
+    label: <Text className={styles.labelSizeMobile}>Субъекты</Text>,
   },
   {
     key: "/cabinet/relations",
     icon: <RetweetOutlined className={styles.icon} style={iconStyle}  />,
-    label: "Доверенности",
+    label: <Text className={styles.labelSizeMobile}>Доверенности</Text>,
   },
   {
     key: "/cabinet/objects",
     icon: <EnvironmentOutlined className={styles.icon} style={iconStyle}  />,
-    label: "Объекты",
+    label: <Text className={styles.labelSizeMobile}>Объекты</Text>,
   },
   {
     type: 'divider',
@@ -82,7 +83,7 @@ const menuItems = [
   {
     key: "/cabinet/profile",
     icon: <ProfileOutlined className={styles.icon} style={iconStyle}  />,
-    label: "Профиль",
+    label: <Text className={styles.labelSizeMobile}>Профиль</Text>,
   },
 ];
 const menuItemsMobile = menuItems.map(item => {
@@ -124,7 +125,7 @@ const menuItemsMobile = menuItems.map(item => {
           components: {
             Menu: {
               itemHeight: 60,
-              iconSize: 30,
+              iconSize: 24,
               itemPaddingInline: 10,
               dropdownWidth: 100
             },
@@ -136,7 +137,7 @@ const menuItemsMobile = menuItems.map(item => {
             <Menu
               style={{ justifyContent: "space-between" }}
               selectable={false}
-              inlineCollapsed={collapsed}
+              // inlineCollapsed={collapsed}
               mode={"horizontal"}
               items={menuItemsMobile}
               overflowedIndicator={<Flex vertical align="center" justify="center" className={styles.menuItem}>

@@ -28,7 +28,7 @@ import useSubjects from "../../../stores/Cabinet/useSubjects";
 
 const { Option } = Select;
 
-export default function ModalFizLica({ onSubmit,setShowModalAdd, type }) {
+export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
   const [documentType, setDocumentType] = useState("passport");
   const [manualAddressInput, setManualAddressInput] = useState(false);
   const [registrationAddress, setRegistrationAddress] = useState("");
@@ -36,8 +36,7 @@ export default function ModalFizLica({ onSubmit,setShowModalAdd, type }) {
   const [residenceAddress, setResidenceAddress] = useState("");
   const [options, setOptions] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [manualResidenceAddressInput, setManualResidenceAddressInput] =
-    useState(false);
+  const [manualResidenceAddressInput, setManualResidenceAddressInput] = useState(false);
 
   const [form] = Form.useForm();
   // const useSubjectsStore = useSubjects();
@@ -51,11 +50,11 @@ export default function ModalFizLica({ onSubmit,setShowModalAdd, type }) {
       secondname: values.secondname,
       snils: values.snils.replace(/[^0-9]/g, ""),
     };
-  
+
     try {
       await submitNewSubject(formData);
       message.success("Субъект успешно создан");
-      form.resetFields(); 
+      form.resetFields();
       setShowModalAdd(false); // Закрываем модальное окно
       if (onSubmit) {
         onSubmit(); // Вызываем onSubmit, если он был передан
@@ -238,12 +237,12 @@ export default function ModalFizLica({ onSubmit,setShowModalAdd, type }) {
       <Form.Item
         label="Тип документа"
         name="typedocuments"
-        // rules={[
-        //   {
-        //     required: true,
-        //     message: "Пожалуйста, укажите тип документа",
-        //   },
-        // ]}
+      // rules={[
+      //   {
+      //     required: true,
+      //     message: "Пожалуйста, укажите тип документа",
+      //   },
+      // ]}
       >
         <Select defaultValue="passport" onChange={onDocumentTypeChange}>
           <Option value="passport">Паспорт гражданина РФ</Option>
