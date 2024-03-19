@@ -81,14 +81,26 @@ export default function AuthLoginForm() {
         <Form.Item
           {...tailFormItemLayout}
         >
-          <Button
-            type="primary"
-            htmlType="submit"
-            className={styles.submitButton}
-            disabled={authTimer > 0}
-          >
-            {authTimer > 0 ? `Повторить через ${authTimer} секунд(ы)` : 'Вход'}
-          </Button>
+          {!isCodeRequested &&
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={styles.submitButton}
+              disabled={authTimer > 0}
+            >
+              {'Вход'}
+            </Button>
+          }
+          {isCodeRequested &&
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={styles.submitButton}
+              disabled={authTimer > 0}
+            >
+              {authTimer > 0 ? `Повторить через ${authTimer} секунд(ы)` : 'Повторить звонок'}
+            </Button>
+          }
         </Form.Item>
       </Form>
       {isCodeRequested && <CodeForm />}

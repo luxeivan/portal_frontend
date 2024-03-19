@@ -4,7 +4,7 @@ import config from "../config";
 
 const useAuth = create((set) => {
   return {
-    auth: true,
+    auth: false,
     isAuthModalOpen: false,
     isCodeModalOpen: false,
     loginError: "",
@@ -31,7 +31,7 @@ const useAuth = create((set) => {
         if (state.authTimerInterval) {
           clearInterval(state.authTimerInterval);
         }
-        return { authTimer: 10, authTimerInterval: null };
+        return { authTimer: 30, authTimerInterval: null };
       });
       const timerId = setInterval(() => {
         set((state) => {
