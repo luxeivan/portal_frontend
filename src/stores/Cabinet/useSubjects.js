@@ -61,29 +61,56 @@ const useSubjects = create((set) => ({
     try {
       const response = await axios.post(
         `${config.backServer}/api/cabinet/subjects`,
-        formData,
+        formData, 
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           },
           withCredentials: true,
         }
       );
 
-      if (response.data.status === "ok") {
+      if (response.status === 200) {
         set((state) => ({
           subjects: [...state.subjects, response.data.subject],
         }));
+        return response.data.subject;
       } else {
-        throw new Error(
-          response.data.message || "Произошла ошибка при создании субъекта"
-        );
+        throw new Error(response.data.message || 'Произошла ошибка при создании субъекта');
       }
     } catch (error) {
-      throw new Error(error.response?.data?.message || error.message);
+      throw error;
     }
   },
+
+  // submitNewSubject: async (formData) => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${config.backServer}/api/cabinet/subjects`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  //         },
+  //         withCredentials: true,
+  //       }
+  //     );
+
+  //     if (response.data.status === "ok") {
+  //       set((state) => ({
+  //         subjects: [...state.subjects, response.data.subject],
+  //       }));
+  //     } else {
+  //       throw new Error(
+  //         response.data.message || "Произошла ошибка при создании субъекта"
+  //       );
+  //     }
+  //   } catch (error) {
+  //     throw new Error(error.response?.data?.message || error.message);
+  //   }
+  // },
 }));
 
 export default useSubjects;

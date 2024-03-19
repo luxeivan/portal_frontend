@@ -87,6 +87,11 @@ export default function Subjects() {
     }
   };
 
+  const handleClose = () => {
+    // Здесь меняем состояние, которое контролирует отображение модального окна
+    setShowModalAdd(false); // предполагаемое имя состояния для модального окна
+  };
+
   return (
     <div>
       <Title level={1}>Субъекты</Title>
@@ -146,7 +151,6 @@ export default function Subjects() {
         </Flex>
       </Modal>
 
-      {/* Модалка для Физ.Лиц */}
       <Modal
         title="Добавить физическое лицо"
         visible={showModalAdd}
@@ -154,7 +158,11 @@ export default function Subjects() {
         width={650}
         footer={null}
       >
-        <ModalFizLica onSubmit={handleOkModalAdd} type={selectedType} />
+        <ModalFizLica
+          onSubmit={handleOkModalAdd}
+          setShowModalAdd={setShowModalAdd}
+          type={selectedType}
+        />
       </Modal>
 
       {/* ------------------------------------------------- */}
