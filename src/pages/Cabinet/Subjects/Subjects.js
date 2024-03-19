@@ -132,7 +132,7 @@ export default function Subjects() {
 
       <Modal
         title=""
-        visible={showCategoryModal}
+        open={showCategoryModal}
         onCancel={() => setShowCategoryModal(false)}
         footer={null}
         width={700}
@@ -153,7 +153,7 @@ export default function Subjects() {
 
       <Modal
         title="Добавить физическое лицо"
-        visible={showModalAdd}
+        open={showModalAdd}
         onCancel={handleCancelModalAdd}
         width={650}
         footer={null}

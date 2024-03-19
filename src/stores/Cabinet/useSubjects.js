@@ -1,4 +1,4 @@
-import create from "zustand";
+import {create} from "zustand";
 import axios from "axios";
 import config from "../../config";
 
@@ -71,7 +71,7 @@ const useSubjects = create((set) => ({
         }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         set((state) => ({
           subjects: [...state.subjects, response.data.subject],
         }));

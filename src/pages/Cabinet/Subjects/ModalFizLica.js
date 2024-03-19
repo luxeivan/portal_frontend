@@ -61,7 +61,7 @@ export default function ModalFizLica({ onSubmit,setShowModalAdd, type }) {
         onSubmit(); // Вызываем onSubmit, если он был передан
       }
     } catch (error) {
-      
+      console.log(error)
     }
   };
 
