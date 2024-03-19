@@ -28,7 +28,7 @@ import useSubjects from "../../../stores/Cabinet/useSubjects";
 
 const { Option } = Select;
 
-export default function ModalFizLica({ onSubmit, type }) {
+export default function ModalFizLica({ onSubmit,setShowModalAdd, type }) {
   const [documentType, setDocumentType] = useState("passport");
   const [manualAddressInput, setManualAddressInput] = useState(false);
   const [registrationAddress, setRegistrationAddress] = useState("");
@@ -49,15 +49,19 @@ export default function ModalFizLica({ onSubmit, type }) {
       firstname: values.firstname,
       lastname: values.lastname,
       secondname: values.secondname,
-      snils: values.snils.replace(/[^0-9]/g, ""), // убираем всё кроме цифр
+      snils: values.snils.replace(/[^0-9]/g, ""),
     };
-
+  
     try {
       await submitNewSubject(formData);
       message.success("Субъект успешно создан");
-      if (onSubmit) onSubmit();
+      form.resetFields(); 
+      setShowModalAdd(false); // Закрываем модальное окно
+      if (onSubmit) {
+        onSubmit(); // Вызываем onSubmit, если он был передан
+      }
     } catch (error) {
-      message.error(`Ошибка: ${error.message}`);
+      
     }
   };
 
@@ -462,6 +466,8 @@ export default function ModalFizLica({ onSubmit, type }) {
   );
 }
 
+
+
 // import React, { useState, useEffect, useCallback } from "react";
 // import axios from "axios";
 // import config from "../../../config";
@@ -488,10 +494,11 @@ export default function ModalFizLica({ onSubmit, type }) {
 // import { formItemLayout } from "../../.././components/configSizeForm";
 // import { debounce } from "lodash";
 // import TextArea from "antd/es/input/TextArea";
+// import useSubjects from "../../../stores/Cabinet/useSubjects";
 
 // const { Option } = Select;
 
-// export default function ModalFizLica() {
+// export default function ModalFizLica({ onSubmit, type }) {
 //   const [documentType, setDocumentType] = useState("passport");
 //   const [manualAddressInput, setManualAddressInput] = useState(false);
 //   const [registrationAddress, setRegistrationAddress] = useState("");
@@ -501,6 +508,28 @@ export default function ModalFizLica({ onSubmit, type }) {
 //   const [searchText, setSearchText] = useState("");
 //   const [manualResidenceAddressInput, setManualResidenceAddressInput] =
 //     useState(false);
+
+//   const [form] = Form.useForm();
+//   // const useSubjectsStore = useSubjects();
+//   const { submitNewSubject } = useSubjects();
+
+//   const onFinish = async (values) => {
+//     const formData = {
+//       type: "Физическое лицо",
+//       firstname: values.firstname,
+//       lastname: values.lastname,
+//       secondname: values.secondname,
+//       snils: values.snils.replace(/[^0-9]/g, ""), // убираем всё кроме цифр
+//     };
+
+//     try {
+//       await submitNewSubject(formData);
+//       message.success("Субъект успешно создан");
+//       if (onSubmit) onSubmit();
+//     } catch (error) {
+//       message.error(`Ошибка: ${error.message}`);
+//     }
+//   };
 
 //   const onDocumentTypeChange = (value) => {
 //     setDocumentType(value);
@@ -593,7 +622,10 @@ export default function ModalFizLica({ onSubmit, type }) {
 //         );
 //         let preparingData = response.data.data.map((item) => ({
 //           label: (
-//             <Typography.Text style={{ width: "100%", whiteSpace: "none" }} type="">
+//             <Typography.Text
+//               style={{ width: "100%", whiteSpace: "none" }}
+//               type=""
+//             >
 //               {item.value}
 //             </Typography.Text>
 //           ),
@@ -625,7 +657,7 @@ export default function ModalFizLica({ onSubmit, type }) {
 //   const userEmail = authState.email || registrationState.email;
 
 //   return (
-//     <Form {...formItemLayout}>
+//     <Form form={form} {...formItemLayout} onFinish={onFinish}>
 //       <Divider orientation="center">ФИО</Divider>
 
 //       <Form.Item
@@ -672,12 +704,12 @@ export default function ModalFizLica({ onSubmit, type }) {
 //       <Form.Item
 //         label="Тип документа"
 //         name="typedocuments"
-//         rules={[
-//           {
-//             required: true,
-//             message: "Пожалуйста, укажите тип документа",
-//           },
-//         ]}
+//         // rules={[
+//         //   {
+//         //     required: true,
+//         //     message: "Пожалуйста, укажите тип документа",
+//         //   },
+//         // ]}
 //       >
 //         <Select defaultValue="passport" onChange={onDocumentTypeChange}>
 //           <Option value="passport">Паспорт гражданина РФ</Option>
@@ -889,6 +921,12 @@ export default function ModalFizLica({ onSubmit, type }) {
 //           onChange={handleEmailChange}
 //           placeholder="ivanov@yandex.ru"
 //         />
+//       </Form.Item>
+
+//       <Form.Item>
+//         <Button type="primary" onClick={() => form.submit()}>
+//           Отправить
+//         </Button>
 //       </Form.Item>
 //     </Form>
 //   );
