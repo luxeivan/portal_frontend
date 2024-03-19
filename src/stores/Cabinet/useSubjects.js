@@ -13,7 +13,6 @@ const useSubjects = create((set) => ({
   secondname: "",
   snils: "",
 
-
   fetchSubjects: async () => {
     try {
       set({ isLoadingSubjects: true });
@@ -62,10 +61,10 @@ const useSubjects = create((set) => ({
     try {
       const response = await axios.post(
         `${config.backServer}/api/cabinet/subjects`,
-        formData, 
+        formData,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           },
           withCredentials: true,
@@ -77,20 +76,17 @@ const useSubjects = create((set) => ({
           subjects: [...state.subjects, response.data.subject],
         }));
       } else {
-        throw new Error(response.data.message || 'Произошла ошибка при создании субъекта');
+        throw new Error(
+          response.data.message || "Произошла ошибка при создании субъекта"
+        );
       }
     } catch (error) {
       throw new Error(error.response?.data?.message || error.message);
     }
   },
-  
-  
-
 }));
 
 export default useSubjects;
-
-
 
 // import create from "zustand";
 // import axios from "axios";
@@ -106,7 +102,6 @@ export default useSubjects;
 //   lastName: "",
 //   secondname: "",
 //   snils: "",
-
 
 //   fetchSubjects: async () => {
 //     try {
@@ -152,27 +147,27 @@ export default useSubjects;
 //     }
 //   },
 
-  // submitNewSubject: async (firstName, lastName, secondname, snils) => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${config.backServer}/api/cabinet/subjects`,
-  //       { firstName, lastName, secondname, snils },
-  //       { withCredentials: true }
-  //     );
-  //     if (response.data.status === "ok") {
-  //       set(() => ({
-  //         firstName,
-  //         lastName,
-  //         secondname,
-  //         snils,
-  //       }));
-  //     } else {
-  //       console.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Ошибка при создании нового субъекта", error);
-  //   }
-  // },
+// submitNewSubject: async (firstName, lastName, secondname, snils) => {
+//   try {
+//     const response = await axios.post(
+//       `${config.backServer}/api/cabinet/subjects`,
+//       { firstName, lastName, secondname, snils },
+//       { withCredentials: true }
+//     );
+//     if (response.data.status === "ok") {
+//       set(() => ({
+//         firstName,
+//         lastName,
+//         secondname,
+//         snils,
+//       }));
+//     } else {
+//       console.error(response.data.message);
+//     }
+//   } catch (error) {
+//     console.error("Ошибка при создании нового субъекта", error);
+//   }
+// },
 // }));
 
 // export default useSubjects;

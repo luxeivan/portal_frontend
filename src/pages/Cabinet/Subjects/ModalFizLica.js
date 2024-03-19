@@ -38,20 +38,24 @@ export default function ModalFizLica({ onSubmit, type }) {
   const [searchText, setSearchText] = useState("");
   const [manualResidenceAddressInput, setManualResidenceAddressInput] =
     useState(false);
-  const [selectedType, setSelectedType] = useState(type || "defaultType");
 
   const [form] = Form.useForm();
-  const useSubjectsStore = useSubjects();
+  // const useSubjectsStore = useSubjects();
+  const { submitNewSubject } = useSubjects();
 
   const onFinish = async (values) => {
     const formData = {
-      name: `${values.lastname} ${values.firstname} ${values.secondname}`,
-      snils: values.snils,
+      type: "Физическое лицо",
+      firstname: values.firstname,
+      lastname: values.lastname,
+      secondname: values.secondname,
+      snils: values.snils.replace(/[^0-9]/g, ""), // убираем всё кроме цифр
     };
 
     try {
-      await useSubjectsStore.submitNewSubject(formData);
+      await submitNewSubject(formData);
       message.success("Субъект успешно создан");
+      if (onSubmit) onSubmit();
     } catch (error) {
       message.error(`Ошибка: ${error.message}`);
     }
@@ -230,12 +234,12 @@ export default function ModalFizLica({ onSubmit, type }) {
       <Form.Item
         label="Тип документа"
         name="typedocuments"
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста, укажите тип документа",
-          },
-        ]}
+        // rules={[
+        //   {
+        //     required: true,
+        //     message: "Пожалуйста, укажите тип документа",
+        //   },
+        // ]}
       >
         <Select defaultValue="passport" onChange={onDocumentTypeChange}>
           <Option value="passport">Паспорт гражданина РФ</Option>
