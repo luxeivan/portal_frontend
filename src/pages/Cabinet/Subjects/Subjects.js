@@ -130,7 +130,7 @@ export default function Subjects() {
         visible={showCategoryModal}
         onCancel={() => setShowCategoryModal(false)}
         footer={null}
-        width={650}
+        width={700}
         name="type"
       >
         <Flex gap="large">
@@ -138,10 +138,10 @@ export default function Subjects() {
             Физическое лицо
           </Button>
           <Button onClick={() => handleCategorySelect("soleProprietor")}>
-            ИП
+            Индивидуальный предприниматель
           </Button>
           <Button onClick={() => handleCategorySelect("legalEntity")}>
-            Юр.Лицо
+            Юридическое лицо
           </Button>
         </Flex>
       </Modal>
