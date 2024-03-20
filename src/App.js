@@ -28,11 +28,12 @@ import Claims from './pages/Cabinet/Claims/Claims';
 const { Content } = Layout;
 
 export default function App() {
-  const { darkMode } = useGlobal();
+  const { darkMode, checkDarkMode } = useGlobal();
   const { auth, checkJWT } = useAuth();
 
   useEffect(() => {
     checkJWT()
+    checkDarkMode()
   }, []);
 
   const { colorPrimary } = theme.useToken().token;

@@ -72,8 +72,9 @@ const useSubjects = create((set) => ({
       );
 
       if (response.status === 201) {
+        console.log(response.data)
         set((state) => ({
-          subjects: [...state.subjects, response.data.subject],
+          subjects: [...state.subjects, response.data],
         }));
         return response.data.subject;
       } else {

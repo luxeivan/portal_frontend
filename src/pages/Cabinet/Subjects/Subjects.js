@@ -131,14 +131,14 @@ export default function Subjects() {
       {subjects.length === 0 && <p>Субъекты не найдены</p>}
 
       <Modal
-        title=""
+        title="Выберите тип субъекта"
         open={showCategoryModal}
         onCancel={() => setShowCategoryModal(false)}
         footer={null}
         width={700}
         name="type"
       >
-        <Flex gap="large">
+        <Flex gap="large" wrap="wrap">
           <Button onClick={() => handleCategorySelect("individual")}>
             Физическое лицо
           </Button>

@@ -24,7 +24,12 @@
   height: 88vh;
 }
 
+
 @media only screen and (max-width: 575px) {
+  /* .labelSizeMobile {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.88);
+  } */
 
   @keyframes pulseShadow {
     0% {
@@ -64,6 +69,7 @@
     z-index: 100;
     animation: pulseShadow 1s infinite ease-in-out;
   }
+
   .menuItem {
     height: inherit;
   }
