@@ -36,7 +36,8 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
   const [residenceAddress, setResidenceAddress] = useState("");
   const [options, setOptions] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [manualResidenceAddressInput, setManualResidenceAddressInput] = useState(false);
+  const [manualResidenceAddressInput, setManualResidenceAddressInput] =
+    useState(false);
 
   const [form] = Form.useForm();
   // const useSubjectsStore = useSubjects();
@@ -60,7 +61,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
         onSubmit(); // Вызываем onSubmit, если он был передан
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -87,6 +88,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
     headers: {
       authorization: "authorization-text",
     },
+
     customRequest({ file, onSuccess, onError }) {
       const formData = new FormData();
       formData.append("file", file);
@@ -101,7 +103,8 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
         })
         .then((response) => {
           console.log("Ответ сервера", response.data);
-          const relativePath = response.data.filePath;
+          const relativePath = response.data.files[0];
+          console.log("relativePath", relativePath);
           onSuccess(relativePath, file);
           message.success(
             `${file.name} файл загружен успешно и сохранен по пути: ${relativePath}`
@@ -115,6 +118,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
     },
   };
 
+  
   const handlePhoneChange = (e) => {
     console.log("Новый номер телефона:", e.target.value);
   };
@@ -237,12 +241,12 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
       <Form.Item
         label="Тип документа"
         name="typedocuments"
-      // rules={[
-      //   {
-      //     required: true,
-      //     message: "Пожалуйста, укажите тип документа",
-      //   },
-      // ]}
+        // rules={[
+        //   {
+        //     required: true,
+        //     message: "Пожалуйста, укажите тип документа",
+        //   },
+        // ]}
       >
         <Select defaultValue="passport" onChange={onDocumentTypeChange}>
           <Option value="passport">Паспорт гражданина РФ</Option>
@@ -464,8 +468,6 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
     </Form>
   );
 }
-
-
 
 // import React, { useState, useEffect, useCallback } from "react";
 // import axios from "axios";
