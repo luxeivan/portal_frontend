@@ -14,6 +14,7 @@ import {
   Divider,
   message,
   Typography,
+  ConfigProvider,
 } from "antd";
 
 import useAuth from "../../../stores/./useAuth";
@@ -398,18 +399,6 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
         </Upload>
       </Form.Item>
       <Divider orientation="center">СНИЛС</Divider>
-      {/* <Form.Item
-        label="Номер"
-        name="snils"
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста, введите номер СНИЛС",
-          },
-        ]}
-      >
-        <Input placeholder="..." />
-      </Form.Item> */}
       <Form.Item
         label="Номер СНИЛС"
         name="snils"
@@ -421,16 +410,13 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
           () => ({
             validator(_, value) {
               if (!value) {
-                return Promise.reject(new Error('СНИЛС не может быть пустым'));
+                return Promise.reject(new Error("СНИЛС не может быть пустым"));
               }
               if (!/^\d{3}-\d{3}-\d{3}[\s-]?\d{2}$/.test(value)) {
-                return Promise.reject(new Error('Формат СНИЛС неверный'));
+                return Promise.reject(new Error("Формат СНИЛС неверный"));
               }
               return validateSnils(value);
             },
-            // validator(_, value) {
-            //   return validateSnils(value);
-            // },
           }),
         ]}
       >
@@ -455,26 +441,6 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
             form.setFieldsValue({ snils: value });
           }}
         />
-
-        {/* <Input
-          placeholder="XXX-XXX-XXX XX"
-          maxLength={14}
-          onChange={(e) => {
-            // Форматирование ввода СНИЛС
-            let value = e.target.value.replace(/[^0-9]/g, "");
-            value = value
-              .replace(
-                /(\d{3})(\d{1,3})?(\d{1,3})?(\d{1,2})?/,
-                (match, p1, p2, p3, p4) =>
-                  p2
-                    ? `${p1}-${p2}${p3 ? `-${p3}` : ""}${p4 ? `-${p4}` : ""}`
-                    : p1
-              )
-              .trim();
-            e.target.value = value; // Обновляем значение поля ввода
-            form.setFieldsValue({ snils: value }); // Обновляем значение в форме
-          }}
-        /> */}
       </Form.Item>
       <Divider orientation="center">Место регистрации</Divider>
       <Form.Item
@@ -491,9 +457,14 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
           <Input />
         ) : (
           <AutoComplete
-            options={options}
+            options={options.map((option) => ({
+              ...option,
+              label: <div style={{ whiteSpace: "normal" }}>{option.label}</div>,
+            }))}
             onSelect={onSelect}
             onSearch={onSearch}
+            popupMatchSelectWidth = {true}
+            style={{ width: "100%" }}
           >
             <TextArea
               placeholder="Начните вводить"
@@ -535,9 +506,14 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
           <Input />
         ) : (
           <AutoComplete
-            options={options}
+            options={options.map((option) => ({
+              ...option,
+              label: <div style={{ whiteSpace: "normal" }}>{option.label}</div>,
+            }))}
             onSelect={onSelect}
             onSearch={onSearch}
+            popupMatchSelectWidth = {true}
+            style={{ width: "100%" }}
           >
             <TextArea
               placeholder="Начните вводить"
@@ -589,6 +565,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
   );
 }
 
+// 21 марта в 8:37
 // import React, { useState, useEffect, useCallback } from "react";
 // import axios from "axios";
 // import config from "../../../config";
@@ -796,6 +773,38 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
 //     setManualResidenceAddressInput(e.target.checked);
 //   };
 
+//   const validateSnils = (snils) => {
+//     const error = { code: 0, message: "" };
+//     if (typeof snils !== "string") snils = "";
+//     if (!snils.length) {
+//       error.code = 1;
+//       error.message = "СНИЛС пуст";
+//     } else if (snils.length !== 14) {
+//       error.code = 2;
+//       error.message = "СНИЛС должен состоять из 11 цифр";
+//     } else {
+//       const nums = snils.replace(/[^0-9]/g, "");
+//       if (nums.length !== 11) {
+//         error.code = 3;
+//         error.message = "Неправильный формат СНИЛС";
+//       } else {
+//         let sum = 0;
+//         for (let i = 0; i < 9; i++) {
+//           sum += parseInt(nums[i]) * (9 - i);
+//         }
+//         let checkDigit = sum < 100 ? sum : sum % 101;
+//         if (checkDigit === 100) checkDigit = 0;
+//         if (checkDigit === parseInt(nums.slice(-2))) {
+//           return Promise.resolve();
+//         } else {
+//           error.code = 4;
+//           error.message = "Неверный контрольный номер";
+//         }
+//       }
+//     }
+//     return Promise.reject(error.message);
+//   };
+
 //   const userPhone = authState.phone || registrationState.phone;
 //   const userEmail = authState.email || registrationState.email;
 
@@ -958,16 +967,47 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
 //       </Form.Item>
 //       <Divider orientation="center">СНИЛС</Divider>
 //       <Form.Item
-//         label="Номер"
+//         label="Номер СНИЛС"
 //         name="snils"
 //         rules={[
 //           {
 //             required: true,
 //             message: "Пожалуйста, введите номер СНИЛС",
 //           },
+//           () => ({
+//             validator(_, value) {
+//               if (!value) {
+//                 return Promise.reject(new Error('СНИЛС не может быть пустым'));
+//               }
+//               if (!/^\d{3}-\d{3}-\d{3}[\s-]?\d{2}$/.test(value)) {
+//                 return Promise.reject(new Error('Формат СНИЛС неверный'));
+//               }
+//               return validateSnils(value);
+//             },
+//           }),
 //         ]}
 //       >
-//         <Input placeholder="..." />
+//         <Input
+//           placeholder="XXX-XXX-XXX XX"
+//           maxLength={14}
+//           onChange={(e) => {
+//             let value = e.target.value.replace(/[^0-9]/g, "");
+//             if (value.length > 9) {
+//               value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(
+//                 6,
+//                 9
+//               )} ${value.slice(9, 11)}`;
+//             } else if (value.length > 6) {
+//               value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(
+//                 6
+//               )}`;
+//             } else if (value.length > 3) {
+//               value = `${value.slice(0, 3)}-${value.slice(3)}`;
+//             }
+//             e.target.value = value;
+//             form.setFieldsValue({ snils: value });
+//           }}
+//         />
 //       </Form.Item>
 //       <Divider orientation="center">Место регистрации</Divider>
 //       <Form.Item
