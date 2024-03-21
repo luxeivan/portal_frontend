@@ -12,7 +12,7 @@ const useGlobal = create((set) => ({
     });
   },
   checkDarkMode: () => {
-    console.log(localStorage.getItem('darkMode') === '1')
+    // console.log(localStorage.getItem('darkMode') === '1')
     if (localStorage.getItem('darkMode') === '1') {
       set((state) => ({
         darkMode: true,

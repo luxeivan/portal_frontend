@@ -1,6 +1,6 @@
 import React from "react";
 import { InboxOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
+import { Form, message, Upload } from "antd";
 import config from "../../config";
 import axios from "axios";
 
@@ -87,16 +87,27 @@ const uploadProps = {
 
 export default function Uploader() {
   return (
-    <Dragger {...uploadProps}>
-      <p className="ant-upload-drag-icon">
-        <InboxOutlined />
-      </p>
-      <p className="ant-upload-text">
-        Нажмите или перетащите файл в эту область для загрузки
-      </p>
-      <p className="ant-upload-hint">
-        Поддерживается загрузка одного или нескольких файлов.
-      </p>
-    </Dragger>
+    <Form.Item
+      label="Загрузить файл"
+      name="uploader"
+      rules={[
+        {
+          required: true,
+          message: "Пожалуйста, загрузите файл",
+        },
+      ]}
+    >
+      <Dragger {...uploadProps}>
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">
+          Нажмите или перетащите файл в эту область для загрузки
+        </p>
+        <p className="ant-upload-hint">
+          Поддерживается загрузка одного или нескольких файлов.
+        </p>
+      </Dragger>
+    </Form.Item>
   );
 }
