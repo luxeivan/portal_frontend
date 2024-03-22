@@ -30,9 +30,9 @@ const { Option } = Select;
 export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
   const [documentType, setDocumentType] = useState("passport");
   const [manualAddressInput, setManualAddressInput] = useState(false);
-  const [registrationAddress, setRegistrationAddress] = useState("");
+  const [registrationAddress] = useState("");
   const [isAddressSame, setIsAddressSame] = useState(false);
-  const [residenceAddress, setResidenceAddress] = useState("");
+  const [setResidenceAddress] = useState("");
   const [options, setOptions] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [manualResidenceAddressInput, setManualResidenceAddressInput] =
@@ -530,38 +530,6 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
           </AutoComplete>
         )}
       </Form.Item>
-      {/* <Form.Item
-        label="Адрес"
-        name={"registration"}
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста, введите адрес регистрации",
-          },
-        ]}
-      >
-        {manualAddressInput ? (
-          <Input />
-        ) : (
-          <AutoComplete
-            options={options.map((option) => ({
-              ...option,
-              label: <div style={{ whiteSpace: "normal" }}>{option.label}</div>,
-            }))}
-            onSelect={onSelect}
-            onSearch={onSearch}
-            popupMatchSelectWidth={true}
-            style={{ width: "100%" }}
-          >
-            <TextArea
-              placeholder="Начните вводить"
-              style={{
-                height: 60,
-              }}
-            />
-          </AutoComplete>
-        )}
-      </Form.Item> */}
 
       {/* _______Чекбокс ручного ввода_______ */}
       <Form.Item>
@@ -596,6 +564,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
                 required: true,
                 message: "Введите город, улицу, номер дома и квартиру",
               },
+              { validator: validateAddress },
             ]}
           >
             {manualAddressInput ? (
