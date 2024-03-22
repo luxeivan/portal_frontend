@@ -127,7 +127,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, type }) {
     setSelectedRegistrationAddress(option.value);
   };
 
-  // Валидирует адрес, убеждаясь, что он был выбран из списка
+  // Валидирует адрес, убеждаясь, что он был выбран из списка :)
   const validateAddress = (rule, value) => {
     if (selectedRegistrationAddress === value) {
       return Promise.resolve();
