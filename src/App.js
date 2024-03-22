@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import axios from "axios";
 import { ConfigProvider, Flex, Layout, theme } from "antd";
 import "./App.css";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
@@ -30,6 +31,25 @@ const { Content } = Layout;
 export default function App() {
   const { darkMode, checkDarkMode } = useGlobal();
   const { auth, checkJWT } = useAuth();
+  const { toggleModal, logout } = useAuth();
+
+  //Надо проверить как работает(должен срабатывать на просроченный JWT
+  useEffect(() => {
+    const interceptorId = axios.interceptors.response.use(
+      response => response,
+      error => {
+        if (error.response && error.response.status === 401) {
+          logout();
+          toggleModal("isAuthModalOpen", true);
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(interceptorId);
+    };
+  }, [logout, toggleModal]);
 
   useEffect(() => {
     checkJWT();
@@ -62,11 +82,8 @@ export default function App() {
           <Layout>
             <Flex>
               {auth && (
-                // <Sider collapsed={true}>
                 <CabinetMenu />
-                // </Sider>
               )}
-              {/* <Layout > */}
               <Content
                 style={{ padding: "0 24px", minHeight: "calc(100vh - 120px)" }}
               >
@@ -130,7 +147,6 @@ export default function App() {
                   <Route path="*" element={<Page404 />} />
                 </Routes>
               </Content>
-              {/* </Layout> */}
             </Flex>
           </Layout>
           <AppFooter />
