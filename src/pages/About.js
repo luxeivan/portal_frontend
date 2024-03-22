@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import AppHelmet from "../components/Global/AppHelmet";
 import { Flex, Image, List, Typography, Button } from "antd";
 import styles from "./About.module.css";
@@ -10,6 +11,16 @@ const { Title, Paragraph } = Typography;
 
 export default function About() {
   const { darkMode } = useGlobal();
+  const navigate = useNavigate(); // Используем хук
+
+  // Функция для обработки клика
+  const handlePuzzleClick = () => {
+    navigate("/puzzle-game");
+  };
+
+  const handleJumpClick = () => {
+    navigate("/jump-game");
+  };
 
   return (
     <>
@@ -115,7 +126,12 @@ export default function About() {
             />
           </div>
         </Flex>
-        <Button type="dashed">Энергосберегающий пазл</Button>
+        <Button type="dashed" onClick={handlePuzzleClick}>
+          Энергосберегающие пятнашки
+        </Button>
+        {/* <Button type="dashed" onClick={handleJumpClick}>
+          МосОблДжамп
+        </Button> */}
       </div>
     </>
   );

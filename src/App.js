@@ -25,6 +25,8 @@ import Relations from "./pages/Cabinet/Relations/Relations";
 import Drafts from "./pages/Cabinet/Drafts/Drafts";
 import Checking from "./pages/Cabinet/Checking/Checking";
 import Claims from "./pages/Cabinet/Claims/Claims";
+import PuzzleGame from "./pages/PuzzleGame";
+import JumpGame from "./pages/JumpGame";
 
 const { Content } = Layout;
 
@@ -36,8 +38,8 @@ export default function App() {
   //Надо проверить как работает(должен срабатывать на просроченный JWT
   useEffect(() => {
     const interceptorId = axios.interceptors.response.use(
-      response => response,
-      error => {
+      (response) => response,
+      (error) => {
         if (error.response && error.response.status === 401) {
           logout();
           toggleModal("isAuthModalOpen", true);
@@ -81,9 +83,7 @@ export default function App() {
           <AppHeader />
           <Layout>
             <Flex>
-              {auth && (
-                <CabinetMenu />
-              )}
+              {auth && <CabinetMenu />}
               <Content
                 style={{ padding: "0 24px", minHeight: "calc(100vh - 120px)" }}
               >
@@ -145,6 +145,8 @@ export default function App() {
                   <Route path="/cabinet/claimer/:id" element={<Claims />} />
                   {/* ----------------------------------------- */}
                   <Route path="*" element={<Page404 />} />
+                  <Route path="/puzzle-game" element={<PuzzleGame />} />
+                  {/* <Route path="/jump-game" element={<JumpGame />} /> */}
                 </Routes>
               </Content>
             </Flex>
