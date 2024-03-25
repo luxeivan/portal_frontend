@@ -1,8 +1,10 @@
-import {create} from "zustand";
+import { create } from "zustand";
 import axios from "axios";
 import config from "../../config";
+import { debounce } from "lodash";
+import { Typography } from "antd";
 
-const useSubjects = create((set) => ({
+const useSubjects = create((set, get) => ({
   subjects: [],
   subject: null,
   isLoadingSubjects: false,
@@ -12,6 +14,8 @@ const useSubjects = create((set) => ({
   lastName: "",
   secondname: "",
   snils: "",
+  searchText: "",
+  addressOptions: [],
 
   fetchSubjects: async () => {
     try {
@@ -34,6 +38,7 @@ const useSubjects = create((set) => ({
       });
     }
   },
+
   fetchSubjectItem: async (id) => {
     try {
       set({ isLoadingSubjectItem: true });
@@ -61,10 +66,10 @@ const useSubjects = create((set) => ({
     try {
       const response = await axios.post(
         `${config.backServer}/api/cabinet/subjects`,
-        formData, 
+        formData,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           },
           withCredentials: true,
@@ -72,51 +77,64 @@ const useSubjects = create((set) => ({
       );
 
       if (response.status === 201) {
-        console.log(response.data)
+        console.log(response.data);
         set((state) => ({
           subjects: [...state.subjects, response.data],
         }));
         return response.data.subject;
       } else {
-        // throw new Error(response.data.message || 'Произошла ошибка при создании субъекта');
       }
     } catch (error) {
       throw error;
     }
   },
 
-  // submitNewSubject: async (formData) => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${config.backServer}/api/cabinet/subjects`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-  //         },
-  //         withCredentials: true,
-  //       }
-  //     );
+  // Действие для обновления searchText
+  setSearchText: (text) => set({ searchText: text }),
 
-  //     if (response.data.status === "ok") {
-  //       set((state) => ({
-  //         subjects: [...state.subjects, response.data.subject],
-  //       }));
-  //     } else {
-  //       throw new Error(
-  //         response.data.message || "Произошла ошибка при создании субъекта"
-  //       );
-  //     }
-  //   } catch (error) {
-  //     throw new Error(error.response?.data?.message || error.message);
-  //   }
-  // },
+  // Действие для установки адресных опций
+  setAddressOptions: (options) => set({ addressOptions: options }),
+
+  // Задержанная функция для получения адресов
+  debouncedFetchAddresses: debounce(async (searchText) => {
+    if (!searchText) {
+      get().setAddressOptions([]);
+      return;
+    }
+    try {
+      const token = localStorage.getItem("jwt");
+      const response = await axios.get(
+        `${config.backServer}/api/cabinet/get-fias`,
+        {
+          params: { searchString: searchText },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      let preparingData = response.data.data.map((item) => ({
+        label: (
+          <Typography.Text
+            style={{ width: "100%", whiteSpace: "normal" }}
+            type=""
+          >
+            {item.value}
+          </Typography.Text>
+        ),
+        value: item.value,
+      }));
+      get().setAddressOptions(preparingData);
+    } catch (error) {
+      console.error("Ошибка при получении адресов:", error);
+      get().setAddressOptions([]);
+    }
+  }, 800),
 }));
 
 export default useSubjects;
 
-// import create from "zustand";
+// import {create} from "zustand";
 // import axios from "axios";
 // import config from "../../config";
 
@@ -152,6 +170,7 @@ export default useSubjects;
 //       });
 //     }
 //   },
+
 //   fetchSubjectItem: async (id) => {
 //     try {
 //       set({ isLoadingSubjectItem: true });
@@ -175,27 +194,33 @@ export default useSubjects;
 //     }
 //   },
 
-// submitNewSubject: async (firstName, lastName, secondname, snils) => {
-//   try {
-//     const response = await axios.post(
-//       `${config.backServer}/api/cabinet/subjects`,
-//       { firstName, lastName, secondname, snils },
-//       { withCredentials: true }
-//     );
-//     if (response.data.status === "ok") {
-//       set(() => ({
-//         firstName,
-//         lastName,
-//         secondname,
-//         snils,
-//       }));
-//     } else {
-//       console.error(response.data.message);
+//   submitNewSubject: async (formData) => {
+//     try {
+//       const response = await axios.post(
+//         `${config.backServer}/api/cabinet/subjects`,
+//         formData,
+//         {
+//           headers: {
+//             'Content-Type': 'application/json',
+//             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+//           },
+//           withCredentials: true,
+//         }
+//       );
+
+//       if (response.status === 201) {
+//         console.log(response.data)
+//         set((state) => ({
+//           subjects: [...state.subjects, response.data],
+//         }));
+//         return response.data.subject;
+//       } else {
+//       }
+//     } catch (error) {
+//       throw error;
 //     }
-//   } catch (error) {
-//     console.error("Ошибка при создании нового субъекта", error);
-//   }
-// },
+//   },
+
 // }));
 
 // export default useSubjects;
