@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import {
-  Flex,
   Input,
   Form,
-  Select,
   AutoComplete,
   Checkbox,
   Button,
@@ -21,12 +19,10 @@ import TextArea from "antd/es/input/TextArea";
 
 import Uploader from "../../../components/FormComponents/Uploader";
 import FullName from "../../../components/Global/User/FullName";
-// import TextInput from "../../../components/FormComponents/TextInput"; ниже пробовал
-
-const { Option } = Select;
+import ConfirmationDocument from "../../../components/Global/User/ConfirmationDocument";
 
 export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
-  const [documentType, setDocumentType] = useState("passport");
+  const [ setDocumentType ] = useState("passport");
   const [searchText] = useState("");
   const [manualAddressInput, setManualAddressInput] = useState(false);
   const [registrationAddress] = useState("");
@@ -39,7 +35,6 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
 
   const [manualResidenceAddressInput, setManualResidenceAddressInput] =
     useState(false);
-  const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
   const [fileList, setFileList] = useState([]);
   const [selectedRegistrationAddress, setSelectedRegistrationAddress] =
     useState("");
@@ -84,10 +79,6 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
     }
   };
 
-  // Изменяет тип документа в зависимости от выбора пользователя
-  const onDocumentTypeChange = (value) => {
-    setDocumentType(value);
-  };
   // Состояние авторизации пользователя
   const authState = useAuth((state) => ({
     phone: state.phone,
@@ -123,20 +114,6 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
     } else {
       setResidenceAddress("");
     }
-  };
-
-  // Обрабатывает изменения в коде подразделения, форматируя его
-  const handleKodPodrazdeleniaChange = (e) => {
-    const { value } = e.target;
-    const onlyNums = value.replace(/[^\d]/g, "");
-    let formattedKod = "";
-
-    if (onlyNums.length <= 3) {
-      formattedKod = onlyNums;
-    } else if (onlyNums.length > 3 && onlyNums.length <= 6) {
-      formattedKod = `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
-    }
-    setKodPodrazdelenia(formattedKod);
   };
 
   // Устанавливает адрес, выбранный из списка
@@ -229,133 +206,10 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
         typedocuments: "passport",
       }}
     >
+      {/* _______ФИО_______ */}
       <FullName />
-      
-      <Divider orientation="center">Подтверждающий документ</Divider>
-
-      {/* _______Тип подтверждающего документа_______ */}
-      <Form.Item label="Тип документа" name="typedocuments">
-        <Select onChange={onDocumentTypeChange}>
-          <Option value="passport">Паспорт гражданина РФ</Option>
-          <Option value="other">Иной документ</Option>
-        </Select>
-      </Form.Item>
-
-      {/* _______Паспорт_______ */}
-      {documentType === "passport" && (
-        <>
-          <Flex gap="middle" vertical>
-            {/* _______Серия паспорта_______ */}
-            <Form.Item
-              label="Серия паспорта"
-              name="seriaspasport"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, укажите серию паспорта",
-                },
-              ]}
-            >
-              <Input maxLength={4} pattern="\d*" placeholder="1234" />
-            </Form.Item>
-
-            {/* _______Номер паспорта_______ */}
-            <Form.Item
-              label="Номер паспорта"
-              name="numberpasport"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, укажите номер паспорта",
-                },
-              ]}
-            >
-              <Input maxLength={6} pattern="\d*" placeholder="567890" />
-            </Form.Item>
-
-            {/* _______Код подразделения_______ */}
-            <Form.Item
-              label="Код подразделения"
-              name="kodpodrazdelenia"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, укажите код подразделения",
-                },
-                () => ({
-                  validator(_, value) {
-                    if (!value || /^\d{3}-\d{3}$/.test(value)) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error("Формат кода подразделения должен быть 111-111")
-                    );
-                  },
-                }),
-              ]}
-            >
-              <Input
-                maxLength={7}
-                placeholder="123-456"
-                value={kodPodrazdelenia}
-                onChange={handleKodPodrazdeleniaChange}
-              />
-            </Form.Item>
-
-            {/* _______Кем выдан_______ */}
-            <Form.Item
-              label="Кем выдан"
-              name="kemvidan"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, укажите кем выдан паспорт",
-                },
-              ]}
-            >
-              <TextArea
-                placeholder="..."
-                style={{
-                  height: 60,
-                }}
-              />
-            </Form.Item>
-          </Flex>
-        </>
-      )}
-
-      {/* _______Иной документ_______ */}
-      {documentType === "other" && (
-        <>
-          {/* _______Тип документа_______ */}
-          <Form.Item label="Тип документа">
-            <Select>
-              <Option value="type1">Тип1</Option>
-              <Option value="type2">Тип2</Option>
-            </Select>
-          </Form.Item>
-
-          {/* _______Реквизиты документа_______ */}
-          <Form.Item
-            label="Реквизиты документа"
-            name="recvizitydocumenta"
-            rules={[
-              {
-                required: true,
-                message: "Пожалуйста, укажите реквизиты документа",
-              },
-            ]}
-          >
-            <TextArea
-              placeholder="..."
-              style={{
-                height: 60,
-              }}
-            />
-          </Form.Item>
-        </>
-      )}
-
+      {/* _______Подтверждающий документ_______ */}
+      <ConfirmationDocument />
       {/* _______Загрузка_______ */}
       <Uploader
         fileList={fileList}

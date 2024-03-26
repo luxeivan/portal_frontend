@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Form, Divider } from "antd";
 
-export default function FullName({ onSubmit, setShowModalAdd }) {
+export default function FullName() {
   return (
     <>
       <Divider orientation="center">ФИО</Divider>
