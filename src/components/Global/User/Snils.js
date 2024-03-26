@@ -4,15 +4,12 @@ import { Input, Form, Divider } from "antd";
 
 import useSubjects from "../../../stores/Cabinet/useSubjects";
 
-export default function Snils({ onSubmit, setShowModalAdd }) {
-  const [form] = Form.useForm();
-
+export default function Snils({ form }){
   const { validateSnils } = useSubjects();
 
   return (
     <>
       <Divider orientation="center">СНИЛС</Divider>
-      {/* _______СНИЛС_______ */}
       <Form.Item
         label="Номер СНИЛС"
         name="snils"

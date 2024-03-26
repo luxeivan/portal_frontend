@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Input, Form, Button, Divider, message } from "antd";
+import { Form, Button, message } from "antd";
 
 import useAuth from "../../../stores/./useAuth";
 import useRegistration from "../../.././stores/useRegistration";
@@ -13,6 +13,7 @@ import FullName from "../../../components/Global/User/FullName";
 import ConfirmationDocument from "../../../components/Global/User/ConfirmationDocument";
 import Snils from "../../../components/Global/User/Snils";
 import Address from "../../../components/Global/User/Address";
+import Contacts from "../../../components/Global/User/Contacts";
 
 export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
   const [searchText] = useState("");
@@ -55,20 +56,6 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
     email: state.email,
   }));
 
-  const handlePhoneChange = (e) => {
-    let value = e.target.value.replace(/\D/g, "");
-    value = value.replace(
-      /^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2}).*/,
-      "+$1 ($2) $3-$4-$5"
-    );
-    value = value.substring(0, 18);
-    form.setFieldsValue({ phone: value });
-  };
-
-  const handleEmailChange = (e) => {
-    console.log("Новый email:", e.target.value);
-  };
-
   useEffect(() => {
     debouncedFetchAddresses(searchText);
   }, [searchText, debouncedFetchAddresses]);
@@ -97,39 +84,11 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
         onChange={({ fileList: newFileList }) => setFileList(newFileList)}
       />
       {/* _______СНИЛС_______ */}
-      <Snils />
+      <Snils form={form} />
       {/* _______Блок с адресами_______ */}
       <Address />
-
-      <Divider orientation="center">Другое</Divider>
-
-      {/* _______Телефон_______ */}
-      <Form.Item
-        label="Мобильный номер телефона"
-        name="phone"
-        rules={[{ required: true, message: "Введите номер телефона" }]}
-      >
-        <Input
-          onChange={handlePhoneChange}
-          placeholder="Начните вводить номер с цифры 7..."
-          maxLength={18}
-        />
-      </Form.Item>
-
-      {/* _______Почта_______ */}
-      <Form.Item
-        label="Адрес электронной почты"
-        name="email"
-        rules={[
-          { required: true, message: "Введите email" },
-          {
-            type: "email",
-            message: "Пожалуйста, введите корректный email",
-          },
-        ]}
-      >
-        <Input onChange={handleEmailChange} placeholder="ivanov@yandex.ru" />
-      </Form.Item>
+      {/* _______Блок с телефоном и почтой_______ */}
+      <Contacts form={form}/>
 
       {/* _______Кнопка отправки формы_______ */}
       <Form.Item>
