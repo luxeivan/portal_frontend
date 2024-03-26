@@ -6,7 +6,7 @@ import TextArea from "antd/es/input/TextArea";
 
 const { Option } = Select;
 
-export default function ConfirmationDocument({ onSubmit, setShowModalAdd }) {
+export default function ConfirmationDocument() {
   const [documentType, setDocumentType] = useState("passport");
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
 
