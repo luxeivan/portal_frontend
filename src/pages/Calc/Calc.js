@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import AppHelmet from "../components/Global/AppHelmet";
+import AppHelmet from "../../components/Global/AppHelmet";
 import { Image, Typography } from "antd";
-import imgCalc from "../img/calc/calculator.webp";
+import imgCalc from "../../img/calc/calculator.webp";
 import styles from "./Calc.module.css";
 
 const { Title } = Typography;
