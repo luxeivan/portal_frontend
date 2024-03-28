@@ -113,6 +113,7 @@ const useAuth = create((set) => {
     
     checkJWT: async () => {
       let validJwt = false;
+      console.log(validJwt)
       if (localStorage.getItem("jwt")) {
         const res = await axios.post(`${config.backServer}/api/auth/checkjwt`, {
           jwt: localStorage.getItem("jwt"),
