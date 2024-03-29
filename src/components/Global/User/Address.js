@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  Input,
-  Form,
-  AutoComplete,
-  Checkbox,
-  Divider,
-} from "antd";
+import { Input, Form, AutoComplete, Checkbox, Divider } from "antd";
 
 import useSubjects from "../../../stores/Cabinet/useSubjects";
 import TextArea from "antd/es/input/TextArea";
@@ -135,7 +129,7 @@ export default function Address({ onSubmit, setShowModalAdd }) {
         // Автокомплит для адреса, если ввод не ручной
         <Form.Item
           label="Адрес"
-          name={"registration"}
+          name={"addressRegistration"}
           rules={[
             {
               required: true,
@@ -204,7 +198,7 @@ export default function Address({ onSubmit, setShowModalAdd }) {
           ) : (
             <Form.Item
               label="Адрес проживания"
-              name="livingAddress"
+              name="addressResidential"
               rules={[
                 {
                   required: true,

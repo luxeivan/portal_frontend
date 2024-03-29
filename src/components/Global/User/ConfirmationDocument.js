@@ -48,7 +48,7 @@ export default function ConfirmationDocument() {
             {/* _______Серия паспорта_______ */}
             <Form.Item
               label="Серия паспорта"
-              name="seriaspasport"
+              name="serialPassport"
               rules={[
                 {
                   required: true,
@@ -62,7 +62,7 @@ export default function ConfirmationDocument() {
             {/* _______Номер паспорта_______ */}
             <Form.Item
               label="Номер паспорта"
-              name="numberpasport"
+              name="numberPassport"
               rules={[
                 {
                   required: true,

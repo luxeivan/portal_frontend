@@ -22,7 +22,7 @@ export default function Contacts({ form }) {
       <Divider orientation="center">Другое</Divider>
       {/* _______Телефон_______ */}
       <Form.Item
-        label="Мобильный номер телефона"
+        label="Мобильный телефон"
         name="phone"
         rules={[{ required: true, message: "Введите номер телефона" }]}
       >
@@ -34,7 +34,7 @@ export default function Contacts({ form }) {
       </Form.Item>
       {/* _______Почта_______ */}
       <Form.Item
-        label="Адрес электронной почты"
+        label="Электронная почта"
         name="email"
         rules={[
           { required: true, message: "Введите email" },
