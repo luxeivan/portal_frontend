@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 
 import { Form, Button, message } from "antd";
@@ -29,6 +30,14 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       lastname: values.lastname,
       secondname: values.secondname,
       snils: values.snils.replace(/[^0-9]/g, ""),
+      typeDoc: values.typedocuments,
+      serialPassport: values.serialPassport,
+      numberPassport: values.numberPassport,
+      fileDoc: values.fileDoc,
+      addressRegistration: values.addressRegistration,
+      addressResidential: values.addressResidential,
+      addressRegistrationFias: values.addressRegistrationFias,
+      addressResidentialFias: values.addressResidentialFias,
     };
 
     try {
@@ -77,18 +86,19 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       {/* _______ФИО_______ */}
       <FullName />
       {/* _______Подтверждающий документ_______ */}
-      <ConfirmationDocument />
+      <ConfirmationDocument form={form}/>
       {/* _______Загрузка_______ */}
       <Uploader
         fileList={fileList}
         onChange={({ fileList: newFileList }) => setFileList(newFileList)}
+        form={form}
       />
       {/* _______СНИЛС_______ */}
       <Snils form={form} />
       {/* _______Блок с адресами_______ */}
-      <Address />
+      <Address form={form} />
       {/* _______Блок с телефоном и почтой_______ */}
-      <Contacts form={form}/>
+      <Contacts form={form} />
 
       {/* _______Кнопка отправки формы_______ */}
       <Form.Item>
