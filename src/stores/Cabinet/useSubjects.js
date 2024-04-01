@@ -166,6 +166,8 @@ const useSubjects = create((set, get) => ({
 
 export default useSubjects;
 
+
+
 // import { create } from "zustand";
 // import axios from "axios";
 // import config from "../../config";
@@ -283,15 +285,12 @@ export default useSubjects;
 //       );
 //       let preparingData = response.data.data.map((item) => ({
 //         label: (
-//           <Typography.Text
-//             style={{ width: "100%", whiteSpace: "normal" }}
-//             type=""
-//           >
+//           <Typography.Text style={{ width: "100%", whiteSpace: "normal" }}>
 //             {item.value}
-//             {console.log(item)}
 //           </Typography.Text>
 //         ),
 //         value: item.value,
+//         fias_id: item.data.fias_id 
 //       }));
 //       get().setAddressOptions(preparingData);
 //     } catch (error) {
