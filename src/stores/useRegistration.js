@@ -14,7 +14,6 @@ const useRegistration = create((set, get) => ({
   codeRequested: false,
   emailVerified: false,
   codeRequestedEmail: false,
-  codeRequested: false,
 
   setRegistrationStep: (step) => set(() => ({ registrationStep: step })),
   setPhone: (phone) => set(() => ({ phone })),

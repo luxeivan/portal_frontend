@@ -5,6 +5,7 @@ import axios from "axios";
 const useServices = create((set) => ({
     services: [],
     serviceItem: null,
+    
     fetchServices: async (url, type) => {
         set((state) => ({ services: [] }))
         const res = await axios.get(`${config.apiServer}/api/${url}?filters[type][$eq]=${type}&populate[0]=icon`)

@@ -38,6 +38,7 @@ export default function AppHeader() {
 
   const handleLogout = () => {
     logout();
+    navigate('/');
   };
  
   const handlerChangeAuth = () => {

@@ -1,0 +1,40 @@
+.puzzleContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    margin: auto;
+    width: 200px;
+  }
+  
+  .puzzlePiece {
+    background-color: #1890ff;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    width: 45px;
+    cursor: pointer;
+    font-size: 24px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .emptyPiece {
+    visibility: hidden; 
+  }
+  
+  .puzzlePiece:hover {
+    background-color: #1077e0; 
+  }
+  
+  @media (min-width: 600px) {
+    .puzzleContainer {
+      width: 300px;
+    }
+    .puzzlePiece {
+      height: 70px;
+      width: 70px;
+      font-size: 28px;
+    }
+  }
+  

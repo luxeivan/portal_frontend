@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import AppHelmet from "../components/Global/AppHelmet";
+import AppHelmet from "../../components/Global/AppHelmet";
 import { Card, Flex, Typography, Image } from "antd";
 import { Link, useParams } from "react-router-dom";
-import useServices from "../stores/useServices";
+import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
-import config from "../config";
+import config from "../../config";
 const { Title, Text } = Typography;
 
 export default function Services() {
