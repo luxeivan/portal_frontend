@@ -45,7 +45,7 @@ export default function Uploader({ form }) {
   return (
     <Form.Item
       label="Загрузить файл"
-      name="fileDocr"
+      name="fileDoc"
       rules={[
         {
           required: true,
