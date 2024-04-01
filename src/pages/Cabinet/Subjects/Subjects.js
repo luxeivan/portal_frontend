@@ -87,6 +87,11 @@ export default function Subjects() {
     }
   };
 
+  const handleClose = () => {
+    // Здесь меняем состояние, которое контролирует отображение модального окна
+    setShowModalAdd(false); // предполагаемое имя состояния для модального окна
+  };
+
   return (
     <div>
       <Title level={1}>Субъекты</Title>
@@ -126,14 +131,14 @@ export default function Subjects() {
       {subjects.length === 0 && <p>Субъекты не найдены</p>}
 
       <Modal
-        title=""
-        visible={showCategoryModal}
+        title="Выберите тип субъекта"
+        open={showCategoryModal}
         onCancel={() => setShowCategoryModal(false)}
         footer={null}
         width={700}
         name="type"
       >
-        <Flex gap="large">
+        <Flex gap="large" wrap="wrap">
           <Button onClick={() => handleCategorySelect("individual")}>
             Физическое лицо
           </Button>
@@ -146,15 +151,18 @@ export default function Subjects() {
         </Flex>
       </Modal>
 
-      {/* Модалка для Физ.Лиц */}
       <Modal
         title="Добавить физическое лицо"
-        visible={showModalAdd}
+        open={showModalAdd}
         onCancel={handleCancelModalAdd}
         width={650}
         footer={null}
       >
-        <ModalFizLica onSubmit={handleOkModalAdd} type={selectedType} />
+        <ModalFizLica
+          onSubmit={handleOkModalAdd}
+          setShowModalAdd={setShowModalAdd}
+          type={selectedType}
+        />
       </Modal>
 
       {/* ------------------------------------------------- */}

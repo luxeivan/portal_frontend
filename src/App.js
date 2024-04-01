@@ -1,38 +1,61 @@
-import React, { useEffect } from 'react';
-import { ConfigProvider, Flex, Layout, theme } from 'antd';
-import './App.css';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import Main from './pages/Main';
-import AppHeader from './components/Global/AppHeader';
-import AppFooter from './components/Global/AppFooter';
-import Calc from './pages/Calc';
-import About from './pages/About';
-import Services from './pages/Services';
-import useGlobal from './stores/useGlobal';
-import useAuth from './stores/useAuth';
-import CabinetMenu from './components/Cabinet/CabinetMenu';
-import AuthModal from './components/Global/Auth/AuthModal/AuthModal';
-import CodeModal from './components/Global/Auth/Login/CodeModal';
-import ServiceItem from './pages/ServiceItem';
-import Page404 from './pages/Page404';
-import Container from './components/Container';
-import NewClaim from './pages/Cabinet/NewClaim';
-import Profile from './pages/Cabinet/Profile/Profile';
-import Subjects from './pages/Cabinet/Subjects/Subjects';
-import Objects from './pages/Cabinet/Objects/Objects';
-import Relations from './pages/Cabinet/Relations/Relations';
-import Drafts from './pages/Cabinet/Drafts/Drafts';
-import Checking from './pages/Cabinet/Checking/Checking';
-import Claims from './pages/Cabinet/Claims/Claims';
+import React, { useEffect } from "react";
+import axios from "axios";
+import { ConfigProvider, Flex, Layout, theme } from "antd";
+import "./App.css";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+import Main from "./pages/Main";
+import AppHeader from "./components/Global/AppHeader";
+import AppFooter from "./components/Global/AppFooter";
+import Calc from "./pages/Calc/Calc";
+import About from "./pages/About/About";
+import Services from "./pages/Services/Services";
+import useGlobal from "./stores/useGlobal";
+import useAuth from "./stores/useAuth";
+import CabinetMenu from "./components/Cabinet/CabinetMenu";
+import AuthModal from "./components/Global/Auth/AuthModal/AuthModal";
+import CodeModal from "./components/Global/Auth/Login/CodeModal";
+import ServiceItem from "./pages/ServiceItem/ServiceItem";
+import Page404 from "./pages/Page404";
+import Container from "./components/Container";
+import NewClaim from "./pages/Cabinet/NewClaim";
+import Profile from "./pages/Cabinet/Profile/Profile";
+import Subjects from "./pages/Cabinet/Subjects/Subjects";
+import Objects from "./pages/Cabinet/Objects/Objects";
+import Relations from "./pages/Cabinet/Relations/Relations";
+import Drafts from "./pages/Cabinet/Drafts/Drafts";
+import Checking from "./pages/Cabinet/Checking/Checking";
+import Claims from "./pages/Cabinet/Claims/Claims";
+import PuzzleGame from "./pages/Games/PuzzleGame";
+// import JumpGame from "./pages/Game/JumpGame";
 
 const { Content } = Layout;
 
 export default function App() {
-  const { darkMode } = useGlobal();
+  const { darkMode, checkDarkMode } = useGlobal();
   const { auth, checkJWT } = useAuth();
+  const { toggleModal, logout } = useAuth();
+
+  //Надо проверить как работает(должен срабатывать на просроченный JWT
+  useEffect(() => {
+    const interceptorId = axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          logout();
+          toggleModal("isAuthModalOpen", true);
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(interceptorId);
+    };
+  }, [logout, toggleModal]);
 
   useEffect(() => {
-    checkJWT()
+    checkJWT();
+    checkDarkMode();
   }, []);
 
   const { colorPrimary } = theme.useToken().token;
@@ -49,8 +72,8 @@ export default function App() {
           colorPrimary: "#0061aa",
           colorInfo: "#F37021",
           myCustomColor: "#00ffff",
-          customfontSizeIcon: "16px"
-        }
+          customfontSizeIcon: "16px",
+        },
       }}
     >
       <Layout>
@@ -58,38 +81,74 @@ export default function App() {
           <AuthModal />
           <CodeModal />
           <AppHeader />
-          <Layout >
+          <Layout>
             <Flex>
-
-              {auth && (
-                // <Sider collapsed={true}>
-                <CabinetMenu />
-                // </Sider>
-              )}
-              {/* <Layout > */}
-              <Content style={{ padding: '0 24px', minHeight: "calc(100vh - 120px)" }}>
+              {auth && <CabinetMenu />}
+              <Content
+                style={{ padding: "0 24px", minHeight: "calc(100vh - 120px)" }}
+              >
                 <Routes>
-                  <Route path='/' element={<Main />} />
-                  <Route path='/services' element={<Container><Services /></Container>} />
-                  <Route path='/services/:level2' element={<Container><Services /></Container>} />
-                  <Route path='/services/:level2/:level3' element={<Container><Services /></Container>} />
-                  <Route path='/services/:level2/:level3/:id' element={<Container><ServiceItem /></Container>} />
-                  <Route path='/about' element={<About />} />
-                  <Route path='/calc' element={<Calc />} />
+                  <Route path="/" element={<Main />} />
+                  <Route
+                    path="/services"
+                    element={
+                      <Container>
+                        <Services />
+                      </Container>
+                    }
+                  />
+                  <Route
+                    path="/services/:level2"
+                    element={
+                      <Container>
+                        <Services />
+                      </Container>
+                    }
+                  />
+                  <Route
+                    path="/services/:level2/:level3"
+                    element={
+                      <Container>
+                        <Services />
+                      </Container>
+                    }
+                  />
+                  <Route
+                    path="/services/:level2/:level3/:id"
+                    element={
+                      <Container>
+                        <ServiceItem />
+                      </Container>
+                    }
+                  />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/calc" element={<Calc />} />
                   {/* ----------------------------------------- */}
-                  <Route path='/cabinet/new-claim/:url/:id' element={auth ? <Container><NewClaim /></Container> : <Calc />} />
-                  <Route path='/cabinet/profile' element={<Profile />} />
-                  <Route path='/cabinet/subjects' element={<Subjects />} />
-                  <Route path='/cabinet/relations' element={<Relations />} />
-                  <Route path='/cabinet/objects' element={<Objects />} />
-                  <Route path='/cabinet/drafts' element={<Drafts />} />
-                  <Route path='/cabinet/checking' element={<Checking />} />
-                  <Route path='/cabinet/claimer/:id' element={<Claims />} />
+                  <Route
+                    path="/cabinet/new-claim/:url/:id"
+                    element={
+                      auth ? (
+                        <Container>
+                          <NewClaim />
+                        </Container>
+                      ) : (
+                        <Calc />
+                      )
+                    }
+                  />
+                  <Route path="/cabinet/profile" element={<Profile />} />
+                  <Route path="/cabinet/subjects" element={<Subjects />} />
+                  <Route path="/cabinet/relations" element={<Relations />} />
+                  <Route path="/cabinet/objects" element={<Objects />} />
+                  <Route path="/cabinet/drafts" element={<Drafts />} />
+                  <Route path="/cabinet/checking" element={<Checking />} />
+                  <Route path="/cabinet/claimer/:id" element={<Claims />} />
                   {/* ----------------------------------------- */}
-                  <Route path='*' element={<Page404 />} />
+                  <Route path="*" element={<Page404 />} />
+                  <Route path="/puzzle-game" element={<PuzzleGame />} />
+                  {/* <Route path="/jump-game" element={<JumpGame />} /> */}
                 </Routes>
               </Content>
-              {/* </Layout> */}
             </Flex>
           </Layout>
           <AppFooter />
@@ -97,4 +156,4 @@ export default function App() {
       </Layout>
     </ConfigProvider>
   );
-};
+}

@@ -2,6 +2,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons'
 import { Form, Input, Typography, Popover, theme } from 'antd'
 import React from 'react'
 import StrapiRichText from '../StrapiRichText'
+import { formItemLayout } from "../../components/configSizeForm";
 
 export default function TextInput({ displayName, name, shortDescription, required, description, depends }) {
     const { colorInfo, customfontSizeIcon } = theme.useToken().token;
@@ -10,6 +11,7 @@ export default function TextInput({ displayName, name, shortDescription, require
     if (show)
         return (
             <Form.Item
+            {...formItemLayout}
                 name={name}
                 label={
                     <Typography.Text>{displayName}

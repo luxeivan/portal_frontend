@@ -6,7 +6,7 @@ export default function SceletonCard({ width = 250, height = "100%" }) {
     <Flex wrap="wrap" gap="large">
       {[1, 2, 3].map((Item) => (
         <Card
-          key={Item.uniqueId}
+          key={Item}
           loading={true}
           styles={{ body: { width, height } }}
         ></Card>

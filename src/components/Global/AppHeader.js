@@ -38,6 +38,7 @@ export default function AppHeader() {
 
   const handleLogout = () => {
     logout();
+    navigate('/');
   };
  
   const handlerChangeAuth = () => {
@@ -52,12 +53,12 @@ export default function AppHeader() {
   } = theme.useToken();
   const rightMenuArea = auth ? (
     <Space size={'small'}>
-      <Switch onChange={toggleDarkMode} checkedChildren={<SunOutlined />} unCheckedChildren={<MoonOutlined />} />
+      <Switch onChange={toggleDarkMode} checkedChildren={<SunOutlined />} unCheckedChildren={<MoonOutlined />} value={darkMode}/>
       <Button onClick={handleLogout}>Выйти</Button>
     </Space>
   ) : (
     <Space size={'small'}>
-      <Switch onChange={toggleDarkMode} checkedChildren={<SunOutlined />} unCheckedChildren={<MoonOutlined />} />
+      <Switch onChange={toggleDarkMode} checkedChildren={<SunOutlined />} unCheckedChildren={<MoonOutlined />} value={darkMode}/>
       <Button onClick={handlerChangeAuth}>Кабинет</Button>
     </Space>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Flex, Menu, Typography, ConfigProvider } from "antd";
+import { Button, Flex, Menu, Typography, ConfigProvider, theme } from "antd";
 import {
   UserOutlined,
   ProfileOutlined,
@@ -18,27 +18,32 @@ import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
-
+export default function CabinetMenu() {
+  const { colorPrimaryText } = theme.useToken().token
+const iconStyle = {
+  // color: "rgb(227, 112, 33)"
+  color: "gray"
+}
 const menuItems = [
   {
     key: "/services",
-    icon: <PlusSquareOutlined className={styles.icon} />,
-    label: "Новая",
+    icon: <PlusSquareOutlined className={styles.icon} style={iconStyle} />,
+    label: <Text className={styles.labelSizeMobile}>Новая</Text>,
   },
   {
     key: "/cabinet/drafts",
-    icon: <FolderOpenOutlined className={styles.icon} />,
-    label: "Черновики",
+    icon: <FolderOpenOutlined className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>Черновики</Text>,
   },
   {
     key: "/cabinet/checking",
-    icon: <CheckCircleOutlined className={styles.icon} />,
-    label: "На проверке",
+    icon: <CheckCircleOutlined className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>На проверке</Text>,
   },
   {
     key: "submenu",
-    icon: <DownOutlined className={styles.icon} />,
-    label: 'Заявки',
+    icon: <DownOutlined className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>Заявки</Text>,
     children: [
       {
         key: "/cabinet/claimer/1",
@@ -59,26 +64,26 @@ const menuItems = [
   },
   {
     key: "/cabinet/subjects",
-    icon: <UserOutlined className={styles.icon} />,
-    label: "Субъекты",
+    icon: <UserOutlined className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>Субъекты</Text>,
   },
   {
     key: "/cabinet/relations",
-    icon: <RetweetOutlined className={styles.icon} />,
-    label: "Доверенности",
+    icon: <RetweetOutlined className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>Доверенности</Text>,
   },
   {
     key: "/cabinet/objects",
-    icon: <EnvironmentOutlined className={styles.icon} />,
-    label: "Объекты",
+    icon: <EnvironmentOutlined className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>Объекты</Text>,
   },
   {
     type: 'divider',
   },
   {
     key: "/cabinet/profile",
-    icon: <ProfileOutlined className={styles.icon} />,
-    label: "Профиль",
+    icon: <ProfileOutlined className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>Профиль</Text>,
   },
 ];
 const menuItemsMobile = menuItems.map(item => {
@@ -97,10 +102,9 @@ const menuItemsMobile = menuItems.map(item => {
   }
 })
 
-export default function CabinetMenu() {
   const navigator = useNavigate()
   const [collapsed, setCollapsed] = useState(false);
-
+  
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
@@ -113,26 +117,7 @@ export default function CabinetMenu() {
 
     <div className={styles.menuContainer}>
 
-      <div className={styles.desktop}>
-        <Button
-          type="secondary"
-          onClick={toggleCollapsed}
-          style={{
-            marginBottom: 16,
-          }}
-        >
-          {collapsed ? (
-            <Text>
-              <MenuUnfoldOutlined />
-              Развернуть
-            </Text>
-          ) : (
-            <Text>
-              <MenuFoldOutlined />
-              Свернуть
-            </Text>
-          )}
-        </Button>
+      <div >
       </div>
       {/* ----------------------------------------------------------------------- */}
       <ConfigProvider
@@ -140,7 +125,7 @@ export default function CabinetMenu() {
           components: {
             Menu: {
               itemHeight: 60,
-              iconSize: 30,
+              iconSize: 24,
               itemPaddingInline: 10,
               dropdownWidth: 100
             },
@@ -152,12 +137,12 @@ export default function CabinetMenu() {
             <Menu
               style={{ justifyContent: "space-between" }}
               selectable={false}
-              inlineCollapsed={collapsed}
+              // inlineCollapsed={collapsed}
               mode={"horizontal"}
               items={menuItemsMobile}
               overflowedIndicator={<Flex vertical align="center" justify="center" className={styles.menuItem}>
                 <div>
-                  <Text><MenuOutlined /></Text>
+                  <Text><MenuOutlined style={iconStyle}/></Text>
                 </div>
                 <Text>Еще</Text>
               </Flex>}
@@ -183,12 +168,32 @@ export default function CabinetMenu() {
 
         <div className={styles.desktop}>
           <Flex vertical className={styles.menuItem}>
+              {/* <Button
+                type="secondary"
+                onClick={toggleCollapsed}
+                style={{
+                  marginBottom: 16,
+                }}
+              >
+                {collapsed ? (
+                  <Text>
+                    <MenuUnfoldOutlined />
+                    Развернуть
+                  </Text>
+                ) : (
+                  <Text>
+                    <MenuFoldOutlined />
+                    Свернуть
+                  </Text>
+                )}
+              </Button> */}
             <Menu
               selectable={false}
               inlineCollapsed={collapsed}
               mode={"inline"}
               items={menuItems}
               onClick={handlerMenu}
+              style={{height:"100%"}}
             />
           </Flex>
         </div>
