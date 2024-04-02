@@ -1,6 +1,6 @@
 import React from "react";
 import { Divider } from "antd";
-import TextInput from "../../FormComponents/TextInput"; // Предполагается, что путь до компонента TextInput верный
+import TextInput from "../../FormComponents/TextInput"; 
 
 export default function FullName() {
   return (
@@ -11,7 +11,7 @@ export default function FullName() {
         name="lastname"
         required={true}
         shortDescription="Иванов"
-        description={["Введите вашу фамилию полностью"]} // Теперь это массив
+        description={["Введите вашу фамилию полностью"]} 
       />
 
       <TextInput
@@ -19,14 +19,14 @@ export default function FullName() {
         name="firstname"
         required={true}
         shortDescription="Иван"
-        description={["Введите ваше имя полностью"]} // Теперь это массив
+        description={["Введите ваше имя полностью"]} 
       />
 
       <TextInput
         displayName="Отчество"
         name="secondname"
         shortDescription="Иванович"
-        description={["Введите ваше отчество полностью (если имеется)"]} // Теперь это массив
+        description={["Введите ваше отчество полностью (если имеется)"]} 
       />
     </>
   );
