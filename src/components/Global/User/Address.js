@@ -13,8 +13,24 @@ export default function Address({ form }) {
   const [residenceAddress, setResidenceAddress] = useState(""); // я х.з почему, но без residenceAddress всё крашится
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [region, setRegion] = useState("");
+  const [area, setArea] = useState("");
+  const [locality, setLocality] = useState("");
   const [houseNumber, setHouseNumber] = useState("");
+  const [frame, setFrame] = useState("");
   const [apartmentNumber, setApartmentNumber] = useState("");
+  const [building, setBuilding] = useState("");
+  const [cityResidence, setCityResidence] = useState("");
+  const [streetResidence, setStreetResidence] = useState("");
+  const [postcodeResidence, setPostcodeResidence] = useState("");
+  const [regionResidence, setRegionResidence] = useState("");
+  const [areaResidence, setAreaResidence] = useState("");
+  const [localityResidence, setLocalityResidence] = useState("");
+  const [houseNumberResidence, setHouseNumberResidence] = useState("");
+  const [frameResidence, setFrameResidence] = useState("");
+  const [apartmentNumberResidence, setApartmentNumberResidence] = useState("");
+  const [buildingResidence, setBuildingResidence] = useState("");
 
   const [manualResidenceAddressInput, setManualResidenceAddressInput] =
     useState(false);
@@ -111,22 +127,91 @@ export default function Address({ form }) {
   //Поля для ручного ввода адреса регистрации
   const manualAddressFields = (
     <>
-      <Form.Item label="Город" name="city">
+      <Form.Item label="Почтовый индекс" name="postcode">
+        <Input value={postcode} onChange={(e) => setPostcode(e.target.value)} />
+      </Form.Item>
+
+      <Form.Item
+        label="Регион"
+        name="region"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите регион",
+          },
+        ]}
+      >
+        <Input value={region} onChange={(e) => setRegion(e.target.value)} />
+      </Form.Item>
+
+      <Form.Item label="Район" name="area">
+        <Input value={area} onChange={(e) => setArea(e.target.value)} />
+      </Form.Item>
+
+      <Form.Item
+        label="Город"
+        name="city"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите город",
+          },
+        ]}
+      >
         <Input value={city} onChange={(e) => setCity(e.target.value)} />
       </Form.Item>
 
-      <Form.Item label="Улица" name="street">
+      <Form.Item
+        label="Населенный пункт"
+        name="locality"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите населенный пункт",
+          },
+        ]}
+      >
+        <Input value={locality} onChange={(e) => setLocality(e.target.value)} />
+      </Form.Item>
+
+      <Form.Item
+        label="Улица"
+        name="street"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите улицу",
+          },
+        ]}
+      >
         <Input value={street} onChange={(e) => setStreet(e.target.value)} />
       </Form.Item>
 
-      <Form.Item label="Номер дома" name="houseNumber">
+      <Form.Item
+        label="Номер дома"
+        name="houseNumber"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите номер дома",
+          },
+        ]}
+      >
         <Input
           value={houseNumber}
           onChange={(e) => setHouseNumber(e.target.value)}
         />
       </Form.Item>
 
-      <Form.Item label="Номер квартиры" name="apartmentNumber">
+      <Form.Item label="Корпус" name="frame">
+        <Input value={frame} onChange={(e) => setFrame(e.target.value)} />
+      </Form.Item>
+
+      <Form.Item label="Строение" name="building">
+        <Input value={building} onChange={(e) => setBuilding(e.target.value)} />
+      </Form.Item>
+
+      <Form.Item label="Квартира/Офис/Комната" name="apartmentNumber">
         <Input
           value={apartmentNumber}
           onChange={(e) => setApartmentNumber(e.target.value)}
@@ -138,17 +223,119 @@ export default function Address({ form }) {
   //Поля для ручного ввода адреса проживания
   const manualResidenceAddressFields = (
     <>
-      <Form.Item label="Город" name="residenceCity">
-        <Input />
+      <Form.Item label="Почтовый индекс" name="postcodeResidence">
+        <Input
+          value={postcodeResidence}
+          onChange={(e) => setPostcodeResidence(e.target.value)}
+        />
       </Form.Item>
-      <Form.Item label="Улица" name="residenceStreet">
-        <Input />
+
+      <Form.Item
+        label="Регион"
+        name="regionResidence"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите регион",
+          },
+        ]}
+      >
+        <Input
+          value={regionResidence}
+          onChange={(e) => setRegionResidence(e.target.value)}
+        />
       </Form.Item>
-      <Form.Item label="Номер дома" name="residenceStreet">
-        <Input />
+
+      <Form.Item label="Район" name="areaResidence">
+        <Input
+          value={areaResidence}
+          onChange={(e) => setAreaResidence(e.target.value)}
+        />
       </Form.Item>
-      <Form.Item label="Номер квартиры" name="residenceStreet">
-        <Input />
+
+      <Form.Item
+        label="Город"
+        name="cityResidence"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите город",
+          },
+        ]}
+      >
+        <Input
+          value={cityResidence}
+          onChange={(e) => setCityResidence(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label="Населенный пункт"
+        name="localityResidence"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите населенный пункт",
+          },
+        ]}
+      >
+        <Input
+          value={localityResidence}
+          onChange={(e) => setLocalityResidence(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label="Улица"
+        name="streetResidence"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите улицу",
+          },
+        ]}
+      >
+        <Input
+          value={streetResidence}
+          onChange={(e) => setStreetResidence(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label="Номер дома"
+        name="houseNumberResidence"
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите номер дома",
+          },
+        ]}
+      >
+        <Input
+          value={houseNumberResidence}
+          onChange={(e) => setHouseNumberResidence(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item label="Корпус" name="frameResidence">
+        <Input
+          value={frameResidence}
+          onChange={(e) => setFrameResidence(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item label="Строение" name="buildingResidence">
+        <Input
+          value={buildingResidence}
+          onChange={(e) => setBuildingResidence(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item label="Квартира/Офис/Комната" name="apartmentNumberResidence">
+        <Input
+          value={apartmentNumberResidence}
+          onChange={(e) => setApartmentNumberResidence(e.target.value)}
+        />
       </Form.Item>
     </>
   );
@@ -263,7 +450,7 @@ export default function Address({ form }) {
                       <div style={{ whiteSpace: "normal" }}>{option.label}</div>
                     ),
                   }))}
-                  onSelect={onSelectResidential} 
+                  onSelect={onSelectResidential}
                   onSearch={onSearch}
                   popupMatchSelectWidth={true}
                   style={{ width: "100%" }}
