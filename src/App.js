@@ -26,6 +26,9 @@ import Drafts from "./pages/Cabinet/Drafts/Drafts";
 import Checking from "./pages/Cabinet/Checking/Checking";
 import Claims from "./pages/Cabinet/Claims/Claims";
 import PuzzleGame from "./pages/Games/PuzzleGame";
+import Contacts from "./pages/Contacts/Contacts";
+import Claimers from "./pages/Cabinet/Claims/Claimers";
+import Archives from "./pages/Cabinet/Claims/Archives";
 // import JumpGame from "./pages/Game/JumpGame";
 
 const { Content } = Layout;
@@ -123,6 +126,7 @@ export default function App() {
                   />
                   <Route path="/about" element={<About />} />
                   <Route path="/calc" element={<Calc />} />
+                  <Route path="/contacts" element={<Contacts />} />
                   {/* ----------------------------------------- */}
                   <Route
                     path="/cabinet/new-claim/:url/:id"
@@ -142,7 +146,9 @@ export default function App() {
                   <Route path="/cabinet/objects" element={<Objects />} />
                   <Route path="/cabinet/drafts" element={<Drafts />} />
                   <Route path="/cabinet/checking" element={<Checking />} />
-                  <Route path="/cabinet/claimer/:id" element={<Claims />} />
+                  <Route path="/cabinet/claimers/" element={<Claimers />} />
+                  <Route path="/cabinet/claimers/:id" element={<Claims />} />
+                  <Route path="/cabinet/archives/" element={<Archives />} />
                   {/* ----------------------------------------- */}
                   <Route path="*" element={<Page404 />} />
                   <Route path="/puzzle-game" element={<PuzzleGame />} />
