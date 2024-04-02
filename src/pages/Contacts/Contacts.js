@@ -7,7 +7,7 @@ const { Title, Paragraph } = Typography;
 export default function Contacts() {
     return (
         <>
-            <AppHelmet title={"О нас"} desc={"Контакты"} />
+            <AppHelmet title={"Контакты"} desc={"Контакты"} />
             <div>
                 <Title level={1}>Контакты</Title>
                 <Title level={2}>Адреса центров обслуживания клиентов</Title>
