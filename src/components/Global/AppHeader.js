@@ -14,18 +14,23 @@ const { Header } = Layout;
 const items = [
   {
     key: 1,
-    label: `Услуги`,
-    url: '/services'
+    label: `О нас`,
+    url: '/about'
   },
   {
     key: 2,
-    label: `О нас`,
-    url: '/about'
+    label: `Каталог услуг`,
+    url: '/services'
   },
   {
     key: 3,
     label: `Калькулятор`,
     url: '/calc'
+  },
+  {
+    key: 4,
+    label: `Контакты`,
+    url: '/contacts'
   },
 ]
 
@@ -59,21 +64,25 @@ export default function AppHeader() {
   ) : (
     <Space size={'small'}>
       <Switch onChange={toggleDarkMode} checkedChildren={<SunOutlined />} unCheckedChildren={<MoonOutlined />} value={darkMode}/>
-      <Button onClick={handlerChangeAuth}>Кабинет</Button>
+      <Button onClick={handlerChangeAuth}>Войти</Button>
     </Space>
   );
   const itemsMobile = [
     {
-      label: <Link to="/services">Услуги</Link>,
+      label: <Link to="/about">О нас</Link>,
       key: '0',
     },
     {
-      label: <Link to="/about">О нас</Link>,
+      label: <Link to="/services">Каталог услуг</Link>,
       key: '1',
     },
     {
       label: <Link to="/calc">Калькулятор</Link>,
       key: '2',
+    },
+    {
+      label: <Link to="/contacts">Контакты</Link>,
+      key: '3',
     },
     {
       type: 'divider',

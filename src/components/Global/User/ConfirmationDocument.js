@@ -6,7 +6,7 @@ import TextArea from "antd/es/input/TextArea";
 
 const { Option } = Select;
 
-export default function ConfirmationDocument() {
+export default function ConfirmationDocument({ form }) {
   const [documentType, setDocumentType] = useState("passport");
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
 
@@ -34,7 +34,7 @@ export default function ConfirmationDocument() {
       <Divider orientation="center">Подтверждающий документ</Divider>
 
       {/* _______Тип подтверждающего документа_______ */}
-      <Form.Item label="Тип документа" name="typedocuments">
+      <Form.Item label="Тип документа" name="typeDoc">
         <Select onChange={onDocumentTypeChange}>
           <Option value="passport">Паспорт гражданина РФ</Option>
           <Option value="other">Иной документ</Option>

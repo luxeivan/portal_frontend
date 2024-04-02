@@ -5,7 +5,7 @@ import { Input, Form, AutoComplete, Checkbox, Divider } from "antd";
 import useSubjects from "../../../stores/Cabinet/useSubjects";
 import TextArea from "antd/es/input/TextArea";
 
-export default function Address({ onSubmit, setShowModalAdd }) {
+export default function Address({ form }) {
   const [searchText] = useState("");
   const [manualAddressInput, setManualAddressInput] = useState(false);
   const [registrationAddress] = useState("");
@@ -20,7 +20,9 @@ export default function Address({ onSubmit, setShowModalAdd }) {
     useState(false);
   const [selectedRegistrationAddress, setSelectedRegistrationAddress] =
     useState("");
-  const [selectRedesidenceAddress, setSelectedResidenceAddress] = useState("");
+  const [selectedResidenceAddress, setSelectedResidenceAddress] = useState("");
+  const [registrationFiasId, setRegistrationFiasId] = useState("");
+  const [redesidenceFiasId, setRedesidenceFiasId] = useState("");
 
   const { addressOptions, setSearchText, debouncedFetchAddresses } =
     useSubjects();
@@ -30,6 +32,10 @@ export default function Address({ onSubmit, setShowModalAdd }) {
     setManualAddressInput(e.target.checked);
     if (e.target.checked) {
       setSelectedRegistrationAddress("");
+      form.setFieldsValue({
+        addressRegistrationFias: "",
+        addressResidentialFias: "",
+      });
     }
   };
 
@@ -38,20 +44,47 @@ export default function Address({ onSubmit, setShowModalAdd }) {
     const isChecked = e.target.checked;
     setIsAddressSame(isChecked);
     if (isChecked) {
-      setResidenceAddress(registrationAddress);
+      form.setFieldsValue({
+        addressResidential: form.getFieldValue("addressRegistration"),
+        addressResidentialFias: form.getFieldValue("addressResidential"),
+      });
     } else {
-      setResidenceAddress("");
+      form.setFieldsValue({
+        addressResidential: "",
+        addressResidentialFias: "",
+      });
     }
   };
 
   // Устанавливает адрес, выбранный из списка
   const onSelect = (value, option) => {
     setSelectedRegistrationAddress(option.value);
+    setRegistrationFiasId(option.fias_id); // сохраняем fias_id
+    form.setFieldsValue({
+      addressRegistration: option.value,
+      addressRegistrationFias: option.fias_id,
+    });
+  };
+
+  const onSelectResidential = (value, option) => {
+    setSelectedResidenceAddress(option.value);
+    setRedesidenceFiasId(option.fias_id); // сохраняем fias_id
+    form.setFieldsValue({
+      addressResidential: option.value,
+      addressResidentialFias: option.fias_id,
+    });
   };
 
   // Валидирует адрес, убеждаясь, что он был выбран из списка :)
   const validateAddress = (rule, value) => {
     if (selectedRegistrationAddress === value) {
+      return Promise.resolve();
+    }
+    return Promise.reject("Выберите адрес из списка");
+  };
+
+  const validateResidenceAddress = (rule, value) => {
+    if (selectedResidenceAddress === value) {
       return Promise.resolve();
     }
     return Promise.reject("Выберите адрес из списка");
@@ -127,41 +160,56 @@ export default function Address({ onSubmit, setShowModalAdd }) {
       {/* _______Место регистрации_______ */}
       {!manualAddressInput ? (
         // Автокомплит для адреса, если ввод не ручной
-        <Form.Item
-          label="Адрес"
-          name={"addressRegistration"}
-          rules={[
-            {
-              required: true,
-              message: "Пожалуйста, введите адрес регистрации",
-            },
-            { validator: validateAddress },
-          ]}
-        >
-          {manualAddressInput ? (
-            <Input />
-          ) : (
-            <AutoComplete
-              options={addressOptions.map((option) => ({
-                ...option,
-                label: (
-                  <div style={{ whiteSpace: "normal" }}>{option.label}</div>
-                ),
-              }))}
-              onSelect={onSelect}
-              onSearch={onSearch}
-              popupMatchSelectWidth={true}
-              style={{ width: "100%" }}
-            >
-              <TextArea
-                placeholder="Начните вводить"
-                style={{
-                  height: 60,
-                }}
-              />
-            </AutoComplete>
-          )}
-        </Form.Item>
+        <>
+          <Form.Item
+            label="Адрес"
+            name={"addressRegistration"}
+            rules={[
+              {
+                required: true,
+                message: "Пожалуйста, введите адрес регистрации",
+              },
+              { validator: validateAddress },
+            ]}
+          >
+            {manualAddressInput ? (
+              <Input />
+            ) : (
+              <AutoComplete
+                options={addressOptions.map((option) => ({
+                  ...option,
+                  label: (
+                    <div style={{ whiteSpace: "normal" }}>{option.label}</div>
+                  ),
+                }))}
+                onSelect={onSelect}
+                onSearch={onSearch}
+                popupMatchSelectWidth={true}
+                style={{ width: "100%" }}
+              >
+                <TextArea
+                  placeholder="Начните вводить"
+                  style={{
+                    height: 60,
+                  }}
+                />
+              </AutoComplete>
+            )}
+          </Form.Item>
+          <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.addressRegistration !==
+              currentValues.addressRegistration
+            }
+          >
+            {() => (
+              <Form.Item name="addressRegistrationFias" hidden>
+                <Input type="hidden" />
+              </Form.Item>
+            )}
+          </Form.Item>
+        </>
       ) : (
         manualAddressFields
       )}
@@ -196,37 +244,52 @@ export default function Address({ onSubmit, setShowModalAdd }) {
             // Тут используем поля для ручного ввода адреса проживания
             manualResidenceAddressFields
           ) : (
-            <Form.Item
-              label="Адрес проживания"
-              name="addressResidential"
-              rules={[
-                {
-                  required: true,
-                  message: "Введите город, улицу, номер дома и квартиру",
-                },
-                { validator: validateAddress },
-              ]}
-            >
-              <AutoComplete
-                options={addressOptions.map((option) => ({
-                  ...option,
-                  label: (
-                    <div style={{ whiteSpace: "normal" }}>{option.label}</div>
-                  ),
-                }))}
-                onSelect={onSelect}
-                onSearch={onSearch}
-                popupMatchSelectWidth={true}
-                style={{ width: "100%" }}
+            <>
+              <Form.Item
+                label="Адрес проживания"
+                name="addressResidential"
+                rules={[
+                  {
+                    required: true,
+                    message: "Введите город, улицу, номер дома и квартиру",
+                  },
+                  { validator: validateResidenceAddress },
+                ]}
               >
-                <TextArea
-                  placeholder="Начните вводить"
-                  style={{
-                    height: 60,
-                  }}
-                />
-              </AutoComplete>
-            </Form.Item>
+                <AutoComplete
+                  options={addressOptions.map((option) => ({
+                    ...option,
+                    label: (
+                      <div style={{ whiteSpace: "normal" }}>{option.label}</div>
+                    ),
+                  }))}
+                  onSelect={onSelectResidential} 
+                  onSearch={onSearch}
+                  popupMatchSelectWidth={true}
+                  style={{ width: "100%" }}
+                >
+                  <TextArea
+                    placeholder="Начните вводить"
+                    style={{
+                      height: 60,
+                    }}
+                  />
+                </AutoComplete>
+              </Form.Item>
+              <Form.Item
+                noStyle
+                shouldUpdate={(prevValues, currentValues) =>
+                  prevValues.addressResidential !==
+                  currentValues.addressResidential
+                }
+              >
+                {() => (
+                  <Form.Item name="addressResidentialFias" hidden>
+                    <Input type="hidden" />
+                  </Form.Item>
+                )}
+              </Form.Item>
+            </>
           )}
 
           <Form.Item>
