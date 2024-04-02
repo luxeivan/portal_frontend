@@ -2,6 +2,7 @@
 import { Checkbox, Skeleton } from 'antd'
 import Title from 'antd/es/typography/Title'
 import React from 'react'
+import AppHelmet from '../../../components/Global/AppHelmet'
 
 const options = [
     {
@@ -24,6 +25,7 @@ export default function Profile() {
     };
     return (
         <div>
+             <AppHelmet title={"Профиль"} desc={"Профиль пользователя"} />
             <Title level={1}>Профиль</Title>
 
             <Skeleton.Image active style={{ marginBottom: 30 }} />
