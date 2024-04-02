@@ -19,7 +19,7 @@ export default function Services() {
   //console.log(services)
   return (
     <>
-      <AppHelmet title={"Услуги"} desc={"Услуги компании"} />
+      <AppHelmet title={"Каталог услуг"} desc={"Услуги компании"} />
       <div>
         {!level2 && !level3 && (
           <>

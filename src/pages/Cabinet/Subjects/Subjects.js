@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Card, Flex, Modal, Button } from "antd";
-
 import useSubjects from "../../../stores/Cabinet/useSubjects";
-
 import styles from "./Subjects.module.css";
-
 import { PlusOutlined } from "@ant-design/icons";
-
 import SceletonCard from "../../../components/SceletonCard";
-
 import ModalFizLica from "./ModalFizLica";
+import AppHelmet from '../../../components/Global/AppHelmet'
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -94,6 +90,7 @@ export default function Subjects() {
 
   return (
     <div>
+        <AppHelmet title={"Субъекты"} desc={"Субъекты"} />
       <Title level={1}>Субъекты</Title>
 
       <Flex wrap="wrap" gap="large">
