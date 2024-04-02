@@ -11,7 +11,12 @@ import {
   DownOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  MenuOutlined
+  FileSearchOutlined,
+  MenuOutlined,
+  FileSyncOutlined,
+  FileZipOutlined,
+  FileUnknownOutlined,
+  FileAddOutlined
 } from "@ant-design/icons";
 import styles from "./CabinetMenu.module.css";
 import { useNavigate } from "react-router-dom";
@@ -26,41 +31,41 @@ const iconStyle = {
 }
 const menuItems = [
   {
+    type: 'group', 
+    label: 'Услуги',
+  },
+  {
     key: "/services",
-    icon: <PlusSquareOutlined className={styles.icon} style={iconStyle} />,
+    icon: <FileAddOutlined  className={styles.icon} style={iconStyle} />,
     label: <Text className={styles.labelSizeMobile}>Новая</Text>,
   },
   {
+    key: "/cabinet/claimers",
+    icon: <FileSyncOutlined className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>В работе</Text>,
+  },
+  {
+    key: "/cabinet/archives",
+    icon: <FileZipOutlined  className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>Архив</Text>,
+  },
+  {
+    type: 'group', 
+    label: 'Заявки',
+  },
+  {
     key: "/cabinet/drafts",
-    icon: <FolderOpenOutlined className={styles.icon} style={iconStyle}  />,
+    icon: <FileUnknownOutlined className={styles.icon} style={iconStyle}  />,
     label: <Text className={styles.labelSizeMobile}>Черновики</Text>,
   },
   {
     key: "/cabinet/checking",
-    icon: <CheckCircleOutlined className={styles.icon} style={iconStyle}  />,
+    icon: <FileSearchOutlined  className={styles.icon} style={iconStyle}  />,
     label: <Text className={styles.labelSizeMobile}>На проверке</Text>,
   },
   {
-    key: "submenu",
-    icon: <DownOutlined className={styles.icon} style={iconStyle}  />,
-    label: <Text className={styles.labelSizeMobile}>Заявки</Text>,
-    children: [
-      {
-        key: "/cabinet/claimer/1",
-        label: "Иванов Иван Иванович",
-      },
-      {
-        key: "/cabinet/claimer/2",
-        label: "ИП Гослинг Райан",
-      },
-      {
-        key: "/cabinet/claimer/3",
-        label: "ООО Драйв",
-      },
-    ],
-  },
-  {
-    type: 'divider',
+    type: 'group', 
+    label: 'Мои данные',
   },
   {
     key: "/cabinet/subjects",
@@ -78,7 +83,8 @@ const menuItems = [
     label: <Text className={styles.labelSizeMobile}>Объекты</Text>,
   },
   {
-    type: 'divider',
+    type: 'group', 
+    label: 'Настройки',
   },
   {
     key: "/cabinet/profile",
