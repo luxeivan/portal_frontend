@@ -12,6 +12,7 @@ export default function TextInput({
   required,
   description,
   depends,
+  inputProps,
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   const form = Form.useFormInstance();
@@ -41,6 +42,7 @@ export default function TextInput({
             <Input
               placeholder={shortDescription}
               style={{ paddingRight: "30px" }}
+              {...inputProps} // Дополнительные пропсы для Input
             />
             <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />
           </div>
