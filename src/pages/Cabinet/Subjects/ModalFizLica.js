@@ -102,7 +102,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       {/* _______Кнопка отправки формы_______ */}
       <Form.Item>
         <Button type="primary" onClick={() => form.submit()}>
-          Отправить
+          Добавить
         </Button>
       </Form.Item>
     </Form>

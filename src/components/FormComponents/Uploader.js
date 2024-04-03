@@ -1,30 +1,57 @@
 import React, { useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
-import { Form, Upload, message, theme } from "antd";
+import { Form, Upload, message, theme, Image } from "antd";
 import useGlobal from "../../stores/useGlobal";
 import axios from "axios";
 import config from "../../config";
 
 const { Dragger } = Upload;
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 
 export default function Uploader({ form }) {
-
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([])
   const { colorPrimaryText } = theme.useToken().token
+
+  const previewFile = async (file) => {
+    console.log(file)
+    if(file?.name.includes('.pdf')) return window.open(file.url, '_blank');
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+  };
   const onRemove = (event) => {
     console.log(event)
+    console.log(fileList)
+    setFileList(fileList.filter(item => item.uid !== event.uid))
   }
   const uploadProps = {
+
+    beforeUpload: (file) => {
+      const isPNG = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'application/pdf';
+      if (!isPNG) {
+        message.error(`${file.name} не поддерживающего формата`);
+      }
+      return isPNG || Upload.LIST_IGNORE;
+    },
+
     onRemove,
-    listType: "picture-card",
+    listType: "text",
     fileList,
     name: "file",
     headers: {
       authorization: "authorization-text",
     },
-    previewFile: (event)=>{
-      console.log(event)
-    },
+    onPreview: previewFile,
 
     customRequest({ file, onSuccess, onError }) {
       const formData = new FormData();
@@ -38,14 +65,23 @@ export default function Uploader({ form }) {
           },
           withCredentials: true,
         })
-        .then((response) => {
+        .then(async (response) => {
           const relativePath = response.data.files[0];
+          const fileblob = await axios.get(`${config.backServer}/api/cabinet/get-file/${relativePath}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+            responseType: 'blob'
+          })
+          if (!fileblob.data) throw new Error('Ошибка загрузка файла')
+          const objectURL = window.URL.createObjectURL(fileblob.data)
           setFileList([...fileList, {
-            crossOrigin:'use-credentials',
+            crossOrigin: 'use-credentials',
             uid: relativePath,
             name: file.name,
             status: 'done',
-            url: `${config.backServer}/api/cabinet/get-file/${relativePath}`,
+            url: objectURL,
           }])
           onSuccess(relativePath, file);
           form.setFieldsValue({ fileDoc: relativePath });
@@ -61,9 +97,10 @@ export default function Uploader({ form }) {
     },
   };
 
+
   return (
     <Form.Item
-      label="Загрузить файл"
+      label="Загрузить документ"
       name="fileDoc"
       rules={[
         {
@@ -77,8 +114,21 @@ export default function Uploader({ form }) {
           <InboxOutlined style={{ color: colorPrimaryText, fontSize: "48px" }} />
         </div>
         <p className="ant-upload-text">Файл размером не более 10мб</p>
-        <p className="ant-upload-hint">поддерживаются форматы PDF, JPEG, JPG</p>
+        <p className="ant-upload-hint">форматы PDF, JPEG, PNG</p>
       </Dragger>
+      {previewImage && (
+        <Image
+          wrapperStyle={{
+            display: 'none',
+          }}
+          preview={{
+            visible: previewOpen,
+            onVisibleChange: (visible) => setPreviewOpen(visible),
+            afterOpenChange: (visible) => !visible && setPreviewImage(''),
+          }}
+          src={previewImage}
+        />
+      )}
     </Form.Item>
   );
 }
