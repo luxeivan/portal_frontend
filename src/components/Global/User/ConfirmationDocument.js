@@ -31,7 +31,7 @@ export default function ConfirmationDocument({ form }) {
 
   return (
     <>
-      <Divider orientation="center">Подтверждающий документ</Divider>
+      <Divider orientation="center">Удостоверяющий документ</Divider>
 
       {/* _______Тип подтверждающего документа_______ */}
       <Form.Item label="Тип документа" name="typeDoc">
