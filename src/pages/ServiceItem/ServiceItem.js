@@ -77,18 +77,18 @@ export default function ServiceItem() {
                     // size="small"
                     direction="vertical"
                     current={100}
-                    items={serviceItem.attributes.steps.map((item) => ({
+                    items={serviceItem.attributes.steps.map((item,index) => ({
                       icon: (
                         <div
                           className={styles.icon}
                           style={{ border: `2px solid ${colorPrimary}` }}
                         >
-                          <Text className={styles.iconText}>{item.id}</Text>
+                          <Text className={styles.iconText}>{index+1}</Text>
                         </div>
                       ),
                       title: item.name,
                       description: item.shortDescription,
-                      subTitle: `${item.planDays} ${item.typeDay} дн.`,
+                      //subTitle: `${item.planDays} ${item.typeDay} дн.`,
                     }))}
                   />
                 ),
