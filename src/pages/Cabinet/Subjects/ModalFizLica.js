@@ -87,6 +87,9 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       <FullName />
       {/* _______Подтверждающий документ_______ */}
       <ConfirmationDocument form={form} />
+      {/* _______Блок с адресами_______ */}
+      <AddressRegistration form={form} />
+      <AddressResidential form={form} />
       {/* _______Загрузка_______ */}
       <Uploader
         fileList={fileList}
@@ -95,9 +98,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       />
       {/* _______СНИЛС_______ */}
       <Snils form={form} />
-      {/* _______Блок с адресами_______ */}
-      <AddressRegistration form={form} />
-      <AddressResidential form={form} />
+
       {/* _______Блок с телефоном и почтой_______ */}
       <Contacts form={form} />
 

@@ -29,6 +29,7 @@ import PuzzleGame from "./pages/Games/PuzzleGame";
 import Contacts from "./pages/Contacts/Contacts";
 import Claimers from "./pages/Cabinet/Claims/Claimers";
 import Archives from "./pages/Cabinet/Claims/Archives";
+import Law from "./pages/Law/Law";
 // import JumpGame from "./pages/Game/JumpGame";
 
 const { Content } = Layout;
@@ -127,6 +128,7 @@ export default function App() {
                   <Route path="/about" element={<About />} />
                   <Route path="/calc" element={<Calc />} />
                   <Route path="/contacts" element={<Contacts />} />
+                  <Route path="/law" element={<Law />} />
                   {/* ----------------------------------------- */}
                   <Route
                     path="/cabinet/new-claim/:url/:id"
