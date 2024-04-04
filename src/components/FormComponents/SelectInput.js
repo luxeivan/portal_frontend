@@ -43,7 +43,6 @@ export default function SelectInput({
             <Select
               onChange={onChange}
               placeholder="Выберите вариант"
-              allowClear
               style={{ paddingRight: "30px" }}
             >
               {options.map((option) => (
