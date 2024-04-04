@@ -44,7 +44,7 @@ const useAuth = create((set) => {
       }, 1000);
       set({ authTimerInterval: timerId });
     },
-    
+
 
     login: async (email, password) => {
       try {
@@ -71,7 +71,7 @@ const useAuth = create((set) => {
         }));
       }
     },
-    
+
 
     verifyPincode: async (pincode) => {
       try {
@@ -110,15 +110,19 @@ const useAuth = create((set) => {
         password: "",
       }));
     },
-    
+
     checkJWT: async () => {
       let validJwt = false;
-      console.log(validJwt)
+      //console.log(validJwt)
       if (localStorage.getItem("jwt")) {
-        const res = await axios.post(`${config.backServer}/api/auth/checkjwt`, {
-          jwt: localStorage.getItem("jwt"),
-        });
-        validJwt = res.data;
+        try {
+          const res = await axios.post(`${config.backServer}/api/auth/checkjwt`, {
+            jwt: localStorage.getItem("jwt"),
+          });
+          validJwt = res.data;
+        } catch (error) {
+          console.log(error)
+        }
       }
       if (validJwt) {
         set((state) => ({
@@ -127,9 +131,11 @@ const useAuth = create((set) => {
         }));
       }
     },
+
     resetCodeRequest: () => {
       set({ isCodeRequested: false });
     }
+
   };
 });
 
