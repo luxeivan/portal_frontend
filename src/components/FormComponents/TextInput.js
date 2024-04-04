@@ -51,7 +51,7 @@ export default function TextInput({
           title={displayName}
           placement="right"
           onClose={onClose}
-          visible={drawerVisible}
+          open={drawerVisible}
         >
           <StrapiRichText
             content={Array.isArray(description) ? description : [description]}

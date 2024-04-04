@@ -113,7 +113,7 @@ export default function Uploader({ form }) {
         <div>
           <InboxOutlined style={{ color: colorPrimaryText, fontSize: "48px" }} />
         </div>
-        <p className="ant-upload-text">Файл размером не более 10мб</p>
+        <p className="ant-upload-text">Файл размером не более 10МБ</p>
         <p className="ant-upload-hint">форматы PDF, JPEG, PNG</p>
       </Dragger>
       {previewImage && (

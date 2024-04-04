@@ -199,7 +199,7 @@ const menuItemsMobile = menuItems.map(item => {
               mode={"inline"}
               items={menuItems}
               onClick={handlerMenu}
-              style={{height:"100%"}}
+              style={{height:"100%",paddingRight: '20px'}}
             />
           </Flex>
         </div>

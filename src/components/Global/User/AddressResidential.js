@@ -222,7 +222,7 @@ export default function AddressResidential({ form }) {
           ) : (
             <>
               <Form.Item
-                label="Адрес проживания"
+                label="Адрес"
                 name="addressResidential"
                 rules={[
                   {
