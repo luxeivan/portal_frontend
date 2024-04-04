@@ -32,6 +32,11 @@ const items = [
     label: `Контакты`,
     url: '/contacts'
   },
+  {
+    key: 5,
+    label: `Законодательство`,
+    url: '/law'
+  },
 ]
 
 
