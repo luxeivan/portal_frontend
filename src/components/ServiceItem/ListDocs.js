@@ -1,4 +1,4 @@
-import { QuestionCircleOutlined } from '@ant-design/icons'
+import { QuestionCircleOutlined,InfoCircleOutlined } from '@ant-design/icons'
 import { List, Avatar, Space, Popover, Typography,theme } from 'antd'
 import React from 'react'
 import StrapiRichText from '../StrapiRichText'
@@ -6,7 +6,7 @@ import StrapiRichText from '../StrapiRichText'
 const { Paragraph } = Typography
 
 export default function ListDocs({ list }) {
-    const {myCustomColor,colorInfo,customfontSizeIcon} = theme.useToken().token;
+    const {myCustomColor,colorInfo,customfontSizeIcon,colorBorder} = theme.useToken().token;
     //console.log(theme.useToken().token)
     return (
 
@@ -22,7 +22,7 @@ export default function ListDocs({ list }) {
                                 {item.displayName} {' '}
                                 {item.common.description ?
                                     <Popover content={<StrapiRichText content={item.common.description} />}>
-                                        <QuestionCircleOutlined style={{ color: colorInfo, fontSize: customfontSizeIcon, cursor: "pointer" }} />
+                                        <InfoCircleOutlined style={{ color: colorBorder, fontSize: customfontSizeIcon, cursor: "pointer" }} />
                                     </Popover>
                                     : false
                                 }

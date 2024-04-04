@@ -41,8 +41,7 @@ export default function ServiceItem() {
           <Title level={1}>
             {serviceItem.attributes.type} - {serviceItem.attributes.name}
           </Title>
-          <Paragraph>{serviceItem.attributes.shortDescription}</Paragraph>
-          <Divider />
+          {/* <Divider /> */}
 
           <Collapse
             defaultActiveKey={["1"]}
@@ -52,6 +51,7 @@ export default function ServiceItem() {
                 label: "Описание",
                 children: (
                   <div>
+                    <Paragraph>{serviceItem.attributes.shortDescription}</Paragraph>
                     <StrapiRichText
                       content={serviceItem.attributes.description}
                     />
@@ -77,25 +77,25 @@ export default function ServiceItem() {
                     // size="small"
                     direction="vertical"
                     current={100}
-                    items={serviceItem.attributes.steps.map((item,index) => ({
+                    items={serviceItem.attributes.steps.map((item, index) => ({
                       icon: (
                         <div
                           className={styles.icon}
                           style={{ border: `2px solid ${colorPrimary}` }}
                         >
-                          <Text className={styles.iconText}>{index+1}</Text>
+                          <Text className={styles.iconText}>{index + 1}</Text>
                         </div>
                       ),
                       title: item.name,
                       description: item.shortDescription,
-                      //subTitle: `${item.planDays} ${item.typeDay} дн.`,
+                      subTitle: `${item.period ? item.period : ''}`,
                     }))}
                   />
                 ),
               },
               {
                 key: "3",
-                label: "Информация которая потребуется при подаче заявления",
+                label: "Информация которая потребуется при подаче заявки",
                 children: (
                   <Paragraph>
                     {serviceItem.attributes.fields && (
