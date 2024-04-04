@@ -53,9 +53,8 @@ export default function Services() {
                 .subServices.map((item, index) => (
                   <Link
                     key={index}
-                    to={`/services/${
-                      serviceDetailsData.find((item) => item.url === level2).url
-                    }/${item.title}`}
+                    to={`/services/${serviceDetailsData.find((item) => item.url === level2).url
+                      }/${item.title}`}
                     className={styles.styleLink}
                   >
                     <Card className={styles.styleCard}>
@@ -115,7 +114,7 @@ const serviceDetailsData = [
   {
     url: "uslugi-tehnologicheskogo-prisoedineniyas",
     title: "Услуги технологического присоединения",
-    content: "Приказ Минэнерго от 15.04.2014 № 186 (ред. от 07.07.2021 № 541)",
+    content: "Подключение энергопринимающих устройств к электрическим сетям",
     subServices: [
       { title: "Физические лица" },
       { title: "Юридические лица" },
@@ -126,6 +125,7 @@ const serviceDetailsData = [
   {
     url: "kommercheskie-uslugis",
     title: "Коммерческие услуги",
+    content: "Аренда, Строительство, Ремонт",
     subServices: [
       { title: "Ремонт, техническое и оперативное обслуживание" },
       { title: "Услуги аренды" },
@@ -139,8 +139,7 @@ const serviceDetailsData = [
   {
     url: "uchet-elektricheskoj-energiis",
     title: "Учёт электрической энергии",
-    content:
-      "Приказ Минзнерго от 15.04.2014 Nº 186 (ред. от 07.07.2021 Nº 541)",
+    content: "Установка, замена и поверка приборов учета",
     subServices: [
       { title: "Физические лица" },
       { title: "Юридические лица" },
@@ -152,6 +151,7 @@ const serviceDetailsData = [
   {
     url: "servisnye-uslugis",
     title: "Сервисные услуги",
+    content: "Техническая поддержка пользователей",
     subServices: [
       { title: "Актуальная информация профиля" },
       { title: "Подписка на информационные сообщения" },
