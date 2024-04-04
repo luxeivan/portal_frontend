@@ -175,10 +175,6 @@ export default function AddressRegistration({ form }) {
             label="Адрес"
             name={"addressRegistration"}
             rules={[
-              {
-                required: true,
-                message: "Пожалуйста, введите адрес регистрации",
-              },
               { validator: validateAddress },
             ]}
           >
