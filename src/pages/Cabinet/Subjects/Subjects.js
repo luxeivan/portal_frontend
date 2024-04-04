@@ -135,21 +135,21 @@ export default function Subjects() {
         width={700}
         name="type"
       >
-        <Flex gap="large" wrap="wrap">
-          <Button onClick={() => handleCategorySelect("individual")}>
-            Физическое лицо
+        <Flex gap="large" wrap="wrap" justify="center">
+          <Button className={styles.buttontypenewsubject} onClick={() => handleCategorySelect("individual")}>
+            Физическое<br/> лицо
           </Button>
-          <Button onClick={() => handleCategorySelect("soleProprietor")}>
-            Индивидуальный предприниматель
+          <Button className={styles.buttontypenewsubject} onClick={() => handleCategorySelect("legalEntity")}>
+            Юридическое<br/> лицо
           </Button>
-          <Button onClick={() => handleCategorySelect("legalEntity")}>
-            Юридическое лицо
+          <Button className={styles.buttontypenewsubject} onClick={() => handleCategorySelect("soleProprietor")}>
+            Индивидуальный<br/> предприниматель
           </Button>
         </Flex>
       </Modal>
 
       <Modal
-        title="Добавить физическое лицо"
+        title="Добавление физического лица"
         open={showModalAdd}
         onCancel={handleCancelModalAdd}
         width={650}

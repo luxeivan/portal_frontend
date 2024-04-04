@@ -55,7 +55,7 @@ export default function CodeForm() {
         {...tailFormItemLayout}
       >
         <Button type="primary" htmlType="submit" className={styles.sendCodeButton}>
-          Подтвердить
+          Получить код
         </Button>
       </Form.Item>
     </Form>

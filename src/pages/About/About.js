@@ -126,9 +126,9 @@ export default function About() {
             />
           </div>
         </Flex>
-        <Button type="dashed" onClick={handlePuzzleClick}>
+        {/* <Button type="dashed" onClick={handlePuzzleClick}>
           Энергосберегающие пятнашки
-        </Button>
+        </Button> */}
         {/* <Button type="dashed" onClick={handleJumpClick}>
           МосОблДжамп
         </Button> */}

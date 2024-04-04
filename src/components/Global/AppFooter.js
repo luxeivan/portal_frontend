@@ -9,7 +9,7 @@ export default function AppFooter() {
         textAlign: "center",
       }}
     >
-      АО Мособлэнерго ©{new Date().getFullYear()} Создано Шишкин & Януть
+      Copyright © <a href="https://mosoblenergo.ru/" target="_blank">АО «Мособлэнерго»</a> | Разработка сайта - Шишкин & Януть | 2023 - {new Date().getFullYear()}
     </Footer>
   );
 }

@@ -127,7 +127,7 @@ export default function ServiceItem() {
             >
               <Link to={`/cabinet/new-claim/${level2}/${serviceItem.id}`}>
                 <Button type="primary" size="large" onClick={showDrawer}>
-                  Подать заявку
+                  Получить услугу
                 </Button>
               </Link>
             </motion.div>

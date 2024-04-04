@@ -12,8 +12,9 @@ import Uploader from "../../../components/FormComponents/Uploader";
 import FullName from "../../../components/Global/User/FullName";
 import ConfirmationDocument from "../../../components/Global/User/ConfirmationDocument";
 import Snils from "../../../components/Global/User/Snils";
-import Address from "../../../components/Global/User/Address";
 import Contacts from "../../../components/Global/User/Contacts";
+import AddressRegistration from "../../../components/Global/User/AddressRegistration";
+import AddressResidential from "../../../components/Global/User/AddressResidential";
 
 export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
   const [searchText] = useState("");
@@ -85,7 +86,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       {/* _______ФИО_______ */}
       <FullName />
       {/* _______Подтверждающий документ_______ */}
-      <ConfirmationDocument form={form}/>
+      <ConfirmationDocument form={form} />
       {/* _______Загрузка_______ */}
       <Uploader
         fileList={fileList}
@@ -95,14 +96,15 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       {/* _______СНИЛС_______ */}
       <Snils form={form} />
       {/* _______Блок с адресами_______ */}
-      <Address form={form} />
+      <AddressRegistration form={form} />
+      <AddressResidential form={form} />
       {/* _______Блок с телефоном и почтой_______ */}
       <Contacts form={form} />
 
       {/* _______Кнопка отправки формы_______ */}
       <Form.Item>
         <Button type="primary" onClick={() => form.submit()}>
-          Отправить
+          Добавить
         </Button>
       </Form.Item>
     </Form>

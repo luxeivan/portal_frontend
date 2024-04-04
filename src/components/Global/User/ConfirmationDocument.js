@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
-import { Flex, Input, Form, Select, Divider } from "antd";
+import { Form, Divider } from "antd";
 
 import TextArea from "antd/es/input/TextArea";
 
-const { Option } = Select;
+import SelectInput from "../../FormComponents/SelectInput";
+import TextInput from "../../FormComponents/TextInput";
 
 export default function ConfirmationDocument({ form }) {
   const [documentType, setDocumentType] = useState("passport");
@@ -13,7 +14,18 @@ export default function ConfirmationDocument({ form }) {
   // Изменяет тип документа в зависимости от выбора пользователя
   const onDocumentTypeChange = (value) => {
     setDocumentType(value);
+    form.setFieldsValue({ typeDoc: value });
   };
+
+  const otherDocumentOptions = [
+    { value: "type1", label: "Тип1" },
+    { value: "type2", label: "Тип2" },
+  ];
+
+  const documentOptions = [
+    { value: "passport", label: "Паспорт гражданина РФ" },
+    { value: "other", label: "Иной документ" },
+  ];
 
   // Обрабатывает изменения в коде подразделения, форматируя его
   const handleKodPodrazdeleniaChange = (e) => {
@@ -31,118 +43,94 @@ export default function ConfirmationDocument({ form }) {
 
   return (
     <>
-      <Divider orientation="center">Подтверждающий документ</Divider>
+      <Divider orientation="center">Удостоверяющий документ</Divider>
 
       {/* _______Тип подтверждающего документа_______ */}
-      <Form.Item label="Тип документа" name="typeDoc">
-        <Select onChange={onDocumentTypeChange}>
-          <Option value="passport">Паспорт гражданина РФ</Option>
-          <Option value="other">Иной документ</Option>
-        </Select>
-      </Form.Item>
+      <SelectInput
+        displayName="Тип документа"
+        name="typeDoc"
+        required={true}
+        description={["Выберите тип документа из списка"]}
+        options={documentOptions}
+        onChange={onDocumentTypeChange}
+      />
 
       {/* _______Паспорт_______ */}
       {documentType === "passport" && (
         <>
-          <Flex gap="middle" vertical>
-            {/* _______Серия паспорта_______ */}
-            <Form.Item
-              label="Серия паспорта"
-              name="serialPassport"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, укажите серию паспорта",
-                },
-              ]}
-            >
-              <Input maxLength={4} pattern="\d*" placeholder="1234" />
-            </Form.Item>
-
-            {/* _______Номер паспорта_______ */}
-            <Form.Item
-              label="Номер паспорта"
-              name="numberPassport"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, укажите номер паспорта",
-                },
-              ]}
-            >
-              <Input maxLength={6} pattern="\d*" placeholder="567890" />
-            </Form.Item>
-
-            {/* _______Код подразделения_______ */}
-            <Form.Item
-              label="Код подразделения"
-              name="kodpodrazdelenia"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, укажите код подразделения",
-                },
-                () => ({
-                  validator(_, value) {
-                    if (!value || /^\d{3}-\d{3}$/.test(value)) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error("Формат кода подразделения должен быть 111-111")
-                    );
-                  },
-                }),
-              ]}
-            >
-              <Input
-                maxLength={7}
-                placeholder="123-456"
-                value={kodPodrazdelenia}
-                onChange={handleKodPodrazdeleniaChange}
-              />
-            </Form.Item>
-
-            {/* _______Кем выдан_______ */}
-            <Form.Item
-              label="Кем выдан"
-              name="kemvidan"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, укажите кем выдан паспорт",
-                },
-              ]}
-            >
-              <TextArea
-                placeholder="..."
-                style={{
-                  height: 60,
-                }}
-              />
-            </Form.Item>
-          </Flex>
-        </>
-      )}
-
-      {/* _______Иной документ_______ */}
-      {documentType === "other" && (
-        <>
-          {/* _______Тип документа_______ */}
-          <Form.Item label="Тип документа">
-            <Select>
-              <Option value="type1">Тип1</Option>
-              <Option value="type2">Тип2</Option>
-            </Select>
-          </Form.Item>
-
-          {/* _______Реквизиты документа_______ */}
-          <Form.Item
-            label="Реквизиты документа"
-            name="recvizitydocumenta"
+          {/* Серия паспорта */}
+          <TextInput
+            displayName="Серия паспорта"
+            name="serialPassport"
+            required={true}
+            shortDescription="1234"
+            inputProps={{
+              maxLength: 4,
+              pattern: "\\d*",
+            }}
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, укажите реквизиты документа",
+                message: "Пожалуйста, укажите серию паспорта",
+              },
+            ]}
+          />
+
+          {/* Номер паспорта */}
+          <TextInput
+            displayName="Номер паспорта"
+            name="numberPassport"
+            required={true}
+            shortDescription="567890"
+            inputProps={{
+              maxLength: 6,
+              pattern: "\\d*",
+            }}
+            rules={[
+              {
+                required: true,
+                message: "Пожалуйста, укажите номер паспорта",
+              },
+            ]}
+          />
+
+          {/* Код подразделения */}
+          <TextInput
+            displayName="Код подразделения"
+            name="kodpodrazdelenia"
+            required={true}
+            shortDescription="123-456"
+            inputProps={{
+              maxLength: 7,
+              value: kodPodrazdelenia,
+              onChange: handleKodPodrazdeleniaChange,
+            }}
+            rules={[
+              {
+                required: true,
+                message: "Пожалуйста, укажите код подразделения",
+              },
+              () => ({
+                validator(_, value) {
+                  if (!value || /^\d{3}-\d{3}$/.test(value)) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Формат кода подразделения должен быть 111-111")
+                  );
+                },
+              }),
+            ]}
+          />
+
+          {/* _______Кем выдан_______ */}
+          <Form.Item
+            label="Кем выдан"
+            name="kemvidan"
+            rules={[
+              {
+                required: true,
+                message: "Пожалуйста, укажите кем выдан паспорт",
               },
             ]}
           >
@@ -153,6 +141,36 @@ export default function ConfirmationDocument({ form }) {
               }}
             />
           </Form.Item>
+        </>
+      )}
+
+      {/* _______Иной документ_______ */}
+      {documentType === "other" && (
+        <>
+          {/* Использование SelectInput для поля "Тип документа" */}
+          <SelectInput
+            displayName="Тип документа"
+            name="otherTypeDoc"
+            required={true}
+            description={["Выберите тип иного документа из списка"]}
+            options={otherDocumentOptions}
+            onChange={(value) => {}}
+          />
+
+          {/* Реквизиты документа */}
+          <TextInput
+            displayName="Реквизиты документа"
+            name="recvizitydocumenta"
+            required={true}
+            shortDescription="..."
+            inputType="textarea"
+            rules={[
+              {
+                required: true,
+                message: "Пожалуйста, укажите реквизиты документа",
+              },
+            ]}
+          />
         </>
       )}
     </>

@@ -1,43 +1,51 @@
 import React from "react";
-import { Input, Form, Divider } from "antd";
+import { Divider } from "antd";
+import TextInput from "../../FormComponents/TextInput";
 
 export default function FullName() {
   return (
     <>
       <Divider orientation="center">ФИО</Divider>
-
-      {/* _______Фамилия_______ */}
-      <Form.Item
-        label="Фамилия"
+      <TextInput
+        displayName="Фамилия"
         name="lastname"
+        required={true}
+        shortDescription="Иванов"
+        description={["Введите вашу фамилию полностью"]}
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите вашу фамилию",
+            message: "Пожалуйста, введите вашу фамилию", 
           },
         ]}
-      >
-        <Input placeholder="Иванов" />
-      </Form.Item>
+      />
 
-      {/* _______Имя_______ */}
-      <Form.Item
-        label="Имя"
+      <TextInput
+        displayName="Имя"
         name="firstname"
+        required={true}
+        shortDescription="Иван"
+        description={["Введите ваше имя полностью"]}
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите ваше имя",
+            message: "Пожалуйста, введите ваше имя", 
           },
         ]}
-      >
-        <Input placeholder="Иван" />
-      </Form.Item>
+      />
 
-      {/* _______Отчество_______ */}
-      <Form.Item label="Отчество" name="secondname">
-        <Input placeholder="Иванович" />
-      </Form.Item>
+      <TextInput
+        displayName="Отчество"
+        name="secondname"
+        shortDescription="Иванович"
+        description={["Введите ваше отчество полностью (если имеется)"]}
+        rules={[
+          {
+            required: true,
+            message: "Пожалуйста, введите ваше отчество", 
+          },
+        ]}
+      />
     </>
   );
 }
