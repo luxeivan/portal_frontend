@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Typography } from "antd";
 import styles from "./PuzzleGame.module.css";
 
+import moveSoundFile from '../../assets/sounds/Movie.mp3';
+
+
+
 const { Title, Paragraph } = Typography;
 
 const generatePuzzle = () => {
@@ -15,6 +19,7 @@ const generatePuzzle = () => {
 };
 
 const PuzzleGame = () => {
+  const moveSound = new Audio(moveSoundFile);
   const [puzzle, setPuzzle] = useState([]);
 
   useEffect(() => {
@@ -35,6 +40,7 @@ const PuzzleGame = () => {
         newPuzzle[index],
       ];
       setPuzzle(newPuzzle);
+      moveSound.play();
     }
   };
 

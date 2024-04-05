@@ -111,13 +111,13 @@ export default function AddressRegistration({ form }) {
       <Form.Item label="Адрес регистрации" name="fullAddress">
         <Input readOnly />
       </Form.Item>
-      <Form.Item label="Страна" name="country">
-        <Input value={country} onChange={(e) => setCountry(e.target.value)} />
-      </Form.Item>
+
       <Form.Item label="Почтовый индекс" name="postcode">
         <Input value={postcode} onChange={(e) => setPostcode(e.target.value)} />
       </Form.Item>
-
+      <Form.Item label="Страна" name="country">
+        <Input value={country} onChange={(e) => setCountry(e.target.value)} />
+      </Form.Item>
       <Form.Item label="Регион" name="region">
         <Input value={region} onChange={(e) => setRegion(e.target.value)} />
       </Form.Item>
