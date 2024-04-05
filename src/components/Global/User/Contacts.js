@@ -26,7 +26,7 @@ export default function Contacts({ form }) {
       <Form.Item
         label="Мобильный телефон"
         name="phone"
-        rules={[{ required: true, message: "Введите номер телефона" }]}
+        rules={[{ required: true, message: "" }]}
       >
         <Input
           onChange={handlePhoneChange}
@@ -39,7 +39,7 @@ export default function Contacts({ form }) {
         label="Электронная почта"
         name="email"
         rules={[
-          { required: true, message: "Введите email" },
+          { required: true, message: "" },
           {
             type: "email",
             message: "Пожалуйста, введите корректный email",
