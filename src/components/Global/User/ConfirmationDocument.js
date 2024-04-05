@@ -73,7 +73,7 @@ export default function ConfirmationDocument({ form }) {
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, укажите серию паспорта",
+                message: "",
               },
             ]}
           />
@@ -90,7 +90,7 @@ export default function ConfirmationDocument({ form }) {
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, укажите номер паспорта",
+                message: "",
               },
             ]}
           />
@@ -108,7 +108,7 @@ export default function ConfirmationDocument({ form }) {
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, укажите код подразделения",
+                message: "",
               },
               () => ({
                 validator(_, value) {
@@ -129,7 +129,7 @@ export default function ConfirmationDocument({ form }) {
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, укажите кем выдан паспорт",
+                message: "",
               },
             ]}
           >
@@ -144,13 +144,10 @@ export default function ConfirmationDocument({ form }) {
           <Form.Item
             label="Когда выдан"
             name="date"
-            rules={[{ required: true, message: "Введите дату выдачи" }]}
+            rules={[{ required: true, message: "" }]}
           >
             <ConfigProvider locale={ruRU}>
-              <DatePicker
-                format="DD.MM.YYYY"
-                style={{ width: "100%" }} 
-              />
+              <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
             </ConfigProvider>
           </Form.Item>
         </>
@@ -168,32 +165,56 @@ export default function ConfirmationDocument({ form }) {
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, укажите тип документа",
+                message: "",
               },
             ]}
           />
 
           {/* Реквизиты документа */}
-          <TextInput
-            displayName="Реквизиты документа"
+          <Form.Item
+            label="Реквизиты документа"
             name="recvizitydocumenta"
-            required={true}
-            shortDescription="..."
-            inputType="textarea"
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, укажите реквизиты документа",
+                message: "",
               },
             ]}
-          />
+          >
+            <TextArea
+              placeholder="..."
+              style={{
+                height: 60,
+              }}
+            />
+          </Form.Item>
+          {/* _______Кем выдан_______ */}
+          <Form.Item
+            label="Кем выдан"
+            name="kemvidanOther"
+            rules={[
+              {
+                required: true,
+                message: "",
+              },
+            ]}
+          >
+            <TextArea
+              placeholder="..."
+              style={{
+                height: 60,
+              }}
+            />
+          </Form.Item>
           {/* _______Когда выдан_______ */}
           <Form.Item
             label="Когда выдан"
-            name="date"
-            rules={[{ required: true, message: "Введите дату выдачи" }]}
+            name="dateOther"
+            rules={[{ required: true, message: "" }]}
           >
-            <DatePicker />
+            <ConfigProvider locale={ruRU}>
+              <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
+            </ConfigProvider>
           </Form.Item>
         </>
       )}

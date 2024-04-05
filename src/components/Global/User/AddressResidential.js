@@ -8,6 +8,7 @@ import TextArea from "antd/es/input/TextArea";
 export default function AddressResidential({ form }) {
   const [searchText] = useState("");
   const [isAddressSame, setIsAddressSame] = useState(false);
+  const [countryResidence, setCountryResidence] = useState("");
   const [cityResidence, setCityResidence] = useState("");
   const [streetResidence, setStreetResidence] = useState("");
   const [postcodeResidence, setPostcodeResidence] = useState("");
@@ -18,6 +19,7 @@ export default function AddressResidential({ form }) {
   const [frameResidence, setFrameResidence] = useState("");
   const [apartmentNumberResidence, setApartmentNumberResidence] = useState("");
   const [buildingResidence, setBuildingResidence] = useState("");
+  const [kommentResidence, setKommentResidence] = useState("");
 
   const [manualResidenceAddressInput, setManualResidenceAddressInput] =
     useState(false);
@@ -71,9 +73,55 @@ export default function AddressResidential({ form }) {
     }
   };
 
+  const getAddressStringResidence = () => {
+    // Собираем строки в одну, если они не пустые
+    return [
+      countryResidence,
+      postcodeResidence,
+      regionResidence,
+      areaResidence,
+      cityResidence,
+      localityResidence,
+      streetResidence,
+      houseNumberResidence,
+      frameResidence,
+      buildingResidence,
+      apartmentNumberResidence,
+      kommentResidence,
+    ]
+      .filter(Boolean)
+      .join(", ");
+  };
+
+  useEffect(() => {
+    form.setFieldsValue({ fullAddressResidence: getAddressStringResidence() });
+  }, [
+    countryResidence,
+    postcodeResidence,
+    regionResidence,
+    areaResidence,
+    cityResidence,
+    localityResidence,
+    streetResidence,
+    houseNumberResidence,
+    frameResidence,
+    buildingResidence,
+    apartmentNumberResidence,
+    kommentResidence,
+  ]);
+
   //Поля для ручного ввода адреса проживания
   const manualResidenceAddressFields = (
     <>
+      <Form.Item label="Адрес проживания" name="fullAddressResidence">
+        <Input readOnly />
+      </Form.Item>
+      <Form.Item label="Страна" name="countryResidence">
+        <Input
+          value={countryResidence}
+          onChange={(e) => setCountryResidence(e.target.value)}
+        />
+      </Form.Item>
       <Form.Item label="Почтовый индекс" name="postcodeResidence">
         <Input
           value={postcodeResidence}
@@ -81,16 +129,7 @@ export default function AddressResidential({ form }) {
         />
       </Form.Item>
 
-      <Form.Item
-        label="Регион"
-        name="regionResidence"
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста, введите регион",
-          },
-        ]}
-      >
+      <Form.Item label="Регион" name="regionResidence">
         <Input
           value={regionResidence}
           onChange={(e) => setRegionResidence(e.target.value)}
@@ -104,64 +143,28 @@ export default function AddressResidential({ form }) {
         />
       </Form.Item>
 
-      <Form.Item
-        label="Город"
-        name="cityResidence"
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста, введите город",
-          },
-        ]}
-      >
+      <Form.Item label="Город" name="cityResidence">
         <Input
           value={cityResidence}
           onChange={(e) => setCityResidence(e.target.value)}
         />
       </Form.Item>
 
-      <Form.Item
-        label="Населенный пункт"
-        name="localityResidence"
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста, введите населенный пункт",
-          },
-        ]}
-      >
+      <Form.Item label="Населенный пункт" name="localityResidence">
         <Input
           value={localityResidence}
           onChange={(e) => setLocalityResidence(e.target.value)}
         />
       </Form.Item>
 
-      <Form.Item
-        label="Улица"
-        name="streetResidence"
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста, введите улицу",
-          },
-        ]}
-      >
+      <Form.Item label="Улица" name="streetResidence">
         <Input
           value={streetResidence}
           onChange={(e) => setStreetResidence(e.target.value)}
         />
       </Form.Item>
 
-      <Form.Item
-        label="Номер дома"
-        name="houseNumberResidence"
-        rules={[
-          {
-            required: true,
-            message: "Пожалуйста, введите номер дома",
-          },
-        ]}
-      >
+      <Form.Item label="Номер дома" name="houseNumberResidence">
         <Input
           value={houseNumberResidence}
           onChange={(e) => setHouseNumberResidence(e.target.value)}
@@ -186,6 +189,16 @@ export default function AddressResidential({ form }) {
         <Input
           value={apartmentNumberResidence}
           onChange={(e) => setApartmentNumberResidence(e.target.value)}
+        />
+      </Form.Item>
+      <Form.Item label="Комментарий" name="kommentResidence">
+        <TextArea
+          placeholder="..."
+          style={{
+            height: 60,
+          }}
+          value={kommentResidence}
+          onChange={(e) => setKommentResidence(e.target.value)}
         />
       </Form.Item>
     </>
@@ -227,7 +240,7 @@ export default function AddressResidential({ form }) {
                 rules={[
                   {
                     required: true,
-                    message: "Введите город, улицу, номер дома и квартиру",
+                    message: "",
                   },
                   { validator: validateResidenceAddress },
                 ]}
