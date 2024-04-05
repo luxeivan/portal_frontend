@@ -116,19 +116,19 @@ export default function AddressResidential({ form }) {
       <Form.Item label="Адрес проживания" name="fullAddressResidence">
         <Input readOnly />
       </Form.Item>
-      <Form.Item label="Страна" name="countryResidence">
-        <Input
-          value={countryResidence}
-          onChange={(e) => setCountryResidence(e.target.value)}
-        />
-      </Form.Item>
+
       <Form.Item label="Почтовый индекс" name="postcodeResidence">
         <Input
           value={postcodeResidence}
           onChange={(e) => setPostcodeResidence(e.target.value)}
         />
       </Form.Item>
-
+      <Form.Item label="Страна" name="countryResidence">
+        <Input
+          value={countryResidence}
+          onChange={(e) => setCountryResidence(e.target.value)}
+        />
+      </Form.Item>
       <Form.Item label="Регион" name="regionResidence">
         <Input
           value={regionResidence}
