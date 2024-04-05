@@ -15,7 +15,7 @@ export default function FullName() {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите вашу фамилию", 
+            message: "", 
           },
         ]}
       />
@@ -29,7 +29,7 @@ export default function FullName() {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите ваше имя", 
+            message: "", 
           },
         ]}
       />
@@ -42,7 +42,7 @@ export default function FullName() {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите ваше отчество", 
+            message: "", 
           },
         ]}
       />

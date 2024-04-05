@@ -240,7 +240,7 @@ export default function AddressResidential({ form }) {
                 rules={[
                   {
                     required: true,
-                    message: "Введите город, улицу, номер дома и квартиру",
+                    message: "",
                   },
                   { validator: validateResidenceAddress },
                 ]}

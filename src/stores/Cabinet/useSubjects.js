@@ -155,7 +155,7 @@ const useSubjects = create((set, get) => ({
           return Promise.resolve();
         } else {
           error.code = 4;
-          error.message = "Неверный контрольный номер";
+          error.message = "Неверный СНИЛС";
         }
       }
     }
