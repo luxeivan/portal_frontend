@@ -143,6 +143,7 @@ export default function Services() {
     }))
   }
   useEffect(() => {
+    console.log(services)
     setServicesFiltered(services)
   }, [services])
 
