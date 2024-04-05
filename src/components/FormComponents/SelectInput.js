@@ -28,6 +28,7 @@ export default function SelectInput({
     fontSize: customfontSizeIcon,
     cursor: "pointer",
     marginLeft: "5px",
+    pointerEvents: 'none',
   };
 
   if (show) {
@@ -43,7 +44,6 @@ export default function SelectInput({
             <Select
               onChange={onChange}
               placeholder="Выберите вариант"
-              style={{ paddingRight: "30px" }}
             >
               {options.map((option) => (
                 <Option key={option.value} value={option.value}>
