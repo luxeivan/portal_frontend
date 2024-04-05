@@ -26,7 +26,7 @@ export default function TagFilter({ array, handlerFilter }) {
             {/* <span>Мощность:</span> */}
             {Array.from(tagsData).map((tag) => (
                 <Tag.CheckableTag
-                    color="red"
+                style={{padding:"5px 10px"}}
                     key={tag}
                     checked={selectedTags.includes(tag)}
                     onChange={(checked) => handleChange(tag, checked)}

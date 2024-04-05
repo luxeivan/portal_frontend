@@ -15,6 +15,7 @@ import ListDocs from "../../components/ServiceItem/ListDocs";
 import StrapiRichText from "../../components/StrapiRichText";
 import styles from "./ServicesItem.module.css";
 import { motion } from "framer-motion";
+import { LeftOutlined } from "@ant-design/icons";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -38,8 +39,10 @@ export default function ServiceItem() {
     <div>
       {serviceItem && (
         <>
-          <Title level={1}>
-            {serviceItem.attributes.name}
+        
+        <Link to={`/services/${level2}/${level3}`}><Button style={{marginTop:"20px"}}><LeftOutlined /></Button></Link>
+          <Title level={1} style={{marginTop:"10px"}}>
+          <span style={{color:"gray"}}>Услуга:</span><br/>{serviceItem.attributes.name}
           </Title>
           {/* <Divider /> */}
 

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Image, Tag } from "antd";
+import { Card, Flex, Typography, Image, Tag, Button } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
 import config from "../../config";
 import TagFilter from "../../components/Filters/TagFilter";
+import { LeftOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;
 
 
@@ -40,7 +41,7 @@ const serviceDetailsData = [
   {
     url: "kommercheskie-uslugis",
     title: "Коммерческие услуги",
-    content: "Аренда, Строительство, Ремонт",
+    content: "Аренда, обслуживание, ремонт, проектирование, строительство",
     subServices: [
       {
         title: "Ремонт, техническое и оперативное обслуживание",
@@ -72,7 +73,7 @@ const serviceDetailsData = [
   {
     url: "uchet-elektricheskoj-energiis",
     title: "Учёт электрической энергии",
-    content: "Установка, замена и поверка приборов учета",
+    content: "Установка и замена приборов учета",
     subServices: [
       {
         title: "Для физических лиц",
@@ -157,7 +158,7 @@ export default function Services() {
       <div>
         {!level2 && !level3 && (
           <>
-            <Title level={1} className={styles.title}>
+            <Title level={1} className={styles.title} style={{marginTop:"65px"}}>
               Каталог услуг
             </Title>
             <Flex wrap="wrap" gap="large">
@@ -178,7 +179,8 @@ export default function Services() {
         )}
         {level2 && !level3 && (
           <>
-            <Title level={1} className={styles.title}>
+          <Link to={'/services/'}><Button style={{marginTop:"20px"}}><LeftOutlined /></Button></Link>
+            <Title level={1} className={styles.title} style={{marginTop:"10px"}}>
               {serviceDetailsData.find((item) => item.url === level2).title}
             </Title>
             <Flex wrap="wrap" gap="large">
@@ -202,7 +204,8 @@ export default function Services() {
         )}
         {level2 && level3 && (
           <>
-            <Title level={1} className={styles.title}>
+          <Link to={`/services/${level2}`}><Button style={{marginTop:"20px"}}><LeftOutlined /></Button></Link>
+            <Title level={1} className={styles.title} style={{marginTop:"10px"}}>
               {serviceDetailsData.find((item) => item.url === level2).title}: <span style={{ textTransform: "lowercase" }}>{serviceDetailsData.find(item => item.url === level2).subServices.find(item => item.url === level3).title}</span>
             </Title>
             <TagFilter array={services.map(item => item.attributes.power)} handlerFilter={handlerFilter} />

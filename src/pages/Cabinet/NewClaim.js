@@ -34,7 +34,7 @@ export default function NewClaim() {
             {claim &&
                 <>
                     <Title>
-                        Новая заявка: {claim.attributes?.name}
+                        <span style={{color:"gray"}}>Услуга:</span><br/> {claim.attributes?.name}
                     </Title>
                     <Form
                         layout="vertical"
@@ -70,7 +70,7 @@ export default function NewClaim() {
 
                         })}
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">Подать заявление</Button>
+                            <Button type="primary" htmlType="submit">Подать заявку на услугу</Button>
                         </Form.Item>
                     </Form>
 
