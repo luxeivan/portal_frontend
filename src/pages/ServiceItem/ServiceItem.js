@@ -39,7 +39,7 @@ export default function ServiceItem() {
       {serviceItem && (
         <>
           <Title level={1}>
-            {serviceItem.attributes.type} - {serviceItem.attributes.name}
+            {serviceItem.attributes.name}
           </Title>
           {/* <Divider /> */}
 
@@ -70,8 +70,23 @@ export default function ServiceItem() {
                 ),
               },
               {
-                key: "2",
-                label: "Этапы",
+                key: "32",
+                label: "Необходимая информация для подачи заявки",
+                children: (
+                  <Paragraph>
+                    {serviceItem.attributes.fields && (
+                      <ListDocs
+                        list={serviceItem.attributes.fields.filter(
+                          (item) => item.common.showInSpecification
+                        )}
+                      />
+                    )}
+                  </Paragraph>
+                ),
+              },
+              {
+                key: "3",
+                label: "Этапы выполнения",
                 children: (
                   <Steps
                     // size="small"
@@ -91,21 +106,6 @@ export default function ServiceItem() {
                       subTitle: `${item.period ? item.period : ''}`,
                     }))}
                   />
-                ),
-              },
-              {
-                key: "3",
-                label: "Информация которая потребуется при подаче заявки",
-                children: (
-                  <Paragraph>
-                    {serviceItem.attributes.fields && (
-                      <ListDocs
-                        list={serviceItem.attributes.fields.filter(
-                          (item) => item.common.showInSpecification
-                        )}
-                      />
-                    )}
-                  </Paragraph>
                 ),
               },
               {
