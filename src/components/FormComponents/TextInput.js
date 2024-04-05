@@ -13,6 +13,7 @@ export default function TextInput({
   description,
   depends,
   inputProps,
+  
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   const form = Form.useFormInstance();
@@ -36,7 +37,7 @@ export default function TextInput({
           {...formItemLayout}
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
-          rules={[{ required }]}
+          rules={[{ required,  message: `` }]}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             <Input

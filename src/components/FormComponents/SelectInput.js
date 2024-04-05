@@ -38,12 +38,13 @@ export default function SelectInput({
           {...formItemLayout}
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
-          rules={[{ required }]}
+          rules={[{ required,  message: `` }]}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             <Select
               onChange={onChange}
               placeholder="Выберите вариант"
+              // style={{ paddingRight: "30px" }}
             >
               {options.map((option) => (
                 <Option key={option.value} value={option.value}>

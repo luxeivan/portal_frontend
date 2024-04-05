@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 
-import { Form, Divider, Input, DatePicker } from "antd";
+import { Form, Divider, ConfigProvider, DatePicker } from "antd";
 
 import TextArea from "antd/es/input/TextArea";
 
 import SelectInput from "../../FormComponents/SelectInput";
 import TextInput from "../../FormComponents/TextInput";
+
+import ruRU from "antd/lib/locale/ru_RU";
+import moment from "moment";
+import "moment/locale/ru";
+
+moment.locale("ru");
 
 export default function ConfirmationDocument({ form }) {
   const [documentType, setDocumentType] = useState("passport");
@@ -16,11 +22,6 @@ export default function ConfirmationDocument({ form }) {
     setDocumentType(value);
     form.setFieldsValue({ typeDoc: value });
   };
-
-  const otherDocumentOptions = [
-    { value: "type1", label: "Тип1" },
-    { value: "type2", label: "Тип2" },
-  ];
 
   const documentOptions = [
     { value: "passport", label: "Паспорт гражданина РФ" },
@@ -75,7 +76,6 @@ export default function ConfirmationDocument({ form }) {
               },
             ]}
           />
-
           {/* Номер паспорта */}
           <TextInput
             displayName="Номер паспорта"
@@ -93,7 +93,6 @@ export default function ConfirmationDocument({ form }) {
               },
             ]}
           />
-
           {/* Код подразделения */}
           <TextInput
             displayName="Код подразделения"
@@ -122,7 +121,6 @@ export default function ConfirmationDocument({ form }) {
               }),
             ]}
           />
-
           {/* _______Кем выдан_______ */}
           <Form.Item
             label="Кем выдан"
@@ -141,14 +139,18 @@ export default function ConfirmationDocument({ form }) {
               }}
             />
           </Form.Item>
-
           {/* _______Когда выдан_______ */}
           <Form.Item
             label="Когда выдан"
             name="date"
             rules={[{ required: true, message: "Введите дату выдачи" }]}
           >
-            <DatePicker />
+            <ConfigProvider locale={ruRU}>
+              <DatePicker
+                format="DD.MM.YYYY"
+                style={{ width: "100%" }} 
+              />
+            </ConfigProvider>
           </Form.Item>
         </>
       )}
@@ -156,15 +158,6 @@ export default function ConfirmationDocument({ form }) {
       {/* _______Иной документ_______ */}
       {documentType === "other" && (
         <>
-          {/* "Тип иного документа" */}
-          {/* <SelectInput
-            displayName="Тип документа"
-            name="otherTypeDoc"
-            required={true}
-            description={["Выберите тип иного документа из списка"]}
-            options={otherDocumentOptions}
-            onChange={(value) => {}}
-          /> */}
           <TextInput
             displayName="Тип иного документа"
             name="otherTypeDoc"
