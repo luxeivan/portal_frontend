@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
-import { Form, Input } from "antd";
+import { Form, Input, Typography } from "antd";
+import Title from "antd/es/typography/Title";
 import useAuth from "../../../../stores/useAuth";
 import styles from "./CodeForm.module.css";
 
@@ -29,45 +30,49 @@ export default function CodeForm() {
   };
 
   return (
-    <Form
-      ref={formRef}
-      name="codeForm"
-      onFinish={onFinish}
-      className={styles.codeFormContainer}
-    >
-      <Form.Item name="pin1" rules={[{ required: true }]}>
-        <Input
-          className={styles.codeInput}
-          ref={inputRef1}
-          maxLength={1}
-          onChange={(e) => handleInputChange(e, inputRef2)}
-        />
-      </Form.Item>
-      <Form.Item name="pin2" rules={[{ required: true }]}>
-        <Input
-          className={styles.codeInput}
-          ref={inputRef2}
-          maxLength={1}
-          onChange={(e) => handleInputChange(e, inputRef3)}
-        />
-      </Form.Item>
-      <Form.Item name="pin3" rules={[{ required: true }]}>
-        <Input
-          className={styles.codeInput}
-          ref={inputRef3}
-          maxLength={1}
-          onChange={(e) => handleInputChange(e, inputRef4)}
-        />
-      </Form.Item>
-      <Form.Item name="pin4" rules={[{ required: true }]}>
-        <Input
-          className={styles.codeInput}
-          ref={inputRef4}
-          maxLength={1}
-          onChange={handleInput4Change}
-        />
-      </Form.Item>
-    </Form>
+    <>
+      <Title level={5}>Сейчас Вам поступит телефонный звонок, отвечать на него не нужно.</Title>
+      <Typography.Text level={5}>Введите последние 4 цифры:</Typography.Text>
+      <Form
+        ref={formRef}
+        name="codeForm"
+        onFinish={onFinish}
+        className={styles.codeFormContainer}
+      >
+        <Form.Item name="pin1" rules={[{ required: true }]}>
+          <Input
+            className={styles.codeInput}
+            ref={inputRef1}
+            maxLength={1}
+            onChange={(e) => handleInputChange(e, inputRef2)}
+          />
+        </Form.Item>
+        <Form.Item name="pin2" rules={[{ required: true }]}>
+          <Input
+            className={styles.codeInput}
+            ref={inputRef2}
+            maxLength={1}
+            onChange={(e) => handleInputChange(e, inputRef3)}
+          />
+        </Form.Item>
+        <Form.Item name="pin3" rules={[{ required: true }]}>
+          <Input
+            className={styles.codeInput}
+            ref={inputRef3}
+            maxLength={1}
+            onChange={(e) => handleInputChange(e, inputRef4)}
+          />
+        </Form.Item>
+        <Form.Item name="pin4" rules={[{ required: true }]}>
+          <Input
+            className={styles.codeInput}
+            ref={inputRef4}
+            maxLength={1}
+            onChange={handleInput4Change}
+          />
+        </Form.Item>
+      </Form>
+    </>
   );
 }
 

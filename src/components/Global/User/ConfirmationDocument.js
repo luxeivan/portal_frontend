@@ -50,6 +50,7 @@ export default function ConfirmationDocument({ form }) {
       <SelectInput
         displayName="Тип документа"
         name="typeDoc"
+        defaultValue="passport"
         required={true}
         description={["Выберите тип документа из списка"]}
         options={documentOptions}

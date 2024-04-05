@@ -14,6 +14,7 @@ export default function SelectInput({
   options,
   onChange,
   depends,
+  defaultValue
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   const form = Form.useFormInstance();
@@ -42,6 +43,7 @@ export default function SelectInput({
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             <Select
+            defaultValue={defaultValue}
               onChange={onChange}
               placeholder="Выберите вариант"
               // style={{ paddingRight: "30px" }}

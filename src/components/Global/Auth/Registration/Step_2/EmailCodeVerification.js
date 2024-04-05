@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
-import { Form, Input } from "antd";
+import { Form, Input,Typography } from "antd";
+import Title from "antd/es/typography/Title";
 import useRegistration from "../../../../../stores/useRegistration";
 import styles from "./EmailCodeVerification.module.css"; // Убедитесь, что путь к CSS-файлу правильный
 
@@ -24,22 +25,26 @@ const EmailCodeVerification = () => {
   };
 
   return (
-    <Form ref={formRef} onFinish={onFinish} className={styles.codeFormContainer}>
-      {Array.from({ length: 4 }, (_, index) => (
-        <Form.Item
-          key={index}
-          name={`pin${index + 1}`}
-          rules={[{ required: true, message: "Введите цифру" }]}
-        >
-          <Input
-            className={styles.codeInput}
-            ref={(el) => (inputRefs.current[index] = el)}
-            maxLength={1}
-            onChange={(e) => handleInputChange(e, index)}
-          />
-        </Form.Item>
-      ))}
-    </Form>
+    <>
+      <Title level={5}>Сейчас Вам поступит телефонный звонок, отвечать на него не нужно.</Title>
+      <Typography.Text level={5}>Введите последние 4 цифры:</Typography.Text>
+      <Form ref={formRef} onFinish={onFinish} className={styles.codeFormContainer}>
+        {Array.from({ length: 4 }, (_, index) => (
+          <Form.Item
+            key={index}
+            name={`pin${index + 1}`}
+            rules={[{ required: true, message: "Введите цифру" }]}
+          >
+            <Input
+              className={styles.codeInput}
+              ref={(el) => (inputRefs.current[index] = el)}
+              maxLength={1}
+              onChange={(e) => handleInputChange(e, index)}
+            />
+          </Form.Item>
+        ))}
+      </Form>
+    </>
   );
 };
 
