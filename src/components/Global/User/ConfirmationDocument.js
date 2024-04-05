@@ -147,10 +147,7 @@ export default function ConfirmationDocument({ form }) {
             rules={[{ required: true, message: "Введите дату выдачи" }]}
           >
             <ConfigProvider locale={ruRU}>
-              <DatePicker
-                format="DD.MM.YYYY"
-                style={{ width: "100%" }} 
-              />
+              <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
             </ConfigProvider>
           </Form.Item>
         </>
@@ -193,7 +190,9 @@ export default function ConfirmationDocument({ form }) {
             name="date"
             rules={[{ required: true, message: "Введите дату выдачи" }]}
           >
-            <DatePicker />
+            <ConfigProvider locale={ruRU}>
+              <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
+            </ConfigProvider>
           </Form.Item>
         </>
       )}
