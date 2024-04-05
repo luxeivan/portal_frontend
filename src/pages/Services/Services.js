@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Image, Divider } from "antd";
+import { Card, Flex, Typography, Image, Tag } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
 import config from "../../config";
+import TagFilter from "../../components/Filters/TagFilter";
 const { Title, Text } = Typography;
 
 
@@ -128,7 +129,22 @@ const serviceDetailsData = [
 export default function Services() {
   const services = useServices((state) => state.services);
   const fetchServices = useServices((state) => state.fetchServices);
+  const [servicesFiltered, setServicesFiltered] = useState([])
+
   const { level2, level3 } = useParams();
+  const handlerFilter = (arrayWithType) => {
+    // console.log(arrayWithType)
+    if (arrayWithType.length === 0) return setServicesFiltered(services)
+    setServicesFiltered(services.filter(item => {
+      let found = false
+      arrayWithType.forEach(element => { if (item.attributes.power === element) found = true });
+      if (found) return true
+    }))
+  }
+  useEffect(() => {
+    setServicesFiltered(services)
+  }, [services])
+
   useEffect(() => {
     if (level2 && level3) {
       fetchServices(level2, serviceDetailsData.find(item => item.url === level2).subServices.find(item => item.url === level3).name);
@@ -151,7 +167,7 @@ export default function Services() {
                   to={`/services/${item.url}`}
                   className={styles.styleLink}
                 >
-                  <Card className={styles.styleCard}>
+                  <Card className={styles.styleCard} hoverable>
                     <Title level={4}>{item.title}</Title>
                     <Text>{item.content}</Text>
                   </Card>
@@ -175,7 +191,7 @@ export default function Services() {
                       }/${item.url}`}
                     className={styles.styleLink}
                   >
-                    <Card className={styles.styleCard}>
+                    <Card className={styles.styleCard} hoverable>
                       <Title level={4}>{item.title}</Title>
                       <Text>{item.content}</Text>
                     </Card>
@@ -187,18 +203,20 @@ export default function Services() {
         {level2 && level3 && (
           <>
             <Title level={1} className={styles.title}>
-            {serviceDetailsData.find((item) => item.url === level2).title}: <span style={{textTransform:"lowercase"}}>{serviceDetailsData.find(item => item.url === level2).subServices.find(item => item.url === level3).title}</span>
+              {serviceDetailsData.find((item) => item.url === level2).title}: <span style={{ textTransform: "lowercase" }}>{serviceDetailsData.find(item => item.url === level2).subServices.find(item => item.url === level3).title}</span>
             </Title>
-            
+            <TagFilter array={services.map(item => item.attributes.power)} handlerFilter={handlerFilter} />
+
+
             <Flex wrap="wrap" gap="large">
-              {services &&
-                services.map((item) => (
+              {servicesFiltered &&
+                servicesFiltered.map((item) => (
                   <Link
                     key={item.id}
                     to={`/services/${level2}/${level3}/${item.id}`}
                     className={styles.styleLink}
                   >
-                    <Card className={styles.styleCard}>
+                    <Card className={styles.styleCard} hoverable>
                       <div className={styles.cardContent}>
                         <Title level={4}>{item.attributes.name}</Title>
                         <Text>{item.attributes.shortDescription}</Text>
