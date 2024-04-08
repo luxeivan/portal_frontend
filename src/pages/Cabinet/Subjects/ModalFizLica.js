@@ -83,7 +83,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, read = false, 
       initialValues={{
         phone: userPhone,
         email: userEmail,
-        // typeDoc: "passport",
+        typeDoc: "Паспорт гражданина РФ",
         date: moment('01.04.2024', 'DD.MM.YYYY'),
       }}
     >

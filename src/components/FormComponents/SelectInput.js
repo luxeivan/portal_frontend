@@ -42,7 +42,7 @@ export default function SelectInput({
           {...formItemLayout}
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
-          rules={[{ required, message: `` }]}
+          rules={!read && [{ required, message: `` }]}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             {!read &&
