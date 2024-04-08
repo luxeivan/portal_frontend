@@ -52,8 +52,8 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
         edit={edit}
         value={value?.typeDoc}
         displayName="Тип документа"
-        name="typeDoc"
-        //defaultValue="Паспорт гражданина РФ"
+        name="typeDoc"        
+        defaultValue="Паспорт гражданина РФ"
         required={true}
         description={["Выберите тип документа из списка"]}
         options={documentOptions}
@@ -157,8 +157,9 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
             name="dateIssue"
             label="Когда выдан"
             rules={[
-              { required: true, message: "Пожалуйста, введите дату выдачи" },
-            ]}
+              { required: true, message: "" },
+            ]}           
+            valuePropName="value"
           >
             <DatePicker format="DD.MM.YYYY" />
           </Form.Item>

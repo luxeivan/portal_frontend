@@ -92,6 +92,8 @@ export default function ModalFizLica({
         dateIssue: value.dateIssue
           ? moment(value.dateIssue, "DD.MM.YYYY")
           : null,
+        typeDoc: "Паспорт гражданина РФ",
+        date: moment('01.04.2024', 'DD.MM.YYYY'),
       }}
     >
       {/* _______ФИО_______ */}
