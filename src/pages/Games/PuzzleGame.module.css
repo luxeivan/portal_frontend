@@ -1,40 +1,171 @@
 .puzzleContainer {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
-    margin: auto;
-    width: 200px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  margin: auto;
+  width: 200px;
+}
+
+.puzzlePiece {
+  background-color: #1890ff;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  cursor: pointer;
+  font-size: 24px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.emptyPiece {
+  visibility: hidden;
+}
+
+.puzzlePiece:hover {
+  background-color: #1077e0;
+}
+
+.introScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.character {
+  max-width: 300px;
+  margin-bottom: 50%;
+}
+
+.speechBubble {
+  position: absolute;
+  top: 2%;
+  left: -65%;
+  width: 200px;
+  height: 200px;
+  background-color: #f0f0f0;
+  border-radius: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  border: 2px solid #333;
+  color: #333;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+}
+
+:root {
+  --bubble-border-light-theme: #333;
+  --bubble-border-dark-theme: #ddd;
+  --bubble-text-light-theme: #333;
+  --bubble-text-dark-theme: #ddd;
+}
+
+.dark-theme .speechBubble {
+  border-color: var(--bubble-border-dark-theme);
+  color: var(--bubble-text-dark-theme);
+}
+
+.speechBubble button {
+  align-self: center;
+}
+
+.speechBubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border: 15px solid transparent;
+  border-top-color: #f0f0f0;
+  border-bottom: 0;
+  margin-left: -15px;
+  margin-top: -15px;
+}
+
+.characterContainer {
+  position: relative;
+}
+
+@media (min-width: 600px) {
+  .puzzleContainer {
+    width: 300px;
   }
-  
   .puzzlePiece {
-    background-color: #1890ff;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 45px;
-    width: 45px;
-    cursor: pointer;
-    font-size: 24px;
-    transition: transform 0.2s ease-in-out;
+    height: 70px;
+    width: 70px;
+    font-size: 28px;
   }
-  
-  .emptyPiece {
-    visibility: hidden; 
+}
+
+@media (max-width: 599px) {
+  .character {
+    max-width: 150px;
+    margin-bottom: 130%;
   }
-  
-  .puzzlePiece:hover {
-    background-color: #1077e0; 
+
+  .speechBubble {
+    top: -10%;
+    left: 120%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 150px;
+    font-size: 12px;
   }
-  
-  @media (min-width: 600px) {
-    .puzzleContainer {
-      width: 300px;
-    }
-    .puzzlePiece {
-      height: 70px;
-      width: 70px;
-      font-size: 28px;
-    }
+
+  .speechBubble button {
+    width: auto;
+    padding: 5px 10px;
+    font-size: 12px;
   }
-  
+
+  .speechBubble::after {
+    top: 90%;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -2px;
+    display: none;
+  }
+}
+
+/* Стили для планшетов */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .character {
+    max-width: 300px; /* Адаптация размера персонажа для планшетов */
+  }
+
+  .speechBubble {
+    top: -10%; /* Поднять облачко повыше */
+    left: 100%; /* Центрирование по горизонтали */
+    transform: translateX(-50%); /* Корректировка положения облачка */
+    width: 160px; /* Установить ширину облачка */
+    height: 160px; /* Установить высоту облачка */
+    font-size: 14px; /* Установить размер шрифта в облачке */
+  }
+}
+
+/* Стили для MacBook Air */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .character {
+    max-width: 250px; 
+    top: 10%;
+    margin-bottom: 90%;
+  }
+
+  .speechBubble {
+    top: 5%; 
+    left: 130%;
+    transform: translateX(-50%); 
+    width: 180px; 
+    height: 180px; 
+    font-size: 16px; 
+  }
+
+}
