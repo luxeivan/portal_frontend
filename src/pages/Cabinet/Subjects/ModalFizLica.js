@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import { Form, Button, message } from "antd";
+import moment from 'moment';
+
 
 import useAuth from "../../../stores/./useAuth";
 import useRegistration from "../../.././stores/useRegistration";
@@ -80,7 +82,8 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       initialValues={{
         phone: userPhone,
         email: userEmail,
-        typedocuments: "passport",
+        typeDoc: "passport",
+        date: moment('01.04.2024', 'DD.MM.YYYY'),
       }}
     >
       {/* _______ФИО_______ */}
