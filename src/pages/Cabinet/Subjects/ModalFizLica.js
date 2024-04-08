@@ -16,7 +16,7 @@ import Contacts from "../../../components/Subjects/Contacts";
 import AddressRegistration from "../../../components/Subjects/AddressRegistration";
 import AddressResidential from "../../../components/Subjects/AddressResidential";
 
-export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
+export default function ModalFizLica({ onSubmit, setShowModalAdd, read = false, value = {} }) {
   const [searchText] = useState("");
   const [fileList, setFileList] = useState([]);
 
@@ -84,23 +84,24 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       }}
     >
       {/* _______ФИО_______ */}
-      <FullName value={{ firstname: "Егор", lastname: "Степанов", secondname: "Викторович" }} />
+      <FullName read={read} value={{ firstname: value.firstname, lastname: value.lastname, secondname: value.secondname }} />
       {/* _______Подтверждающий документ_______ */}
-      <ConfirmationDocument form={form} />
+      <ConfirmationDocument read={read} value={{typeDoc:value.typeDoc}} form={form} />
       {/* _______Блок с адресами_______ */}
-      <AddressRegistration form={form} />
-      <AddressResidential form={form} />
+      <AddressRegistration read={read} form={form} />
+      <AddressResidential read={read} form={form} />
       {/* _______Загрузка_______ */}
       <Uploader
+        read={read}
         fileList={fileList}
         onChange={({ fileList: newFileList }) => setFileList(newFileList)}
         form={form}
       />
       {/* _______СНИЛС_______ */}
-      <Snils form={form} />
+      <Snils read={read} form={form} />
 
       {/* _______Блок с телефоном и почтой_______ */}
-      <Contacts form={form} />
+      <Contacts read={read} form={form} />
 
       {/* _______Кнопка отправки формы_______ */}
       <Form.Item>

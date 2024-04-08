@@ -110,15 +110,7 @@ export default function App() {
                     }
                   />
                   <Route
-                    path="/services/:level2/:level3"
-                    element={
-                      <Container>
-                        <Services />
-                      </Container>
-                    }
-                  />
-                  <Route
-                    path="/services/:level2/:level3/:id"
+                    path="/services/:level2/:id"
                     element={
                       <Container>
                         <ServiceItem />

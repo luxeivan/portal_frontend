@@ -190,9 +190,8 @@ export default function Services() {
             </Title>
             {/* {services && services.map(item =>
               <TagFilter array={item.attributes.filters.map(item => item.value)} handlerFilter={handlerFilter} />
-
             )} */}
-            <TagFilters array={servicesFiltered} handlerFilter={handlerFilter} />
+            <TagFilters array={services} handlerFilter={handlerFilter} />
 
 
             <Flex wrap="wrap" gap="large">
