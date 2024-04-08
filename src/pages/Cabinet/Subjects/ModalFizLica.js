@@ -26,13 +26,14 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, read = false, 
   const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
 
   const onFinish = async (values) => {
+    console.log(values)
     const formData = {
       type: "Физическое лицо",
       firstname: values.firstname,
       lastname: values.lastname,
       secondname: values.secondname,
       snils: values.snils.replace(/[^0-9]/g, ""),
-      typeDoc: values.typedocuments,
+      typeDoc: values.typeDoc,
       serialPassport: values.serialPassport,
       numberPassport: values.numberPassport,
       fileDoc: values.fileDoc,
@@ -82,7 +83,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, read = false, 
       initialValues={{
         phone: userPhone,
         email: userEmail,
-        typeDoc: "passport",
+        // typeDoc: "passport",
         date: moment('01.04.2024', 'DD.MM.YYYY'),
       }}
     >

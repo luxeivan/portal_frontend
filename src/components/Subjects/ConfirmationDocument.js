@@ -14,7 +14,7 @@ import "moment/locale/ru";
 moment.locale("ru");
 
 export default function ConfirmationDocument({ form, read, edit, value }) {
-  const [documentType, setDocumentType] = useState("passport");
+  const [documentType, setDocumentType] = useState("Паспорт гражданина РФ");
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
 
   // Изменяет тип документа в зависимости от выбора пользователя
@@ -24,8 +24,8 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
   };
 
   const documentOptions = [
-    { value: "passport", label: "Паспорт гражданина РФ" },
-    { value: "other", label: "Иной документ" },
+    { value: "Паспорт гражданина РФ", label: "Паспорт гражданина РФ" },
+    { value: "Иной документ", label: "Иной документ" },
   ];
 
   // Обрабатывает изменения в коде подразделения, форматируя его
@@ -53,7 +53,7 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
         value={value?.typeDoc}
         displayName="Тип документа"
         name="typeDoc"
-        defaultValue="passport"
+        //defaultValue="Паспорт гражданина РФ"
         required={true}
         description={["Выберите тип документа из списка"]}
         options={documentOptions}
@@ -61,7 +61,7 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
       />
 
       {/* _______Паспорт_______ */}
-      {documentType === "passport" && (
+      {documentType === "Паспорт гражданина РФ" && (
         <>
           {/* Серия паспорта */}
           <TextInput
@@ -159,7 +159,7 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
       )}
 
       {/* _______Иной документ_______ */}
-      {documentType === "other" && (
+      {documentType === "Иной документ" && (
         <>
           <TextInput
             displayName="Тип иного документа"

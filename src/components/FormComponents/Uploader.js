@@ -69,6 +69,10 @@ export default function Uploader({ form }) {
           withCredentials: true,
         })
         .then(async (response) => {
+          // const files = response.data.files;
+          // console.log(files)
+          // let fileString = ''
+          // files.forEach(item => fileString + item)
           const relativePath = response.data.files[0];
           const fileblob = await axios.get(
             `${config.backServer}/api/cabinet/get-file/${relativePath}`,
@@ -95,7 +99,7 @@ export default function Uploader({ form }) {
           onSuccess(relativePath, file);
           form.setFieldsValue({ fileDoc: relativePath });
           message.success(
-            `${file.name} файл загружен успешно и сохранен по пути: ${relativePath}`
+            `Файлы успешно загружены`
           );
         })
         .catch((error) => {

@@ -106,8 +106,8 @@ export default function Subjects() {
               setShowModalView(true);
             }}
           >
-            <Typography.Text>{subject.attributes.name}</Typography.Text>
-            <Meta description={subject.attributes.type} />
+            <Typography.Text>{subject?.attributes.name}</Typography.Text>
+            <Meta description={subject?.attributes.type} />
           </Card>
         ))}
         <Card

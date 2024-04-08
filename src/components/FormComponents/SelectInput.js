@@ -62,7 +62,7 @@ export default function SelectInput({
             {read &&
               <Typography.Text>{value}</Typography.Text>
             }
-            <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />
+            {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
           </div>
         </Form.Item>
         <Drawer
