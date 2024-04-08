@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Form, Button, message } from "antd";
-import moment from 'moment';
-
+import moment from "moment";
 
 import useAuth from "../../../stores/./useAuth";
 import useRegistration from "../../.././stores/useRegistration";
@@ -18,7 +17,12 @@ import Contacts from "../../../components/Subjects/Contacts";
 import AddressRegistration from "../../../components/Subjects/AddressRegistration";
 import AddressResidential from "../../../components/Subjects/AddressResidential";
 
-export default function ModalFizLica({ onSubmit, setShowModalAdd, read = false, value = {} }) {
+export default function ModalFizLica({
+  onSubmit,
+  setShowModalAdd,
+  read = false,
+  value = {},
+}) {
   const [searchText] = useState("");
   const [fileList, setFileList] = useState([]);
 
@@ -26,7 +30,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, read = false, 
   const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
 
   const onFinish = async (values) => {
-    console.log(values)
+    console.log(values);
     const formData = {
       type: "Физическое лицо",
       firstname: values.firstname,
@@ -34,8 +38,9 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, read = false, 
       secondname: values.secondname,
       snils: values.snils.replace(/[^0-9]/g, ""),
       typeDoc: values.typeDoc,
-      serialPassport: values.serialPassport,
-      numberPassport: values.numberPassport,
+      serialPassport: values.passport.serialPassport,
+      numberPassport: values.passport.numberPassport,
+      kodPodrazdelenia: values.passport.kodPodrazdelenia,
       fileDoc: values.fileDoc,
       addressRegistration: values.addressRegistration,
       addressResidential: values.addressResidential,
@@ -83,14 +88,34 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd, read = false, 
       initialValues={{
         phone: userPhone,
         email: userEmail,
+        // typeDoc: "passport",
+        dateIssue: value.dateIssue
+          ? moment(value.dateIssue, "DD.MM.YYYY")
+          : null,
         typeDoc: "Паспорт гражданина РФ",
         date: moment('01.04.2024', 'DD.MM.YYYY'),
       }}
     >
       {/* _______ФИО_______ */}
-      <FullName read={read} value={{ firstname: value.firstname, lastname: value.lastname, secondname: value.secondname }} />
+      <FullName
+        read={read}
+        value={{
+          firstname: value.firstname,
+          lastname: value.lastname,
+          secondname: value.secondname,
+        }}
+      />
       {/* _______Подтверждающий документ_______ */}
-      <ConfirmationDocument read={read} value={{typeDoc:value.typeDoc}} form={form} />
+      <ConfirmationDocument
+        read={read}
+        value={{
+          typeDoc: value.typeDoc,
+          serialPassport: value.passport?.serialPassport,
+          numberPassport: value.passport?.numberPassport,
+          kodPodrazdelenia: value.passport?.kodPodrazdelenia,
+        }}
+        form={form}
+      />
       {/* _______Блок с адресами_______ */}
       <AddressRegistration read={read} form={form} />
       <AddressResidential read={read} form={form} />

@@ -65,6 +65,9 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
         <>
           {/* Серия паспорта */}
           <TextInput
+            read={read}
+            edit={edit}
+            value={value?.serialPassport}
             displayName="Серия паспорта"
             name="serialPassport"
             required={true}
@@ -82,6 +85,9 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
           />
           {/* Номер паспорта */}
           <TextInput
+            read={read}
+            edit={edit}
+            value={value?.numberPassport}
             displayName="Номер паспорта"
             name="numberPassport"
             required={true}
@@ -99,8 +105,11 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
           />
           {/* Код подразделения */}
           <TextInput
+            read={read}
+            edit={edit}
+            value={value?.kodPodrazdelenia}
             displayName="Код подразделения"
-            name="kodpodrazdelenia"
+            name="kodPodrazdelenia"
             required={true}
             shortDescription="123-456"
             inputProps={{
@@ -145,16 +154,15 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
           </Form.Item>
           {/* _______Когда выдан_______ */}
           <Form.Item
+            name="dateIssue"
             label="Когда выдан"
-            name="date"            
-            rules={[{ required: true, message: "" }]}
+            rules={[
+              { required: true, message: "" },
+            ]}           
             valuePropName="value"
           >
-            <ConfigProvider locale={ruRU}>
-              <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
-            </ConfigProvider>
+            <DatePicker format="DD.MM.YYYY" />
           </Form.Item>
-          
         </>
       )}
 
