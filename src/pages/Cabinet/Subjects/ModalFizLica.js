@@ -9,12 +9,12 @@ import useSubjects from "../../../stores/Cabinet/useSubjects";
 import { formItemLayout } from "../../.././components/configSizeForm";
 
 import Uploader from "../../../components/FormComponents/Uploader";
-import FullName from "../../../components/Global/User/FullName";
-import ConfirmationDocument from "../../../components/Global/User/ConfirmationDocument";
-import Snils from "../../../components/Global/User/Snils";
-import Contacts from "../../../components/Global/User/Contacts";
-import AddressRegistration from "../../../components/Global/User/AddressRegistration";
-import AddressResidential from "../../../components/Global/User/AddressResidential";
+import FullName from "../../../components/Subjects/FullName";
+import ConfirmationDocument from "../../../components/Subjects/ConfirmationDocument";
+import Snils from "../../../components/Subjects/Snils";
+import Contacts from "../../../components/Subjects/Contacts";
+import AddressRegistration from "../../../components/Subjects/AddressRegistration";
+import AddressResidential from "../../../components/Subjects/AddressResidential";
 
 export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
   const [searchText] = useState("");
@@ -84,7 +84,7 @@ export default function ModalFizLica({ onSubmit, setShowModalAdd }) {
       }}
     >
       {/* _______ФИО_______ */}
-      <FullName />
+      <FullName value={{ firstname: "Егор", lastname: "Степанов", secondname: "Викторович" }} />
       {/* _______Подтверждающий документ_______ */}
       <ConfirmationDocument form={form} />
       {/* _______Блок с адресами_______ */}

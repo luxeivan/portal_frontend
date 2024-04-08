@@ -1,12 +1,15 @@
 import React from "react";
-import { Divider } from "antd";
-import TextInput from "../../FormComponents/TextInput";
+import { Divider, Typography } from "antd";
+import TextInput from "../FormComponents/TextInput";
 
-export default function FullName() {
+export default function FullName({ read, edit, value }) {
   return (
     <>
       <Divider orientation="center">ФИО</Divider>
       <TextInput
+        read={read}
+        edit={edit}
+        value={value?.lastname}
         displayName="Фамилия"
         name="lastname"
         required={true}
@@ -15,12 +18,14 @@ export default function FullName() {
         rules={[
           {
             required: true,
-            message: "", 
+            message: "",
           },
         ]}
-      />
-
+        />
       <TextInput
+        read={read}
+        edit={edit}
+        value={value?.firstname}
         displayName="Имя"
         name="firstname"
         required={true}
@@ -29,12 +34,15 @@ export default function FullName() {
         rules={[
           {
             required: true,
-            message: "", 
+            message: "",
           },
         ]}
       />
 
       <TextInput
+        read={read}
+        edit={edit}
+        value={value?.secondname}
         displayName="Отчество"
         name="secondname"
         shortDescription="Иванович"
@@ -42,7 +50,7 @@ export default function FullName() {
         rules={[
           {
             required: true,
-            message: "", 
+            message: "",
           },
         ]}
       />

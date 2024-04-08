@@ -13,7 +13,9 @@ export default function TextInput({
   description,
   depends,
   inputProps,
-  
+  read,
+  edit,
+  value
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   const form = Form.useFormInstance();
@@ -37,14 +39,20 @@ export default function TextInput({
           {...formItemLayout}
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
-          rules={[{ required,  message: `` }]}
+          rules={[{ required, message: `` }]}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Input
-              placeholder={shortDescription}
-              style={{ paddingRight: "30px" }}
-              {...inputProps} // Дополнительные пропсы для Input
-            />
+            {!read &&
+              <Input
+                placeholder={shortDescription}
+                style={{ paddingRight: "30px" }}
+                {...inputProps} // Дополнительные пропсы для Input
+                value={edit && value}
+              />
+            }
+            {read &&
+              <Typography.Text>{value}</Typography.Text>
+            }
             <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />
           </div>
         </Form.Item>

@@ -4,8 +4,8 @@ import { Form, Divider, ConfigProvider, DatePicker } from "antd";
 
 import TextArea from "antd/es/input/TextArea";
 
-import SelectInput from "../../FormComponents/SelectInput";
-import TextInput from "../../FormComponents/TextInput";
+import SelectInput from "../FormComponents/SelectInput";
+import TextInput from "../FormComponents/TextInput";
 
 import ruRU from "antd/lib/locale/ru_RU";
 import moment from "moment";

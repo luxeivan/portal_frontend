@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Input, Form, Divider } from "antd";
-import TextInput from "../../FormComponents/TextInput";
+import TextInput from "../FormComponents/TextInput";
 
 export default function Contacts({ form }) {
   const handlePhoneChange = (e) => {
