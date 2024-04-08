@@ -148,11 +148,13 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
             label="Когда выдан"
             name="date"
             rules={[{ required: true, message: "" }]}
+            valuePropName="value"
           >
             <ConfigProvider locale={ruRU}>
               <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
             </ConfigProvider>
           </Form.Item>
+          
         </>
       )}
 
