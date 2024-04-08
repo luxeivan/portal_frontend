@@ -90,7 +90,7 @@ export default function Subjects() {
 
   return (
     <div>
-        <AppHelmet title={"Субъекты"} desc={"Субъекты"} />
+      <AppHelmet title={"Субъекты"} desc={"Субъекты"} />
       <Title level={1}>Субъекты</Title>
 
       <Flex wrap="wrap" gap="large">
@@ -137,13 +137,13 @@ export default function Subjects() {
       >
         <Flex gap="large" wrap="wrap" justify="center">
           <Button className={styles.buttontypenewsubject} onClick={() => handleCategorySelect("individual")}>
-            Физическое<br/> лицо
+            Физическое<br /> лицо
           </Button>
           <Button className={styles.buttontypenewsubject} onClick={() => handleCategorySelect("legalEntity")}>
-            Юридическое<br/> лицо
+            Юридическое<br /> лицо
           </Button>
           <Button className={styles.buttontypenewsubject} onClick={() => handleCategorySelect("soleProprietor")}>
-            Индивидуальный<br/> предприниматель
+            Индивидуальный<br /> предприниматель
           </Button>
         </Flex>
       </Modal>
@@ -161,10 +161,27 @@ export default function Subjects() {
           type={selectedType}
         />
       </Modal>
+      <Modal
+        title="Просмотр физического лица"
+        open={showModalView}
+        onCancel={handleCancelModalView}
+        width={650}
+        footer={null}
+      >
+        <ModalFizLica
+          read
+          value={{
+           ...subject.attributes.counterparty[0]
+          }}
+          onSubmit={handleOkModalAdd}
+          setShowModalAdd={setShowModalAdd}
+          type={selectedType}
+        />
+      </Modal>
 
       {/* ------------------------------------------------- */}
 
-      <Modal
+      {/* <Modal
         title={subject && subject.attributes.name}
         open={showModalView}
         onOk={handleOkModalView}
@@ -178,7 +195,7 @@ export default function Subjects() {
           {subject && subject.attributes.counterparty[0].serialPassport}{" "}
           {subject && subject.attributes.counterparty[0].numberPassport}
         </Typography.Paragraph>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

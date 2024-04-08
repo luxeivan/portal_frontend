@@ -13,7 +13,7 @@ import "moment/locale/ru";
 
 moment.locale("ru");
 
-export default function ConfirmationDocument({ form }) {
+export default function ConfirmationDocument({ form, read, edit, value }) {
   const [documentType, setDocumentType] = useState("passport");
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
 
@@ -48,6 +48,9 @@ export default function ConfirmationDocument({ form }) {
 
       {/* _______Тип подтверждающего документа_______ */}
       <SelectInput
+        read={read}
+        edit={edit}
+        value={value?.typeDoc}
         displayName="Тип документа"
         name="typeDoc"
         defaultValue="passport"
