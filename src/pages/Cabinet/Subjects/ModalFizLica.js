@@ -131,7 +131,13 @@ export default function ModalFizLica({
         form={form}
       />
       {/* _______Блок с адресами_______ */}
-      <AddressRegistration read={read} form={form} />
+      <AddressRegistration
+        read={read}
+        form={form}
+        value={{
+          addressRegistration: value.addressRegistration,
+        }}
+      />
       <AddressResidential read={read} form={form} />
       {/* _______Загрузка_______ */}
       <Uploader
