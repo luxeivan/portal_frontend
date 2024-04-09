@@ -163,7 +163,7 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
               rules={[
                 {
                   required: true,
-                  message: "Пожалуйста, укажите, кем был выдан документ",
+                  message: "т",
                 },
               ]}
             >
@@ -176,14 +176,34 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
             </Form.Item>
           )}
           {/* _______Когда выдан_______ */}
-          <Form.Item
+          {read ? (
+            <Form.Item label="Когда выдан" name="dateIssue">
+              <Typography.Text>{value.dateIssue}</Typography.Text>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              label="Когда выдан"
+              name="dateIssue"
+              rules={[
+                {
+                  required: true,
+                  message: "",
+                },
+              ]}
+              valuePropName="value"
+            >
+              <DatePicker format="DD.MM.YYYY" />
+            </Form.Item>
+          )}
+          {/* 123456 */}
+          {/* <Form.Item
             name="dateIssue"
             label="Когда выдан"
             rules={[{ required: true, message: "" }]}
             valuePropName="value"
           >
             <DatePicker format="DD.MM.YYYY" />
-          </Form.Item>
+          </Form.Item> */}
         </>
       )}
 
