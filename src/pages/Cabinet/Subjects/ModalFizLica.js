@@ -52,6 +52,8 @@ export default function ModalFizLica({
       addressResidential: values.addressResidential,
       addressRegistrationFias: values.addressRegistrationFias,
       addressResidentialFias: values.addressResidentialFias,
+      phone: values.phone,
+      email: values.phone,
     };
 
     try {
@@ -92,9 +94,11 @@ export default function ModalFizLica({
       {...formItemLayout}
       onFinish={onFinish}
       initialValues={{
-        phone: userPhone,
-        email: userEmail,
+        // phone: userPhone,
+        // email: userEmail,
         // typeDoc: "passport",
+        phone: userPhone || "",
+        email: userEmail || "",
         dateIssue: value.dateIssue
           ? moment(value.dateIssue, "DD.MM.YYYY")
           : null,
@@ -138,19 +142,45 @@ export default function ModalFizLica({
           addressRegistration: value.addressRegistration,
         }}
       />
-      <AddressResidential read={read} form={form} />
+      <AddressResidential
+        read={read}
+        form={form}
+        value={{
+          addressResidential: value.addressResidential,
+        }}
+      />
       {/* _______Загрузка_______ */}
       <Uploader
         read={read}
         fileList={fileList}
         onChange={({ fileList: newFileList }) => setFileList(newFileList)}
         form={form}
+        value={{
+          fileDoc: Array.isArray(value.fileDoc) ? value.fileDoc : [],
+        }}
       />
+
+      {/* <Uploader
+        read={read}
+        fileList={fileList}
+        onChange={({ fileList: newFileList }) => setFileList(newFileList)}
+        form={form}
+        value={{
+          fileDoc: value.fileDoc,
+        }}
+      /> */}
       {/* _______СНИЛС_______ */}
       <Snils read={read} form={form} />
 
       {/* _______Блок с телефоном и почтой_______ */}
-      <Contacts read={read} form={form} />
+      <Contacts
+        read={read}
+        form={form}
+        value={{
+          phone: Array.isArray(value.phone) ? value.phone : [],
+          email: Array.isArray(value.email) ? value.email : [],
+        }}
+      />
 
       {/* _______Кнопка отправки формы_______ */}
       <Form.Item>

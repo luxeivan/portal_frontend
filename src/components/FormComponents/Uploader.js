@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import { Form, Upload, message, theme, Image, Divider } from "antd";
-import useGlobal from "../../stores/useGlobal";
 import axios from "axios";
 import config from "../../config";
 
@@ -14,7 +13,7 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-export default function Uploader({ form }) {
+export default function Uploader({ form, read, edit, value }) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
@@ -70,12 +69,8 @@ export default function Uploader({ form }) {
           withCredentials: true,
         })
         .then(async (response) => {
-          // const files = response.data.files;
-          // console.log(files)
-          // let fileString = ''
-          // files.forEach(item => fileString + item)
           const relativePath = response.data.files[0];
-          files.push(relativePath)
+          files.push(relativePath);
           const fileblob = await axios.get(
             `${config.backServer}/api/cabinet/get-file/${relativePath}`,
             {
@@ -88,7 +83,7 @@ export default function Uploader({ form }) {
           );
           if (!fileblob.data) throw new Error("Ошибка загрузка файла");
           const objectURL = window.URL.createObjectURL(fileblob.data);
-          setFileList(prev=>[
+          setFileList((prev) => [
             ...prev,
             {
               crossOrigin: "use-credentials",
@@ -100,9 +95,7 @@ export default function Uploader({ form }) {
           ]);
           onSuccess(relativePath, file);
           form.setFieldsValue({ fileDoc: files });
-          message.success(
-            `Файлы успешно загружены`
-          );
+          message.success(`Файлы успешно загружены`);
         })
         .catch((error) => {
           console.error("Ошибка при загрузке файла", error);
@@ -113,6 +106,48 @@ export default function Uploader({ form }) {
   };
 
   return (
+    // <>
+    //   <Divider orientation="center">Файлы</Divider>
+    //   {read && value?.files && Array.isArray(value.files) ? (
+    //     value.files.map((file, index) => (
+    //       <div key={index} style={{ marginBottom: "10px" }}>
+    //         <a href={file.url} target="_blank" rel="noopener noreferrer">
+    //           {file.name}
+    //         </a>
+    //       </div>
+    //     ))
+    //   ) : (
+    //     // Код для загрузки файлов (Dragger и прочее), как у вас уже реализовано
+    //     <Dragger {...uploadProps}>
+    //       <p className="ant-upload-drag-icon">
+    //         <InboxOutlined
+    //           style={{ color: colorPrimaryText, fontSize: "48px" }}
+    //         />
+    //       </p>
+    //       <p className="ant-upload-text">
+    //         Нажмите или перетащите файл в эту область для загрузки
+    //       </p>
+    //       <p className="ant-upload-hint">
+    //         Поддерживается загрузка нескольких файлов. Строго в форматах PDF,
+    //         JPEG, PNG.
+    //       </p>
+    //     </Dragger>
+    //   )}
+    //   {previewImage && (
+    //     <Image
+    //       wrapperStyle={{
+    //         display: "none",
+    //       }}
+    //       preview={{
+    //         visible: previewOpen,
+    //         onVisibleChange: (visible) => setPreviewOpen(visible),
+    //         afterOpenChange: (visible) => !visible && setPreviewImage(""),
+    //       }}
+    //       src={previewImage}
+    //     />
+    //   )}
+    // </>
+
     <>
       <Divider orientation="center">Файлы</Divider>
       <Form.Item

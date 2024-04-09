@@ -5,7 +5,7 @@ import { Input, Form, AutoComplete, Checkbox, Divider, Typography } from "antd";
 import useSubjects from "../../stores/Cabinet/useSubjects";
 import TextArea from "antd/es/input/TextArea";
 
-export default function AddressRegistration({ form, read, value }) {
+export default function AddressRegistration({ form, read, edit, value }) {
   const [searchText] = useState("");
   const [manualAddressInput, setManualAddressInput] = useState(false);
   const [countryRegistration, setCountryRegistration] = useState("");
@@ -69,7 +69,6 @@ export default function AddressRegistration({ form, read, value }) {
   };
 
   const getAddressString = () => {
-    // Собираем строки в одну, если они не пустые
     return [
       countryRegistration,
       postcodeRegistration,
