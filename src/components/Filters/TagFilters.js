@@ -1,30 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { Flex, Tag } from 'antd'
+function arrToObj(arr, field) {
+    const object = {}
+    arr.forEach(filter => {
+        if (!object.hasOwnProperty(filter[field])) {
+            object[filter[field]] = {}
+            object[filter[field]].name = filter.name
+            object[filter[field]].value = new Set()
+        }
+        if (filter.value)
+            object[filter[field]].value.add(filter.value)
+    })
+    return object
+}
 
 export default function TagFilters({ array, handlerFilter }) {
     const [listFilters, setListFilter] = useState([])
     const [selectedTags, setSelectedTags] = useState([]);
-    const objectFilters = {}
+    let objectFilters = {}
     const handleChange = (tag, checked) => {
+        console.log(tag)
         const nextSelectedTags = checked
             ? [...selectedTags, tag]
             : selectedTags.filter((t) => t.value !== tag.value);
         //console.log('Выбрано:', nextSelectedTags);
         setSelectedTags(nextSelectedTags);
-        const objectForFilter = {}
-        nextSelectedTags.forEach(filter => {
-            if (!objectForFilter.hasOwnProperty(filter.component)) {
-                objectForFilter[filter.component] = {}
-                objectForFilter[filter.component].value = new Set()
-            }
-            if (filter.value)
-                objectForFilter[filter.component].value.add(filter.value)
-        })
-        //console.log('objectForFilter:', objectForFilter);
-        handlerFilter(Object.entries(objectForFilter).map(item => ({
+        const objectForFilter = arrToObj(nextSelectedTags, 'component')
+        const arrayForFilter = Object.entries(objectForFilter).map(item => ({
             component: item[0],
             value: Array.from(item[1].value)
-        })))
+        }))
+        console.log(arrayForFilter)
+        handlerFilter(arrayForFilter)
     };
     useEffect(() => {
         array.forEach(service => {
@@ -36,10 +43,10 @@ export default function TagFilters({ array, handlerFilter }) {
                         objectFilters[filter.__component].name = filter.name
                         objectFilters[filter.__component].value = new Set()
                     }
-                    //console.log(objectFilters)
                     if (filter.value)
                         objectFilters[filter.__component].value.add(filter.value)
                 })
+                //console.log(objectFilters)
             }
         });
         setListFilter(Object.entries(objectFilters).map(item => ({

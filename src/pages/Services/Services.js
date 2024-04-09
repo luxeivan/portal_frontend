@@ -135,17 +135,53 @@ export default function Services() {
 
   const { level2 } = useParams();
 
-
-  const handlerFilter = (arrayForFilter) => {
-    if (Object.keys(arrayForFilter).length == 0) return setServicesFiltered(services)
-    setServicesFiltered(services.filter(item => {
-      let found = false
-      arrayForFilter.forEach(element => {
-        if (element.value.includes(item.attributes.filters.find(item => item.__component === element.component)?.value)) found = true
-      });
-      if (found) return true
-    }))
+  function filtered(arr, filters) {
+    let found = false
+    arr.forEach(element => {
+      if (element.value.includes(filters.find(item => item.__component === element.component)?.value)) found = true
+    });
+    if (found) return true
   }
+  const handlerFilter = (arrayForFilter,) => {
+    let tempFiltered = services
+    
+    if (Object.keys(arrayForFilter).length == 0) return setServicesFiltered(services)
+    arrayForFilter.forEach(element => {
+      tempFiltered = services.filter(service => {
+        let found = false
+       
+        if (element.value.includes(service.attributes.filters.find(item => item.__component === element.component)?.value)) found = true
+        if (found) return true
+      })
+      // console.log(tempFiltered)
+      setServicesFiltered(tempFiltered)
+     
+    })
+
+
+    // setServicesFiltered(tempFiltered.filter(item => {
+    //   let found = false
+    //   arrayForFilter.forEach(element => {
+    //     if (element.value.includes(item.attributes.filters.find(item => item.__component === element.component)?.value)) found = true
+    //   });
+    //   if (found) return true
+    // }))
+
+
+    //const tempServices = services.filter(item => !item.attributes.filters.find(item => item.__component === arrayForFilter.component)?.value)
+    //console.log(tempServices)
+    //setServicesFiltered(prev => [...tempServices].sort())
+  }
+  // const handlerFilter = (arrayForFilter,checked) => {
+  //   if (Object.keys(arrayForFilter).length == 0) return setServicesFiltered(services)
+  //   setServicesFiltered(servicesFiltered.filter(item => {
+  //     let found = false
+  //     arrayForFilter.forEach(element => {
+  //       if (element.value.includes(item.attributes.filters.find(item => item.__component === element.component)?.value)) found = true
+  //     });
+  //     if (found) return true
+  //   }))
+  // }
 
 
   useEffect(() => {
@@ -191,7 +227,7 @@ export default function Services() {
             {/* {services && services.map(item =>
               <TagFilter array={item.attributes.filters.map(item => item.value)} handlerFilter={handlerFilter} />
             )} */}
-            <TagFilters array={services} handlerFilter={handlerFilter} />
+            <TagFilters array={servicesFiltered} handlerFilter={handlerFilter} />
 
 
             <Flex wrap="wrap" gap="large">
