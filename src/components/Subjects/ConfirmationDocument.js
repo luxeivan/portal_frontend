@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Form, Divider, ConfigProvider, DatePicker, Typography } from "antd";
 
@@ -14,7 +14,11 @@ import "moment/locale/ru";
 moment.locale("ru");
 
 export default function ConfirmationDocument({ form, read, edit, value }) {
-  const [documentType, setDocumentType] = useState("Паспорт гражданина РФ");
+  // const [documentType, setDocumentType] = useState("Паспорт гражданина РФ");
+  const [documentType, setDocumentType] = useState(
+    value.typeDoc || "Паспорт гражданина РФ"
+  );
+
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
 
   // Изменяет тип документа в зависимости от выбора пользователя
@@ -41,6 +45,12 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
     }
     setKodPodrazdelenia(formattedKod);
   };
+
+  useEffect(() => {
+    if (value.typeDoc) {
+      setDocumentType(value.typeDoc);
+    }
+  }, [value.typeDoc]);
 
   return (
     <>
