@@ -43,6 +43,10 @@ export default function ModalFizLica({
       kodPodrazdelenia: values.kodPodrazdelenia,
       kemVidan: values.kemVidan,
       dateIssue: values.dateIssue,
+      typeOtherDoc: values.typeOtherDoc,
+      recvizityOthetDoc: values.recvizityOthetDoc,
+      kemVidanOthetDoc: values.kemVidanOthetDoc,
+      dateIssueOthetDoc: values.dateIssueOthetDoc,
       fileDoc: values.fileDoc,
       addressRegistration: values.addressRegistration,
       addressResidential: values.addressResidential,
@@ -94,8 +98,10 @@ export default function ModalFizLica({
         dateIssue: value.dateIssue
           ? moment(value.dateIssue, "DD.MM.YYYY")
           : null,
+        dateIssueOthetDoc: value.dateIssueOthetDoc
+          ? moment(value.dateIssueOthetDoc, "DD.MM.YYYY")
+          : null,
         typeDoc: "Паспорт гражданина РФ",
-        date: moment('01.04.2024', 'DD.MM.YYYY'),
       }}
     >
       {/* _______ФИО_______ */}
@@ -117,6 +123,10 @@ export default function ModalFizLica({
           kodPodrazdelenia: value.passport?.kodPodrazdelenia,
           kemVidan: value.passport?.kemVidan,
           dateIssue: value.passport?.dateIssue,
+          typeOtherDoc: value.otherDoc?.typeOtherDoc,
+          recvizityOthetDoc: value.otherDoc?.recvizityOthetDoc,
+          kemVidanOthetDoc: value.otherDoc?.kemVidanOthetDoc,
+          dateIssueOthetDoc: value.otherDoc?.dateIssueOthetDoc,
         }}
         form={form}
       />
