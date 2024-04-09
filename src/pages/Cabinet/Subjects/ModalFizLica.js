@@ -41,6 +41,7 @@ export default function ModalFizLica({
       serialPassport: values.serialPassport,
       numberPassport: values.numberPassport,
       kodPodrazdelenia: values.kodPodrazdelenia,
+      kemVidan: values.kemVidan,
       fileDoc: values.fileDoc,
       addressRegistration: values.addressRegistration,
       addressResidential: values.addressResidential,
@@ -113,6 +114,7 @@ export default function ModalFizLica({
           serialPassport: value.passport?.serialPassport,
           numberPassport: value.passport?.numberPassport,
           kodPodrazdelenia: value.passport?.kodPodrazdelenia,
+          kemVidan: value.passport?.kemVidan,
         }}
         form={form}
       />

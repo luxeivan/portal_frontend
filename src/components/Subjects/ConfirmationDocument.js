@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Form, Divider, ConfigProvider, DatePicker } from "antd";
+import { Form, Divider, ConfigProvider, DatePicker, Typography } from "antd";
 
 import TextArea from "antd/es/input/TextArea";
 
@@ -52,7 +52,7 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
         edit={edit}
         value={value?.typeDoc}
         displayName="Тип документа"
-        name="typeDoc"        
+        name="typeDoc"
         defaultValue="Паспорт гражданина РФ"
         required={true}
         description={["Выберите тип документа из списка"]}
@@ -135,9 +135,9 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
             ]}
           />
           {/* _______Кем выдан_______ */}
-          <Form.Item
+          {/* <Form.Item
             label="Кем выдан"
-            name="kemvidan"
+            name="kemVidan"
             rules={[
               {
                 required: true,
@@ -151,14 +151,35 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
                 height: 60,
               }}
             />
-          </Form.Item>
+          </Form.Item> */}
+          {read ? (
+            <Form.Item label="Кем выдан" name="kemVidan">
+              <Typography.Text>{value.kemVidan}</Typography.Text>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              label="Кем выдан"
+              name="kemVidan"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, укажите, кем был выдан документ",
+                },
+              ]}
+            >
+              <TextArea
+                placeholder="..."
+                style={{
+                  height: 60,
+                }}
+              />
+            </Form.Item>
+          )}
           {/* _______Когда выдан_______ */}
           <Form.Item
             name="dateIssue"
             label="Когда выдан"
-            rules={[
-              { required: true, message: "" },
-            ]}           
+            rules={[{ required: true, message: "" }]}
             valuePropName="value"
           >
             <DatePicker format="DD.MM.YYYY" />
