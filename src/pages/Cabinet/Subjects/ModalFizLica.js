@@ -28,9 +28,9 @@ export default function ModalFizLica({
 
   const [form] = Form.useForm();
   const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
-
+  console.log(value)
   const onFinish = async (values) => {
-    console.log(values);
+    //console.log(values);
     const formData = {
       type: "Физическое лицо",
       firstname: values.firstname,
@@ -160,7 +160,7 @@ export default function ModalFizLica({
         read={read}
         form={form}
         value={{
-          addressResidential: value.addressResidential,
+          addressResidential: value?.addressResidential,
         }}
       />
       {/* _______Загрузка_______ */}

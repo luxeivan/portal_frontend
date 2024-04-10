@@ -123,10 +123,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
 
   //Поля для ручного ввода адреса регистрации
   const manualAddressFields = (
-    <>
-      <Form.Item label="Адрес регистрации" name="fullAddressRegistration">
-        <Input readOnly />
-      </Form.Item>
+    <>      
       <Form.Item label="Почтовый индекс" name="postcodeRegistration">
         <Input
           value={postcodeRegistration}
@@ -210,13 +207,13 @@ export default function AddressRegistration({ form, read, edit, value }) {
       </Form.Item>
     </>
   );
-console.log(value)
+  console.log(value)
   return (
     <>
       <Divider orientation="center">Место регистрации</Divider>
 
       {read ? (
-        value.manual ? (
+        value?.manual ? (
           <div>
             <div>Почтовый индекс: {value.manual.postcodeRegistration}</div>
             <div>Страна: {value.manual.countryRegistration}</div>
@@ -238,7 +235,7 @@ console.log(value)
           </div>
         ) : (
           <Form.Item label="Адрес регистрации">
-            <Typography.Text>{value.addressRegistration}</Typography.Text>
+            <Typography.Text>{value?.addressRegistration}</Typography.Text>
           </Form.Item>
         )
       ) : (
@@ -248,7 +245,7 @@ console.log(value)
               <Form.Item
                 label="Адрес"
                 name={"addressRegistration"}
-                // rules={[{ validator: validateAddress }]}
+              // rules={[{ validator: validateAddress }]}
               >
                 <AutoComplete
                   options={addressOptions.map((option) => ({
