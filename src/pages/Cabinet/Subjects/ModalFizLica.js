@@ -177,8 +177,8 @@ export default function ModalFizLica({
         read={read}
         form={form}
         value={{
-          phone: Array.isArray(value.phone) ? value.phone : [],
-          email: Array.isArray(value.email) ? value.email : [],
+          phone: value.phone,
+          email: value.email,
         }}
       />
 

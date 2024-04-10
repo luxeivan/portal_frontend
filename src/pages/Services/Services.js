@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Image, Tag, Button } from "antd";
+import { Card, Flex, Typography, Image, Tag, Button, List } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
 import config from "../../config";
 import TagFilter from "../../components/Filters/TagFilter";
-import { LeftOutlined } from "@ant-design/icons";
 import TagFilters from "../../components/Filters/TagFilters";
+import { LeftOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;
 
 
@@ -132,31 +132,63 @@ export default function Services() {
   const services = useServices((state) => state.services);
   const fetchServices = useServices((state) => state.fetchServices);
   const [servicesFiltered, setServicesFiltered] = useState([])
+  const [notFounded, setNotFounded] = useState(false)
 
   const { level2 } = useParams();
 
-  function filtered(arr, filters) {
-    let found = false
-    arr.forEach(element => {
-      if (element.value.includes(filters.find(item => item.__component === element.component)?.value)) found = true
-    });
-    if (found) return true
-  }
+  // function filtered(arr, filters) {
+  //   let found = false
+  //   arr.forEach(element => {
+  //     if (element.value.includes(filters.find(item => item.__component === element.component)?.value)) found = true
+  //   });
+  //   if (found) return true
+  // }
   const handlerFilter = (arrayForFilter,) => {
     let tempFiltered = services
-    
+    //console.log(arrayForFilter)
+    //console.log(services)
     if (Object.keys(arrayForFilter).length == 0) return setServicesFiltered(services)
-    arrayForFilter.forEach(element => {
-      tempFiltered = services.filter(service => {
-        let found = false
-       
-        if (element.value.includes(service.attributes.filters.find(item => item.__component === element.component)?.value)) found = true
-        if (found) return true
+    // arrayForFilter.forEach(element => {
+    //   tempFiltered = services.filter(service => {
+    //     let found = false
+
+    //     if (element.value.includes(service.attributes.filters.find(item => item.__component === element.component)?.value)) found = true
+    //     if (found) return true
+    //   })
+    //   // console.log(tempFiltered)
+    //   setServicesFiltered(tempFiltered)     
+    // })
+    let temp = services.filter(service => {
+      let found = 0
+      arrayForFilter.forEach(filterItem => {
+        // let serviceValue = service.attributes.filters.find(serviceFilter => serviceFilter.__component === filterItem.component)?.value
+        // if (filterItem.value.includes(serviceValue)) {
+        //   found = found + 1
+        //   console.log(serviceValue)
+        // }
+        let serviceArr = service.attributes.filters.filter(serviceFilter => serviceFilter.__component === filterItem.component)
+        //console.log(serviceArr)
+        if (serviceArr.length > 0) {
+          serviceArr.forEach(item => {
+            //console.log(item)
+
+            if (filterItem.value.includes(item.value)) {
+              found = found + 1
+              console.log(item.value)
+            }
+          })
+        }
       })
-      // console.log(tempFiltered)
-      setServicesFiltered(tempFiltered)
-     
+      if (found === arrayForFilter.length) return true
     })
+    if (temp.length > 0) {
+      setServicesFiltered(temp)
+      setNotFounded(false)
+    } else {
+      setServicesFiltered(temp)
+      setNotFounded(true)
+    }
+    //console.log(temp)
 
 
     // setServicesFiltered(tempFiltered.filter(item => {
@@ -174,7 +206,7 @@ export default function Services() {
   }
   // const handlerFilter = (arrayForFilter,checked) => {
   //   if (Object.keys(arrayForFilter).length == 0) return setServicesFiltered(services)
-  //   setServicesFiltered(servicesFiltered.filter(item => {
+  //   setServicesFiltered(services.filter(item => {
   //     let found = false
   //     arrayForFilter.forEach(element => {
   //       if (element.value.includes(item.attributes.filters.find(item => item.__component === element.component)?.value)) found = true
@@ -186,6 +218,7 @@ export default function Services() {
 
   useEffect(() => {
     setServicesFiltered(services)
+    console.log(services)
   }, [services])
 
   useEffect(() => {
@@ -220,6 +253,7 @@ export default function Services() {
         )}
         {level2 && (
           <>
+
             <Link to={`/services`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
             <Title level={1} className={styles.title} style={{ marginTop: "10px" }}>
               {serviceDetailsData.find((item) => item.url === level2).title}
@@ -227,9 +261,9 @@ export default function Services() {
             {/* {services && services.map(item =>
               <TagFilter array={item.attributes.filters.map(item => item.value)} handlerFilter={handlerFilter} />
             )} */}
-            <TagFilters array={servicesFiltered} handlerFilter={handlerFilter} />
+            <TagFilters array={services} handlerFilter={handlerFilter} />
 
-
+            {notFounded && <Typography.Title>По заданному фильтру услуг не найдено</Typography.Title>}
             <Flex wrap="wrap" gap="large">
               {servicesFiltered &&
                 servicesFiltered.map((item) => (
@@ -238,10 +272,18 @@ export default function Services() {
                     to={`/services/${level2}/${item.id}`}
                     className={styles.styleLink}
                   >
-                    <Card className={styles.styleCard} hoverable>
+                    <Card key={item.id} className={styles.styleCard} hoverable>
                       <div className={styles.cardContent}>
                         <Title level={4}>{item.attributes.name}</Title>
-                        <Text>{item.attributes.shortDescription}</Text>
+                        {item.attributes.filters.length>0 &&
+                          <List
+                            size="small"
+                            dataSource={item.attributes.filters}
+                            renderItem={(item) => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>}
+                          />
+                        }
+                        {/* {item.attributes.filters.map(item => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>)} */}
+                        {/* <Text>{item.attributes.shortDescription}</Text> */}
                       </div>
                       {item.attributes.icon.data && (
                         <Flex
