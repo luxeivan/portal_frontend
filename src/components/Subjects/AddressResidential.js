@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import { Input, Form, AutoComplete, Checkbox, Divider } from "antd";
+import { Input, Form, AutoComplete, Checkbox, Divider, Typography } from "antd";
 
 import useSubjects from "../../stores/Cabinet/useSubjects";
 import TextArea from "antd/es/input/TextArea";
 
-export default function AddressResidential({ form }) {
+export default function AddressResidential({ form, read, edit, value }) {
   const [searchText] = useState("");
   const [isAddressSame, setIsAddressSame] = useState(false);
   const [countryResidence, setCountryResidence] = useState("");
@@ -107,7 +107,7 @@ export default function AddressResidential({ form }) {
     frameResidence,
     buildingResidence,
     apartmentNumberResidence,
-    kommentResidence,
+    kommentResidence, 
   ]);
 
   //Поля для ручного ввода адреса проживания
@@ -215,80 +215,87 @@ export default function AddressResidential({ form }) {
     <>
       <Divider orientation="center">Место проживания</Divider>
 
-      {/* _______Чекбокс совпадения адреса_______ */}
-      <Form.Item>
-        <Checkbox
-          checked={isAddressSame}
-          onChange={handleAddressCheckboxChange}
-        >
-          Совпадает с адресом по месту регистрации
-        </Checkbox>
-      </Form.Item>
-
-      {/* _______Если адрес совпадает_______ */}
-
-      {!isAddressSame && (
+      {read ? (
+        // Если режим чтения - просто отображаем значение
+        <Form.Item label="Адрес проживания">
+          <Typography.Text>{value.addressResidential}</Typography.Text>
+        </Form.Item>
+      ) : (
+        // Если режим редактирования - отображаем форму ввода
         <>
-          {manualResidenceAddressInput ? (
-            // Тут используем поля для ручного ввода адреса проживания
-            manualResidenceAddressFields
-          ) : (
+          <Form.Item>
+            <Checkbox
+              checked={isAddressSame}
+              onChange={handleAddressCheckboxChange}
+            >
+              Совпадает с адресом по месту регистрации
+            </Checkbox>
+          </Form.Item>
+
+          {!isAddressSame && (
             <>
-              <Form.Item
-                label="Адрес"
-                name="addressResidential"
-                rules={[
-                  {
-                    required: true,
-                    message: "",
-                  },
-                  { validator: validateResidenceAddress },
-                ]}
-              >
-                <AutoComplete
-                  options={addressOptions.map((option) => ({
-                    ...option,
-                    label: (
-                      <div style={{ whiteSpace: "normal" }}>{option.label}</div>
-                    ),
-                  }))}
-                  onSelect={onSelectResidential}
-                  onSearch={onSearch}
-                  popupMatchSelectWidth={true}
-                  style={{ width: "100%" }}
-                >
-                  <TextArea
-                    placeholder="Начните вводить"
-                    style={{
-                      height: 60,
-                    }}
-                  />
-                </AutoComplete>
-              </Form.Item>
-              <Form.Item
-                noStyle
-                shouldUpdate={(prevValues, currentValues) =>
-                  prevValues.addressResidential !==
-                  currentValues.addressResidential
-                }
-              >
-                {() => (
-                  <Form.Item name="addressResidentialFias" hidden>
-                    <Input type="hidden" />
+              {manualResidenceAddressInput ? (
+                // Тут используем поля для ручного ввода адреса проживания
+                manualResidenceAddressFields
+              ) : (
+                <>
+                  <Form.Item
+                    label="Адрес"
+                    name="addressResidential"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Пожалуйста, введите адрес проживания",
+                      },
+                      { validator: validateResidenceAddress },
+                    ]}
+                  >
+                    <AutoComplete
+                      options={addressOptions.map((option) => ({
+                        ...option,
+                        label: (
+                          <div style={{ whiteSpace: "normal" }}>
+                            {option.label}
+                          </div>
+                        ),
+                      }))}
+                      onSelect={onSelectResidential}
+                      onSearch={onSearch}
+                      popupMatchSelectWidth={true}
+                      style={{ width: "100%" }}
+                    >
+                      <TextArea
+                        placeholder="Начните вводить"
+                        style={{ height: 60 }}
+                      />
+                    </AutoComplete>
                   </Form.Item>
-                )}
+                  <Form.Item
+                    noStyle
+                    shouldUpdate={(prevValues, currentValues) =>
+                      prevValues.addressResidential !==
+                      currentValues.addressResidential
+                    }
+                  >
+                    {() => (
+                      <Form.Item name="addressResidentialFias" hidden>
+                        <Input type="hidden" />
+                      </Form.Item>
+                    )}
+                  </Form.Item>
+                </>
+              )}
+
+              <Form.Item>
+                <Checkbox
+                  checked={manualResidenceAddressInput}
+                  onChange={handleManualResidenceAddressCheckbox}
+                >
+                  Ввести адрес проживания по полям вручную
+                </Checkbox>
               </Form.Item>
             </>
           )}
-
-          <Form.Item>
-            <Checkbox
-              checked={manualResidenceAddressInput}
-              onChange={handleManualResidenceAddressCheckbox}
-            >
-              Ввести адрес проживания по полям вручную
-            </Checkbox>
-          </Form.Item>
         </>
       )}
     </>

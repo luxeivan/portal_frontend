@@ -28,9 +28,9 @@ export default function ModalFizLica({
 
   const [form] = Form.useForm();
   const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
-
+  console.log(value)
   const onFinish = async (values) => {
-    console.log(values);
+    //console.log(values);
     const formData = {
       type: "Физическое лицо",
       firstname: values.firstname,
@@ -41,12 +41,36 @@ export default function ModalFizLica({
       serialPassport: values.serialPassport,
       numberPassport: values.numberPassport,
       kodPodrazdelenia: values.kodPodrazdelenia,
+      kemVidan: values.kemVidan,
+      dateIssue: values.dateIssue,
+      typeOtherDoc: values.typeOtherDoc,
+      recvizityOthetDoc: values.recvizityOthetDoc,
+      kemVidanOthetDoc: values.kemVidanOthetDoc,
+      dateIssueOthetDoc: values.dateIssueOthetDoc,
       fileDoc: values.fileDoc,
-      addressRegistration: values.addressRegistration,
+      addressRegistration: {
+        manual: {
+          countryRegistration: values.countryRegistration,
+          postcodeRegistration: values.postcodeRegistration,
+          regionRegistration: values.regionRegistration,
+          areaRegistration: values.areaRegistration,
+          cityRegistration: values.cityRegistration,
+          localityRegistration: values.localityRegistration,
+          streetRegistration: values.streetRegistration,
+          houseNumberRegistration: values.houseNumberRegistration,
+          frameRegistration: values.frameRegistration,
+          buildingRegistration: values.buildingRegistration,
+          apartmentNumberRegistration: values.apartmentNumberRegistration,
+          kommentRegistration: values.kommentRegistration,
+        },
+      },
       addressResidential: values.addressResidential,
-      addressRegistrationFias: values.addressRegistrationFias,
-      addressResidentialFias: values.addressResidentialFias,
+      //addressRegistrationFias: values.addressRegistrationFias,
+      //addressResidentialFias: values.addressResidentialFias,
+      phone: values.phone,
+      email: values.email,
     };
+    console.log(formData);
 
     try {
       await submitNewSubject(formData);
@@ -86,14 +110,18 @@ export default function ModalFizLica({
       {...formItemLayout}
       onFinish={onFinish}
       initialValues={{
-        phone: userPhone,
-        email: userEmail,
+        // phone: userPhone,
+        // email: userEmail,
         // typeDoc: "passport",
+        phone: userPhone || "",
+        email: userEmail || "",
         dateIssue: value.dateIssue
           ? moment(value.dateIssue, "DD.MM.YYYY")
           : null,
+        dateIssueOthetDoc: value.dateIssueOthetDoc
+          ? moment(value.dateIssueOthetDoc, "DD.MM.YYYY")
+          : null,
         typeDoc: "Паспорт гражданина РФ",
-        date: moment('01.04.2024', 'DD.MM.YYYY'),
       }}
     >
       {/* _______ФИО_______ */}
@@ -113,24 +141,66 @@ export default function ModalFizLica({
           serialPassport: value.passport?.serialPassport,
           numberPassport: value.passport?.numberPassport,
           kodPodrazdelenia: value.passport?.kodPodrazdelenia,
+          kemVidan: value.passport?.kemVidan,
+          dateIssue: value.passport?.dateIssue,
+          typeOtherDoc: value.otherDoc?.typeOtherDoc,
+          recvizityOthetDoc: value.otherDoc?.recvizityOthetDoc,
+          kemVidanOthetDoc: value.otherDoc?.kemVidanOthetDoc,
+          dateIssueOthetDoc: value.otherDoc?.dateIssueOthetDoc,
         }}
         form={form}
       />
       {/* _______Блок с адресами_______ */}
-      <AddressRegistration read={read} form={form} />
-      <AddressResidential read={read} form={form} />
+      <AddressRegistration
+        read={read}
+        form={form}
+        value={value.addressRegistration}
+      />
+      <AddressResidential
+        read={read}
+        form={form}
+        value={{
+          addressResidential: value?.addressResidential,
+        }}
+      />
       {/* _______Загрузка_______ */}
       <Uploader
         read={read}
         fileList={fileList}
         onChange={({ fileList: newFileList }) => setFileList(newFileList)}
         form={form}
+        value={{
+          fileDoc: value?.fileDoc,
+        }}
       />
+
+      {/* <Uploader
+        read={read}
+        fileList={fileList}
+        onChange={({ fileList: newFileList }) => setFileList(newFileList)}
+        form={form}
+        value={{
+          fileDoc: value.fileDoc,
+        }}
+      /> */}
       {/* _______СНИЛС_______ */}
-      <Snils read={read} form={form} />
+      <Snils
+        read={read}
+        form={form}
+        value={{
+          snils: value.snils,
+        }}
+      />
 
       {/* _______Блок с телефоном и почтой_______ */}
-      <Contacts read={read} form={form} />
+      <Contacts
+        read={read}
+        form={form}
+        value={{
+          phone: value.phone,
+          email: value.email,
+        }}
+      />
 
       {/* _______Кнопка отправки формы_______ */}
       <Form.Item>

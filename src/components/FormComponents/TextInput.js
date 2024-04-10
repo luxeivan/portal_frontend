@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Typography, Drawer, theme } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
-
 import StrapiRichText from "../StrapiRichText";
 import { formItemLayout } from "../../components/configSizeForm";
 
