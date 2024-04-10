@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Flex, Tag,Segmented} from 'antd'
+import { Button, Flex, Tag, Segmented, Divider,ConfigProvider } from 'antd'
 import { CloseOutlined } from "@ant-design/icons";
 function arrToObj(arr, field) {
     const object = {}
@@ -19,7 +19,7 @@ export default function TagFilters({ array, handlerFilter }) {
     const [listFilters, setListFilter] = useState([])
     const [selectedTags, setSelectedTags] = useState([]);
     let objectFilters = {}
-    const handlerClear = ()=>{
+    const handlerClear = () => {
         setSelectedTags([])
         handlerFilter([])
     }
@@ -65,9 +65,9 @@ export default function TagFilters({ array, handlerFilter }) {
             {listFilters.length > 0 && <Button style={{ marginBottom: "20px" }} onClick={handlerClear}>
                 {/* <CloseOutlined /> */}
                 Очистить фильтр
-                </Button>}
-                <br/>
-                {/* <Segmented size="large" defaultValue={'Юридические лица'} options={['Физические лица', 'Юридические лица', 'Индивидуальные предприниматели']} /> */}
+            </Button>}
+            <br />
+            {/* <Segmented size="large" defaultValue={'Юридические лица'} options={['Физические лица', 'Юридические лица', 'Индивидуальные предприниматели']} /> */}
             {listFilters.sort(function (a, b) {
                 if (a.sort > b.sort) {
                     return 1;
@@ -78,17 +78,31 @@ export default function TagFilters({ array, handlerFilter }) {
                 return 0;
             }).map((item, index) =>
                 <Flex key={index} style={{ marginBottom: "5px" }} gap={1} wrap="wrap" align="center">
-                    <span style={{ fontWeight: 700 }}>{item.name}:</span>
-                    {item.value.map((tag) => (
-                        <Tag.CheckableTag
-                            style={{ padding: "5px 10px" }}
-                            key={tag}
-                            checked={selectedTags.find(item => item.value === tag)}
-                            onChange={(checked) => handleChange({ component: item.component, value: tag }, checked)}
-                        >
-                            {tag}
-                        </Tag.CheckableTag>
-                    ))}
+                    {/* <Divider orientation="left" plain>
+                        {item.name}
+                    </Divider> */}
+                    {/* <span style={{ fontWeight: 700 }}>{item.name}:</span> */}
+                    
+                    <ConfigProvider
+                        theme={{
+                            components: {
+                                Tag: {
+                                    defaultBg:"#131313",
+                                },
+                            },
+                        }}
+                    >
+                        {item.value.map((tag) => (
+                            <Tag.CheckableTag
+                                // style={{ padding: "5px 10px",border:"1px solid gray",borderRadius:"10px" }}
+                                key={tag}
+                                checked={selectedTags.find(item => item.value === tag)}
+                                onChange={(checked) => handleChange({ component: item.component, value: tag }, checked)}
+                            >
+                                {tag}
+                            </Tag.CheckableTag>
+                        ))}
+                    </ConfigProvider>
                 </Flex>)}
 
         </>

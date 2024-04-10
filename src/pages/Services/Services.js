@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Image, Tag, Button } from "antd";
+import { Card, Flex, Typography, Image, Tag, Button, List } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
@@ -136,13 +136,13 @@ export default function Services() {
 
   const { level2 } = useParams();
 
-  function filtered(arr, filters) {
-    let found = false
-    arr.forEach(element => {
-      if (element.value.includes(filters.find(item => item.__component === element.component)?.value)) found = true
-    });
-    if (found) return true
-  }
+  // function filtered(arr, filters) {
+  //   let found = false
+  //   arr.forEach(element => {
+  //     if (element.value.includes(filters.find(item => item.__component === element.component)?.value)) found = true
+  //   });
+  //   if (found) return true
+  // }
   const handlerFilter = (arrayForFilter,) => {
     let tempFiltered = services
     //console.log(arrayForFilter)
@@ -173,7 +173,7 @@ export default function Services() {
             //console.log(item)
 
             if (filterItem.value.includes(item.value)) {
-              found = found+1
+              found = found + 1
               console.log(item.value)
             }
           })
@@ -218,6 +218,7 @@ export default function Services() {
 
   useEffect(() => {
     setServicesFiltered(services)
+    console.log(services)
   }, [services])
 
   useEffect(() => {
@@ -271,10 +272,18 @@ export default function Services() {
                     to={`/services/${level2}/${item.id}`}
                     className={styles.styleLink}
                   >
-                    <Card className={styles.styleCard} hoverable>
+                    <Card key={item.id} className={styles.styleCard} hoverable>
                       <div className={styles.cardContent}>
                         <Title level={4}>{item.attributes.name}</Title>
-                        <Text>{item.attributes.shortDescription}</Text>
+                        {item.attributes.filters.length>0 &&
+                          <List
+                            size="small"
+                            dataSource={item.attributes.filters}
+                            renderItem={(item) => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>}
+                          />
+                        }
+                        {/* {item.attributes.filters.map(item => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>)} */}
+                        {/* <Text>{item.attributes.shortDescription}</Text> */}
                       </div>
                       {item.attributes.icon.data && (
                         <Flex
