@@ -62,7 +62,7 @@ export default function ModalFizLica({
           buildingRegistration: values.buildingRegistration,
           apartmentNumberRegistration: values.apartmentNumberRegistration,
           kommentRegistration: values.kommentRegistration,
-        }
+        },
       },
       addressResidential: values.addressResidential,
       //addressRegistrationFias: values.addressRegistrationFias,
@@ -70,7 +70,7 @@ export default function ModalFizLica({
       phone: values.phone,
       email: values.email,
     };
-    console.log(formData)
+    console.log(formData);
 
     try {
       await submitNewSubject(formData);
@@ -154,9 +154,7 @@ export default function ModalFizLica({
       <AddressRegistration
         read={read}
         form={form}
-        value={{
-          addressRegistration: value.addressRegistration,
-        }}
+        value={value.addressRegistration}
       />
       <AddressResidential
         read={read}
@@ -186,7 +184,13 @@ export default function ModalFizLica({
         }}
       /> */}
       {/* _______СНИЛС_______ */}
-      <Snils read={read} form={form} />
+      <Snils
+        read={read}
+        form={form}
+        value={{
+          snils: value.snils,
+        }}
+      />
 
       {/* _______Блок с телефоном и почтой_______ */}
       <Contacts

@@ -77,7 +77,7 @@ const PuzzleGame = () => {
           <div className={styles.speechBubble}>
             <p>
               {dialogueStep === 0
-                ? "Привет! Я МосОблик!"
+                ? "Привет! Я Энергетик!"
                 : "Давай сыграем в мини-игру и поможем планете!"}
             </p>
             {dialogueStep < 1 ? (

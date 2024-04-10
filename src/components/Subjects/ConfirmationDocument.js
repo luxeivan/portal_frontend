@@ -265,7 +265,7 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
               rules={[
                 {
                   required: true,
-                  message: "т",
+                  message: "",
                 },
               ]}
             >
