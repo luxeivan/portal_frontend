@@ -210,7 +210,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
       </Form.Item>
     </>
   );
-
+console.log(value)
   return (
     <>
       <Divider orientation="center">Место регистрации</Divider>
