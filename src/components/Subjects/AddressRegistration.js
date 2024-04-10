@@ -4,6 +4,7 @@ import { Input, Form, AutoComplete, Checkbox, Divider, Typography } from "antd";
 
 import useSubjects from "../../stores/Cabinet/useSubjects";
 import TextArea from "antd/es/input/TextArea";
+import TextInput from "../FormComponents/TextInput";
 
 export default function AddressRegistration({ form, read, edit, value }) {
   const [searchText] = useState("");
@@ -68,25 +69,6 @@ export default function AddressRegistration({ form, read, edit, value }) {
     debouncedFetchAddresses(searchText);
   };
 
-  const getAddressString = () => {
-    return [
-      countryRegistration,
-      postcodeRegistration,
-      regionRegistration,
-      areaRegistration,
-      cityRegistration,
-      localityRegistration,
-      streetRegistration,
-      houseNumberRegistration,
-      frameRegistration,
-      buildingRegistration,
-      apartmentNumberRegistration,
-      kommentRegistration,
-    ]
-      .filter(Boolean)
-      .join(", ");
-  };
-
   useEffect(() => {
     form.setFieldsValue({
       manualAddressRegistration: {
@@ -102,8 +84,8 @@ export default function AddressRegistration({ form, read, edit, value }) {
         buildingRegistration,
         apartmentNumberRegistration,
         kommentRegistration,
-      }
-      // fullAddressRegistration: getAddressString() 
+      },
+      // fullAddressRegistration: getAddressString()
     });
   }, [
     countryRegistration,
@@ -121,15 +103,47 @@ export default function AddressRegistration({ form, read, edit, value }) {
     kommentRegistration,
   ]);
 
+  const onCityChange = (e) => {
+    setCityRegistration(e.target.value);
+    form.setFieldsValue({ cityRegistration: e.target.value });
+  };
+
+  const onPostcodeRegistrationChange = (e) => {
+    setPostcodeRegistration(e.target.value);
+    form.setFieldsValue({ postcodeRegistration: e.target.value });
+  };
+
+  const onCountryRegistrationChange = (e) => {
+    setCountryRegistration(e.target.value);
+    form.setFieldsValue({ countryRegistration: e.target.value });
+  };
+
   //Поля для ручного ввода адреса регистрации
   const manualAddressFields = (
-    <>      
-      <Form.Item label="Почтовый индекс" name="postcodeRegistration">
+    <>
+      <TextInput
+        displayName="Почтовый индекс"
+        read={read}
+        edit={edit}
+        value={value?.postcodeRegistration}
+        onChange={onPostcodeRegistrationChange}
+        name="postcodeRegistration"
+      />
+      {/* <Form.Item label="Почтовый индекс" name="postcodeRegistration">
         <Input
           value={postcodeRegistration}
           onChange={(e) => setPostcodeRegistration(e.target.value)}
         />
-      </Form.Item>
+      </Form.Item> */}
+      <TextInput
+        displayName="Страна"
+        read={read}
+        edit={edit}
+        value={value?.countryRegistration}
+        onChange={onCountryRegistrationChange}
+        name="countryRegistration"
+      />
+
       <Form.Item label="Страна" name="countryRegistration">
         <Input
           value={countryRegistration}
@@ -148,12 +162,21 @@ export default function AddressRegistration({ form, read, edit, value }) {
           onChange={(e) => setAreaRegistration(e.target.value)}
         />
       </Form.Item>
-      <Form.Item label="Город" name="cityRegistration">
+      <TextInput
+        displayName="Город"
+        read={read}
+        edit={edit}
+        value={value?.cityRegistration}
+        onChange={onCityChange}
+        name="cityRegistration"
+      />
+
+      {/* <Form.Item label="Город" name="cityRegistration">
         <Input
           value={cityRegistration}
           onChange={(e) => setCityRegistration(e.target.value)}
         />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item label="Населенный пункт" name="localityRegistration">
         <Input
           value={localityRegistration}
@@ -207,7 +230,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
       </Form.Item>
     </>
   );
-  console.log(value)
+  console.log(value);
   return (
     <>
       <Divider orientation="center">Место регистрации</Divider>
@@ -245,7 +268,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
               <Form.Item
                 label="Адрес"
                 name={"addressRegistration"}
-              // rules={[{ validator: validateAddress }]}
+                // rules={[{ validator: validateAddress }]}
               >
                 <AutoComplete
                   options={addressOptions.map((option) => ({
@@ -283,9 +306,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
             manualAddressFields
           )}
 
-          <Form.Item
-            name={"addressRegistrationManual"}
-          >
+          <Form.Item name={"addressRegistrationManual"}>
             <Checkbox
               checked={manualAddressInput}
               onChange={handleManualAddressCheckbox}
@@ -389,7 +410,23 @@ export default function AddressRegistration({ form, read, edit, value }) {
 //   };
 
 //   useEffect(() => {
-//     form.setFieldsValue({ fullAddressRegistration: getAddressString() });
+//     form.setFieldsValue({
+//       manualAddressRegistration: {
+//         countryRegistration,
+//         postcodeRegistration,
+//         regionRegistration,
+//         areaRegistration,
+//         cityRegistration,
+//         localityRegistration,
+//         streetRegistration,
+//         houseNumberRegistration,
+//         frameRegistration,
+//         buildingRegistration,
+//         apartmentNumberRegistration,
+//         kommentRegistration,
+//       }
+//       // fullAddressRegistration: getAddressString()
+//     });
 //   }, [
 //     countryRegistration,
 //     postcodeRegistration,
@@ -409,9 +446,6 @@ export default function AddressRegistration({ form, read, edit, value }) {
 //   //Поля для ручного ввода адреса регистрации
 //   const manualAddressFields = (
 //     <>
-//       <Form.Item label="Адрес регистрации" name="fullAddressRegistration">
-//         <Input readOnly />
-//       </Form.Item>
 //       <Form.Item label="Почтовый индекс" name="postcodeRegistration">
 //         <Input
 //           value={postcodeRegistration}
@@ -495,15 +529,37 @@ export default function AddressRegistration({ form, read, edit, value }) {
 //       </Form.Item>
 //     </>
 //   );
-
+//   console.log(value)
 //   return (
 //     <>
 //       <Divider orientation="center">Место регистрации</Divider>
 
 //       {read ? (
-//         <Form.Item label="Адрес регистрации">
-//           <Typography.Text>{value.addressRegistration}</Typography.Text>
-//         </Form.Item>
+//         value?.manual ? (
+//           <div>
+//             <div>Почтовый индекс: {value.manual.postcodeRegistration}</div>
+//             <div>Страна: {value.manual.countryRegistration}</div>
+//             <div>Регион: {value.manual.regionRegistration}</div>
+//             <div>Район: {value.manual.areaRegistration}</div>
+//             <div>Город: {value.manual.cityRegistration}</div>
+//             <div>Населенный пункт: {value.manual.localityRegistration}</div>
+//             <div>Улица: {value.manual.streetRegistration}</div>
+//             <div>Номер дома: {value.manual.houseNumberRegistration}</div>
+//             <div>Корпус: {value.manual.frameRegistration}</div>
+//             <div>Строение: {value.manual.buildingRegistration}</div>
+//             <div>
+//               Квартира/Офис/Комната: {value.manual.apartmentNumberRegistration}
+//             </div>
+//             <div>
+//               Квартира/Офис/Комната: {value.manual.apartmentNumberRegistration}
+//             </div>
+//             <div>Комментарий: {value.manual.kommentRegistration}</div>
+//           </div>
+//         ) : (
+//           <Form.Item label="Адрес регистрации">
+//             <Typography.Text>{value?.addressRegistration}</Typography.Text>
+//           </Form.Item>
+//         )
 //       ) : (
 //         <>
 //           {!manualAddressInput ? (
@@ -511,7 +567,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
 //               <Form.Item
 //                 label="Адрес"
 //                 name={"addressRegistration"}
-//                 // rules={[{ validator: validateAddress }]}
+//               // rules={[{ validator: validateAddress }]}
 //               >
 //                 <AutoComplete
 //                   options={addressOptions.map((option) => ({
@@ -549,7 +605,9 @@ export default function AddressRegistration({ form, read, edit, value }) {
 //             manualAddressFields
 //           )}
 
-//           <Form.Item>
+//           <Form.Item
+//             name={"addressRegistrationManual"}
+//           >
 //             <Checkbox
 //               checked={manualAddressInput}
 //               onChange={handleManualAddressCheckbox}
