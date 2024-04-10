@@ -88,7 +88,23 @@ export default function AddressRegistration({ form, read, edit, value }) {
   };
 
   useEffect(() => {
-    form.setFieldsValue({ fullAddressRegistration: getAddressString() });
+    form.setFieldsValue({
+      manualAddressRegistration: {
+        countryRegistration,
+        postcodeRegistration,
+        regionRegistration,
+        areaRegistration,
+        cityRegistration,
+        localityRegistration,
+        streetRegistration,
+        houseNumberRegistration,
+        frameRegistration,
+        buildingRegistration,
+        apartmentNumberRegistration,
+        kommentRegistration,
+      }
+      // fullAddressRegistration: getAddressString() 
+    });
   }, [
     countryRegistration,
     postcodeRegistration,

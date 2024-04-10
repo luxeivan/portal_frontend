@@ -48,13 +48,29 @@ export default function ModalFizLica({
       kemVidanOthetDoc: values.kemVidanOthetDoc,
       dateIssueOthetDoc: values.dateIssueOthetDoc,
       fileDoc: values.fileDoc,
-      addressRegistration: values.addressRegistration,
+      addressRegistration: {
+        manual: {
+          countryRegistration: values.countryRegistration,
+          postcodeRegistration: values.postcodeRegistration,
+          regionRegistration: values.regionRegistration,
+          areaRegistration: values.areaRegistration,
+          cityRegistration: values.cityRegistration,
+          localityRegistration: values.localityRegistration,
+          streetRegistration: values.streetRegistration,
+          houseNumberRegistration: values.houseNumberRegistration,
+          frameRegistration: values.frameRegistration,
+          buildingRegistration: values.buildingRegistration,
+          apartmentNumberRegistration: values.apartmentNumberRegistration,
+          kommentRegistration: values.kommentRegistration,
+        }
+      },
       addressResidential: values.addressResidential,
-      addressRegistrationFias: values.addressRegistrationFias,
-      addressResidentialFias: values.addressResidentialFias,
+      //addressRegistrationFias: values.addressRegistrationFias,
+      //addressResidentialFias: values.addressResidentialFias,
       phone: values.phone,
       email: values.email,
     };
+    console.log(formData)
 
     try {
       await submitNewSubject(formData);
@@ -156,7 +172,7 @@ export default function ModalFizLica({
         onChange={({ fileList: newFileList }) => setFileList(newFileList)}
         form={form}
         value={{
-          fileDoc:  value?.fileDoc,
+          fileDoc: value?.fileDoc,
         }}
       />
 
