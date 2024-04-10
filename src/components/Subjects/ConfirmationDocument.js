@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Form, Divider, ConfigProvider, DatePicker } from "antd";
+import { Form, Divider, ConfigProvider, DatePicker, Typography } from "antd";
 
 import TextArea from "antd/es/input/TextArea";
 
@@ -14,7 +14,11 @@ import "moment/locale/ru";
 moment.locale("ru");
 
 export default function ConfirmationDocument({ form, read, edit, value }) {
-  const [documentType, setDocumentType] = useState("Паспорт гражданина РФ");
+  // const [documentType, setDocumentType] = useState("Паспорт гражданина РФ");
+  const [documentType, setDocumentType] = useState(
+    value.typeDoc || "Паспорт гражданина РФ"
+  );
+
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
 
   // Изменяет тип документа в зависимости от выбора пользователя
@@ -42,6 +46,12 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
     setKodPodrazdelenia(formattedKod);
   };
 
+  useEffect(() => {
+    if (value.typeDoc) {
+      setDocumentType(value.typeDoc);
+    }
+  }, [value.typeDoc]);
+
   return (
     <>
       <Divider orientation="center">Удостоверяющий документ</Divider>
@@ -52,7 +62,7 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
         edit={edit}
         value={value?.typeDoc}
         displayName="Тип документа"
-        name="typeDoc"        
+        name="typeDoc"
         defaultValue="Паспорт гражданина РФ"
         required={true}
         description={["Выберите тип документа из списка"]}
@@ -135,34 +145,51 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
             ]}
           />
           {/* _______Кем выдан_______ */}
-          <Form.Item
-            label="Кем выдан"
-            name="kemvidan"
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
-          >
-            <TextArea
-              placeholder="..."
-              style={{
-                height: 60,
-              }}
-            />
-          </Form.Item>
+          {read ? (
+            <Form.Item label="Кем выдан" name="kemVidan">
+              <Typography.Text>{value.kemVidan}</Typography.Text>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              label="Кем выдан"
+              name="kemVidan"
+              rules={[
+                {
+                  required: true,
+                  message: "т",
+                },
+              ]}
+            >
+              <TextArea
+                placeholder="..."
+                style={{
+                  height: 60,
+                }}
+              />
+            </Form.Item>
+          )}
           {/* _______Когда выдан_______ */}
-          <Form.Item
-            name="dateIssue"
-            label="Когда выдан"
-            rules={[
-              { required: true, message: "" },
-            ]}           
-            valuePropName="value"
-          >
-            <DatePicker format="DD.MM.YYYY" />
-          </Form.Item>
+          {read ? (
+            <Form.Item label="Когда выдан" name="dateIssue">
+              <Typography.Text>
+                {moment(value.dateIssue).format("DD.MM.YYYY")}
+              </Typography.Text>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              label="Когда выдан"
+              name="dateIssue"
+              rules={[
+                {
+                  required: true,
+                  message: "",
+                },
+              ]}
+              valuePropName="value"
+            >
+              <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
+            </Form.Item>
+          )}
         </>
       )}
 
@@ -171,7 +198,10 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
         <>
           <TextInput
             displayName="Тип иного документа"
-            name="otherTypeDoc"
+            read={read}
+            edit={edit}
+            value={value?.typeOtherDoc}
+            name="typeOtherDoc"
             required={true}
             shortDescription="..."
             inputType="textarea"
@@ -182,11 +212,33 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
               },
             ]}
           />
-
           {/* Реквизиты документа */}
-          <Form.Item
+          {read ? (
+            <Form.Item label="Реквизиты документа" name="recvizityOthetDoc">
+              <Typography.Text>{value.recvizityOthetDoc}</Typography.Text>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              label="Реквизиты документа"
+              name="recvizityOthetDoc"
+              rules={[
+                {
+                  required: true,
+                  message: "",
+                },
+              ]}
+            >
+              <TextArea
+                placeholder="..."
+                style={{
+                  height: 60,
+                }}
+              />
+            </Form.Item>
+          )}
+          {/* <Form.Item
             label="Реквизиты документа"
-            name="recvizitydocumenta"
+            name="recvizityOthetDoc"
             rules={[
               {
                 required: true,
@@ -200,11 +252,34 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
                 height: 60,
               }}
             />
-          </Form.Item>
+          </Form.Item> */}
           {/* _______Кем выдан_______ */}
-          <Form.Item
+          {read ? (
+            <Form.Item label="Кем выдан" name="kemVidanOthetDoc">
+              <Typography.Text>{value.kemVidanOthetDoc}</Typography.Text>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              label="Кем выдан"
+              name="kemVidanOthetDoc"
+              rules={[
+                {
+                  required: true,
+                  message: "т",
+                },
+              ]}
+            >
+              <TextArea
+                placeholder="..."
+                style={{
+                  height: 60,
+                }}
+              />
+            </Form.Item>
+          )}
+          {/* <Form.Item
             label="Кем выдан"
-            name="kemvidanOther"
+            name="kemVidanOthetDoc"
             rules={[
               {
                 required: true,
@@ -218,17 +293,38 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
                 height: 60,
               }}
             />
-          </Form.Item>
+          </Form.Item> */}
           {/* _______Когда выдан_______ */}
-          <Form.Item
-            label="Когда выдан"
-            name="dateOther"
-            rules={[{ required: true, message: "" }]}
-          >
-            <ConfigProvider locale={ruRU}>
+          {read ? (
+            <Form.Item label="Когда выдан" name="dateIssueOthetDoc">
+              <Typography.Text>
+                {moment(value.dateIssueOthetDoc).format("DD.MM.YYYY")}
+              </Typography.Text>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              label="Когда выдан"
+              name="dateIssueOthetDoc"
+              rules={[
+                {
+                  required: true,
+                  message: "",
+                },
+              ]}
+              valuePropName="value"
+            >
               <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
-            </ConfigProvider>
-          </Form.Item>
+            </Form.Item>
+          )}
+          {/* <Form.Item
+            label="Когда выдан"
+            name="dateIssueOthetDoc"
+            rules={[
+              { required: true, message: "Выберите дату выдачи документа" },
+            ]}
+          >
+            <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
+          </Form.Item> */}
         </>
       )}
     </>
