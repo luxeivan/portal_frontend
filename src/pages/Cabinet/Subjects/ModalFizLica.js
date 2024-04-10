@@ -156,7 +156,7 @@ export default function ModalFizLica({
         onChange={({ fileList: newFileList }) => setFileList(newFileList)}
         form={form}
         value={{
-          fileDoc: Array.isArray(value.fileDoc) ? value.fileDoc : [],
+          fileDoc:  value?.fileDoc,
         }}
       />
 
