@@ -107,7 +107,7 @@ export default function AddressResidential({ form, read, edit, value }) {
     frameResidence,
     buildingResidence,
     apartmentNumberResidence,
-    kommentResidence,
+    kommentResidence, 
   ]);
 
   //Поля для ручного ввода адреса проживания
