@@ -25,8 +25,13 @@ export default function AddressRegistration({ form, read, edit, value }) {
     if (e.target.checked) {
       setSelectedRegistrationAddress("");
       form.setFieldsValue({
-        addressRegistrationFias: "",
-        addressResidentialFias: "",
+        fullAddress: "",
+        fiasId: "",
+        manual: 1
+      });
+    } else {
+      form.setFieldsValue({
+        manual: 0
       });
     }
   };
@@ -36,8 +41,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
     setSelectedRegistrationAddress(option.value);
     setRegistrationFiasId(option.fias_id); // сохраняем fias_id
     form.setFieldsValue({
-      addressRegistration: option.value,
-      addressRegistrationFias: option.fias_id,
+      fiasId: option.fias_id,
     });
   };
 
@@ -59,28 +63,28 @@ export default function AddressRegistration({ form, read, edit, value }) {
     debouncedFetchAddresses(searchText);
   };
   //Поля для ручного ввода адреса регистрации
-  const manualAddressFields = (
-    <>
-      {AddressRegistrationJson.map(item =>
-        <TextInput
-          read={read}
-          edit={edit}
-          value={value?.manual[item.name]}
-          displayName={item.displayName}
-          name={item.name}
-          description={item.description}
-        />
-      )}
-    </>
-  );
-  console.log(value?.manual)
+
+  console.log(value)
   return (
     <>
       <Divider orientation="center">Место регистрации</Divider>
-      {!manualAddressInput && !value?.manual ? (
+      {manualAddressInput || (read && value?.manual) ?
         <>
-          <Form.Item label="Адрес" name={"addressRegistration"}>
-            <AutoComplete
+          {AddressRegistrationJson.map(item =>
+            <TextInput
+              read={read}
+              edit={edit}
+              value={value?.manual[item.name]}
+              displayName={item.displayName}
+              name={item.name}
+              description={item.description}
+            />
+          )}
+        </>
+        :
+        <>
+          <Form.Item label="Адрес" name={"fullAddress"}>
+            {!read && <AutoComplete
               options={addressOptions.map((option) => ({
                 ...option,
                 label: (
@@ -94,6 +98,8 @@ export default function AddressRegistration({ form, read, edit, value }) {
             >
               <TextArea placeholder="Начните вводить" style={{ height: 60 }} />
             </AutoComplete>
+            }
+            {read && <Typography.Text>{value?.fias?.fullAddress}</Typography.Text>}
           </Form.Item>
           <Form.Item
             noStyle
@@ -101,14 +107,15 @@ export default function AddressRegistration({ form, read, edit, value }) {
               prevValues.addressRegistration !== currentValues.addressRegistration
             }
           >
-            <Form.Item name="addressRegistrationFias" hidden>
+            <Form.Item name="fiasId" hidden>
+              <Input type="hidden" />
+            </Form.Item>
+            <Form.Item name="manual" hidden>
               <Input type="hidden" />
             </Form.Item>
           </Form.Item>
         </>
-      ) : (
-        manualAddressFields
-      )}
+      }
       {!read &&
 
         <Form.Item name={"addressRegistrationManual"}>
