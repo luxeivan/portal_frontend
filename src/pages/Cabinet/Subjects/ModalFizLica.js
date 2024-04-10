@@ -53,7 +53,7 @@ export default function ModalFizLica({
       addressRegistrationFias: values.addressRegistrationFias,
       addressResidentialFias: values.addressResidentialFias,
       phone: values.phone,
-      email: values.phone,
+      email: values.email,
     };
 
     try {
