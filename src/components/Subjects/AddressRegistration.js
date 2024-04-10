@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Input, Form, AutoComplete, Checkbox, Divider } from "antd";
 
-import useSubjects from "../../../stores/Cabinet/useSubjects";
+import useSubjects from "../../stores/Cabinet/useSubjects";
 import TextArea from "antd/es/input/TextArea";
 
 export default function AddressRegistration({ form }) {

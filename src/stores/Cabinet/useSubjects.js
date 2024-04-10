@@ -51,7 +51,7 @@ const useSubjects = create((set, get) => ({
           },
         }
       );
-      console.log(response.data);
+      //console.log(response.data);
       set({ subject: response.data, isLoadingSubjectItem: false });
     } catch (error) {
       console.log(error);

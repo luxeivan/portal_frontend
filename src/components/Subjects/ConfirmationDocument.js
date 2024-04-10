@@ -4,8 +4,8 @@ import { Form, Divider, ConfigProvider, DatePicker } from "antd";
 
 import TextArea from "antd/es/input/TextArea";
 
-import SelectInput from "../../FormComponents/SelectInput";
-import TextInput from "../../FormComponents/TextInput";
+import SelectInput from "../FormComponents/SelectInput";
+import TextInput from "../FormComponents/TextInput";
 
 import ruRU from "antd/lib/locale/ru_RU";
 import moment from "moment";
@@ -13,8 +13,8 @@ import "moment/locale/ru";
 
 moment.locale("ru");
 
-export default function ConfirmationDocument({ form }) {
-  const [documentType, setDocumentType] = useState("passport");
+export default function ConfirmationDocument({ form, read, edit, value }) {
+  const [documentType, setDocumentType] = useState("Паспорт гражданина РФ");
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
 
   // Изменяет тип документа в зависимости от выбора пользователя
@@ -24,8 +24,8 @@ export default function ConfirmationDocument({ form }) {
   };
 
   const documentOptions = [
-    { value: "passport", label: "Паспорт гражданина РФ" },
-    { value: "other", label: "Иной документ" },
+    { value: "Паспорт гражданина РФ", label: "Паспорт гражданина РФ" },
+    { value: "Иной документ", label: "Иной документ" },
   ];
 
   // Обрабатывает изменения в коде подразделения, форматируя его
@@ -48,9 +48,12 @@ export default function ConfirmationDocument({ form }) {
 
       {/* _______Тип подтверждающего документа_______ */}
       <SelectInput
+        read={read}
+        edit={edit}
+        value={value?.typeDoc}
         displayName="Тип документа"
-        name="typeDoc"
-        defaultValue="passport"
+        name="typeDoc"        
+        defaultValue="Паспорт гражданина РФ"
         required={true}
         description={["Выберите тип документа из списка"]}
         options={documentOptions}
@@ -58,10 +61,13 @@ export default function ConfirmationDocument({ form }) {
       />
 
       {/* _______Паспорт_______ */}
-      {documentType === "passport" && (
+      {documentType === "Паспорт гражданина РФ" && (
         <>
           {/* Серия паспорта */}
           <TextInput
+            read={read}
+            edit={edit}
+            value={value?.serialPassport}
             displayName="Серия паспорта"
             name="serialPassport"
             required={true}
@@ -79,6 +85,9 @@ export default function ConfirmationDocument({ form }) {
           />
           {/* Номер паспорта */}
           <TextInput
+            read={read}
+            edit={edit}
+            value={value?.numberPassport}
             displayName="Номер паспорта"
             name="numberPassport"
             required={true}
@@ -96,8 +105,11 @@ export default function ConfirmationDocument({ form }) {
           />
           {/* Код подразделения */}
           <TextInput
+            read={read}
+            edit={edit}
+            value={value?.kodPodrazdelenia}
             displayName="Код подразделения"
-            name="kodpodrazdelenia"
+            name="kodPodrazdelenia"
             required={true}
             shortDescription="123-456"
             inputProps={{
@@ -142,19 +154,20 @@ export default function ConfirmationDocument({ form }) {
           </Form.Item>
           {/* _______Когда выдан_______ */}
           <Form.Item
+            name="dateIssue"
             label="Когда выдан"
-            name="date"
-            rules={[{ required: true, message: "" }]}
+            rules={[
+              { required: true, message: "" },
+            ]}           
+            valuePropName="value"
           >
-            <ConfigProvider locale={ruRU}>
-              <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
-            </ConfigProvider>
+            <DatePicker format="DD.MM.YYYY" />
           </Form.Item>
         </>
       )}
 
       {/* _______Иной документ_______ */}
-      {documentType === "other" && (
+      {documentType === "Иной документ" && (
         <>
           <TextInput
             displayName="Тип иного документа"

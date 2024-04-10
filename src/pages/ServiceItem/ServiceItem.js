@@ -24,10 +24,10 @@ export default function ServiceItem() {
   const { colorPrimary } = theme.useToken().token;
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
-  const { level2, level3, id } = useParams();
+  const { level2, id } = useParams();
   useEffect(() => {
     fetchServiceItem(level2, id);
-  }, [level2, level3, id]);
+  }, [level2,  id]);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -40,7 +40,7 @@ export default function ServiceItem() {
       {serviceItem && (
         <>
         
-        <Link to={`/services/${level2}/${level3}`}><Button style={{marginTop:"20px"}}><LeftOutlined /></Button></Link>
+        <Link to={`/services/${level2}`}><Button style={{marginTop:"20px"}}><LeftOutlined /></Button></Link>
           <Title level={1} style={{marginTop:"10px"}}>
           <span style={{color:"gray"}}>Услуга:</span><br/>{serviceItem.attributes.name}
           </Title>

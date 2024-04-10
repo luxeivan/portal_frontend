@@ -14,7 +14,10 @@ export default function SelectInput({
   options,
   onChange,
   depends,
-  defaultValue
+  defaultValue,
+  read,
+  edit,
+  value
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   const form = Form.useFormInstance();
@@ -39,22 +42,27 @@ export default function SelectInput({
           {...formItemLayout}
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
-          rules={[{ required,  message: `` }]}
+          rules={!read && [{ required, message: `` }]}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Select
-            defaultValue={defaultValue}
-              onChange={onChange}
-              placeholder="Выберите вариант"
+            {!read &&
+              <Select
+                defaultValue={defaultValue}
+                onChange={onChange}
+                placeholder="Выберите вариант"
               // style={{ paddingRight: "30px" }}
-            >
-              {options.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-            <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />
+              >
+                {options.map((option) => (
+                  <Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
+            }
+            {read &&
+              <Typography.Text>{value}</Typography.Text>
+            }
+            {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
           </div>
         </Form.Item>
         <Drawer

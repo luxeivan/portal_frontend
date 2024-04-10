@@ -19,6 +19,7 @@ export default function Uploader({ form }) {
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
   const { colorPrimaryText } = theme.useToken().token;
+  let files = [];
 
   const previewFile = async (file) => {
     console.log(file);
@@ -69,7 +70,12 @@ export default function Uploader({ form }) {
           withCredentials: true,
         })
         .then(async (response) => {
+          // const files = response.data.files;
+          // console.log(files)
+          // let fileString = ''
+          // files.forEach(item => fileString + item)
           const relativePath = response.data.files[0];
+          files.push(relativePath)
           const fileblob = await axios.get(
             `${config.backServer}/api/cabinet/get-file/${relativePath}`,
             {
@@ -82,8 +88,8 @@ export default function Uploader({ form }) {
           );
           if (!fileblob.data) throw new Error("Ошибка загрузка файла");
           const objectURL = window.URL.createObjectURL(fileblob.data);
-          setFileList([
-            ...fileList,
+          setFileList(prev=>[
+            ...prev,
             {
               crossOrigin: "use-credentials",
               uid: relativePath,
@@ -93,9 +99,9 @@ export default function Uploader({ form }) {
             },
           ]);
           onSuccess(relativePath, file);
-          form.setFieldsValue({ fileDoc: relativePath });
+          form.setFieldsValue({ fileDoc: files });
           message.success(
-            `${file.name} файл загружен успешно и сохранен по пути: ${relativePath}`
+            `Файлы успешно загружены`
           );
         })
         .catch((error) => {

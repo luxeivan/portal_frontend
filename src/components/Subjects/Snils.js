@@ -2,7 +2,7 @@ import React from "react";
 
 import { Input, Form, Divider } from "antd";
 
-import useSubjects from "../../../stores/Cabinet/useSubjects";
+import useSubjects from "../../stores/Cabinet/useSubjects";
 
 export default function Snils({ form }){
   const { validateSnils } = useSubjects();
