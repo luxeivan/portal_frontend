@@ -20,7 +20,7 @@ export default function Contacts({ form, read, edit, value }) {
 
   return (
     <>
-      <Divider orientation="center">Другое</Divider>
+      <Divider orientation="center">Контакты</Divider>
       {/* _______Телефон_______ */}
 
       {read ? (
@@ -29,7 +29,7 @@ export default function Contacts({ form, read, edit, value }) {
         </Form.Item>
       ) : (
         <Form.Item
-          label="Телефон"
+          label="Мобильный телефон"
           name="phone"
           rules={[
             {
@@ -65,7 +65,7 @@ export default function Contacts({ form, read, edit, value }) {
         </Form.Item>
       ) : (
         <Form.Item
-          label="Телефон"
+          label="Электронная почта"
           name="email"
           rules={[
             {

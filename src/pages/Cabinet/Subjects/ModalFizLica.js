@@ -170,7 +170,13 @@ export default function ModalFizLica({
         }}
       /> */}
       {/* _______СНИЛС_______ */}
-      <Snils read={read} form={form} />
+      <Snils
+        read={read}
+        form={form}
+        value={{
+          snils: value.snils,
+        }}
+      />
 
       {/* _______Блок с телефоном и почтой_______ */}
       <Contacts

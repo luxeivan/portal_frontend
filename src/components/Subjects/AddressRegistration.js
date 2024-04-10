@@ -210,7 +210,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
               <Form.Item
                 label="Адрес"
                 name={"addressRegistration"}
-                rules={[{ validator: validateAddress }]}
+                // rules={[{ validator: validateAddress }]}
               >
                 <AutoComplete
                   options={addressOptions.map((option) => ({
@@ -261,3 +261,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
     </>
   );
 }
+
+// СНИЛС показать + НЕобязательное поле
+// Убрать выбрать из списка в Регистрации
+// Другое переименовать в контакты
