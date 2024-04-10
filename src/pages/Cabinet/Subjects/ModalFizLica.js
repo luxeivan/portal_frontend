@@ -53,7 +53,7 @@ export default function ModalFizLica({
       addressRegistrationFias: values.addressRegistrationFias,
       addressResidentialFias: values.addressResidentialFias,
       phone: values.phone,
-      email: values.phone,
+      email: values.email,
     };
 
     try {
@@ -177,8 +177,8 @@ export default function ModalFizLica({
         read={read}
         form={form}
         value={{
-          phone: Array.isArray(value.phone) ? value.phone : [],
-          email: Array.isArray(value.email) ? value.email : [],
+          phone: value.phone,
+          email: value.email,
         }}
       />
 
