@@ -264,7 +264,9 @@ export default function AddressRegistration({ form, read, edit, value }) {
             manualAddressFields
           )}
 
-          <Form.Item>
+          <Form.Item
+            name={"addressRegistrationManual"}
+          >
             <Checkbox
               checked={manualAddressInput}
               onChange={handleManualAddressCheckbox}
