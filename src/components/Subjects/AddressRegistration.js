@@ -5,6 +5,8 @@ import { Input, Form, AutoComplete, Checkbox, Divider, Typography } from "antd";
 import useSubjects from "../../stores/Cabinet/useSubjects";
 import TextArea from "antd/es/input/TextArea";
 import TextInput from "../FormComponents/TextInput";
+import AddressRegistrationJson from "./AddressRegistration.json"
+
 
 export default function AddressRegistration({ form, read, edit, value }) {
   const [searchText] = useState("");
@@ -56,73 +58,10 @@ export default function AddressRegistration({ form, read, edit, value }) {
     setSearchText(searchText);
     debouncedFetchAddresses(searchText);
   };
-  const jsondata = [
-    {
-      displayName: "Почтовый индекс",
-      description: "Почтовый индекс",
-      name: "postcodeRegistration",
-    },
-    {
-      displayName: "Страна",
-      description: "Страна",
-      name: "countryRegistration"
-    },
-    {
-      displayName: "Регион",
-      description: "Регион",
-      name: "regionRegistration"
-    },
-    {
-      displayName: "Район",
-      description: "Район",
-      name: "areaRegistration"
-    },
-    {
-      displayName: "Город",
-      description: "Город",
-      name: "cityRegistration"
-    },
-    {
-      displayName: "Населенный пункт",
-      description: "Населенный пункт",
-      name: "localityRegistration"
-    },
-    {
-      displayName: "Улица",
-      description: "Улица",
-      name: "streetRegistration"
-    },
-    {
-      displayName: "Номер дома",
-      description: "Номер дома",
-      name: "houseNumberRegistration"
-    },
-    {
-      displayName: "Корпус",
-      description: "Корпус",
-      name: "frameRegistration"
-    },
-    {
-      displayName: "Строение",
-      description: "Строение",
-      name: "buildingRegistration"
-    },
-    {
-      displayName: "Квартира/Офис/Комната",
-      description: "Квартира/Офис/Комната",
-      name: "apartmentNumberRegistration"
-    },
-    {
-      displayName: "Комментарий",
-      description: "Комментарий",
-      name: "kommentRegistration"
-    },
-  ]
-
   //Поля для ручного ввода адреса регистрации
   const manualAddressFields = (
     <>
-      {jsondata.map(item =>
+      {AddressRegistrationJson.map(item =>
         <TextInput
           read={read}
           edit={edit}
