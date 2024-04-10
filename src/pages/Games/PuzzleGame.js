@@ -60,7 +60,7 @@ const PuzzleGame = () => {
         newPuzzle[index],
       ];
       setPuzzle(newPuzzle);
-      moveSound.play();
+      //moveSound.play();
       checkIfLevelCompleted(newPuzzle);
     }
   };
