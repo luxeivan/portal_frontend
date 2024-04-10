@@ -27,11 +27,11 @@ export default function AddressRegistration({ form, read, edit, value }) {
       form.setFieldsValue({
         fullAddress: "",
         fiasId: "",
-        manual: 1
+        manual: "1"
       });
     } else {
       form.setFieldsValue({
-        manual: 0
+        manual: "0"
       });
     }
   };
@@ -39,7 +39,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
   // Устанавливает адрес, выбранный из списка
   const onSelect = (value, option) => {
     setSelectedRegistrationAddress(option.value);
-    setRegistrationFiasId(option.fias_id); // сохраняем fias_id
+    //setRegistrationFiasId(option.fias_id); // сохраняем fias_id
     form.setFieldsValue({
       fiasId: option.fias_id,
     });
@@ -102,20 +102,27 @@ export default function AddressRegistration({ form, read, edit, value }) {
             {read && <Typography.Text>{value?.fias?.fullAddress}</Typography.Text>}
           </Form.Item>
           <Form.Item
+            name="fiasId"
+            hidden
             noStyle
             shouldUpdate={(prevValues, currentValues) =>
               prevValues.addressRegistration !== currentValues.addressRegistration
             }
           >
-            <Form.Item name="fiasId" hidden>
-              <Input type="hidden" />
-            </Form.Item>
-            <Form.Item name="manual" hidden>
-              <Input type="hidden" />
-            </Form.Item>
+            <Input type="hidden" />
           </Form.Item>
         </>
       }
+      <Form.Item
+        name="manual"
+        hidden
+        noStyle
+        shouldUpdate={(prevValues, currentValues) =>
+          prevValues.addressRegistration !== currentValues.addressRegistration
+        }
+      >
+        <Input type="hidden" />
+      </Form.Item>
       {!read &&
 
         <Form.Item name={"addressRegistrationManual"}>

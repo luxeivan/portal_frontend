@@ -30,9 +30,9 @@ export default function ModalFizLica({
   const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
   //console.log(value)
   const onFinish = async (values) => {
-    //console.log(values);
+    console.log(values);
     let addressRegistration = {}
-    if (values.manual === 1) {
+    if (values.manual == "1") {
       addressRegistration = {
         manual: {
           countryRegistration: values.countryRegistration,
@@ -215,11 +215,13 @@ export default function ModalFizLica({
       />
 
       {/* _______Кнопка отправки формы_______ */}
-      <Form.Item>
-        <Button type="primary" onClick={() => form.submit()}>
-          Добавить
-        </Button>
-      </Form.Item>
+      {!read &&
+        <Form.Item>
+          <Button type="primary" onClick={() => form.submit()}>
+            Добавить
+          </Button>
+        </Form.Item>
+      }
     </Form>
   );
 }
