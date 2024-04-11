@@ -32,10 +32,10 @@ export default function Contacts({ form, read, edit, value }) {
           label="Мобильный телефон"
           name="phone"
           rules={[
-            {
-              required: true,
-              message: "",
-            },
+            // {
+            //   required: true,
+            //   message: "",
+            // },
           ]}
         >
           <Input

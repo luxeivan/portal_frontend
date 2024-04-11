@@ -25,13 +25,13 @@ export default function ModalFizLica({
 }) {
   const [searchText] = useState("");
   const [fileList, setFileList] = useState([]);
-  
 
   const [form] = Form.useForm();
   const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
   //console.log(value)
   const onFinish = async (values) => {
     console.log(values);
+
     const addressRegistration = {
       fias: {
         fullAddress: values.fullAddressRegistration,
@@ -46,12 +46,67 @@ export default function ModalFizLica({
       },
     };
 
+    // let addressRegistration = {};
+    // if (values.manualRegistration == "1") {
+    //   addressRegistration = {
+    //     manual: {
+    //       countryRegistration: values.countryRegistration,
+    //       postcodeRegistration: values.postcodeRegistration,
+    //       regionRegistration: values.regionRegistration,
+    //       areaRegistration: values.areaRegistration,
+    //       cityRegistration: values.cityRegistration,
+    //       localityRegistration: values.localityRegistration,
+    //       streetRegistration: values.streetRegistration,
+    //       houseNumberRegistration: values.houseNumberRegistration,
+    //       frameRegistration: values.frameRegistration,
+    //       buildingRegistration: values.buildingRegistration,
+    //       apartmentNumberRegistration: values.apartmentNumberRegistration,
+    //       kommentRegistration: values.kommentRegistration,
+    //     },
+    //   };
+    // } else {
+    //   addressRegistration = {
+    //     fias: {
+    //       fullAddress: values.fullAddress,
+    //       fiasId: values.fiasId,
+    //     },
+    //   };
+    // }
+
+    // let addressResidential = {};
+    // if (values.manualResidential == '1') {
+    //   addressResidential = {
+    //     manual: {
+    //       countryResidential: values.countryResidential,
+    //       postcodeResidential: values.postcodeResidential,
+    //       regionResidential: values.regionResidential,
+    //       areaResidential: values.areaResidential,
+    //       cityResidential: values.cityResidential,
+    //       localityResidential: values.localityResidential,
+    //       streetResidential: values.streetResidential,
+    //       houseNumberResidential: values.houseNumberResidential,
+    //       frameResidential: values.frameResidential,
+    //       buildingResidential: values.buildingResidential,
+    //       apartmentNumberResidential: values.apartmentNumberResidential,
+    //       kommentResidential: values.kommentResidential,
+    //     },
+    //   };
+    // } else {
+    //   addressResidential = {
+    //     fias: {
+    //       fullAddress: values.fullAddress,
+    //       fiasId: values.fiasId,
+    //     },
+    //   };
+    // }
+
+
     const formData = {
       type: "Физическое лицо",
       firstname: values.firstname,
       lastname: values.lastname,
       secondname: values.secondname,
-      snils: values.snils.replace(/[^0-9]/g, ""),
+      snils: values.snils,
       typeDoc: values.typeDoc,
       serialPassport: values.serialPassport,
       numberPassport: values.numberPassport,
@@ -197,6 +252,7 @@ export default function ModalFizLica({
   );
 }
 
+
 // import React, { useState, useEffect } from "react";
 
 // import { Form, Button, message } from "antd";
@@ -283,6 +339,7 @@ export default function ModalFizLica({
 //         },
 //       };
 //     }
+
 
 //     const formData = {
 //       type: "Физическое лицо",
