@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Select, Typography, Drawer, theme } from "antd";
+import { Form, Select, Typography, Drawer, theme, Button } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import StrapiRichText from "../StrapiRichText";
 import { formItemLayout } from "../../components/configSizeForm";
@@ -49,7 +49,6 @@ export default function SelectInput({
                 defaultValue={defaultValue}
                 onChange={onChange}
                 placeholder="Выберите вариант"
-              // style={{ paddingRight: "30px" }}
               >
                 {options.map((option) => (
                   <Option key={option.value} value={option.value}>
@@ -61,7 +60,8 @@ export default function SelectInput({
             {read &&
               <Typography.Text>{value}</Typography.Text>
             }
-            {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
+
+            {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer}/>}
           </div>
         </Form.Item>
         <Drawer
