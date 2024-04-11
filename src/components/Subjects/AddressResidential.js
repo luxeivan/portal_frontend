@@ -142,7 +142,6 @@ export default function AddressResidential({ form, read, edit, value }) {
     </>
   );
 }
-
 //старый стабильный вариант
 // import React, { useState, useEffect } from "react";
 
