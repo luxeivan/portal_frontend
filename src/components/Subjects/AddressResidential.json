@@ -1,0 +1,62 @@
+[
+    {
+      "displayName": "Почтовый индекс",
+      "name": "postcodeResidence",
+      "description": "Введите почтовый индекс места проживания."
+    },
+    {
+      "displayName": "Страна",
+      "name": "countryResidence",
+      "description": "Введите страну места проживания."
+    },
+    {
+      "displayName": "Регион",
+      "name": "regionResidence",
+      "description": "Введите регион места проживания."
+    },
+    {
+      "displayName": "Район",
+      "name": "areaResidence",
+      "description": "Введите район места проживания."
+    },
+    {
+      "displayName": "Город",
+      "name": "cityResidence",
+      "description": "Введите город места проживания."
+    },
+    {
+      "displayName": "Населённый пункт",
+      "name": "localityResidence",
+      "description": "Введите населённый пункт места проживания."
+    },
+    {
+      "displayName": "Улица",
+      "name": "streetResidence",
+      "description": "Введите улицу места проживания."
+    },
+    {
+      "displayName": "Номер дома",
+      "name": "houseNumberResidence",
+      "description": "Введите номер дома места проживания."
+    },
+    {
+      "displayName": "Корпус",
+      "name": "frameResidence",
+      "description": "Введите корпус места проживания, если применимо."
+    },
+    {
+      "displayName": "Строение",
+      "name": "buildingResidence",
+      "description": "Введите строение места проживания, если применимо."
+    },
+    {
+      "displayName": "Квартира/Офис/Комната",
+      "name": "apartmentNumberResidence",
+      "description": "Введите номер квартиры, офиса или комнаты места проживания."
+    },
+    {
+      "displayName": "Комментарий",
+      "name": "kommentResidence",
+      "description": "Добавьте любые дополнительные замечания или комментарии."
+    }
+  ]  
