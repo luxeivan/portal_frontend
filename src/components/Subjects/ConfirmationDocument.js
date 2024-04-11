@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import { Form, Divider, ConfigProvider, DatePicker, Typography } from "antd";
+import locale from 'antd/locale/ru_RU'
+import localePicker from 'antd/es/date-picker/locale/ru_RU';
 
 import TextArea from "antd/es/input/TextArea";
 
@@ -18,7 +20,7 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
   const [documentType, setDocumentType] = useState(
     value.typeDoc || "Паспорт гражданина РФ"
   );
-
+console.log(localePicker)
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
 
   // Изменяет тип документа в зависимости от выбора пользователя
@@ -187,7 +189,10 @@ export default function ConfirmationDocument({ form, read, edit, value }) {
               ]}
               valuePropName="value"
             >
-              <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
+              <ConfigProvider locale={locale}>
+
+                <DatePicker format="DD.MM.YYYY" locale={localePicker} style={{ width: "100%" }} />
+              </ConfigProvider>
             </Form.Item>
           )}
         </>
