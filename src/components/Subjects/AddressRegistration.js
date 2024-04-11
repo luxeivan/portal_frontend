@@ -5,8 +5,7 @@ import { Input, Form, AutoComplete, Checkbox, Divider, Typography } from "antd";
 import useSubjects from "../../stores/Cabinet/useSubjects";
 import TextArea from "antd/es/input/TextArea";
 import TextInput from "../FormComponents/TextInput";
-import AddressRegistrationJson from "./AddressRegistration.json"
-
+import AddressRegistrationJson from "./AddressRegistration.json";
 
 export default function AddressRegistration({ form, read, edit, value }) {
   const [searchText] = useState("");
@@ -27,11 +26,11 @@ export default function AddressRegistration({ form, read, edit, value }) {
       form.setFieldsValue({
         fullAddress: "",
         fiasId: "",
-        manual: "1"
+        manual: "1",
       });
     } else {
       form.setFieldsValue({
-        manual: "0"
+        manual: "0",
       });
     }
   };
@@ -64,13 +63,13 @@ export default function AddressRegistration({ form, read, edit, value }) {
   };
   //Поля для ручного ввода адреса регистрации
 
-  console.log(value)
+  console.log(value);
   return (
     <>
       <Divider orientation="center">Место регистрации</Divider>
-      {manualAddressInput || (read && value?.manual) ?
+      {manualAddressInput || (read && value?.manual) ? (
         <>
-          {AddressRegistrationJson.map(item =>
+          {AddressRegistrationJson.map((item) => (
             <TextInput
               read={read}
               edit={edit}
@@ -79,40 +78,47 @@ export default function AddressRegistration({ form, read, edit, value }) {
               name={item.name}
               description={item.description}
             />
-          )}
+          ))}
         </>
-        :
+      ) : (
         <>
           <Form.Item label="Адрес" name={"fullAddress"}>
-            {!read && <AutoComplete
-              options={addressOptions.map((option) => ({
-                ...option,
-                label: (
-                  <div style={{ whiteSpace: "normal" }}>{option.label}</div>
-                ),
-              }))}
-              onSelect={onSelect}
-              onSearch={onSearch}
-              popupMatchSelectWidth={true}
-              style={{ width: "100%" }}
-            >
-              <TextArea placeholder="Начните вводить" style={{ height: 60 }} />
-            </AutoComplete>
-            }
-            {read && <Typography.Text>{value?.fias?.fullAddress}</Typography.Text>}
+            {!read && (
+              <AutoComplete
+                options={addressOptions.map((option) => ({
+                  ...option,
+                  label: (
+                    <div style={{ whiteSpace: "normal" }}>{option.label}</div>
+                  ),
+                }))}
+                onSelect={onSelect}
+                onSearch={onSearch}
+                popupMatchSelectWidth={true}
+                style={{ width: "100%" }}
+              >
+                <TextArea
+                  placeholder="Начните вводить"
+                  style={{ height: 60 }}
+                />
+              </AutoComplete>
+            )}
+            {read && (
+              <Typography.Text>{value?.fias?.fullAddress}</Typography.Text>
+            )}
           </Form.Item>
           <Form.Item
             name="fiasId"
             hidden
             noStyle
             shouldUpdate={(prevValues, currentValues) =>
-              prevValues.addressRegistration !== currentValues.addressRegistration
+              prevValues.addressRegistration !==
+              currentValues.addressRegistration
             }
           >
             <Input type="hidden" />
           </Form.Item>
         </>
-      }
+      )}
       <Form.Item
         name="manual"
         hidden
@@ -123,14 +129,16 @@ export default function AddressRegistration({ form, read, edit, value }) {
       >
         <Input type="hidden" />
       </Form.Item>
-      {!read &&
-
+      {!read && (
         <Form.Item name={"addressRegistrationManual"}>
-          <Checkbox checked={manualAddressInput} onChange={handleManualAddressCheckbox}>
+          <Checkbox
+            checked={manualAddressInput}
+            onChange={handleManualAddressCheckbox}
+          >
             Ввести адрес по полям вручную
           </Checkbox>
         </Form.Item>
-      }
+      )}
     </>
   );
 }
