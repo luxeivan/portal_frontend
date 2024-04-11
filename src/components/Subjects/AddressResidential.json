@@ -1,62 +1,62 @@
 [
     {
       "displayName": "Почтовый индекс",
-      "name": "postcodeResidence",
+      "name": "postcodeResidential",
       "description": "Введите почтовый индекс места проживания."
     },
     {
       "displayName": "Страна",
-      "name": "countryResidence",
+      "name": "countryResidential",
       "description": "Введите страну места проживания."
     },
     {
       "displayName": "Регион",
-      "name": "regionResidence",
+      "name": "regionResidential",
       "description": "Введите регион места проживания."
     },
     {
       "displayName": "Район",
-      "name": "areaResidence",
+      "name": "areaResidential",
       "description": "Введите район места проживания."
     },
     {
       "displayName": "Город",
-      "name": "cityResidence",
+      "name": "cityResidential",
       "description": "Введите город места проживания."
     },
     {
       "displayName": "Населённый пункт",
-      "name": "localityResidence",
+      "name": "localityResidential",
       "description": "Введите населённый пункт места проживания."
     },
     {
       "displayName": "Улица",
-      "name": "streetResidence",
+      "name": "streetResidential",
       "description": "Введите улицу места проживания."
     },
     {
       "displayName": "Номер дома",
-      "name": "houseNumberResidence",
+      "name": "houseNumberResidential",
       "description": "Введите номер дома места проживания."
     },
     {
       "displayName": "Корпус",
-      "name": "frameResidence",
+      "name": "frameResidential",
       "description": "Введите корпус места проживания, если применимо."
     },
     {
       "displayName": "Строение",
-      "name": "buildingResidence",
+      "name": "buildingResidential",
       "description": "Введите строение места проживания, если применимо."
     },
     {
       "displayName": "Квартира/Офис/Комната",
-      "name": "apartmentNumberResidence",
+      "name": "apartmentNumberResidential",
       "description": "Введите номер квартиры, офиса или комнаты места проживания."
     },
     {
       "displayName": "Комментарий",
-      "name": "kommentResidence",
+      "name": "kommentResidential",
       "description": "Добавьте любые дополнительные замечания или комментарии."
     }
   ]  
