@@ -32,7 +32,7 @@ export default function ModalFizLica({
   const onFinish = async (values) => {
     console.log(values);
     let addressRegistration = {};
-    if (values.manual == "1") {
+    if (values.manualRegistration == "1") {
       addressRegistration = {
         manual: {
           countryRegistration: values.countryRegistration,
@@ -59,7 +59,7 @@ export default function ModalFizLica({
     }
 
     let addressResidential = {};
-    if (values.manual == '1') {
+    if (values.manualResidential == '1') {
       addressResidential = {
         manual: {
           countryResidential: values.countryResidential,

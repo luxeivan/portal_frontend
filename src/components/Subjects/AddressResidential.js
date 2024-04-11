@@ -26,11 +26,11 @@ export default function AddressResidential({ form, read, edit, value }) {
       form.setFieldsValue({
         fullAddress: "",
         fiasId: "",
-        manual: "1",
+        manualResidential: "1",
       });
     } else {
       form.setFieldsValue({
-        manual: "0",
+        manualResidential: "0",
       });
     }
   };
@@ -120,7 +120,7 @@ export default function AddressResidential({ form, read, edit, value }) {
         </>
       )}
       <Form.Item
-        name="manual"
+        name="manualResidential"
         hidden
         noStyle
         shouldUpdate={(prevValues, currentValues) =>

@@ -26,11 +26,11 @@ export default function AddressRegistration({ form, read, edit, value }) {
       form.setFieldsValue({
         fullAddress: "",
         fiasId: "",
-        manual: "1",
+        manualRegistration: "1",
       });
     } else {
       form.setFieldsValue({
-        manual: "0",
+        manualRegistration: "0",
       });
     }
   };
@@ -120,7 +120,7 @@ export default function AddressRegistration({ form, read, edit, value }) {
         </>
       )}
       <Form.Item
-        name="manual"
+        name="manualRegistration"
         hidden
         noStyle
         shouldUpdate={(prevValues, currentValues) =>
