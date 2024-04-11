@@ -35,6 +35,7 @@ export default function AddressInput({
         [`${fieldName}fiasId`]: "",
         [`manual${fieldName}`]: "1",
       });
+      console.log(form.getFieldsValue())
     } else {
       form.setFieldsValue({
         [`manual${fieldName}`]: "0",
@@ -44,6 +45,7 @@ export default function AddressInput({
 
   const onSelect = (value, option) => {
     setSelectedAddress(option.value);
+    console.log(option)
     form.setFieldsValue({
       [`${fieldName}fiasId`]: option.fias_id,
     });
@@ -82,7 +84,7 @@ export default function AddressInput({
           <Form.Item
             label="Адрес"
             name={`${fieldName}fullAddress`}
-            rules={[{ validator: validateAddress }]}
+            // rules={[{ validator: validateAddress }]}
           >
             {!read && (
               <AutoComplete
@@ -104,10 +106,21 @@ export default function AddressInput({
             )}
             {read && <Typography.Text>{value?.fias?.fullAddress}</Typography.Text>}
           </Form.Item>
-          <Form.Item name={`${fieldName}fiasId`} noStyle>
+          <Form.Item name={`${fieldName}fiasId`} noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              // prevValues.addressRegistration !== currentValues.addressRegistration
+              true
+            }
+          >
             <Input type="hidden" />
           </Form.Item>
-          <Form.Item name={`manual${fieldName}`} noStyle>
+          <Form.Item name={`manual${fieldName}`}
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              // prevValues.addressRegistration !== currentValues.addressRegistration
+              true
+            }
+          >
             <Input type="hidden" />
           </Form.Item>
         </>
