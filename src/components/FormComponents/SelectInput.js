@@ -32,7 +32,6 @@ export default function SelectInput({
     fontSize: customfontSizeIcon,
     cursor: "pointer",
     marginLeft: "5px",
-    pointerEvents: 'none',
   };
 
   if (show) {
