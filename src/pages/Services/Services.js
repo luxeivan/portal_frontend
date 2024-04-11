@@ -179,7 +179,7 @@ export default function Services() {
           })
         }
       })
-      if (found === arrayForFilter.length) return true
+      if (found >= arrayForFilter.length) return true
     })
     if (temp.length > 0) {
       setServicesFiltered(temp)

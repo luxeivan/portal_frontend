@@ -34,8 +34,8 @@ const items = [
   },
   {
     key: 5,
-    label: `Законодательство`,
-    url: '/law'
+    label: `Документация`,
+    url: '/docs'
   },
 ]
 

@@ -28,9 +28,36 @@ export default function ModalFizLica({
 
   const [form] = Form.useForm();
   const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
-  console.log(value)
+  //console.log(value)
   const onFinish = async (values) => {
-    //console.log(values);
+    console.log(values);
+    let addressRegistration = {}
+    if (values.manual == "1") {
+      addressRegistration = {
+        manual: {
+          countryRegistration: values.countryRegistration,
+          postcodeRegistration: values.postcodeRegistration,
+          regionRegistration: values.regionRegistration,
+          areaRegistration: values.areaRegistration,
+          cityRegistration: values.cityRegistration,
+          localityRegistration: values.localityRegistration,
+          streetRegistration: values.streetRegistration,
+          houseNumberRegistration: values.houseNumberRegistration,
+          frameRegistration: values.frameRegistration,
+          buildingRegistration: values.buildingRegistration,
+          apartmentNumberRegistration: values.apartmentNumberRegistration,
+          kommentRegistration: values.kommentRegistration,
+        }
+      }
+    } else {
+      addressRegistration = {
+        fias: {
+          fullAddress: values.fullAddress,
+          fiasId: values.fiasId
+        }
+      }
+    }
+
     const formData = {
       type: "Физическое лицо",
       firstname: values.firstname,
@@ -48,22 +75,7 @@ export default function ModalFizLica({
       kemVidanOthetDoc: values.kemVidanOthetDoc,
       dateIssueOthetDoc: values.dateIssueOthetDoc,
       fileDoc: values.fileDoc,
-      addressRegistration: {
-        manual: {
-          countryRegistration: values.countryRegistration,
-          postcodeRegistration: values.postcodeRegistration,
-          regionRegistration: values.regionRegistration,
-          areaRegistration: values.areaRegistration,
-          cityRegistration: values.cityRegistration,
-          localityRegistration: values.localityRegistration,
-          streetRegistration: values.streetRegistration,
-          houseNumberRegistration: values.houseNumberRegistration,
-          frameRegistration: values.frameRegistration,
-          buildingRegistration: values.buildingRegistration,
-          apartmentNumberRegistration: values.apartmentNumberRegistration,
-          kommentRegistration: values.kommentRegistration,
-        },
-      },
+      addressRegistration,
       addressResidential: values.addressResidential,
       //addressRegistrationFias: values.addressRegistrationFias,
       //addressResidentialFias: values.addressResidentialFias,
@@ -203,11 +215,13 @@ export default function ModalFizLica({
       />
 
       {/* _______Кнопка отправки формы_______ */}
-      <Form.Item>
-        <Button type="primary" onClick={() => form.submit()}>
-          Добавить
-        </Button>
-      </Form.Item>
+      {!read &&
+        <Form.Item>
+          <Button type="primary" onClick={() => form.submit()}>
+            Добавить
+          </Button>
+        </Form.Item>
+      }
     </Form>
   );
 }
