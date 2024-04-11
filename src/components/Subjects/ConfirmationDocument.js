@@ -66,7 +66,7 @@ console.log(localePicker)
         displayName="Тип документа"
         name="typeDoc"
         defaultValue="Паспорт гражданина РФ"
-        required={true}
+        // required={true}
         description={["Выберите тип документа из списка"]}
         options={documentOptions}
         onChange={onDocumentTypeChange}
@@ -82,18 +82,18 @@ console.log(localePicker)
             value={value?.serialPassport}
             displayName="Серия паспорта"
             name="serialPassport"
-            required={true}
+            // required={true}
             shortDescription="1234"
             inputProps={{
               maxLength: 4,
               pattern: "\\d*",
             }}
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "",
+            //   },
+            // ]}
           />
           {/* Номер паспорта */}
           <TextInput
@@ -102,18 +102,18 @@ console.log(localePicker)
             value={value?.numberPassport}
             displayName="Номер паспорта"
             name="numberPassport"
-            required={true}
+            // required={true}
             shortDescription="567890"
             inputProps={{
               maxLength: 6,
               pattern: "\\d*",
             }}
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "",
+            //   },
+            // ]}
           />
           {/* Код подразделения */}
           <TextInput
@@ -122,7 +122,7 @@ console.log(localePicker)
             value={value?.kodPodrazdelenia}
             displayName="Код подразделения"
             name="kodPodrazdelenia"
-            required={true}
+            // required={true}
             shortDescription="123-456"
             inputProps={{
               maxLength: 7,
@@ -130,10 +130,10 @@ console.log(localePicker)
               onChange: handleKodPodrazdeleniaChange,
             }}
             rules={[
-              {
-                required: true,
-                message: "",
-              },
+              // {
+              //   required: true,
+              //   message: "",
+              // },
               () => ({
                 validator(_, value) {
                   if (!value || /^\d{3}-\d{3}$/.test(value)) {
@@ -155,12 +155,12 @@ console.log(localePicker)
             <Form.Item
               label="Кем выдан"
               name="kemVidan"
-              rules={[
-                {
-                  required: true,
-                  message: "т",
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "т",
+              //   },
+              // ]}
             >
               <TextArea
                 placeholder="..."
@@ -181,12 +181,12 @@ console.log(localePicker)
             <Form.Item
               label="Когда выдан"
               name="dateIssue"
-              rules={[
-                {
-                  required: true,
-                  message: "",
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "",
+              //   },
+              // ]}
               valuePropName="value"
             >
               <ConfigProvider locale={locale}>
@@ -207,15 +207,15 @@ console.log(localePicker)
             edit={edit}
             value={value?.typeOtherDoc}
             name="typeOtherDoc"
-            required={true}
+            // required={true}
             shortDescription="..."
             inputType="textarea"
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "",
+            //   },
+            // ]}
           />
           {/* Реквизиты документа */}
           {read ? (
@@ -226,12 +226,12 @@ console.log(localePicker)
             <Form.Item
               label="Реквизиты документа"
               name="recvizityOthetDoc"
-              rules={[
-                {
-                  required: true,
-                  message: "",
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "",
+              //   },
+              // ]}
             >
               <TextArea
                 placeholder="..."
@@ -267,12 +267,12 @@ console.log(localePicker)
             <Form.Item
               label="Кем выдан"
               name="kemVidanOthetDoc"
-              rules={[
-                {
-                  required: true,
-                  message: "",
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "",
+              //   },
+              // ]}
             >
               <TextArea
                 placeholder="..."
@@ -310,12 +310,12 @@ console.log(localePicker)
             <Form.Item
               label="Когда выдан"
               name="dateIssueOthetDoc"
-              rules={[
-                {
-                  required: true,
-                  message: "",
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "",
+              //   },
+              // ]}
               valuePropName="value"
             >
               <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />

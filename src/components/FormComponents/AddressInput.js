@@ -31,13 +31,13 @@ export default function AddressInput({
     if (e.target.checked) {
       setSelectedAddress("");
       form.setFieldsValue({
-        [`${fieldName}FullAddress`]: "",
-        [`${fieldName}FiasId`]: "",
-        [`${fieldName}Manual`]: "1",
+        [`${fieldName}fullAddress`]: "",
+        [`${fieldName}fiasId`]: "",
+        [`${fieldName}manual`]: "1",
       });
     } else {
       form.setFieldsValue({
-        [`${fieldName}Manual`]: "0",
+        [`${fieldName}manual`]: "0",
       });
     }
   };
@@ -45,7 +45,7 @@ export default function AddressInput({
   const onSelect = (value, option) => {
     setSelectedAddress(option.value);
     form.setFieldsValue({
-      [`${fieldName}FiasId`]: option.fias_id,
+      [`${fieldName}fiasId`]: option.fias_id,
     });
   };
 
@@ -81,7 +81,7 @@ export default function AddressInput({
         <>
           <Form.Item
             label="Адрес"
-            name={`${fieldName}FullAddress`}
+            name={`${fieldName}fullAddress`}
             rules={[{ validator: validateAddress }]}
           >
             {!read && (
@@ -104,13 +104,13 @@ export default function AddressInput({
             )}
             {read && <Typography.Text>{value?.fias?.fullAddress}</Typography.Text>}
           </Form.Item>
-          <Form.Item name={`${fieldName}FiasId`} noStyle>
+          <Form.Item name={`${fieldName}fiasId`} noStyle>
             <Input type="hidden" />
           </Form.Item>
         </>
       )}
       {!read && (
-        <Form.Item name={`${fieldName}Manual`} noStyle>
+        <Form.Item name={`${fieldName}manual`} noStyle>
           <Checkbox
             checked={manualInput}
             onChange={handleManualCheckboxChange}

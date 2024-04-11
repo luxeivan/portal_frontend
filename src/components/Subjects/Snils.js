@@ -19,21 +19,21 @@ export default function Snils({ form, read, edit, value }) {
         <Form.Item
           label="Номер СНИЛС"
           name="snils"
-          rules={[
-            () => ({
-              validator(_, value) {
-                if (!value) {
-                  return Promise.reject(
-                    new Error("СНИЛС не может быть пустым")
-                  );
-                }
-                if (!/^\d{3}-\d{3}-\d{3}[\s-]?\d{2}$/.test(value)) {
-                  return Promise.reject(new Error("Формат СНИЛС неверный"));
-                }
-                return validateSnils(value);
-              },
-            }),
-          ]}
+          // rules={[
+          //   () => ({
+          //     validator(_, value) {
+          //       if (!value) {
+          //         return Promise.reject(
+          //           new Error("СНИЛС не может быть пустым")
+          //         );
+          //       }
+          //       if (!/^\d{3}-\d{3}-\d{3}[\s-]?\d{2}$/.test(value)) {
+          //         return Promise.reject(new Error("Формат СНИЛС неверный"));
+          //       }
+          //       return validateSnils(value);
+          //     },
+          //   }),
+          // ]}
         >
           <Input
             placeholder="XXX-XXX-XXX XX"
