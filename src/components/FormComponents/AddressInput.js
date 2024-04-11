@@ -33,11 +33,11 @@ export default function AddressInput({
       form.setFieldsValue({
         [`${fieldName}fullAddress`]: "",
         [`${fieldName}fiasId`]: "",
-        [`${fieldName}manual`]: "1",
+        [`manual${fieldName}`]: "1",
       });
     } else {
       form.setFieldsValue({
-        [`${fieldName}manual`]: "0",
+        [`manual${fieldName}`]: "0",
       });
     }
   };
@@ -105,6 +105,9 @@ export default function AddressInput({
             {read && <Typography.Text>{value?.fias?.fullAddress}</Typography.Text>}
           </Form.Item>
           <Form.Item name={`${fieldName}fiasId`} noStyle>
+            <Input type="hidden" />
+          </Form.Item>
+          <Form.Item name={`manual${fieldName}`} noStyle>
             <Input type="hidden" />
           </Form.Item>
         </>
