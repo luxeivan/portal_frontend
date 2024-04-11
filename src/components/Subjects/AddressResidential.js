@@ -24,13 +24,13 @@ export default function AddressResidential({ form, read, edit, value }) {
     if (e.target.checked) {
       setSelectedResidenceAddress("");
       form.setFieldsValue({
-        fullAddressResidential: "",
-        fiasIdResidential: "",
-        manualResidential: "1",
+        fullAddress: "",
+        fiasId: "",
+        manual: "1",
       });
     } else {
       form.setFieldsValue({
-        manualResidential: "0",
+        manual: "0",
       });
     }
   };
@@ -39,7 +39,7 @@ export default function AddressResidential({ form, read, edit, value }) {
   const onSelectResidential = (value, option) => {
     setSelectedResidenceAddress(option.value);
     form.setFieldsValue({
-      fiasIdResidential: option.fias_id,
+      fiasId: option.fias_id,
     });
   };
 
@@ -62,17 +62,17 @@ export default function AddressResidential({ form, read, edit, value }) {
   };
 
   //Поля для ручного ввода адреса проживания
-
+  console.log(value);
   return (
     <>
       <Divider orientation="center">Место проживания</Divider>
-      {manualAddressResidentialInput || (read && value?.manualResidential) ? (
+      {manualAddressResidentialInput || (read && value?.manual) ? (
         <>
           {AddressResidentialJson.map((item) => (
             <TextInput
               read={read}
               edit={edit}
-              value={value?.manualResidential[item.name]}
+              value={value?.manual[item.name]}
               displayName={item.displayName}
               name={item.name}
               description={item.description}
@@ -81,7 +81,7 @@ export default function AddressResidential({ form, read, edit, value }) {
         </>
       ) : (
         <>
-          <Form.Item label="Адрес" name={"fullAddressResidential"}>
+          <Form.Item label="Адрес" name={"fullAddress"}>
             {!read && (
               <AutoComplete
                 options={addressOptions.map((option) => ({
@@ -102,11 +102,13 @@ export default function AddressResidential({ form, read, edit, value }) {
               </AutoComplete>
             )}
             {read && (
-              <Typography.Text>{value?.fias?.fullAddressResidential}</Typography.Text>
+              <Typography.Text>
+                {value?.fias?.fullAddress}
+              </Typography.Text>
             )}
           </Form.Item>
           <Form.Item
-            name="fiasIdResidential"
+            name="fiasId"
             hidden
             noStyle
             shouldUpdate={(prevValues, currentValues) =>
@@ -118,7 +120,7 @@ export default function AddressResidential({ form, read, edit, value }) {
         </>
       )}
       <Form.Item
-        name="manualResidential"
+        name="manual"
         hidden
         noStyle
         shouldUpdate={(prevValues, currentValues) =>

@@ -59,9 +59,9 @@ export default function ModalFizLica({
     }
 
     let addressResidential = {};
-    if (values.manualResidential === '1') {
+    if (values.manual == '1') {
       addressResidential = {
-        manualResidential: {
+        manual: {
           countryResidential: values.countryResidential,
           postcodeResidential: values.postcodeResidential,
           regionResidential: values.regionResidential,
@@ -79,8 +79,8 @@ export default function ModalFizLica({
     } else {
       addressResidential = {
         fias: {
-          fullAddressResidential: values.fullAddressResidential,
-          fiasIdResidential: values.fiasIdResidential,
+          fullAddress: values.fullAddress,
+          fiasId: values.fiasId,
         },
       };
     }
