@@ -57,19 +57,28 @@ export default function SelectInput({
       //   </div>
       // </Form.Item>
       // <div style={{ display: "flex", alignItems: "center" }}>
-        <Form.Item
-          {...formItemLayout}
-          label={<Typography.Text>{displayName}</Typography.Text>}
-          name={name}
-        >
-
+      <Form.Item
+        {...formItemLayout}
+        label={<Typography.Text>{displayName}</Typography.Text>}
+        name={name}
+      >
+        {!read &&
           <Select
             defaultValue={defaultValue}
             placeholder="Выберите вариант"
             options={options}
           />
-        </Form.Item>
-        /* {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />} */
+        }
+        {read &&
+          <Typography.Text>{value}</Typography.Text>
+        }
+        {/* <Select
+            defaultValue={defaultValue}
+            placeholder="Выберите вариант"
+            options={options}
+          /> */}
+      </Form.Item>
+      /* {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />} */
       // </div>
       /* <Drawer
         title={displayName}
