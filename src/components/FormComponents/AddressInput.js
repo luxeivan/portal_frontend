@@ -1,9 +1,9 @@
-
-
 import React, { useState, useEffect } from "react";
 import { Form, AutoComplete, Checkbox, Input, Typography } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import TextInput from "./TextInput";
+import useSubjects from "../../stores/Cabinet/useSubjects";
+
 
 export default function AddressInput({
   form,
@@ -13,12 +13,12 @@ export default function AddressInput({
   manualValue,
   fieldName,
   addressOptions,
-  debouncedFetchAddresses,
-  setSearchText,
+  
   manualInputFields,
 }) {
   const [manualInput, setManualInput] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState("");
+  const { setSearchText, debouncedFetchAddresses } = useSubjects();
 
   useEffect(() => {
     if (manualValue) {

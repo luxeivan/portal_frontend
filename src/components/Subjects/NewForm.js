@@ -1,7 +1,9 @@
 import React from "react";
-import { Divider, Form, Select, Button } from "antd";
-import TextInput from '../FormComponents/TextInput';
-import SelectInput from '../FormComponents/SelectInput';
+import { Divider, Form, Button } from "antd";
+import TextInput from "../FormComponents/TextInput";
+import SelectInput from "../FormComponents/SelectInput";
+import AddressInput from "../FormComponents/AddressInput";
+import SnilsInput from "../FormComponents/SnilsInput";
 import { formItemLayout } from "../../components/configSizeForm";
 
 export default function NewForm({fields, read = false, edit = false, value = false, setShowModal }) {
