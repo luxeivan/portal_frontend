@@ -7,7 +7,7 @@ import { formItemLayout } from "../../components/configSizeForm";
 import AddressInput from '../FormComponents/AddressInput';
 import SnilsInput from '../FormComponents/SnilsInput';
 
-export default function NewForm({ read = false, edit = false, value = false,setShowModal }) {
+export default function NewForm({ read = false, edit = false, value = false, setShowModal }) {
     const [form] = Form.useForm();
     //console.log(fields)
     return (
@@ -18,6 +18,7 @@ export default function NewForm({ read = false, edit = false, value = false,setS
             >
 
                 {fields?.length > 0 && fields.map((field, index) => {
+                    console.log(value)
                     if (field.type === 'divider') return <Divider key={index}>{field.name}</Divider>
                     if (field.type === 'textInput') return <TextInput
                         key={index}
@@ -83,21 +84,19 @@ export default function NewForm({ read = false, edit = false, value = false,setS
                 )}
 
             </Form>
-            {
-                read && (
-                    <Form.Item>
-                        <Button type="primary" onClick={() => console.log('Изменить')}>
-                            Изменить
-                        </Button>
-                        <Button type="primary" danger onClick={() => console.log('Удалить')}>
-                            Удалить
-                        </Button>
-                        <Button onClick={() => setShowModal(false)}>
-                            Закрыть
-                        </Button>
-                    </Form.Item>
-                )
-            }
+            {read && (
+                <Form.Item>
+                    <Button type="primary" onClick={() => console.log('Изменить')}>
+                        Изменить
+                    </Button>{'   '}
+                    <Button type="primary" danger onClick={() => console.log('Удалить')}>
+                        Удалить
+                    </Button>{'   '}
+                    <Button onClick={() => setShowModal(false)}>
+                        Закрыть
+                    </Button>
+                </Form.Item>
+            )}
         </>
     )
 }

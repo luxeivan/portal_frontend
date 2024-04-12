@@ -20,7 +20,7 @@ import NewForm from "../../../components/Subjects/NewForm";
 
 export default function ModalFizLica({
   onSubmit,
-  setShowModalAdd,
+  setShowModal,
   read = false,
   value = {},
 }) {
@@ -75,7 +75,7 @@ export default function ModalFizLica({
       await submitNewSubject(formData);
       message.success("Субъект успешно создан");
       form.resetFields();
-      setShowModalAdd(false);
+      setShowModal(false);
       if (onSubmit) {
         onSubmit();
       }
@@ -197,7 +197,7 @@ export default function ModalFizLica({
     // </Form>
     
       
-      <NewForm  setShowModal={setShowModalAdd}/>
+      <NewForm read={read} setShowModal={setShowModal} value={value}/>
     
   );
 }
