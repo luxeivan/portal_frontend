@@ -1,13 +1,10 @@
 import React from "react";
 import { Divider, Form, Select, Button } from "antd";
-import fields from "./NewForm.json";
-import TextInput from "../FormComponents/TextInput";
-import SelectInput from "../FormComponents/SelectInput";
-import AddressInput from "../FormComponents/AddressInput";
-import SnilsInput from "../FormComponents/SnilsInput";
+import TextInput from '../FormComponents/TextInput';
+import SelectInput from '../FormComponents/SelectInput';
 import { formItemLayout } from "../../components/configSizeForm";
 
-export default function NewForm({ read = false, edit = false, value = false, setShowModal }) {
+export default function NewForm({fields, read = false, edit = false, value = false, setShowModal }) {
     const [form] = Form.useForm();
     //console.log(fields)
     return (

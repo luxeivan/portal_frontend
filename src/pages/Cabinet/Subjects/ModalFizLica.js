@@ -18,6 +18,8 @@ import AddressRegistration from "../../../components/Subjects/AddressRegistratio
 import AddressResidential from "../../../components/Subjects/AddressResidential";
 import NewForm from "../../../components/Subjects/NewForm";
 
+import fields from './FormFizLica.json'
+
 export default function ModalFizLica({
   onSubmit,
   setShowModal,
@@ -197,7 +199,7 @@ export default function ModalFizLica({
     // </Form>
     
       
-      <NewForm read={read} setShowModal={setShowModal} value={value}/>
+      <NewForm fields={fields} read={read} setShowModal={setShowModal} value={value}/>
     
   );
 }
