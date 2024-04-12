@@ -13,7 +13,7 @@ export default function SnilsInput({ form, read, dividerText, displayName, place
     <>
       {read ? (
         <Form.Item label={<Typography.Text>{displayName}</Typography.Text>} name="snils">
-          <Typography.Text>{value.snils}</Typography.Text>
+          <Typography.Text>{value?.snils}</Typography.Text>
         </Form.Item>
       ) : (
         <Form.Item name="snils" label={<Typography.Text>{displayName}</Typography.Text>}  rules={[{ validator: validateSnils }]}>

@@ -157,7 +157,7 @@ export default function Subjects() {
       >
         <ModalFizLica
           onSubmit={handleOkModalAdd}
-          setShowModalAdd={setShowModalAdd}
+          setShowModal={setShowModalAdd}
           type={selectedType}
         />
       </Modal>
@@ -175,7 +175,7 @@ export default function Subjects() {
            ...subject?.attributes.counterparty[0]
           }}
           onSubmit={handleOkModalAdd}
-          setShowModalAdd={setShowModalAdd}
+          setShowModal={setShowModalView}
           type={selectedType}
         />
       </Modal>
