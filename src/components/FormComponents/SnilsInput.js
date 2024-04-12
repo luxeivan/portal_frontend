@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Form, Divider, Typography } from "antd";
 
-export default function SnilsInput({ form, read, dividerText, displayName, placeholder, maxLength, validator, value }) {
+export default function SnilsInput({ form, read, dividerText, displayName, placeholder, maxLength, validator, value = false }) {
   const validateSnils = (rule, value) => {
     if (value && !RegExp(validator.formatRegExp).test(value)) {
       return Promise.reject(new Error(validator.formatErrorText));
@@ -13,10 +13,10 @@ export default function SnilsInput({ form, read, dividerText, displayName, place
     <>
       {read ? (
         <Form.Item label={<Typography.Text>{displayName}</Typography.Text>} name="snils">
-          <Typography.Text>{value?.snils}</Typography.Text>
+          <Typography.Text>{value}</Typography.Text>
         </Form.Item>
       ) : (
-        <Form.Item name="snils" label={<Typography.Text>{displayName}</Typography.Text>}  rules={[{ validator: validateSnils }]}>
+        <Form.Item name="snils" label={<Typography.Text>{displayName}</Typography.Text>} rules={[{ validator: validateSnils }]}>
           <Input
             placeholder={placeholder}
             maxLength={maxLength}

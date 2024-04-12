@@ -18,7 +18,7 @@ export default function NewForm({ read = false, edit = false, value = false, set
             >
 
                 {fields?.length > 0 && fields.map((field, index) => {
-                    console.log(value)
+                    console.log(value[field.name])
                     if (field.type === 'divider') return <Divider key={index}>{field.name}</Divider>
                     if (field.type === 'textInput') return <TextInput
                         key={index}
