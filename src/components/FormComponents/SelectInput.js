@@ -4,8 +4,6 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import StrapiRichText from "../StrapiRichText";
 import { formItemLayout } from "../../components/configSizeForm";
 
-const { Option } = Select;
-
 export default function SelectInput({
   displayName,
   name,
@@ -36,45 +34,51 @@ export default function SelectInput({
 
   if (show) {
     return (
-      <>
-        <Form.Item
-          {...formItemLayout}
-          name={name}
-          label={<Typography.Text>{displayName}</Typography.Text>}
-          rules={!read && [{ required, message: `` }]}
-        >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            {!read &&
-              <Select
-                defaultValue={defaultValue}
-                onChange={onChange}
-                placeholder="Выберите вариант"
-              >
-                {options.map((option) => (
-                  <Option key={option.value} value={option.value}>
-                    {option.label}
-                  </Option>
-                ))}
-              </Select>
-            }
-            {read &&
-              <Typography.Text>{value}</Typography.Text>
-            }
 
-            {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer}/>}
-          </div>
-        </Form.Item>
-        <Drawer
-          title={displayName}
-          placement="right"
-          onClose={onClose}
-          open={drawerVisible}
-        >
-          <StrapiRichText
-            content={Array.isArray(description) ? description : [description]}
-          />
-        </Drawer>
-      </>
+      // <Form.Item
+      //   {...formItemLayout}
+      //   name={name}
+      //   label={<Typography.Text>{displayName}</Typography.Text>}
+      //   rules={!read && [{ required, message: `` }]}
+      // >
+      //   <div style={{ display: "flex", alignItems: "center" }}>
+      //     {!read &&
+      //       <Select
+      //         defaultValue={defaultValue}                
+      //         placeholder="Выберите вариант"
+      //         options={options}
+      //       />
+      //     }
+      //     {read &&
+      //       <Typography.Text>{value}</Typography.Text>
+      //     }
+
+      //     {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer}/>}
+      //   </div>
+      // </Form.Item>
+      <Form.Item
+        {...formItemLayout}
+        label={<Typography.Text>{displayName}</Typography.Text>}
+        name={name}
+      >
+
+        <Select
+          defaultValue={defaultValue}
+          placeholder="Выберите вариант"
+          options={options}
+        />
+      </Form.Item>
+      /* <Drawer
+        title={displayName}
+        placement="right"
+        onClose={onClose}
+        open={drawerVisible}
+      >
+        <StrapiRichText
+          content={Array.isArray(description) ? description : [description]}
+        />
+      </Drawer> */
+
     );
   }
 }

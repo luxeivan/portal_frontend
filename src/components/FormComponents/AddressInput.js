@@ -88,12 +88,12 @@ export default function AddressInput({
           >
             {!read && (
               <AutoComplete
-                options={addressOptions.map((option) => ({
-                  value: option.value,
-                  label: (
-                    <div style={{ whiteSpace: "normal" }}>{option.label}</div>
-                  ),
-                }))}
+                // options={addressOptions.map((option) => ({
+                //   value: option.value,
+                //   label: (
+                //     <div style={{ whiteSpace: "normal" }}>{option.label}</div>
+                //   ),
+                // }))}
                 onSelect={onSelect}
                 onSearch={onSearch}
                 style={{ width: "100%" }}

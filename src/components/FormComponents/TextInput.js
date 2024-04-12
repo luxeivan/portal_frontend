@@ -7,7 +7,7 @@ import { formItemLayout } from "../../components/configSizeForm";
 export default function TextInput({
   displayName,
   name,
-  shortDescription,
+  placeholder,
   required,
   description,
   depends,
@@ -18,7 +18,15 @@ export default function TextInput({
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   const form = Form.useFormInstance();
-  const show = Form.useWatch(depends?.showIf.nameField, form);
+  let show = true
+  show = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
+  if (!depends) 
+    show = true
+    // console.log(depends)
+  //   console.log(Form.useWatch(depends?.[0]?.showIf?.nameField, form))
+  // }
+
+
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const showDrawer = () => setDrawerVisible(true);
@@ -38,15 +46,15 @@ export default function TextInput({
           {...formItemLayout}
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
-          rules={!read &&[{ required, message: `` }]}
+          rules={!read && [{ required, message: `` }]}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             {!read &&
               <Input
-                placeholder={shortDescription}
+                placeholder={placeholder}
                 style={{ paddingRight: "30px" }}
                 {...inputProps} // Дополнительные пропсы для Input
-                value={edit && value}
+                value={value}
               />
             }
             {read &&
