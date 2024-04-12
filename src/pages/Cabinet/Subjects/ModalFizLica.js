@@ -9,7 +9,7 @@ import useSubjects from "../../../stores/Cabinet/useSubjects";
 
 import { formItemLayout } from "../../.././components/configSizeForm";
 
-import Uploader from "../../../components/FormComponents/Uploader";
+import UploaderInput from "../../../components/FormComponents/UploaderInput";
 import FullName from "../../../components/Subjects/FullName";
 import ConfirmationDocument from "../../../components/Subjects/ConfirmationDocument";
 import Snils from "../../../components/Subjects/Snils";
@@ -212,7 +212,7 @@ export default function ModalFizLica({
         value={value.addressResidential}
       />
       {/* _______Загрузка_______ */}
-      <Uploader
+      <UploaderInput
         read={read}
         fileList={fileList}
         onChange={({ fileList: newFileList }) => setFileList(newFileList)}
