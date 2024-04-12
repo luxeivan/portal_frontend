@@ -15,7 +15,7 @@ const getBase64 = (file) =>
   });
 
 
-export default function Uploader({ form, read, edit, value }) {
+export default function UploaderInput({ form, read, edit, value }) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
