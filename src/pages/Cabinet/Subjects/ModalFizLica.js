@@ -195,9 +195,7 @@ export default function ModalFizLica({
     //     </Form.Item>
     //   )}
     // </Form>
-    
-      
-      <NewForm  setShowModal={setShowModalAdd}/>
-    
+
+    <NewForm read={read} setShowModal={setShowModalAdd} />
   );
 }
