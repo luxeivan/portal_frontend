@@ -14,6 +14,7 @@ export default function AddressInput({
   value,
   manualValue,
   name,
+  // manualInputFields,
 }) {
   const [manualInput, setManualInput] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState("");

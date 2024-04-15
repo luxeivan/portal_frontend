@@ -62,7 +62,10 @@ export default function UploaderInput({ read, edit, value, depends }) {
 
     }
 
-  }, [value.fileDoc])
+  }, [value?.fileDoc])
+  useEffect(() => {
+    form.setFieldsValue({ fileDoc: fileList.map(item => item.uid) });
+  }, [fileList])
 
   const previewFile = async (file) => {
     //console.log(file);
@@ -127,7 +130,7 @@ export default function UploaderInput({ read, edit, value, depends }) {
             },
           ]);
           onSuccess(relativePath, file);
-          form.setFieldsValue({ fileDoc: files });
+          // form.setFieldsValue({ fileDoc: files });
           message.success(`Файлы успешно загружены`);
         })
         .catch((error) => {
