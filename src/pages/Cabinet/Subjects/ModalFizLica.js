@@ -7,7 +7,6 @@ import fieldsFizLica from "./FormFizLica.json";
 const { confirm } = Modal;
 
 export default function ModalFizLica({
-  onSubmit,
   setShowModal,
   read = false,
   value = {},

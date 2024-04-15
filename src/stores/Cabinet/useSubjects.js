@@ -111,47 +111,6 @@ const useSubjects = create((set, get) => ({
     }
   },
 
-  // // Действие для обновления searchText
-  // setSearchText: (text) => set({ searchText: text }),
-
-  // // Действие для установки адресных опций
-  // setAddressOptions: (options) => set({ addressOptions: options }),
-
-  // // Делаем задержку запроса для получения адресов
-  // debouncedFetchAddresses: debounce(async (searchText) => {
-  //   if (!searchText) {
-  //     get().setAddressOptions([]);
-  //     return;
-  //   }
-  //   try {
-  //     const token = localStorage.getItem("jwt");
-  //     const response = await axios.get(
-  //       `${config.backServer}/api/cabinet/get-fias`,
-  //       {
-  //         params: { searchString: searchText },
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     let preparingData = response.data.data.map((item) => ({
-  //       label: (
-  //         <Typography.Text style={{ width: "100%", whiteSpace: "normal" }}>
-  //           {item.value}
-  //         </Typography.Text>
-  //       ),
-  //       value: item.value,
-  //       fias_id: item.data.fias_id 
-  //     }));
-  //     get().setAddressOptions(preparingData);
-  //   } catch (error) {
-  //     console.error("Ошибка при получении адресов:", error);
-  //     get().setAddressOptions([]);
-  //   }
-  // }, 800),
-
-  // Валидируем СНИЛС
   validateSnils: (snils) => {
     const error = { code: 0, message: "" };
     if (typeof snils !== "string") snils = "";
