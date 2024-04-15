@@ -172,7 +172,7 @@ export default function Subjects() {
         <ModalFizLica
           read
           value={{
-           ...subject?.attributes.counterparty[0]
+           ...subject
           }}
           onSubmit={handleOkModalAdd}
           setShowModal={setShowModalView}
