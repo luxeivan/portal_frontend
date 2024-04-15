@@ -4,6 +4,7 @@ import TextInput from "../FormComponents/TextInput";
 import SelectInput from "../FormComponents/SelectInput";
 import AddressInput from "../FormComponents/AddressInput";
 import SnilsInput from "../FormComponents/SnilsInput";
+import UploaderInput from "../FormComponents/UploaderInput";
 import { formItemLayout } from "../../components/configSizeForm";
 
 export default function NewForm({
@@ -17,7 +18,13 @@ export default function NewForm({
   const [form] = Form.useForm();
   return (
     <>
-      <Form form={form} {...formItemLayout}>
+      <Form 
+      form={form} 
+      {...formItemLayout}
+      onFinish={(values)=>{
+        console.log(values)
+      }}
+      >
         {fields?.length > 0 &&
           fields.map((field, index) => {
             //console.log(value);
@@ -85,8 +92,23 @@ export default function NewForm({
                   edit={edit}
                   options={field.options}
                   depends={field.depends}
-                  value={value ? value[field.name] : null}
-                  
+                  value={value ? value[field.name] : null}                  
+                />
+              );
+              if (field.type === "uploaderInput")
+              return (
+                <UploaderInput
+                  key={index}
+                  displayName={field.displayName}
+                  name={field.name}
+                  required={field.required}
+                  description={field.description}
+                  placeholder={field.placeholder}
+                  read={read}
+                  edit={edit}
+                  options={field.options}
+                  depends={field.depends}
+                  value={value ? value[field.name] : null}                  
                 />
               );
           })}
