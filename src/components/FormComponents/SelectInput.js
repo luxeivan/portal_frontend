@@ -18,8 +18,16 @@ export default function SelectInput({
   value
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
+  // ----------------------------------------
   const form = Form.useFormInstance();
-  const show = Form.useWatch(depends?.showIf.nameField, form);
+  let show = true
+  let showTemp = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
+  if (depends && showTemp)
+    show = true
+  else if (!depends)
+    show = true
+  else show = false
+  // ----------------------------------------
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const showDrawer = () => setDrawerVisible(true);

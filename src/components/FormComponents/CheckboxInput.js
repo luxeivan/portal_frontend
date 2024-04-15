@@ -18,7 +18,7 @@ export default function CheckboxInput({ displayName, name, shortDescription, req
         return (
             <Form.Item
                 name={name}
-                // valuePropName="checked"
+                valuePropName="checked"
                 rules={[
                     {
                         required,
