@@ -7,6 +7,7 @@ import SnilsInput from "../FormComponents/SnilsInput";
 import { formItemLayout } from "../../components/configSizeForm";
 
 export default function NewForm({
+  handlerDelete,
   fields,
   read = false,
   edit = false,
@@ -19,7 +20,7 @@ export default function NewForm({
       <Form form={form} {...formItemLayout}>
         {fields?.length > 0 &&
           fields.map((field, index) => {
-            console.log(value[field.name]);
+            //console.log(value);
             if (field.type === "divider")
               return <Divider key={index}>{field.name}</Divider>;
             if (field.type === "textInput")
@@ -103,7 +104,7 @@ export default function NewForm({
             Изменить
           </Button>
           {"   "}
-          <Button type="primary" danger onClick={() => console.log("Удалить")}>
+          <Button type="primary" danger onClick={() => handlerDelete(value.id)}>
             Удалить
           </Button>
           {"   "}

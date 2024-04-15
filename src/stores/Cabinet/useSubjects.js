@@ -88,6 +88,28 @@ const useSubjects = create((set, get) => ({
       throw error;
     }
   },
+  deleteSubjectItem: async (id) => {
+    try {
+      set({ isLoadingSubjectItem: true });
+      const token = localStorage.getItem("jwt");
+      const response = await axios.delete(
+        `${config.backServer}/api/cabinet/subjects/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      //console.log(response.data);
+      set((state) => ({ subjects: state.subjects.filter(item => item.id !== id) }));
+    } catch (error) {
+      console.log(error);
+      set({
+        error: error.response?.data?.message || error.message,
+        isLoading: false,
+      });
+    }
+  },
 
   // // Действие для обновления searchText
   // setSearchText: (text) => set({ searchText: text }),
@@ -291,7 +313,7 @@ export default useSubjects;
 //           </Typography.Text>
 //         ),
 //         value: item.value,
-//         fias_id: item.data.fias_id 
+//         fias_id: item.data.fias_id
 //       }));
 //       get().setAddressOptions(preparingData);
 //     } catch (error) {
