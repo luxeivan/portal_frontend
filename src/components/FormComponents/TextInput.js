@@ -58,7 +58,7 @@ export default function TextInput({
               <Input
                 placeholder={placeholder}
                 style={{ paddingRight: "30px" }}
-                {...inputProps} // Дополнительные пропсы для Input
+                {...inputProps}
                 value={value}
               />
             }
