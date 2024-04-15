@@ -1,30 +1,30 @@
-import { Divider } from "antd";
+// import { Divider } from "antd";
 
-import useSubjects from "../../stores/Cabinet/useSubjects";
-import AddressInput from "../FormComponents/AddressInput"; 
-import AddressResidentialJson from "./AddressResidential.json";
+// import useSubjects from "../../stores/Cabinet/useSubjects";
+// import AddressInput from "../FormComponents/AddressInput"; 
+// import AddressResidentialJson from "./AddressResidential.json";
 
-export default function AddressResidential({ form, read, edit, value}) {
-  const { addressOptions, setSearchText, debouncedFetchAddresses } = useSubjects();
+// export default function AddressResidential({ form, read, edit, value}) {
+//   const { addressOptions, setSearchText, debouncedFetchAddresses } = useSubjects();
 
-  return (
-    <>
-      <Divider orientation="center">Место проживания</Divider>
-      <AddressInput
-        form={form}
-        read={read}
-        edit={edit}
-        value={value}
-        fieldName="addressResidential" 
-        manualValue={value?.manualResidential} 
-        addressOptions={addressOptions} 
-        debouncedFetchAddresses={debouncedFetchAddresses}
-        setSearchText={setSearchText}
-        manualInputFields={AddressResidentialJson}
-      />
-    </>
-  );
-}
+//   return (
+//     <>
+//       <Divider orientation="center">Место проживания</Divider>
+//       <AddressInput
+//         form={form}
+//         read={read}
+//         edit={edit}
+//         value={value}
+//         fieldName="addressResidential" 
+//         manualValue={value?.manualResidential} 
+//         addressOptions={addressOptions} 
+//         debouncedFetchAddresses={debouncedFetchAddresses}
+//         setSearchText={setSearchText}
+//         manualInputFields={AddressResidentialJson}
+//       />
+//     </>
+//   );
+// }
 
 
 
