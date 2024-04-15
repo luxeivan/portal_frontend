@@ -68,6 +68,7 @@ export default function NewForm({
                   options={field.options}
                   depends={field.depends}
                   value={value ? value[field.name] : null}
+                  manualInputFields={field.manualInputFields}
                 />
               );
             if (field.type === "snilsInput")
@@ -84,6 +85,7 @@ export default function NewForm({
                   options={field.options}
                   depends={field.depends}
                   value={value ? value[field.name] : null}
+                  
                 />
               );
           })}

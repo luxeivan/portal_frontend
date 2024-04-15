@@ -1,0 +1,86 @@
+[
+    {
+      "displayName": "Почтовый индекс",
+      "description": "Почтовый индекс",
+      "name": "postcode",
+      "placeholder": "Введите почтовый индекс",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Страна",
+      "description": "Страна",
+      "name": "country",
+      "placeholder": "Введите страну",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Регион",
+      "description": "Регион",
+      "name": "region",
+      "placeholder": "Введите регион",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Район",
+      "description": "Район",
+      "name": "area",
+      "placeholder": "Введите район",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Город",
+      "description": "Город",
+      "name": "city",
+      "placeholder": "Введите город ",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Населенный пункт",
+      "description": "Населенный пункт",
+      "name": "locality",
+      "placeholder": "Введите населенный пункт",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Улица",
+      "description": "Улица",
+      "name": "street",
+      "placeholder": "Введите улицу",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Номер дома",
+      "description": "Номер дома",
+      "name": "houseNumber",
+      "placeholder": "Введите номер дома",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Корпус",
+      "description": "Корпус",
+      "name": "frame",
+      "placeholder": "Введите корпус",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Строение",
+      "description": "Строение",
+      "name": "building",
+      "placeholder": "Введите строение",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Квартира/Офис/Комната",
+      "description": "Квартира/Офис/Комната",
+      "name": "apartmentNumber",
+      "placeholder": "Введите Квартиру/Офис/Комнату",
+      "type": "textInput"
+    },
+    {
+      "displayName": "Комментарий",
+      "description": "Комментарий",
+      "name": "komment",
+      "placeholder": "Введите комментарий",
+      "type": "textInput"
+    }
+  ]
