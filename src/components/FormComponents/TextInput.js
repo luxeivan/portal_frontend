@@ -22,10 +22,6 @@ export default function TextInput({
   show = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
   if (!depends) 
     show = true
-    // console.log(depends)
-  //   console.log(Form.useWatch(depends?.[0]?.showIf?.nameField, form))
-  // }
-
 
   const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -53,7 +49,7 @@ export default function TextInput({
               <Input
                 placeholder={placeholder}
                 style={{ paddingRight: "30px" }}
-                {...inputProps} // Дополнительные пропсы для Input
+                {...inputProps}
                 value={value}
               />
             }
