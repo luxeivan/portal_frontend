@@ -1,7 +1,17 @@
 import React from "react";
 import { Input, Form, Divider, Typography } from "antd";
 
-export default function SnilsInput({ form, read, dividerText, displayName, placeholder, maxLength, validator, value = false }) {
+export default function SnilsInput({ read, dividerText, displayName, placeholder, maxLength, validator, value = false,depends }) {
+  // -------------------------------------
+  const form = Form.useFormInstance();
+  let show = true
+  let showTemp = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
+  if (depends && showTemp)
+    show = true
+  else if (!depends)
+    show = true
+  else show = false
+  // -------------------------------------
   const validateSnils = (rule, value) => {
     if (value && !RegExp(validator.formatRegExp).test(value)) {
       return Promise.reject(new Error(validator.formatErrorText));

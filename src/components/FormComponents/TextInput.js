@@ -17,12 +17,17 @@ export default function TextInput({
   value
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
+  // -------------------------------------
   const form = Form.useFormInstance();
   let show = true
-  show = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
-  if (!depends) 
+  let showTemp = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
+  if (depends && showTemp)
     show = true
-    // console.log(depends)
+  else if (!depends)
+    show = true
+  else show = false
+  // -------------------------------------
+  // console.log(depends)
   //   console.log(Form.useWatch(depends?.[0]?.showIf?.nameField, form))
   // }
 
