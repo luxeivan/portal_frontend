@@ -56,6 +56,7 @@ export default function NewForm({
             if (field.type === "addressInput")
               return (
                 <AddressInput
+                  form={form}
                   key={index}
                   displayName={field.displayName}
                   name={field.name}
