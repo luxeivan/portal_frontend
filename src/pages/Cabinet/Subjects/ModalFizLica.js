@@ -10,11 +10,11 @@ export default function ModalFizLica({
   value = {},
 }) {
   const [searchText] = useState("");
-  const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
+  // const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
 
-  useEffect(() => {
-    debouncedFetchAddresses(searchText);
-  }, [searchText, debouncedFetchAddresses]);
+  // useEffect(() => {
+  //   debouncedFetchAddresses(searchText);
+  // }, [searchText, debouncedFetchAddresses]);
 
   return (
     <NewForm
