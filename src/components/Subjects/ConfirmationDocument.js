@@ -241,23 +241,6 @@ console.log(localePicker)
               />
             </Form.Item>
           )}
-          {/* <Form.Item
-            label="Реквизиты документа"
-            name="recvizityOthetDoc"
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
-          >
-            <TextArea
-              placeholder="..."
-              style={{
-                height: 60,
-              }}
-            />
-          </Form.Item> */}
           {/* _______Кем выдан_______ */}
           {read ? (
             <Form.Item label="Кем выдан" name="kemVidanOthetDoc">
@@ -282,23 +265,6 @@ console.log(localePicker)
               />
             </Form.Item>
           )}
-          {/* <Form.Item
-            label="Кем выдан"
-            name="kemVidanOthetDoc"
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
-          >
-            <TextArea
-              placeholder="..."
-              style={{
-                height: 60,
-              }}
-            />
-          </Form.Item> */}
           {/* _______Когда выдан_______ */}
           {read ? (
             <Form.Item label="Когда выдан" name="dateIssueOthetDoc">
@@ -321,15 +287,6 @@ console.log(localePicker)
               <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
             </Form.Item>
           )}
-          {/* <Form.Item
-            label="Когда выдан"
-            name="dateIssueOthetDoc"
-            rules={[
-              { required: true, message: "Выберите дату выдачи документа" },
-            ]}
-          >
-            <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
-          </Form.Item> */}
         </>
       )}
     </>
