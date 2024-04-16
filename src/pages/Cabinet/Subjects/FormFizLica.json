@@ -32,142 +32,94 @@
     "name": "Удостоверяющий документ"
   },
   {
-    "type": "selectInput",
-    "name": "typeDoc",
-    "displayName": "Тип документа",
-    "placeholder": "Иванович",
-    "description": "Выберите тип документа",
-    "required": false,
-    "options": [
-      {
-        "value": "Паспорт гражданина РФ",
-        "label": "Паспорт гражданина РФ"
-      },
-      {
-        "value": "Иной документ",
-        "label": "Иной документ"
-      }
-    ],
-    "defaultValue": "Паспорт гражданина РФ"
-  },
-  {
-    "type": "textInput",
-    "name": "serialPassport",
-    "displayName": "Серия паспорта",
-    "placeholder": "1234",
-    "description": "Введите серию паспорта",
-    "required": false,
-    "depends": {
-      "showIf": {
-        "nameField": "typeDoc",
-        "eq": "Паспорт гражданина РФ"
-      }
+    "type": "confirmationDocumentInput",
+    "name": "document",
+    "displayName": "Удостоверяющий документ",
+    "required": true,
+    "documentTypes": {
+      "Паспорт гражданина РФ": [
+        {
+          "type": "textInput",
+          "name": "serialPassport",
+          "displayName": "Серия паспорта",
+          "placeholder": "1234",
+          "description": "Введите серию паспорта",
+          "required": true
+        },
+        {
+          "type": "textInput",
+          "name": "numberPassport",
+          "displayName": "Номер паспорта",
+          "placeholder": "123456",
+          "description": "Введите номер паспорта",
+          "required": true
+        },
+        {
+          "type": "textInput",
+          "name": "kodPodrazdelenia",
+          "displayName": "Код подразделения",
+          "placeholder": "123-456",
+          "description": "Введите код подразделения",
+          "required": true
+        },
+        {
+          "type": "textInput",
+          "name": "kemVidan",
+          "displayName": "Кем выдан",
+          "placeholder": "...",
+          "description": "Введите кем выдан паспорт",
+          "required": true,
+          "inputType": "textarea",
+          "rows": 3
+        },
+        {
+          "type": "datepicker",
+          "name": "dateIssue",
+          "displayName": "Когда выдан",
+          "placeholder": "01.01.2000",
+          "description": "Введите дату выдачи",
+          "required": true,
+          "format": "DD.MM.YYYY"
+        }
+      ],
+      "Иной документ": [
+        {
+          "type": "textInput",
+          "name": "typeOtherDoc",
+          "displayName": "Тип иного документа",
+          "placeholder": "...",
+          "description": "Введите наименование иного документа",
+          "required": true
+        },
+        {
+          "type": "textInput",
+          "name": "recvizityOthetDoc",
+          "displayName": "Реквизиты документа",
+          "placeholder": "...",
+          "description": "Введите реквизиты иного документа",
+          "required": true
+        },
+        {
+          "type": "textInput",
+          "name": "kemVidanOthetDoc",
+          "displayName": "Кем выдан",
+          "placeholder": "...",
+          "description": "Введите кем выдан иной документ",
+          "required": true
+        },
+        {
+          "type": "datepicker",
+          "name": "dateIssueOthetDoc",
+          "displayName": "Когда выдан",
+          "placeholder": "01.01.2000",
+          "description": "Введите когда выдан иной документ",
+          "required": true,
+          "format": "DD.MM.YYYY"
+        }
+      ]
     }
   },
-  {
-    "type": "textInput",
-    "name": "numberPassport",
-    "displayName": "Номер паспорта",
-    "placeholder": "123456",
-    "description": "Введите номер паспорта",
-    "required": false,
-    "depends": {
-      "showIf": {
-        "nameField": "typeDoc",
-        "eq": "Паспорт гражданина РФ"
-      }
-    }
-  },
-  {
-    "type": "textInput",
-    "name": "kodPodrazdelenia",
-    "displayName": "Код подразделения",
-    "placeholder": "123-456",
-    "description": "Введите номер паспорта",
-    "required": false,
-    "depends": {
-      "showIf": {
-        "nameField": "typeDoc",
-        "eq": "Паспорт гражданина РФ"
-      }
-    }
-  },
-  {
-    "type": "customInput",
-    "name": "kemVidan",
-    "displayName": "Кем выдан",
-    "placeholder": "...",
-    "description": "Введите кем выдан паспорт",
-    "required": false,
-    "inputType": "textarea",
-    "rows": 3
-  },
-  {
-    "type": "customInput",
-    "name": "dateIssue",
-    "displayName": "Когда выдан",
-    "placeholder": "01.01.2000",
-    "description": "Введите дату выдачи",
-    "required": false,
-    "inputType": "datepicker", 
-    "format": "DD.MM.YYYY"
-  },
-  {
-    "type": "textInput",
-    "name": "typeOtherDoc",
-    "displayName": "Тип иного документа",
-    "placeholder": "...",
-    "description": "Введите наименование иного документа",
-    "required": false,
-    "depends": {
-      "showIf": {
-        "nameField": "typeDoc",
-        "eq": "Иной документ"
-      }
-    }
-  },
-  {
-    "type": "textInput",
-    "name": "recvizityOthetDoc",
-    "displayName": "Реквизиты документа",
-    "placeholder": "...",
-    "description": "Введите реквизиты иного документа",
-    "required": false,
-    "depends": {
-      "showIf": {
-        "nameField": "typeDoc",
-        "eq": "Иной документ"
-      }
-    }
-  },
-  {
-    "type": "textInput",
-    "name": "kemVidanOthetDoc",
-    "displayName": "Кем выдан",
-    "placeholder": "...",
-    "description": "Введите кем выдан иной документ",
-    "required": false,
-    "depends": {
-      "showIf": {
-        "nameField": "typeDoc",
-        "eq": "Иной документ"
-      }
-    }
-  },
-  {
-    "type": "textInput",
-    "name": "dateIssueOthetDoc",
-    "displayName": "Когда выдан",
-    "placeholder": "...",
-    "description": "Введите когда выдан иной документ",
-    "required": false,
-    "depends": {
-      "showIf": {
-        "nameField": "typeDoc",
-        "eq": "Иной документ"
-      }
-    }
-  },
+
   {
     "type": "divider",
     "name": "Место регистрации"
