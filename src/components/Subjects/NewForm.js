@@ -4,6 +4,7 @@ import TextInput from "../FormComponents/TextInput";
 import SelectInput from "../FormComponents/SelectInput";
 import AddressInput from "../FormComponents/AddressInput";
 import SnilsInput from "../FormComponents/SnilsInput";
+import UploaderInput from "../FormComponents/UploaderInput";
 import ConfirmationDocumentInput from "../FormComponents/ConfirmationDocumentInput";
 import { formItemLayout } from "../../components/configSizeForm";
 
@@ -38,6 +39,17 @@ const NewForm = ({
             read={read}
             edit={edit}
             value={value[field.name]}
+          />
+        );
+
+      case "uploaderInput":
+        return (
+          <UploaderInput
+            key={index}
+            {...field}
+            value={value[field.name]}
+            read={read}
+            edit={edit}
           />
         );
       case "addressInput":
