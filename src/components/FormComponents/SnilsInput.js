@@ -18,8 +18,9 @@ export default function SnilsInput({ form, read, value = "", name = "snils" }) {
     const error = { code: 0, message: "" };
     if (typeof snils !== "string") snils = "";
     if (!snils.length) {
-      error.code = 1;
-      error.message = "СНИЛС пуст";
+      // error.code = 1;
+      // error.message = "СНИЛС пуст";
+      return Promise.resolve();
     } else if (snils.length !== 14) {
       error.code = 2;
       error.message = "СНИЛС должен состоять из 11 цифр";
@@ -91,7 +92,7 @@ export default function SnilsInput({ form, read, value = "", name = "snils" }) {
               value = `${value.slice(0, 3)}-${value.slice(3)}`;
             }
             e.target.value = value;
-            console.log(value)
+            //console.log(value)
             // setSnils(value)
             form.setFieldsValue({ snils: value });
           }}

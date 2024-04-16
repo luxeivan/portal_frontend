@@ -26,7 +26,13 @@ export default function ModalFizLica({ setShowModal, read = false, value = {}, }
     });
   };
   const handlerSubmitForm = (event) => {
-    console.log(event)
+    //console.log(event )
+    let list = fieldsFizLica.filter(item => item.type !== "divider")
+    const obj = {}
+    list.forEach(item => {
+      obj[item.name] = event[item.name]
+    });
+    console.log(obj)
   }
   return (
     <NewForm

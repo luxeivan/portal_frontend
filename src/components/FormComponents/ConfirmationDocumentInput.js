@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Form, Divider, ConfigProvider, DatePicker, Typography } from "antd";
+import { Form, Divider, ConfigProvider, DatePicker, Typography,Input } from "antd";
 import locale from 'antd/locale/ru_RU'
 import localePicker from 'antd/es/date-picker/locale/ru_RU';
 
@@ -15,14 +15,23 @@ import "moment/locale/ru";
 
 moment.locale("ru");
 
-export default function ConfirmationDocument({ form, read, edit, value }) {
+export default function ConfirmationDocument({ form, read, edit, value, name }) {
   // const [documentType, setDocumentType] = useState("Паспорт гражданина РФ");
   const [documentType, setDocumentType] = useState(
     value.typeDoc || "Паспорт гражданина РФ"
   );
-console.log(localePicker)
+  // console.log(localePicker)
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
 
+  //Здесь надо реализовать формирование поля в зависимости от выбранного документа
+  form.setFieldsValue({
+    [`${name}`]: {
+      passport: {
+        serial: "123",
+        number: "123123"
+      }
+    }
+  })
   // Изменяет тип документа в зависимости от выбора пользователя
   const onDocumentTypeChange = (value) => {
     setDocumentType(value);
@@ -72,6 +81,9 @@ console.log(localePicker)
         onChange={onDocumentTypeChange}
       />
 
+      <Form.Item name={`${name}`} noStyle>
+        <Input type="hidden" />
+      </Form.Item>
       {/* _______Паспорт_______ */}
       {documentType === "Паспорт гражданина РФ" && (
         <>
@@ -88,12 +100,12 @@ console.log(localePicker)
               maxLength: 4,
               pattern: "\\d*",
             }}
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "",
-            //   },
-            // ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "",
+          //   },
+          // ]}
           />
           {/* Номер паспорта */}
           <TextInput
@@ -108,12 +120,12 @@ console.log(localePicker)
               maxLength: 6,
               pattern: "\\d*",
             }}
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "",
-            //   },
-            // ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "",
+          //   },
+          // ]}
           />
           {/* Код подразделения */}
           <TextInput
@@ -155,12 +167,12 @@ console.log(localePicker)
             <Form.Item
               label="Кем выдан"
               name="kemVidan"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: "т",
-              //   },
-              // ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "т",
+            //   },
+            // ]}
             >
               <TextArea
                 placeholder="..."
@@ -190,7 +202,6 @@ console.log(localePicker)
               valuePropName="value"
             >
               <ConfigProvider locale={locale}>
-
                 <DatePicker format="DD.MM.YYYY" locale={localePicker} style={{ width: "100%" }} />
               </ConfigProvider>
             </Form.Item>
@@ -210,12 +221,12 @@ console.log(localePicker)
             // required={true}
             shortDescription="..."
             inputType="textarea"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "",
-            //   },
-            // ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "",
+          //   },
+          // ]}
           />
           {/* Реквизиты документа */}
           {read ? (
@@ -226,12 +237,12 @@ console.log(localePicker)
             <Form.Item
               label="Реквизиты документа"
               name="recvizityOthetDoc"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: "",
-              //   },
-              // ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "",
+            //   },
+            // ]}
             >
               <TextArea
                 placeholder="..."
@@ -250,12 +261,12 @@ console.log(localePicker)
             <Form.Item
               label="Кем выдан"
               name="kemVidanOthetDoc"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: "",
-              //   },
-              // ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "",
+            //   },
+            // ]}
             >
               <TextArea
                 placeholder="..."

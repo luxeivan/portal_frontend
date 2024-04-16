@@ -27,6 +27,16 @@ export default function AddressInput({
     }
   }, [manualValue]);
 
+  //Здесь надо реализовать формирование поля в зависимости от выбранного метода ввода
+  form.setFieldsValue({
+    [`${name}`]: {
+      fias: {
+        address: "123",
+        fiasId: "123123"
+      }
+    }
+  })
+
   // Функция для выполнения запроса к API и получения адресов
   const fetchAddresses = async (searchText) => {
     if (!searchText) {
@@ -143,7 +153,11 @@ export default function AddressInput({
           <Form.Item name={`${name}fiasId`} noStyle>
             <Input type="hidden" />
           </Form.Item>
+          <Form.Item name={`${name}`} noStyle>
+            <Input type="hidden" />
+          </Form.Item>
         </>
+        
       )}
       <Form.Item name={`${name}manual`} valuePropName="checked">
         <Checkbox checked={manualInput} onChange={handleManualCheckboxChange}>

@@ -33,91 +33,10 @@
   },
   {
     "type": "confirmationDocumentInput",
-    "name": "document",
+    "name": "confirmationDocument",
     "displayName": "Удостоверяющий документ",
-    "required": true,
-    "documentTypes": {
-      "Паспорт гражданина РФ": [
-        {
-          "type": "textInput",
-          "name": "serialPassport",
-          "displayName": "Серия паспорта",
-          "placeholder": "1234",
-          "description": "Введите серию паспорта",
-          "required": true
-        },
-        {
-          "type": "textInput",
-          "name": "numberPassport",
-          "displayName": "Номер паспорта",
-          "placeholder": "123456",
-          "description": "Введите номер паспорта",
-          "required": true
-        },
-        {
-          "type": "textInput",
-          "name": "kodPodrazdelenia",
-          "displayName": "Код подразделения",
-          "placeholder": "123-456",
-          "description": "Введите код подразделения",
-          "required": true
-        },
-        {
-          "type": "textInput",
-          "name": "kemVidan",
-          "displayName": "Кем выдан",
-          "placeholder": "...",
-          "description": "Введите кем выдан паспорт",
-          "required": true,
-          "inputType": "textarea",
-          "rows": 3
-        },
-        {
-          "type": "datepicker",
-          "name": "dateIssue",
-          "displayName": "Когда выдан",
-          "placeholder": "01.01.2000",
-          "description": "Введите дату выдачи",
-          "required": true,
-          "format": "DD.MM.YYYY"
-        }
-      ],
-      "Иной документ": [
-        {
-          "type": "textInput",
-          "name": "typeOtherDoc",
-          "displayName": "Тип иного документа",
-          "placeholder": "...",
-          "description": "Введите наименование иного документа",
-          "required": true
-        },
-        {
-          "type": "textInput",
-          "name": "recvizityOthetDoc",
-          "displayName": "Реквизиты документа",
-          "placeholder": "...",
-          "description": "Введите реквизиты иного документа",
-          "required": true
-        },
-        {
-          "type": "textInput",
-          "name": "kemVidanOthetDoc",
-          "displayName": "Кем выдан",
-          "placeholder": "...",
-          "description": "Введите кем выдан иной документ",
-          "required": true
-        },
-        {
-          "type": "datepicker",
-          "name": "dateIssueOthetDoc",
-          "displayName": "Когда выдан",
-          "placeholder": "01.01.2000",
-          "description": "Введите когда выдан иной документ",
-          "required": true,
-          "format": "DD.MM.YYYY"
-        }
-      ]
-    }
+    "required": true  
+    
   },
 
   {
@@ -126,7 +45,7 @@
   },
   {
     "type": "addressInput",
-    "name": "registration",
+    "name": "addressRegistration",
     "displayName": "Адрес",
     "placeholder": "...",
     "description": "Выберите или введите вручную адрес регистрации",
@@ -138,7 +57,7 @@
   },
   {
     "type": "addressInput",
-    "name": "residential",
+    "name": "addressResidential",
     "displayName": "Адрес",
     "placeholder": "...",
     "description": "Выберите или введите вручную адрес проживания",
@@ -150,7 +69,7 @@
   },
   {
     "type": "uploaderInput",
-    "name": "residential",
+    "name": "fileDoc",
     "displayName": "Адрес",
     "placeholder": "...",
     "description": "Выберите или введите вручную адрес проживания",
