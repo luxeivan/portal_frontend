@@ -103,64 +103,7 @@ export default function AddressInput({
 
   console.log(manualInputFields);
   return (
-    // <>
-    //   {manualInput || (read && value?.manual) ? (
-    //     <>
-    //       {manualInputFields.map((item) => (
-    //         <TextInput
-    //           key={item.name}
-    //           read={read}
-    //           edit={edit}
-    //           value={value?.manual[item.name]}
-    //           displayName={item.displayName}
-    //           name={`${name}${item.name}`}
-    //           description={item.description}
-    //         />
-    //       ))}
-    //     </>
-    //   ) : (
-    //     <>
-    //       <Form.Item label="Адрес" name={`${name}fullAddress`}>
-    //         {!read && (
-    //           <AutoComplete
-    //             options={addressOptions}
-    //             onSelect={onSelect}
-    //             onSearch={onSearch}
-    //             style={{ width: "100%" }}
-    //           >
-    //             <TextArea
-    //               placeholder="Начните вводить адрес"
-    //               style={{ height: 60 }}
-    //             />
-    //           </AutoComplete>
-    //         )}
-    //         {read && (
-    //           <Typography.Text>{value?.fias?.fullAddress}</Typography.Text>
-    //         )}
-    //       </Form.Item>
-    //       <Form.Item name={`${name}fiasId`} noStyle>
-    //         <Input type="hidden" />
-    //       </Form.Item>
-    //       {/* {manualInput && (
-    //         <Form.Item name={`manual${name}`} noStyle>
-    //           <Checkbox
-    //             checked={manualInput}
-    //             onChange={handleManualCheckboxChange}
-    //           >
-    //             Ввести адрес вручную
-    //           </Checkbox>
-    //         </Form.Item>
-    //       )} */}
-    //     </>
-    //   )}
-    // </>
     <>
-      <Form.Item name={`${name}manual`} valuePropName="checked">
-        <Checkbox checked={manualInput} onChange={handleManualCheckboxChange}>
-          Ввести адрес вручную
-        </Checkbox>
-      </Form.Item>
-
       {manualInput ? (
         <>
           {Array.isArray(manualInputFields) &&
@@ -202,6 +145,11 @@ export default function AddressInput({
           </Form.Item>
         </>
       )}
+      <Form.Item name={`${name}manual`} valuePropName="checked">
+        <Checkbox checked={manualInput} onChange={handleManualCheckboxChange}>
+          Ввести адрес вручную
+        </Checkbox>
+      </Form.Item>
     </>
   );
 }
