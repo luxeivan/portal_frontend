@@ -4,7 +4,6 @@
   "placeholder": "XXX-XXX-XXX XX",
   "maxLength": 14,
   "validator": {
-    "formatRegExp": "^\\d{3}-\\d{3}-\\d{3}[\\s-]?\\d{2}$",
-    "formatErrorText": "Формат СНИЛС неверный"
+    "formatRegExp": "^\\d{3}-\\d{3}-\\d{3}[\\s-]?\\d{2}$"
   }
 }
