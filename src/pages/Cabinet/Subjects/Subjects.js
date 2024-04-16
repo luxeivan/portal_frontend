@@ -4,7 +4,7 @@ import useSubjects from "../../../stores/Cabinet/useSubjects";
 import styles from "./Subjects.module.css";
 import { PlusOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
-import ModalFizLica from "./ModalFizLica";
+import ModalFizLica from "../../../components/Subjects/ModalFizLica/ModalFizLica";
 import AppHelmet from '../../../components/Global/AppHelmet'
 
 const { Title } = Typography;

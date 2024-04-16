@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Form, AutoComplete, Checkbox, Input, Typography } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import TextInput from "./TextInput";
+import TextInput from "../TextInput";
 import axios from "axios";
 import { debounce } from "lodash";
-import config from "../../config";
-import manualInputFields from "../../pages/Cabinet/Subjects/ManualInputFields.json";
+import config from "../../../config";
+import manualInputFields from "./ManualInputFields.json";
 
 export default function AddressInput({
   form,
@@ -95,13 +95,13 @@ export default function AddressInput({
 
   const onSelect = (value, option) => {
     setSelectedAddress(option.value);
-    console.log(option);
+    //console.log(option);
     form.setFieldsValue({
       [`${name}fiasId`]: option.fias_id,
     });
   };
 
-  console.log(manualInputFields);
+  //console.log(manualInputFields);
   return (
     <>
       {manualInput ? (

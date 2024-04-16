@@ -2,20 +2,14 @@ import React from "react";
 import { Divider, Form, Button } from "antd";
 import TextInput from "../FormComponents/TextInput";
 import SelectInput from "../FormComponents/SelectInput";
-import AddressInput from "../FormComponents/AddressInput";
+import AddressInput from "../FormComponents/AddressInput/AddressInput";
 import SnilsInput from "../FormComponents/SnilsInput";
 import UploaderInput from "../FormComponents/UploaderInput";
 import ConfirmationDocumentInput from "../FormComponents/ConfirmationDocumentInput";
 import { formItemLayout } from "../../components/configSizeForm";
 
-const NewForm = ({
-  fields,
-  read = false,
-  edit = false,
-  value = {},
-  setShowModal,
-}) => {
-  const [form] = Form.useForm();
+const NewForm = ({ fields, read = false, edit = false, value = {}, setShowModal, form, handlerSubmitForm }) => {
+  // const [form] = Form.useForm();
 
   const renderField = (field, index) => {
     switch (field.type) {
@@ -71,6 +65,7 @@ const NewForm = ({
             read={read}
             edit={edit}
             value={value[field.name]}
+            form={form}
           />
         );
       case "confirmationDocumentInput":
@@ -91,7 +86,10 @@ const NewForm = ({
 
   return (
     <>
-      <Form form={form} {...formItemLayout}>
+      <Form
+        form={form} {...formItemLayout}
+        onFinish={handlerSubmitForm}
+      >
         {fields?.map((field, index) => renderField(field, index))}
         {!read && (
           <Form.Item>
