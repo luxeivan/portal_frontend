@@ -15,7 +15,7 @@ const useSubjects = create((set, get) => ({
   secondname: "",
   snils: "",
   searchText: "",
-  addressOptions: [],
+  // addressOptions: [],
 
   fetchSubjects: async () => {
     try {
@@ -88,48 +88,29 @@ const useSubjects = create((set, get) => ({
       throw error;
     }
   },
-
-  // Действие для обновления searchText
-  setSearchText: (text) => set({ searchText: text }),
-
-  // Действие для установки адресных опций
-  setAddressOptions: (options) => set({ addressOptions: options }),
-
-  // Делаем задержку запроса для получения адресов
-  debouncedFetchAddresses: debounce(async (searchText) => {
-    if (!searchText) {
-      get().setAddressOptions([]);
-      return;
-    }
+  deleteSubjectItem: async (id) => {
     try {
+      set({ isLoadingSubjectItem: true });
       const token = localStorage.getItem("jwt");
-      const response = await axios.get(
-        `${config.backServer}/api/cabinet/get-fias`,
+      const response = await axios.delete(
+        `${config.backServer}/api/cabinet/subjects/${id}`,
         {
-          params: { searchString: searchText },
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      let preparingData = response.data.data.map((item) => ({
-        label: (
-          <Typography.Text style={{ width: "100%", whiteSpace: "normal" }}>
-            {item.value}
-          </Typography.Text>
-        ),
-        value: item.value,
-        fias_id: item.data.fias_id 
-      }));
-      get().setAddressOptions(preparingData);
+      //console.log(response.data);
+      set((state) => ({ subjects: state.subjects.filter(item => item.id !== id) }));
     } catch (error) {
-      console.error("Ошибка при получении адресов:", error);
-      get().setAddressOptions([]);
+      console.log(error);
+      set({
+        error: error.response?.data?.message || error.message,
+        isLoading: false,
+      });
     }
-  }, 800),
+  },
 
-  // Валидируем СНИЛС
   validateSnils: (snils) => {
     const error = { code: 0, message: "" };
     if (typeof snils !== "string") snils = "";
@@ -165,6 +146,7 @@ const useSubjects = create((set, get) => ({
 }));
 
 export default useSubjects;
+
 
 
 
@@ -221,7 +203,7 @@ export default useSubjects;
 //           },
 //         }
 //       );
-//       console.log(response.data);
+//       //console.log(response.data);
 //       set({ subject: response.data, isLoadingSubjectItem: false });
 //     } catch (error) {
 //       console.log(error);
@@ -290,7 +272,7 @@ export default useSubjects;
 //           </Typography.Text>
 //         ),
 //         value: item.value,
-//         fias_id: item.data.fias_id 
+//         fias_id: item.data.fias_id
 //       }));
 //       get().setAddressOptions(preparingData);
 //     } catch (error) {
@@ -325,7 +307,7 @@ export default useSubjects;
 //           return Promise.resolve();
 //         } else {
 //           error.code = 4;
-//           error.message = "Неверный контрольный номер";
+//           error.message = "Неверный СНИЛС";
 //         }
 //       }
 //     }
@@ -335,3 +317,4 @@ export default useSubjects;
 // }));
 
 // export default useSubjects;
+

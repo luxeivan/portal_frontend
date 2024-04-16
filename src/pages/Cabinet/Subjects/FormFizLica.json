@@ -1,0 +1,247 @@
+[
+  {
+    "type": "divider",
+    "name": "ФИО"
+  },
+  {
+    "type": "textInput",
+    "name": "lastname",
+    "displayName": "Фамилия",
+    "placeholder": "Иванов",
+    "description": "Введите фамилию",
+    "required": true
+  },
+  {
+    "type": "textInput",
+    "name": "firstname",
+    "displayName": "Имя",
+    "placeholder": "Иван",
+    "description": "Введите имя",
+    "required": true
+  },
+  {
+    "type": "textInput",
+    "name": "secondname",
+    "displayName": "Отчество",
+    "placeholder": "Иванович",
+    "description": "Введите отчество",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Удостоверяющий документ"
+  },
+  {
+    "type": "selectInput",
+    "name": "typeDoc",
+    "displayName": "Тип документа",
+    "placeholder": "Иванович",
+    "description": "Выберите тип документа",
+    "required": false,
+    "options": [
+      {
+        "value": "Паспорт гражданина РФ",
+        "label": "Паспорт гражданина РФ"
+      },
+      {
+        "value": "Иной документ",
+        "label": "Иной документ"
+      }
+    ],
+    "defaultValue": "Паспорт гражданина РФ"
+  },
+  {
+    "type": "textInput",
+    "name": "serialPassport",
+    "displayName": "Серия паспорта",
+    "placeholder": "1234",
+    "description": "Введите серию паспорта",
+    "required": false,
+    "depends": {
+      "showIf": {
+        "nameField": "typeDoc",
+        "eq": "Паспорт гражданина РФ"
+      }
+    }
+  },
+  {
+    "type": "textInput",
+    "name": "numberPassport",
+    "displayName": "Номер паспорта",
+    "placeholder": "123456",
+    "description": "Введите номер паспорта",
+    "required": false,
+    "depends": {
+      "showIf": {
+        "nameField": "typeDoc",
+        "eq": "Паспорт гражданина РФ"
+      }
+    }
+  },
+  {
+    "type": "textInput",
+    "name": "kodPodrazdelenia",
+    "displayName": "Код подразделения",
+    "placeholder": "123-456",
+    "description": "Введите номер паспорта",
+    "required": false,
+    "depends": {
+      "showIf": {
+        "nameField": "typeDoc",
+        "eq": "Паспорт гражданина РФ"
+      }
+    }
+  },
+  {
+    "type": "textInput",
+    "name": "kemVidan",
+    "displayName": "Кем выдан",
+    "placeholder": "...",
+    "description": "Введите кем выдан паспорт",
+    "required": false,
+    "depends": {
+      "showIf": {
+        "nameField": "typeDoc",
+        "eq": "Паспорт гражданина РФ"
+      }
+    }
+  },
+  {
+    "type": "textInput",
+    "name": "dateIssue",
+    "displayName": "Когда выдан",
+    "placeholder": "01.01.2000",
+    "description": "Введите когда выдан паспорт",
+    "required": false,
+    "depends": {
+      "showIf": {
+        "nameField": "typeDoc",
+        "eq": "Паспорт гражданина РФ"
+      }
+    }
+  },
+  {
+    "type": "textInput",
+    "name": "typeOtherDoc",
+    "displayName": "Тип иного документа",
+    "placeholder": "...",
+    "description": "Введите наименование иного документа",
+    "required": false,
+    "depends": {
+      "showIf": {
+        "nameField": "typeDoc",
+        "eq": "Иной документ"
+      }
+    }
+  },
+  {
+    "type": "textInput",
+    "name": "recvizityOthetDoc",
+    "displayName": "Реквизиты документа",
+    "placeholder": "...",
+    "description": "Введите реквизиты иного документа",
+    "required": false,
+    "depends": {
+      "showIf": {
+        "nameField": "typeDoc",
+        "eq": "Иной документ"
+      }
+    }
+  },
+  {
+    "type": "textInput",
+    "name": "kemVidanOthetDoc",
+    "displayName": "Кем выдан",
+    "placeholder": "...",
+    "description": "Введите кем выдан иной документ",
+    "required": false,
+    "depends": {
+      "showIf": {
+        "nameField": "typeDoc",
+        "eq": "Иной документ"
+      }
+    }
+  },
+  {
+    "type": "textInput",
+    "name": "dateIssueOthetDoc",
+    "displayName": "Когда выдан",
+    "placeholder": "...",
+    "description": "Введите когда выдан иной документ",
+    "required": false,
+    "depends": {
+      "showIf": {
+        "nameField": "typeDoc",
+        "eq": "Иной документ"
+      }
+    }
+  },
+  {
+    "type": "divider",
+    "name": "Место регистрации"
+  },
+  {
+    "type": "addressInput",
+    "name": "registration",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Выберите или введите вручную адрес регистрации",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Место проживания"
+  },
+  {
+    "type": "addressInput",
+    "name": "residential",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Выберите или введите вручную адрес проживания",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Файлы"
+  },
+  {
+    "type": "uploaderInput",
+    "name": "residential",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Выберите или введите вручную адрес проживания",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "СНИЛС"
+  },
+  {
+    "type": "snilsInput",
+    "name": "snils",
+    "displayName": "Номер",
+    "placeholder": "123-456-789 99",
+    "description": "Введите СНИЛС",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Контакты"
+  },
+  {
+    "type": "textInput",
+    "name": "phone",
+    "displayName": "Телефон",
+    "placeholder": "+7 (999) 999-99-99",
+    "description": "Введите номер мобильного телефона",
+    "required": false
+  },
+  {
+    "type": "textInput",
+    "name": "email",
+    "displayName": "E-mail",
+    "placeholder": "mail@mail.ru",
+    "description": "Введите адрес электронной почты",
+    "required": false
+  }
+]

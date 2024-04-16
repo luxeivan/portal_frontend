@@ -1,62 +1,62 @@
 [
-    {
-      "displayName": "Почтовый индекс",
-      "description": "Почтовый индекс",
-      "name": "postcodeRegistration"
-    },
-    {
-      "displayName": "Страна",
-      "description": "Страна",
-      "name": "countryRegistration"
-    },
-    {
-      "displayName": "Регион",
-      "description": "Регион",
-      "name": "regionRegistration"
-    },
-    {
-      "displayName": "Район",
-      "description": "Район",
-      "name": "areaRegistration"
-    },
-    {
-      "displayName": "Город",
-      "description": "Город",
-      "name": "cityRegistration"
-    },
-    {
-      "displayName": "Населенный пункт",
-      "description": "Населенный пункт",
-      "name": "localityRegistration"
-    },
-    {
-      "displayName": "Улица",
-      "description": "Улица",
-      "name": "streetRegistration"
-    },
-    {
-      "displayName": "Номер дома",
-      "description": "Номер дома",
-      "name": "houseNumberRegistration"
-    },
-    {
-      "displayName": "Корпус",
-      "description": "Корпус",
-      "name": "frameRegistration"
-    },
-    {
-      "displayName": "Строение",
-      "description": "Строение",
-      "name": "buildingRegistration"
-    },
-    {
-      "displayName": "Квартира/Офис/Комната",
-      "description": "Квартира/Офис/Комната",
-      "name": "apartmentNumberRegistration"
-    },
-    {
-      "displayName": "Комментарий",
-      "description": "Комментарий",
-      "name": "kommentRegistration"
-    }
-  ]
+  {
+    "displayName": "Почтовый индекс",
+    "description": "Почтовый индекс",
+    "name": "postcode"
+  },
+  {
+    "displayName": "Страна",
+    "description": "Страна",
+    "name": "country"
+  },
+  {
+    "displayName": "Регион",
+    "description": "Регион",
+    "name": "region"
+  },
+  {
+    "displayName": "Район",
+    "description": "Район",
+    "name": "area"
+  },
+  {
+    "displayName": "Город",
+    "description": "Город",
+    "name": "city"
+  },
+  {
+    "displayName": "Населенный пункт",
+    "description": "Населенный пункт",
+    "name": "locality"
+  },
+  {
+    "displayName": "Улица",
+    "description": "Улица",
+    "name": "street"
+  },
+  {
+    "displayName": "Номер дома",
+    "description": "Номер дома",
+    "name": "houseNumber"
+  },
+  {
+    "displayName": "Корпус",
+    "description": "Корпус",
+    "name": "frame"
+  },
+  {
+    "displayName": "Строение",
+    "description": "Строение",
+    "name": "building"
+  },
+  {
+    "displayName": "Квартира/Офис/Комната",
+    "description": "Квартира/Офис/Комната",
+    "name": "apartmentNumber"
+  },
+  {
+    "displayName": "Комментарий",
+    "description": "Комментарий",
+    "name": "komment"
+  }
+]

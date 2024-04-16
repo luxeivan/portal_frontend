@@ -1,6 +1,6 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Checkbox, Form, Popover, theme } from 'antd';
-import React from 'react'
+import { Checkbox, Form, Popover, theme,Drawer } from 'antd';
+import React,{useState} from 'react'
 import StrapiRichText from '../StrapiRichText';
 
 const onChange = (e) => {
@@ -8,8 +8,12 @@ const onChange = (e) => {
 };
 export default function CheckboxInput({ displayName, name, shortDescription, required, description, depends }) {
     const { colorInfo, customfontSizeIcon } = theme.useToken().token;
+    const [drawerVisible, setDrawerVisible] = useState(false);
+
+  const showDrawer = () => setDrawerVisible(true);
+  const onClose = () => setDrawerVisible(false);
     const form = Form.useFormInstance();
-    const show = Form.useWatch(depends?.showIf.nameField, form);    
+    const show = Form.useWatch(depends?.showIf.nameField, form);
     if (show)
         return (
             <Form.Item
@@ -22,14 +26,19 @@ export default function CheckboxInput({ displayName, name, shortDescription, req
 
                 ]}
             >
-                <Checkbox onChange={onChange}>{displayName}
+                <Checkbox>{displayName}
                     {description &&
-                        <>
-                            {' '}
-                            <Popover content={<StrapiRichText content={description} />}>
-                                <QuestionCircleOutlined style={{ color: colorInfo, fontSize: customfontSizeIcon, cursor: "pointer" }} />
-                            </Popover>
-                        </>
+                        <Drawer
+                            title={displayName}
+                            placement="right"
+                            onClose={onClose}
+                            open={drawerVisible}
+                        >
+                            
+                            <StrapiRichText
+                                content={Array.isArray(description) ? description : [description]}
+                            />
+                        </Drawer>
                     }
                 </Checkbox>
             </Form.Item >

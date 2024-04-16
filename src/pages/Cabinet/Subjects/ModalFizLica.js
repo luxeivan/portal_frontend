@@ -1,227 +1,62 @@
 import React, { useState, useEffect } from "react";
-
-import { Form, Button, message } from "antd";
-import moment from "moment";
-
-import useAuth from "../../../stores/./useAuth";
-import useRegistration from "../../.././stores/useRegistration";
+import { Form, Modal } from 'antd'
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import useSubjects from "../../../stores/Cabinet/useSubjects";
-
-import { formItemLayout } from "../../.././components/configSizeForm";
-
-import Uploader from "../../../components/FormComponents/Uploader";
-import FullName from "../../../components/Subjects/FullName";
-import ConfirmationDocument from "../../../components/Subjects/ConfirmationDocument";
-import Snils from "../../../components/Subjects/Snils";
-import Contacts from "../../../components/Subjects/Contacts";
-import AddressRegistration from "../../../components/Subjects/AddressRegistration";
-import AddressResidential from "../../../components/Subjects/AddressResidential";
+import NewForm from "../../../components/Subjects/NewForm";
+import fieldsFizLica from "./FormFizLica.json";
+const { confirm } = Modal;
 
 export default function ModalFizLica({
-  onSubmit,
-  setShowModalAdd,
+  setShowModal,
   read = false,
   value = {},
 }) {
-  const [searchText] = useState("");
-  const [fileList, setFileList] = useState([]);
-
-  const [form] = Form.useForm();
-  const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
+  const deleteSubjectItem = useSubjects(store => store.deleteSubjectItem)
+  const handlerDelete = (id) => {
+    confirm({
+      title: 'Вы уверены что хотите удалить субъект?',
+      icon: <ExclamationCircleFilled />,
+      okText: 'Да',
+      okType: 'danger',
+      cancelText: 'Нет',
+      onOk() {
+        console.log('del', id)
+        setShowModal(false)
+        deleteSubjectItem(id)
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+    // console.log('del', id)
+    // setShowModal(false)
+    // deleteSubjectItem(id)
+  }
   //console.log(value)
-  const onFinish = async (values) => {
-    console.log(values);
-    let addressRegistration = {}
-    if (values.manual == "1") {
-      addressRegistration = {
-        manual: {
-          countryRegistration: values.countryRegistration,
-          postcodeRegistration: values.postcodeRegistration,
-          regionRegistration: values.regionRegistration,
-          areaRegistration: values.areaRegistration,
-          cityRegistration: values.cityRegistration,
-          localityRegistration: values.localityRegistration,
-          streetRegistration: values.streetRegistration,
-          houseNumberRegistration: values.houseNumberRegistration,
-          frameRegistration: values.frameRegistration,
-          buildingRegistration: values.buildingRegistration,
-          apartmentNumberRegistration: values.apartmentNumberRegistration,
-          kommentRegistration: values.kommentRegistration,
-        }
-      }
-    } else {
-      addressRegistration = {
-        fias: {
-          fullAddress: values.fullAddress,
-          fiasId: values.fiasId
-        }
-      }
-    }
+  // let fields = fieldsFizLica
+  // if (value.attributes.type === "Физическое лицо") {
+  //   fields = fieldsFizLica
+  // } else if ((value.attributes.type === "Юридическое лицо")) {
+  //   fields = fieldsFizLica
+  // } else if ((value.attributes.type === "Индивидуальный предприниматель")) {
+  //   fields = fieldsFizLica
+  // }
+  // const [searchText] = useState("");
+  // const form = Form.useForm();
+  // const { submitNewSubject, debouncedFetchAddresses } = useSubjects();
 
-    const formData = {
-      type: "Физическое лицо",
-      firstname: values.firstname,
-      lastname: values.lastname,
-      secondname: values.secondname,
-      snils: values.snils.replace(/[^0-9]/g, ""),
-      typeDoc: values.typeDoc,
-      serialPassport: values.serialPassport,
-      numberPassport: values.numberPassport,
-      kodPodrazdelenia: values.kodPodrazdelenia,
-      kemVidan: values.kemVidan,
-      dateIssue: values.dateIssue,
-      typeOtherDoc: values.typeOtherDoc,
-      recvizityOthetDoc: values.recvizityOthetDoc,
-      kemVidanOthetDoc: values.kemVidanOthetDoc,
-      dateIssueOthetDoc: values.dateIssueOthetDoc,
-      fileDoc: values.fileDoc,
-      addressRegistration,
-      addressResidential: values.addressResidential,
-      //addressRegistrationFias: values.addressRegistrationFias,
-      //addressResidentialFias: values.addressResidentialFias,
-      phone: values.phone,
-      email: values.email,
-    };
-    console.log(formData);
-
-    try {
-      await submitNewSubject(formData);
-      message.success("Субъект успешно создан");
-      form.resetFields();
-      setShowModalAdd(false);
-      if (onSubmit) {
-        onSubmit();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Состояние авторизации пользователя
-  const authState = useAuth((state) => ({
-    phone: state.phone,
-    email: state.email,
-  }));
-
-  // Состояние регистрации пользователя
-  const registrationState = useRegistration((state) => ({
-    phone: state.phone,
-    email: state.email,
-  }));
-
-  useEffect(() => {
-    debouncedFetchAddresses(searchText);
-  }, [searchText, debouncedFetchAddresses]);
-
-  const userPhone = authState.phone || registrationState.phone;
-  const userEmail = authState.email || registrationState.email;
+  // useEffect(() => {
+  //   debouncedFetchAddresses(searchText);
+  // }, [searchText, debouncedFetchAddresses]);
 
   return (
-    <Form
-      form={form}
-      {...formItemLayout}
-      onFinish={onFinish}
-      initialValues={{
-        // phone: userPhone,
-        // email: userEmail,
-        // typeDoc: "passport",
-        phone: userPhone || "",
-        email: userEmail || "",
-        dateIssue: value.dateIssue
-          ? moment(value.dateIssue, "DD.MM.YYYY")
-          : null,
-        dateIssueOthetDoc: value.dateIssueOthetDoc
-          ? moment(value.dateIssueOthetDoc, "DD.MM.YYYY")
-          : null,
-        typeDoc: "Паспорт гражданина РФ",
-      }}
-    >
-      {/* _______ФИО_______ */}
-      <FullName
-        read={read}
-        value={{
-          firstname: value.firstname,
-          lastname: value.lastname,
-          secondname: value.secondname,
-        }}
-      />
-      {/* _______Подтверждающий документ_______ */}
-      <ConfirmationDocument
-        read={read}
-        value={{
-          typeDoc: value.typeDoc,
-          serialPassport: value.passport?.serialPassport,
-          numberPassport: value.passport?.numberPassport,
-          kodPodrazdelenia: value.passport?.kodPodrazdelenia,
-          kemVidan: value.passport?.kemVidan,
-          dateIssue: value.passport?.dateIssue,
-          typeOtherDoc: value.otherDoc?.typeOtherDoc,
-          recvizityOthetDoc: value.otherDoc?.recvizityOthetDoc,
-          kemVidanOthetDoc: value.otherDoc?.kemVidanOthetDoc,
-          dateIssueOthetDoc: value.otherDoc?.dateIssueOthetDoc,
-        }}
-        form={form}
-      />
-      {/* _______Блок с адресами_______ */}
-      <AddressRegistration
-        read={read}
-        form={form}
-        value={value.addressRegistration}
-      />
-      <AddressResidential
-        read={read}
-        form={form}
-        value={{
-          addressResidential: value?.addressResidential,
-        }}
-      />
-      {/* _______Загрузка_______ */}
-      <Uploader
-        read={read}
-        fileList={fileList}
-        onChange={({ fileList: newFileList }) => setFileList(newFileList)}
-        form={form}
-        value={{
-          fileDoc: value?.fileDoc,
-        }}
-      />
-
-      {/* <Uploader
-        read={read}
-        fileList={fileList}
-        onChange={({ fileList: newFileList }) => setFileList(newFileList)}
-        form={form}
-        value={{
-          fileDoc: value.fileDoc,
-        }}
-      /> */}
-      {/* _______СНИЛС_______ */}
-      <Snils
-        read={read}
-        form={form}
-        value={{
-          snils: value.snils,
-        }}
-      />
-
-      {/* _______Блок с телефоном и почтой_______ */}
-      <Contacts
-        read={read}
-        form={form}
-        value={{
-          phone: value.phone,
-          email: value.email,
-        }}
-      />
-
-      {/* _______Кнопка отправки формы_______ */}
-      {!read &&
-        <Form.Item>
-          <Button type="primary" onClick={() => form.submit()}>
-            Добавить
-          </Button>
-        </Form.Item>
-      }
-    </Form>
+    <NewForm
+      handlerDelete={handlerDelete}
+      // form={form}
+      fields={fieldsFizLica}
+      read={read}
+      setShowModal={setShowModal}
+      value={{ ...value?.attributes?.counterparty[0], id: value.id }}
+    />
   );
 }

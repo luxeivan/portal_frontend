@@ -7,7 +7,15 @@ export default function SubjectInput({ displayName, name, shortDescription, requ
     const [value, setValue] = useState()
     const [selectedSubject, setSelectedSubject] = useState()
     const form = Form.useFormInstance();
-    const show = Form.useWatch(depends?.showIf.nameField, form);
+    // -----------------
+    let show = true
+    let showTemp = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
+    if (depends && showTemp)
+        show = true
+    else if (!depends)
+        show = true
+    else show = false
+    // -----------------
     const toggleShowModal = () => {
         setShowModal(!showModal)
     }
