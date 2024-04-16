@@ -93,32 +93,24 @@
     }
   },
   {
-    "type": "textInput",
+    "type": "customInput",
     "name": "kemVidan",
     "displayName": "Кем выдан",
     "placeholder": "...",
     "description": "Введите кем выдан паспорт",
     "required": false,
-    "depends": {
-      "showIf": {
-        "nameField": "typeDoc",
-        "eq": "Паспорт гражданина РФ"
-      }
-    }
+    "inputType": "textarea",
+    "rows": 3
   },
   {
-    "type": "textInput",
+    "type": "customInput",
     "name": "dateIssue",
     "displayName": "Когда выдан",
     "placeholder": "01.01.2000",
-    "description": "Введите когда выдан паспорт",
+    "description": "Введите дату выдачи",
     "required": false,
-    "depends": {
-      "showIf": {
-        "nameField": "typeDoc",
-        "eq": "Паспорт гражданина РФ"
-      }
-    }
+    "inputType": "datepicker", 
+    "format": "DD.MM.YYYY"
   },
   {
     "type": "textInput",
