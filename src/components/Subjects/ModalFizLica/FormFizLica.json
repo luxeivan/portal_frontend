@@ -31,12 +31,10 @@
     "type": "divider",
     "name": "Удостоверяющий документ"
   },
+  
   {
     "type": "confirmationDocumentInput",
-    "name": "confirmationDocument",
-    "displayName": "Удостоверяющий документ",
-    "required": true  
-    
+    "name": "confirmationDocument"
   },
 
   {
