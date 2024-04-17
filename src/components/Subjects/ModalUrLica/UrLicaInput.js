@@ -6,6 +6,8 @@ import config from "../../../config";
 export default function UrLicaInput() {
   const [form] = Form.useForm();
 
+  //5032137342 - ИНН МосОблЭнерго
+  //7704217370 - ИНН Озон
   const onFinish = async (values) => {
     console.log("Отправленные данные ИНН:", values);
     try {
