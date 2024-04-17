@@ -11,7 +11,7 @@ export default function AddressInput({
   form,
   read,
   edit,
-  value,
+  value = [],
   manualValue,
   name,
   // manualInputFields,
@@ -27,7 +27,7 @@ export default function AddressInput({
       setManualInput(true);
     }
   }, [manualValue]);
-
+  console.log(value)
   //Здесь надо реализовать формирование поля в зависимости от выбранного метода ввода
   // let obj = {}
   // //console.log(manualInput)
@@ -115,7 +115,7 @@ export default function AddressInput({
       });
       //console.log(form.getFieldsValue());
     } else {
-      let obj = { 
+      let obj = {
         // [`manual_${name}`]: "0", 
       }
       manualInputFields.forEach(item => {
@@ -142,13 +142,26 @@ export default function AddressInput({
       <Form.List name={name}>
         {(fields) => {
           return <>
-            {manualInput && Array.isArray(manualInputFields) &&
+            {manualInput &&
               manualInputFields.map((item, index) => (
                 <TextInput
                   key={index}
                   read={read}
                   edit={edit}
-                  value={value?.manual[item.name]}
+                  value={value[`${item.name}`]}
+                  displayName={item.displayName}
+                  name={`${item.name}`}
+                  placeholder={item.placeholder}
+                  description={item.description}
+                />
+              ))}
+            {read && value.manual &&
+              manualInputFields.map((item, index) => (
+                <TextInput
+                  key={index}
+                  read={read}
+                  edit={edit}
+                  value={value[`${item.name}`]}
                   displayName={item.displayName}
                   name={`${item.name}`}
                   placeholder={item.placeholder}
@@ -172,8 +185,8 @@ export default function AddressInput({
                     />
                   </AutoComplete>
                 )}
-                {read && (
-                  <Typography.Text>{value?.fias?.fullAddress}</Typography.Text>
+                {read && !value.manual && (
+                  <Typography.Text>{value?.fullAddress}</Typography.Text>
                 )}
               </Form.Item>
               <Form.Item name={`fiasId`} noStyle>

@@ -8,6 +8,7 @@ const { confirm } = Modal;
 export default function ModalFizLica({ setShowModal, read = false, value = {}, }) {
   const [form] = Form.useForm();
   const deleteSubjectItem = useSubjects((store) => store.deleteSubjectItem);
+  const submitNewSubject = useSubjects((store) => store.submitNewSubject);
   const handlerDelete = (id) => {
     confirm({
       title: "Вы уверены что хотите удалить субъект?",
@@ -27,13 +28,14 @@ export default function ModalFizLica({ setShowModal, read = false, value = {}, }
   };
 
   const handlerSubmitForm = (event) => {
-    // console.log(event)
     let list = fieldsJson.filter(item => item.type !== "divider")
     const obj = {}
     list.forEach(item => {
       obj[item.name] = event[item.name]
     });
     console.log(obj)
+    obj.type = "Физическое лицо"
+    submitNewSubject(obj)
   }
   return (
     <NewForm

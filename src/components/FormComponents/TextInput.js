@@ -18,16 +18,16 @@ export default function TextInput({
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   // -------------------------------------
-  const form = Form.useFormInstance();
+  // const form = Form.useFormInstance();
   let show = true
-  let showTemp = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
-  if (depends && showTemp)
-    show = true
-  else if (!depends)
-    show = true
-  else show = false
+  // let showTemp = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
+  // if (depends && showTemp)
+  //   show = true
+  // else if (!depends)
+  //   show = true
+  // else show = false
   // -------------------------------------
-   console.log('Отрисовка')
+  //  console.log('Отрисовка')
   //   console.log(Form.useWatch(depends?.[0]?.showIf?.nameField, form))
   // }
 
