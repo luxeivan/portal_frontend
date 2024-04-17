@@ -1,15 +1,12 @@
-import { Modal } from "antd";
+import { Modal, Form } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import useSubjects from "../../../stores/Cabinet/useSubjects";
-import NewForm from "../../../components/Subjects/NewForm";
+import NewForm from "../NewForm";
 import fieldsFizLica from "./FormFizLica.json";
 const { confirm } = Modal;
 
-export default function ModalFizLica({
-  setShowModal,
-  read = false,
-  value = {},
-}) {
+export default function ModalFizLica({ setShowModal, read = false, value = {}, }) {
+  const [form] = Form.useForm();
   const deleteSubjectItem = useSubjects((store) => store.deleteSubjectItem);
   const handlerDelete = (id) => {
     confirm({
@@ -28,8 +25,19 @@ export default function ModalFizLica({
       },
     });
   };
+  const handlerSubmitForm = (event) => {
+    //console.log(event )
+    let list = fieldsFizLica.filter(item => item.type !== "divider")
+    const obj = {}
+    list.forEach(item => {
+      obj[item.name] = event[item.name]
+    });
+    console.log(obj)
+  }
   return (
     <NewForm
+      form={form}
+      handlerSubmitForm={handlerSubmitForm}
       handlerDelete={handlerDelete}
       fields={fieldsFizLica}
       read={read}

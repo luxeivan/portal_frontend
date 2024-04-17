@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Form, AutoComplete, Checkbox, Input, Typography } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import TextInput from "./TextInput";
+import TextInput from "../TextInput";
 import axios from "axios";
 import { debounce } from "lodash";
-import config from "../../config";
-import manualInputFields from "../../pages/Cabinet/Subjects/ManualInputFields.json";
+import config from "../../../config";
+import manualInputFields from "./ManualInputFields.json";
 
 export default function AddressInput({
   form,
@@ -26,6 +26,16 @@ export default function AddressInput({
       setManualInput(true);
     }
   }, [manualValue]);
+
+  //Здесь надо реализовать формирование поля в зависимости от выбранного метода ввода
+  form.setFieldsValue({
+    [`${name}`]: {
+      fias: {
+        address: "123",
+        fiasId: "123123"
+      }
+    }
+  })
 
   // Функция для выполнения запроса к API и получения адресов
   const fetchAddresses = async (searchText) => {
@@ -95,13 +105,13 @@ export default function AddressInput({
 
   const onSelect = (value, option) => {
     setSelectedAddress(option.value);
-    console.log(option);
+    //console.log(option);
     form.setFieldsValue({
       [`${name}fiasId`]: option.fias_id,
     });
   };
 
-  console.log(manualInputFields);
+  //console.log(manualInputFields);
   return (
     <>
       {manualInput ? (
@@ -143,7 +153,11 @@ export default function AddressInput({
           <Form.Item name={`${name}fiasId`} noStyle>
             <Input type="hidden" />
           </Form.Item>
+          <Form.Item name={`${name}`} noStyle>
+            <Input type="hidden" />
+          </Form.Item>
         </>
+        
       )}
       <Form.Item name={`${name}manual`} valuePropName="checked">
         <Checkbox checked={manualInput} onChange={handleManualCheckboxChange}>
