@@ -1,6 +1,6 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Checkbox, Form, Popover, theme,Drawer } from 'antd';
-import React,{useState} from 'react'
+import { Checkbox, Form, Popover, theme, Drawer } from 'antd';
+import React, { useState } from 'react'
 import StrapiRichText from '../StrapiRichText';
 
 const onChange = (e) => {
@@ -10,15 +10,15 @@ export default function CheckboxInput({ displayName, name, shortDescription, req
     const { colorInfo, customfontSizeIcon } = theme.useToken().token;
     const [drawerVisible, setDrawerVisible] = useState(false);
 
-  const showDrawer = () => setDrawerVisible(true);
-  const onClose = () => setDrawerVisible(false);
+    const showDrawer = () => setDrawerVisible(true);
+    const onClose = () => setDrawerVisible(false);
     const form = Form.useFormInstance();
     const show = Form.useWatch(depends?.showIf.nameField, form);
     if (show)
         return (
             <Form.Item
                 name={name}
-                valuePropName="checked"
+                // valuePropName="checked"
                 rules={[
                     {
                         required,
@@ -26,21 +26,20 @@ export default function CheckboxInput({ displayName, name, shortDescription, req
 
                 ]}
             >
-                <Checkbox>{displayName}
-                    {description &&
-                        <Drawer
-                            title={displayName}
-                            placement="right"
-                            onClose={onClose}
-                            open={drawerVisible}
-                        >
-                            
-                            <StrapiRichText
-                                content={Array.isArray(description) ? description : [description]}
-                            />
-                        </Drawer>
-                    }
-                </Checkbox>
+                <Checkbox >{displayName}</Checkbox>
+                {description &&
+                    <Drawer
+                        title={displayName}
+                        placement="right"
+                        onClose={onClose}
+                        open={drawerVisible}
+                    >
+
+                        <StrapiRichText
+                            content={Array.isArray(description) ? description : [description]}
+                        />
+                    </Drawer>
+                }
             </Form.Item >
         )
 }

@@ -18,16 +18,16 @@ export default function TextInput({
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   // -------------------------------------
-  // const form = Form.useFormInstance();
+  const form = Form.useFormInstance();
   let show = true
-  // let showTemp = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
-  // if (depends && showTemp)
-  //   show = true
-  // else if (!depends)
-  //   show = true
-  // else show = false
+  let showTemp = Form.useWatch(depends?.showIf ? depends?.showIf?.nameField : '', form) === depends?.showIf?.eq;
+  if (depends && showTemp)
+    show = true
+  else if (!depends)
+    show = true
+  else show = false
   // -------------------------------------
-  //  console.log('Отрисовка')
+   console.log('Отрисовка')
   //   console.log(Form.useWatch(depends?.[0]?.showIf?.nameField, form))
   // }
 
@@ -52,6 +52,7 @@ export default function TextInput({
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
           rules={!read && [{ required, message: `` }]}
+          // initialValue={value}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             {!read &&
@@ -59,7 +60,8 @@ export default function TextInput({
                 placeholder={placeholder}
                 style={{ paddingRight: "30px" }}
                 {...inputProps}
-                value={value}
+                defaultValue={value}
+                // value={value}
               />
             }
             {read &&

@@ -75,7 +75,7 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
         value={value?.typeDoc}
         displayName="Тип документа"
         name="typeDoc"
-        defaultValue="Паспорт гражданина РФ"
+        //defaultValue="Паспорт гражданина РФ"
         // required={true}
         description={["Выберите тип документа из списка"]}
         options={documentOptions}

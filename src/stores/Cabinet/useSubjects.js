@@ -8,6 +8,16 @@ const useSubjects = create((set, get) => ({
   isLoadingSubjects: false,
   isLoadingSubjectItem: false,
   error: null,
+  showModalView: false,
+  showModalAdd: false,
+
+  setShowModalView: (show) => {
+    set({ showModalView: show });
+  },
+
+  setShowModalAdd: (show) => {
+    set({ showModalAdd: show });
+  },
 
   fetchSubjects: async () => {
     try {
@@ -68,14 +78,14 @@ const useSubjects = create((set, get) => ({
       );
 
       if (response.status === 201) {
-        console.log(response.data);
+        //console.log(response.data);
         set((state) => ({
           subjects: [...state.subjects, response.data],
         }));
         return response.data.subject;
-      } else {
-      }
+      } 
     } catch (error) {
+      console.log(error)
       throw error;
     }
   },
