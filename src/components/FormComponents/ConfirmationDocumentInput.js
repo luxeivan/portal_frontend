@@ -42,10 +42,11 @@ export default function ConfirmationDocument({
     [`${name}`]: {
       passport: {
         serial: "123",
-        number: "123123",
-      },
-    },
-  });
+        number: "123123"
+      }
+    }
+  })
+
   // Изменяет тип документа в зависимости от выбора пользователя
   const onDocumentTypeChange = (value) => {
     setDocumentType(value);

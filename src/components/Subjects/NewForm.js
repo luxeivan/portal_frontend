@@ -8,7 +8,7 @@ import UploaderInput from "../FormComponents/UploaderInput";
 import ConfirmationDocumentInput from "../FormComponents/ConfirmationDocumentInput";
 import { formItemLayout } from "../../components/configSizeForm";
 
-const NewForm = ({ fields, read = false, edit = false, value = {}, setShowModal, form, handlerSubmitForm }) => {
+const NewForm = ({ fields, read = false, edit = false, value = {}, setShowModal, form, handlerSubmitForm,handlerDelete }) => {
   // const [form] = Form.useForm();
 
   const renderField = (field, index) => {
@@ -105,7 +105,7 @@ const NewForm = ({ fields, read = false, edit = false, value = {}, setShowModal,
           <Button type="primary" onClick={() => console.log("Изменить")}>
             Изменить
           </Button>{" "}
-          <Button type="primary" danger onClick={() => console.log("Удалить")}>
+          <Button type="primary" danger onClick={() => handlerDelete(value.id)}>
             Удалить
           </Button>{" "}
           <Button onClick={() => setShowModal(false)}>Закрыть</Button>
