@@ -21,19 +21,37 @@ export default function AddressInput({
   const [selectedAddress, setSelectedAddress] = useState("");
   const [addressOptions, setAddressOptions] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [mathRegistration, setMathRegistration] = useState(false);
 
-  Form.useWatch([name], form)
+  console.log(Form.useWatch((values) => values[name], form))
+
+  if (form.getFieldValue(name)?.manual) {
+    //setSelectedAddress("");
+    form.setFieldsValue({
+      [name]: {
+        [`fullAddress`]: undefined,
+        [`fiasId`]: undefined,
+      },
+    });
+  } else {
+    let obj = {
+    }
+    manualInputFields.forEach(item => {
+      obj[item.name] = undefined
+    })
+    console.log(obj)
+    form.setFieldsValue({ [name]: { ...obj } });
+  }
   // if(form.getFieldValue(name)?.manual){
 
   // }
-  console.log(form.getFieldValue(name)?.manual)
 
-  useEffect(() => {
-    if (manualValue) {
-      setManualInput(true);
-    }
-  }, [manualValue]);
+  // console.log(form.getFieldValue(name)?.manual)
+
+  // useEffect(() => {
+  //   if (manualValue) {
+  //     setManualInput(true);
+  //   }
+  // }, [manualValue]);
   //console.log(value)
 
   // Функция для выполнения запроса к API и получения адресов
@@ -85,26 +103,26 @@ export default function AddressInput({
     debouncedFetchAddresses(searchText);
   };
 
-  const handleManualCheckboxChange = (e) => {
-    setManualInput(e.target.checked);
-    if (e.target.checked) {
-      setSelectedAddress("");
-      form.setFieldsValue({
-        [name]: {
-          [`fullAddress`]: undefined,
-          [`fiasId`]: undefined,
-        },
-      });
-    } else {
-      let obj = {
-      }
-      manualInputFields.forEach(item => {
-        obj[item.name] = undefined
-      })
-      console.log(obj)
-      form.setFieldsValue({ [name]: { ...obj } });
-    }
-  };
+  // const handleManualCheckboxChange = (e) => {
+  //   setManualInput(e.target.checked);
+  //   if (e.target.checked) {
+  //     setSelectedAddress("");
+  //     form.setFieldsValue({
+  //       [name]: {
+  //         [`fullAddress`]: undefined,
+  //         [`fiasId`]: undefined,
+  //       },
+  //     });
+  //   } else {
+  //     let obj = {
+  //     }
+  //     manualInputFields.forEach(item => {
+  //       obj[item.name] = undefined
+  //     })
+  //     console.log(obj)
+  //     form.setFieldsValue({ [name]: { ...obj } });
+  //   }
+  // };
 
   const onSelect = (value, option) => {
     setSelectedAddress(option.value);
@@ -118,83 +136,86 @@ export default function AddressInput({
   //console.log(manualInputFields);
   return (
     <>
-      {!read && matchedWith &&
-        <Form.Item name="matchedWith">
-          <Checkbox onChange={(e) => {
-            setMathRegistration(e.target.checked)
-            form.setFieldsValue({ matchedWith: e.target.checked });
-          }}>Совпадает с адресом регистрации</Checkbox>
-        </Form.Item>
-      }
-      {!mathRegistration &&
-        <Form.List name={name}>
-          {(fields) => {
-            return <>
-              {form.getFieldValue(name)?.manual &&
-                manualInputFields.map((item, index) => (
-                  <TextInput
-                    key={index}
-                    read={read}
-                    edit={edit}
-                    value={value[`${item.name}`]}
-                    displayName={item.displayName}
-                    name={`${item.name}`}
-                    placeholder={item.placeholder}
-                    description={item.description}
-                  />
-                ))}
-              {read && value?.manual &&
-                manualInputFields.map((item, index) => (
-                  <TextInput
-                    key={index}
-                    read={read}
-                    edit={edit}
-                    value={value[`${item.name}`]}
-                    displayName={item.displayName}
-                    name={`${item.name}`}
-                    placeholder={item.placeholder}
-                    description={item.description}
-                  />
-                ))}
+      <Form.List name={name}>
+        {(fields) => {
+          return <>
+            {!read && matchedWith &&
+              <Form.Item name="matchedWith" valuePropName="checked" initialValue={false}>
+                <Checkbox
+                // onChange={(e) => {
+                //   form.setFieldValue("matchedWith", e.target.checked );
+                // }}
+                >Совпадает с адресом регистрации</Checkbox>
+              </Form.Item>
+            }
+            {!form.getFieldValue(name)?.matchedWith &&
+              <>
+                {form.getFieldValue(name)?.manual &&
+                  manualInputFields.map((item, index) => (
+                    <TextInput
+                      key={index}
+                      read={read}
+                      edit={edit}
+                      value={value[`${item.name}`]}
+                      displayName={item.displayName}
+                      name={`${item.name}`}
+                      placeholder={item.placeholder}
+                      description={item.description}
+                    />
+                  ))}
+                {read && value?.manual &&
+                  manualInputFields.map((item, index) => (
+                    <TextInput
+                      key={index}
+                      read={read}
+                      edit={edit}
+                      value={value[`${item.name}`]}
+                      displayName={item.displayName}
+                      name={`${item.name}`}
+                      placeholder={item.placeholder}
+                      description={item.description}
+                    />
+                  ))}
 
 
-              {!manualInput && <>
-                <Form.Item label="Адрес" name={`fullAddress`}>
-                  {!read && (
-                    <AutoComplete
-                      options={addressOptions}
-                      onSelect={onSelect}
-                      onSearch={onSearch}
-                      style={{ width: "100%" }}
-                    >
-                      <TextArea
-                        placeholder="Начните вводить адрес"
-                        style={{ height: 60 }}
-                      />
-                    </AutoComplete>
-                  )}
-                  {read && !value?.manual && (
-                    <Typography.Text>{value?.fullAddress}</Typography.Text>
-                  )}
-                </Form.Item>
-                <Form.Item name={`fiasId`} noStyle>
-                  <Input type="hidden" />
-                </Form.Item>
+                {!form.getFieldValue(name)?.manual && <>
+                  <Form.Item label="Адрес" name={`fullAddress`}>
+                    {!read && (
+                      <AutoComplete
+                        options={addressOptions}
+                        onSelect={onSelect}
+                        onSearch={onSearch}
+                        style={{ width: "100%" }}
+                      >
+                        <TextArea
+                          placeholder="Начните вводить адрес"
+                          style={{ height: 60 }}
+                        />
+                      </AutoComplete>
+                    )}
+                    {read && !value?.manual && (
+                      <Typography.Text>{value?.fullAddress}</Typography.Text>
+                    )}
+                  </Form.Item>
+                  <Form.Item name={`fiasId`} noStyle>
+                    <Input type="hidden" />
+                  </Form.Item>
+                </>
+                }
+                {!read &&
+                  <Form.Item name='manual' valuePropName="checked" initialValue={false}>
+                    <Checkbox>
+                      Ввести адрес вручную
+                    </Checkbox>
+                  </Form.Item>
+                }
               </>
-              }
-              {!read &&
-                <Form.Item name='manual' valuePropName="checked" initialValue={false}>
-                  <Checkbox>
-                    Ввести адрес вручную
-                  </Checkbox>
-                </Form.Item>
-              }
-            </>
+            }
+          </>
 
 
-          }}
-        </Form.List>
-      }
+        }}
+      </Form.List>
     </>
   );
 }
