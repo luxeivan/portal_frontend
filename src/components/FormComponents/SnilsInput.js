@@ -4,14 +4,11 @@ import { Input, Form, Typography } from "antd";
 
 export default function SnilsInput({ form, read, value = "", name = "snils" }) {
   // const [snils, setSnils] = useState(123)
-  const { label, placeholder, maxLength, validator } = {
+  const { label, placeholder, maxLength } = {
     dividerText: "СНИЛС",
     label: "Номер",
     placeholder: "XXX-XXX-XXX XX",
-    maxLength: 14,
-    validator: {
-      formatRegExp: "^\\d{3}-\\d{3}-\\d{3}[\\s-]?\\d{2}$"
-    }
+    maxLength: 14,   
   };
   const validateSnils = ( e ) => {   
     let snils = form.getFieldValue(e.field)
@@ -24,6 +21,9 @@ export default function SnilsInput({ form, read, value = "", name = "snils" }) {
     } else if (snils.length !== 14) {
       error.code = 2;
       error.message = "СНИЛС должен состоять из 11 цифр";
+    } else if (snils == '000-000-000 00') {
+      error.code = 2;
+      error.message = "СНИЛС не должен состоять из нулей";
     } else {
       const nums = snils.replace(/[^0-9]/g, "");
       if (nums.length !== 11) {
@@ -94,7 +94,7 @@ export default function SnilsInput({ form, read, value = "", name = "snils" }) {
             e.target.value = value;
             //console.log(value)
             // setSnils(value)
-            form.setFieldsValue({ snils: value });
+            form.setFieldsValue({ [name]: value });
           }}
         />
       )}

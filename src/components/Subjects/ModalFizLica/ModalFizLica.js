@@ -2,7 +2,7 @@ import { Modal, Form } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import useSubjects from "../../../stores/Cabinet/useSubjects";
 import NewForm from "../NewForm";
-import fieldsFizLica from "./FormFizLica.json";
+import fieldsJson from "./FormFizLica.json";
 const { confirm } = Modal;
 
 export default function ModalFizLica({ setShowModal, read = false, value = {}, }) {
@@ -25,9 +25,10 @@ export default function ModalFizLica({ setShowModal, read = false, value = {}, }
       },
     });
   };
+
   const handlerSubmitForm = (event) => {
-    //console.log(event )
-    let list = fieldsFizLica.filter(item => item.type !== "divider")
+    // console.log(event)
+    let list = fieldsJson.filter(item => item.type !== "divider")
     const obj = {}
     list.forEach(item => {
       obj[item.name] = event[item.name]
@@ -39,7 +40,7 @@ export default function ModalFizLica({ setShowModal, read = false, value = {}, }
       form={form}
       handlerSubmitForm={handlerSubmitForm}
       handlerDelete={handlerDelete}
-      fields={fieldsFizLica}
+      fields={fieldsJson}
       read={read}
       setShowModal={setShowModal}
       value={{ ...value?.attributes?.counterparty[0], id: value.id }}

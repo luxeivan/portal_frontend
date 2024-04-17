@@ -32,6 +32,7 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
       }
     }
   })
+
   // Изменяет тип документа в зависимости от выбора пользователя
   const onDocumentTypeChange = (value) => {
     setDocumentType(value);

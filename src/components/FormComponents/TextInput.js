@@ -27,7 +27,7 @@ export default function TextInput({
     show = true
   else show = false
   // -------------------------------------
-  // console.log(depends)
+   console.log('Отрисовка')
   //   console.log(Form.useWatch(depends?.[0]?.showIf?.nameField, form))
   // }
 
