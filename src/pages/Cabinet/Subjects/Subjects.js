@@ -4,7 +4,7 @@ import useSubjects from "../../../stores/Cabinet/useSubjects";
 import styles from "./Subjects.module.css";
 import { PlusOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
-import ModalFizLica from "./ModalFizLica";
+import ModalFizLica from "../../../components/Subjects/ModalFizLica/ModalFizLica";
 import AppHelmet from '../../../components/Global/AppHelmet'
 
 const { Title } = Typography;
@@ -21,8 +21,12 @@ const stylesForCard = {
 };
 
 export default function Subjects() {
-  const [showModalAdd, setShowModalAdd] = useState(false);
-  const [showModalView, setShowModalView] = useState(false);
+  // const [showModalAdd, setShowModalAdd] = useState(false);
+  // const [showModalView, setShowModalView] = useState(false);
+  const showModalAdd = useSubjects((state) => state.showModalAdd);
+  const showModalView = useSubjects((state) => state.showModalView);
+  const setShowModalAdd = useSubjects((state) => state.setShowModalAdd);
+  const setShowModalView = useSubjects((state) => state.setShowModalView);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
 

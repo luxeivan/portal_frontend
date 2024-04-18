@@ -1,21 +1,29 @@
-import React from "react";
-import { Divider, Form, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import { Divider, Form, Button, Modal, Flex } from "antd";
 import TextInput from "../FormComponents/TextInput";
 import SelectInput from "../FormComponents/SelectInput";
-import AddressInput from "../FormComponents/AddressInput";
+import AddressInput from "../FormComponents/AddressInput/AddressInput";
 import SnilsInput from "../FormComponents/SnilsInput";
 import UploaderInput from "../FormComponents/UploaderInput";
 import ConfirmationDocumentInput from "../FormComponents/ConfirmationDocumentInput";
 import { formItemLayout } from "../../components/configSizeForm";
+import useSubjects from "../../stores/Cabinet/useSubjects";
 
-const NewForm = ({
-  fields,
-  read = false,
-  edit = false,
-  value = {},
-  setShowModal,
-}) => {
-  const [form] = Form.useForm();
+const NewForm = ({ fields, read: tempread = false, edit: tempedit = false, value = {}, setShowModal, form, handlerSubmitForm, handlerDelete, handlerEdit }) => {
+
+  const showModalView = useSubjects((state) => state.showModalView);
+  const showModalAdd = useSubjects((state) => state.showModalAdd);
+  // const [modal, contextHolder] = Modal.useModal();
+  const [edit, setEdit] = useState()
+  const [read, setRead] = useState()
+  useEffect(() => {
+    setEdit(tempedit)
+    setRead(tempread)
+    form.resetFields()
+  }, [showModalView,showModalAdd])
+  // useEffect(() => {
+  // }, [showModalView])
+  // const [form] = Form.useForm();
 
   const renderField = (field, index) => {
     switch (field.type) {
@@ -71,6 +79,7 @@ const NewForm = ({
             read={read}
             edit={edit}
             value={value[field.name]}
+            form={form}
           />
         );
       case "confirmationDocumentInput":
@@ -91,28 +100,60 @@ const NewForm = ({
 
   return (
     <>
-      <Form form={form} {...formItemLayout}>
+      <Form
+        form={form} {...formItemLayout}
+        onFinish={handlerSubmitForm}
+        initialValues={{
+          firstname: "qwerty"
+        }}
+      >
         {fields?.map((field, index) => renderField(field, index))}
-        {!read && (
+        {!read && !edit &&
+          <Flex gap="middle">
+            <Form.Item>
+              <Button type="primary" onClick={() => form.submit()}>
+                Добавить
+              </Button>{" "}
+            </Form.Item>
+            <Form.Item>
+              <Button onClick={() => setShowModal(false)}>Закрыть</Button>
+            </Form.Item>
+          </Flex>
+
+        }
+        {edit && <Flex gap="middle">
           <Form.Item>
-            <Button type="primary" onClick={() => form.submit()}>
-              Добавить
+            <Button type="primary" onClick={() => handlerEdit(value.id)}>
+              Обновить
             </Button>{" "}
+          </Form.Item>
+          <Form.Item>
             <Button onClick={() => setShowModal(false)}>Закрыть</Button>
           </Form.Item>
-        )}
+        </Flex>
+        }
+        {read &&
+          <Flex gap="middle">
+            <Form.Item>
+              <Button type="primary" onClick={() => {
+                setEdit(true)
+                setRead(false)
+                // console.log("Изменить")
+              }}>
+                Изменить
+              </Button>{" "}
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" danger onClick={() => handlerDelete(value.id)}>
+                Удалить
+              </Button>{" "}
+            </Form.Item>
+            <Form.Item>
+              <Button onClick={() => setShowModal(false)}>Закрыть</Button>
+            </Form.Item>
+          </Flex>
+        }
       </Form>
-      {read && (
-        <Form.Item>
-          <Button type="primary" onClick={() => console.log("Изменить")}>
-            Изменить
-          </Button>{" "}
-          <Button type="primary" danger onClick={() => console.log("Удалить")}>
-            Удалить
-          </Button>{" "}
-          <Button onClick={() => setShowModal(false)}>Закрыть</Button>
-        </Form.Item>
-      )}
     </>
   );
 };

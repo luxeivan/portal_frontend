@@ -1,0 +1,109 @@
+[
+  {
+    "type": "divider",
+    "name": "ФИО"
+  },
+  {
+    "type": "textInput",
+    "name": "lastname",
+    "displayName": "Фамилия",
+    "placeholder": "Иванов",
+    "description": "Введите фамилию",
+    "required": true
+  },
+  {
+    "type": "textInput",
+    "name": "firstname",
+    "displayName": "Имя",
+    "placeholder": "Иван",
+    "description": "Введите имя",
+    "required": true
+  },
+  {
+    "type": "textInput",
+    "name": "secondname",
+    "displayName": "Отчество",
+    "placeholder": "Иванович",
+    "description": "Введите отчество",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Удостоверяющий документ"
+  },
+  {
+    "type": "confirmationDocumentInput",
+    "name": "confirmationDocument",
+    "displayName": "Удостоверяющий документ",
+    "required": true
+  },
+  {
+    "type": "divider",
+    "name": "Место регистрации"
+  },
+  {
+    "type": "addressInput",
+    "name": "addressRegistration",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Выберите или введите вручную адрес регистрации",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Место проживания"
+  },
+  {
+    "type": "addressInput",
+    "name": "addressResidential",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Выберите или введите вручную адрес проживания",
+    "required": false,
+    "matchedWith": true
+  },
+  {
+    "type": "divider",
+    "name": "Файлы"
+  },
+  {
+    "type": "uploaderInput",
+    "name": "fileDoc",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Выберите или введите вручную адрес проживания",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "СНИЛС"
+  },
+  {
+    "type": "snilsInput",
+    "name": "snils",
+    "displayName": "Номер",
+    "placeholder": "123-456-789 99",
+    "description": "Введите СНИЛС",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Контакты"
+  },
+  {
+    "type": "textInput",
+    "name": "phone",
+    "displayName": "Телефон",
+    "placeholder": "+7 (999) 999-99-99",
+    "description": "Введите номер мобильного телефона",
+    "required": false
+  },
+  {
+    "type": "textInput",
+    "name": "email",
+    "displayName": "E-mail",
+    "placeholder": "mail@mail.ru",
+    "description": "Введите адрес электронной почты",
+    "required": false
+  }
+]
