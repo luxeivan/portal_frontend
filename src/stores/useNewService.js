@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import config from "../config";
 import axios from "axios";
 
-const useNewClaim = create((set) => ({
+const useNewService = create((set) => ({
     claim: {},   
     fetchClaim: async (url, id) => {
         set((state) => ({ claim: null }))
@@ -16,4 +16,4 @@ const useNewClaim = create((set) => ({
     },
 
 }));
-export default useNewClaim;
+export default useNewService;

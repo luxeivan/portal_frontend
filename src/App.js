@@ -17,7 +17,7 @@ import CodeModal from "./components/Global/Auth/Login/CodeModal";
 import ServiceItem from "./pages/ServiceItem/ServiceItem";
 import Page404 from "./pages/Page404";
 import Container from "./components/Container";
-import NewClaim from "./pages/Cabinet/NewClaim";
+import NewService from "./pages/Cabinet/NewService";
 import Profile from "./pages/Cabinet/Profile/Profile";
 import Subjects from "./pages/Cabinet/Subjects/Subjects";
 import Objects from "./pages/Cabinet/Objects/Objects";
@@ -128,7 +128,7 @@ export default function App() {
                     element={
                       auth ? (
                         <Container>
-                          <NewClaim />
+                          <NewService />
                         </Container>
                       ) : (
                         <Calc />

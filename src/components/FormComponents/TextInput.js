@@ -9,7 +9,7 @@ export default function TextInput({
   name,
   placeholder,
   required,
-  description,
+  description = 'Нет описания',
   depends,
   inputProps,
   read,
@@ -52,7 +52,7 @@ export default function TextInput({
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
           rules={!read && [{ required, message: `` }]}
-          // initialValue={value}
+        // initialValue={value}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             {!read &&
@@ -61,7 +61,7 @@ export default function TextInput({
                 style={{ paddingRight: "30px" }}
                 {...inputProps}
                 defaultValue={value}
-                // value={value}
+              // value={value}
               />
             }
             {read &&
@@ -70,16 +70,18 @@ export default function TextInput({
             {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
           </div>
         </Form.Item>
-        <Drawer
-          title={displayName}
-          placement="right"
-          onClose={onClose}
-          open={drawerVisible}
-        >
-          <StrapiRichText
-            content={Array.isArray(description) ? description : [description]}
-          />
-        </Drawer>
+        
+          <Drawer
+            title={displayName}
+            placement="right"
+            onClose={onClose}
+            open={drawerVisible}
+          >
+            <StrapiRichText
+              content={description}
+            />
+          </Drawer>
+        
       </>
     );
   }

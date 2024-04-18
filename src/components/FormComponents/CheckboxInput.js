@@ -9,16 +9,23 @@ const onChange = (e) => {
 export default function CheckboxInput({ displayName, name, shortDescription, required, description, depends }) {
     const { colorInfo, customfontSizeIcon } = theme.useToken().token;
     const [drawerVisible, setDrawerVisible] = useState(false);
-
     const showDrawer = () => setDrawerVisible(true);
     const onClose = () => setDrawerVisible(false);
+    // -----------------
     const form = Form.useFormInstance();
-    const show = Form.useWatch(depends?.showIf.nameField, form);
+    let show = true
+    let showTemp = Form.useWatch(depends?.showIf ? depends?.showIf?.nameField : '', form) === depends?.showIf?.eq;
+    if (depends && showTemp)
+        show = true
+    else if (!depends)
+        show = true
+    else show = false
+    // -----------------
     if (show)
-        return (
+        return <>
             <Form.Item
                 name={name}
-                // valuePropName="checked"
+                valuePropName="checked"
                 rules={[
                     {
                         required,
@@ -26,20 +33,21 @@ export default function CheckboxInput({ displayName, name, shortDescription, req
 
                 ]}
             >
-                <Checkbox >{displayName}</Checkbox>
-                {description &&
-                    <Drawer
-                        title={displayName}
-                        placement="right"
-                        onClose={onClose}
-                        open={drawerVisible}
-                    >
-
-                        <StrapiRichText
-                            content={Array.isArray(description) ? description : [description]}
-                        />
-                    </Drawer>
-                }
+                <Checkbox>{displayName}</Checkbox>
             </Form.Item >
-        )
+            {description &&
+                <Drawer
+                    title={displayName}
+                    placement="right"
+                    onClose={onClose}
+                    open={drawerVisible}
+                >
+
+                    <StrapiRichText
+                        content={Array.isArray(description) ? description : [description]}
+                    />
+                </Drawer>
+            }
+        </>
+
 }
