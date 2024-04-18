@@ -9,17 +9,18 @@ import {
   Input,
   Select,
 } from "antd";
-import locale from "antd/locale/ru_RU";
-import localePicker from "antd/es/date-picker/locale/ru_RU";
 
+import locale from "antd/locale/ru_RU";
 import TextArea from "antd/es/input/TextArea";
 
 import SelectInput from "./SelectInput";
 import TextInput from "./TextInput";
 
-import ruRU from "antd/lib/locale/ru_RU";
 import moment from "moment";
 import "moment/locale/ru";
+moment.locale('ru');
+import localePicker from "antd/es/date-picker/locale/ru_RU";
+import ruRU from "antd/lib/locale/ru_RU";
 
 moment.locale("ru");
 
@@ -42,10 +43,10 @@ export default function ConfirmationDocument({
     [`${name}`]: {
       passport: {
         serial: "123",
-        number: "123123"
-      }
-    }
-  })
+        number: "123123",
+      },
+    },
+  });
 
   // Изменяет тип документа в зависимости от выбора пользователя
   const onDocumentTypeChange = (value) => {
@@ -217,13 +218,21 @@ export default function ConfirmationDocument({
               // ]}
               valuePropName="value"
             >
-              <ConfigProvider locale={locale}>
+              <ConfigProvider locale={ruRU}>
+                <DatePicker
+                  locale={localePicker}
+                  format="DD.MM.YYYY"
+                  style={{ width: "100%" }}
+                />
+              </ConfigProvider>
+
+              {/* <ConfigProvider locale={locale}>
                 <DatePicker
                   format="DD.MM.YYYY"
                   locale={localePicker}
                   style={{ width: "100%" }}
                 />
-              </ConfigProvider>
+              </ConfigProvider>  */}
             </Form.Item>
           )}
         </>
@@ -315,7 +324,15 @@ export default function ConfirmationDocument({
               // ]}
               valuePropName="value"
             >
-              <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
+              <ConfigProvider locale={ruRU}>
+                <DatePicker
+                  locale={localePicker}
+                  format="DD.MM.YYYY"
+                  style={{ width: "100%" }}
+                />
+              </ConfigProvider>
+
+              {/* <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} /> */}
             </Form.Item>
           )}
         </>

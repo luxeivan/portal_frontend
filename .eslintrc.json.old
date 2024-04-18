@@ -1,10 +1,14 @@
 {
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
   "rules": {
     "no-unused-vars": "off",
-    "react-hooks/exhaustive-deps": "off",
-    // "parserOptions": {
-    //   "sourceType": "module"
-    // }
+    "react-hooks/exhaustive-deps": "off"
   }
 }
