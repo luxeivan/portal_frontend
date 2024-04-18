@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Divider, AutoComplete } from "antd";
+import { Form, Input, Button, Divider, AutoComplete, Typography } from "antd";
 import axios from "axios";
 import config from "../../../config";
 
@@ -26,14 +26,15 @@ export default function UrLicaInput() {
         }
       );
       console.log("Ответ от сервера:", response.data);
-      if (response.data && response.data.suggestions) {
+      if (response.data && response.data.data) {
         setSuggestions(
-          response.data.suggestions.map((suggestion) => ({
+          response.data.data.map((suggestion) => ({
             value: suggestion.data.inn,
+            kpp: suggestion.data.kpp,
             label: suggestion.value,
           }))
         );
-        console.log("Установлены предложения для AutoComplete:", suggestions);
+        console.log("Установлены предложения для AutoComplete:", response.data.data);
       } else {
         setSuggestions([]);
       }
@@ -50,21 +51,28 @@ export default function UrLicaInput() {
     form.setFieldsValue({ inn: option.value });
   };
 
-  const renderItem = (organization, index) => ({
-    value: organization.data.inn,
-    label: (
-      <div
-        key={index}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        {organization.value}
-      </div>
-    ),
-  });
-  
+  const renderItem = (organization, index) => {
+    console.log(organization)
+    return ({
+      value: organization.value,
+      label: (
+        <div
+          key={index}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
+          <Typography.Title level={5} style={{margin:0}}>{organization.label}</Typography.Title>
+          <div>
+            <span style={{fontWeight:600}}>КПП:</span>{' '}{organization.kpp}
+          </div>
+        </div>
+      ),
+    })
+  };
+
 
   return (
     <>
