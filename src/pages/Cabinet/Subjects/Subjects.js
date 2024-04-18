@@ -22,10 +22,14 @@ const stylesForCard = {
 };
 
 export default function Subjects() {
-  const [showModalAdd, setShowModalAdd] = useState(false);
-  const [showModalView, setShowModalView] = useState(false);
   const [showModalUrAdd, setShowModalUrAdd] = useState(false);
   const [showModalUrView, setShowModalUrView] = useState(false);
+  // const [showModalAdd, setShowModalAdd] = useState(false);
+  // const [showModalView, setShowModalView] = useState(false);
+  const showModalAdd = useSubjects((state) => state.showModalAdd);
+  const showModalView = useSubjects((state) => state.showModalView);
+  const setShowModalAdd = useSubjects((state) => state.setShowModalAdd);
+  const setShowModalView = useSubjects((state) => state.setShowModalView);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
 

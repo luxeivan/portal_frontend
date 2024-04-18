@@ -34,9 +34,10 @@
   
   {
     "type": "confirmationDocumentInput",
-    "name": "confirmationDocument"
+    "name": "confirmationDocument",
+    "displayName": "Удостоверяющий документ",
+    "required": true
   },
-
   {
     "type": "divider",
     "name": "Место регистрации"
@@ -59,7 +60,8 @@
     "displayName": "Адрес",
     "placeholder": "...",
     "description": "Выберите или введите вручную адрес проживания",
-    "required": false
+    "required": false,
+    "matchedWith": true
   },
   {
     "type": "divider",
