@@ -3,8 +3,8 @@
   "rules": {
     "no-unused-vars": "off",
     "react-hooks/exhaustive-deps": "off",
-    "parserOptions": {
-      "sourceType": "module"
-    }
+    // "parserOptions": {
+    //   "sourceType": "module"
+    // }
   }
 }
