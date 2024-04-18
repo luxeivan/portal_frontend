@@ -21,10 +21,12 @@ export default function AddressInput({
   const [selectedAddress, setSelectedAddress] = useState("");
   const [addressOptions, setAddressOptions] = useState([]);
   const [searchText, setSearchText] = useState("");
+  // Form.useWatch([name, 'manual'], form)
+  Form.useWatch([name, 'matchedWith'], form)
+  // console.log(Form.useWatch([name, 'manual'], form))
+  // console.log(form.getFieldValue([name,'manual']))
 
-  console.log(Form.useWatch((values) => values[name], form))
-
-  if (form.getFieldValue(name)?.manual) {
+  if (Form.useWatch([name, 'manual'], form)) {
     //setSelectedAddress("");
     form.setFieldsValue({
       [name]: {
@@ -150,6 +152,13 @@ export default function AddressInput({
             }
             {!form.getFieldValue(name)?.matchedWith &&
               <>
+              {!read &&
+                <Form.Item name='manual' valuePropName="checked" initialValue={false}>
+                  <Checkbox>
+                    Ввести адрес вручную
+                  </Checkbox>
+                </Form.Item>
+              }
                 {form.getFieldValue(name)?.manual &&
                   manualInputFields.map((item, index) => (
                     <TextInput
@@ -201,13 +210,6 @@ export default function AddressInput({
                     <Input type="hidden" />
                   </Form.Item>
                 </>
-                }
-                {!read &&
-                  <Form.Item name='manual' valuePropName="checked" initialValue={false}>
-                    <Checkbox>
-                      Ввести адрес вручную
-                    </Checkbox>
-                  </Form.Item>
                 }
               </>
             }

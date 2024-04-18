@@ -1,19 +1,21 @@
 import { Form, Typography, Button, Drawer, Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import useNewClaim from '../../stores/useNewClaim'
+import useNewClaim from '../../stores/useNewService'
 import TextInput from '../../components/FormComponents/TextInput'
 import SubjectInput from '../../components/FormComponents/SubjectInput'
 import CheckboxInput from '../../components/FormComponents/CheckboxInput'
 
 
 const { Title, Paragraph, Text } = Typography
-export default function NewClaim() {
+export default function NewService() {
     const [open, setOpen] = useState(false);
     const [formValue, setFormValue] = useState(false);
     const claim = useNewClaim(state => state.claim)
     const fetchClaim = useNewClaim(state => state.fetchClaim)
     const { id, url } = useParams()
+    const [form] = Form.useForm()
+    
     useEffect(() => {
         fetchClaim(url, id)
     }, [])
@@ -34,9 +36,10 @@ export default function NewClaim() {
             {claim &&
                 <>
                     <Title>
-                        <span style={{color:"gray"}}>Услуга:</span><br/> {claim.attributes?.name}
+                        <span style={{ color: "gray" }}>Услуга:</span><br /> {claim.attributes?.name}
                     </Title>
                     <Form
+                        form={form}
                         layout="vertical"
                         onFinish={onFinish}
                     >
