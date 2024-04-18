@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-import { Form, Divider, ConfigProvider, DatePicker, Typography } from "antd";
-import locale from 'antd/locale/ru_RU'
-import localePicker from 'antd/es/date-picker/locale/ru_RU';
+import {
+  Form,
+  Divider,
+  ConfigProvider,
+  DatePicker,
+  Typography,
+  Input,
+  Select,
+} from "antd";
+import locale from "antd/locale/ru_RU";
+import localePicker from "antd/es/date-picker/locale/ru_RU";
 
 import TextArea from "antd/es/input/TextArea";
 
-import SelectInput from "../FormComponents/SelectInput";
-import TextInput from "../FormComponents/TextInput";
+import SelectInput from "./SelectInput";
+import TextInput from "./TextInput";
 
 import ruRU from "antd/lib/locale/ru_RU";
 import moment from "moment";
@@ -15,13 +23,29 @@ import "moment/locale/ru";
 
 moment.locale("ru");
 
-export default function ConfirmationDocument({ form, read, edit, value }) {
+export default function ConfirmationDocument({
+  form,
+  read,
+  edit,
+  value,
+  name,
+}) {
   // const [documentType, setDocumentType] = useState("Паспорт гражданина РФ");
   const [documentType, setDocumentType] = useState(
     value.typeDoc || "Паспорт гражданина РФ"
   );
-console.log(localePicker)
+  // console.log(localePicker)
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
+
+  //Здесь надо реализовать формирование поля в зависимости от выбранного документа
+  form.setFieldsValue({
+    [`${name}`]: {
+      passport: {
+        serial: "123",
+        number: "123123"
+      }
+    }
+  })
 
   // Изменяет тип документа в зависимости от выбора пользователя
   const onDocumentTypeChange = (value) => {
@@ -56,22 +80,26 @@ console.log(localePicker)
 
   return (
     <>
-      <Divider orientation="center">Удостоверяющий документ</Divider>
+      {/* <Divider orientation="center">Удостоверяющий документ</Divider> */}
 
       {/* _______Тип подтверждающего документа_______ */}
+      {/* <Select options={documentOptions} onChange={onDocumentTypeChange} /> */}
       <SelectInput
         read={read}
         edit={edit}
         value={value?.typeDoc}
         displayName="Тип документа"
         name="typeDoc"
-        defaultValue="Паспорт гражданина РФ"
+        //defaultValue="Паспорт гражданина РФ"
         // required={true}
         description={["Выберите тип документа из списка"]}
         options={documentOptions}
         onChange={onDocumentTypeChange}
       />
 
+      <Form.Item name={`${name}`} noStyle>
+        <Input type="hidden" />
+      </Form.Item>
       {/* _______Паспорт_______ */}
       {documentType === "Паспорт гражданина РФ" && (
         <>
@@ -190,8 +218,11 @@ console.log(localePicker)
               valuePropName="value"
             >
               <ConfigProvider locale={locale}>
-
-                <DatePicker format="DD.MM.YYYY" locale={localePicker} style={{ width: "100%" }} />
+                <DatePicker
+                  format="DD.MM.YYYY"
+                  locale={localePicker}
+                  style={{ width: "100%" }}
+                />
               </ConfigProvider>
             </Form.Item>
           )}
@@ -241,23 +272,6 @@ console.log(localePicker)
               />
             </Form.Item>
           )}
-          {/* <Form.Item
-            label="Реквизиты документа"
-            name="recvizityOthetDoc"
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
-          >
-            <TextArea
-              placeholder="..."
-              style={{
-                height: 60,
-              }}
-            />
-          </Form.Item> */}
           {/* _______Кем выдан_______ */}
           {read ? (
             <Form.Item label="Кем выдан" name="kemVidanOthetDoc">
@@ -282,23 +296,6 @@ console.log(localePicker)
               />
             </Form.Item>
           )}
-          {/* <Form.Item
-            label="Кем выдан"
-            name="kemVidanOthetDoc"
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
-          >
-            <TextArea
-              placeholder="..."
-              style={{
-                height: 60,
-              }}
-            />
-          </Form.Item> */}
           {/* _______Когда выдан_______ */}
           {read ? (
             <Form.Item label="Когда выдан" name="dateIssueOthetDoc">
@@ -321,15 +318,6 @@ console.log(localePicker)
               <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
             </Form.Item>
           )}
-          {/* <Form.Item
-            label="Когда выдан"
-            name="dateIssueOthetDoc"
-            rules={[
-              { required: true, message: "Выберите дату выдачи документа" },
-            ]}
-          >
-            <DatePicker format="DD.MM.YYYY" style={{ width: "100%" }} />
-          </Form.Item> */}
         </>
       )}
     </>

@@ -4,8 +4,9 @@ import useSubjects from "../../../stores/Cabinet/useSubjects";
 import styles from "./Subjects.module.css";
 import { PlusOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
-import ModalFizLica from "./ModalFizLica";
-import AppHelmet from '../../../components/Global/AppHelmet'
+import ModalFizLica from "../../../components/Subjects/ModalFizLica/ModalFizLica";
+import AppHelmet from "../../../components/Global/AppHelmet";
+import ModalUrLica from "../../../components/Subjects/ModalUrLica/ModalUrLica";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -21,8 +22,12 @@ const stylesForCard = {
 };
 
 export default function Subjects() {
-  const [showModalAdd, setShowModalAdd] = useState(false);
-  const [showModalView, setShowModalView] = useState(false);
+  const [showModalUrAdd, setShowModalUrAdd] = useState(false);
+  // const [showModalView, setShowModalView] = useState(false);
+  const showModalAdd = useSubjects((state) => state.showModalAdd);
+  const showModalView = useSubjects((state) => state.showModalView);
+  const setShowModalAdd = useSubjects((state) => state.setShowModalAdd);
+  const setShowModalView = useSubjects((state) => state.setShowModalView);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
 
@@ -57,8 +62,16 @@ export default function Subjects() {
     setShowModalAdd(false);
   };
 
+  const handleCancelModalUrAdd = () => {
+    setShowModalUrAdd(false);
+  };
+
   const handleOkModalAdd = () => {
     setShowModalAdd(false);
+  };
+
+  const handleOkModalUrAdd = () => {
+    setShowModalUrAdd(false);
   };
 
   const handleCancelModalView = () => {
@@ -78,7 +91,8 @@ export default function Subjects() {
     setSelectedType(type); // Сохраняем выбранный тип
     if (type === "individual") {
       setShowModalAdd(true);
-    } else {
+    } else if (type === "legalEntity") {
+      setShowModalUrAdd(true);
       // Для других типов (ИП, Юр.Лицо) может быть своя логика
     }
   };
@@ -136,18 +150,31 @@ export default function Subjects() {
         name="type"
       >
         <Flex gap="large" wrap="wrap" justify="center">
-          <Button className={styles.buttontypenewsubject} onClick={() => handleCategorySelect("individual")}>
-            Физическое<br /> лицо
+          <Button
+            className={styles.buttontypenewsubject}
+            onClick={() => handleCategorySelect("individual")}
+          >
+            Физическое
+            <br /> лицо
           </Button>
-          <Button className={styles.buttontypenewsubject} onClick={() => handleCategorySelect("legalEntity")}>
-            Юридическое<br /> лицо
+          <Button
+            className={styles.buttontypenewsubject}
+            onClick={() => handleCategorySelect("legalEntity")}
+          >
+            Юридическое
+            <br /> лицо
           </Button>
-          <Button className={styles.buttontypenewsubject} onClick={() => handleCategorySelect("soleProprietor")}>
-            Индивидуальный<br /> предприниматель
+          <Button
+            className={styles.buttontypenewsubject}
+            onClick={() => handleCategorySelect("soleProprietor")}
+          >
+            Индивидуальный
+            <br /> предприниматель
           </Button>
         </Flex>
       </Modal>
 
+      {/* Модалка для добавления физ.лица */}
       <Modal
         title="Добавление физического лица"
         open={showModalAdd}
@@ -161,7 +188,7 @@ export default function Subjects() {
           type={selectedType}
         />
       </Modal>
-      
+      {/* Модалка для просмотра физ.лица */}
       <Modal
         title="Просмотр физического лица"
         open={showModalView}
@@ -172,14 +199,28 @@ export default function Subjects() {
         <ModalFizLica
           read
           value={{
-           ...subject
+            ...subject,
           }}
           onSubmit={handleOkModalAdd}
           setShowModal={setShowModalView}
           type={selectedType}
         />
       </Modal>
+
+      {/* Модалка для добавления юр.лица */}
+      <Modal
+        title="Добавление юридического лица"
+        open={showModalUrAdd}
+        onCancel={handleCancelModalUrAdd}
+        width={650}
+        footer={null}
+      >
+        <ModalUrLica
+          onSubmit={handleOkModalUrAdd}
+          setShowModal={setShowModalUrAdd}
+          type={selectedType}
+        />
+      </Modal>
     </div>
   );
 }
-

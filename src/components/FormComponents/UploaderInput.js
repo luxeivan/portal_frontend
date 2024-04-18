@@ -15,7 +15,7 @@ const getBase64 = (file) =>
   });
 
 
-export default function UploaderInput({ read, edit, value, depends }) {
+export default function UploaderInput({ read, edit, value, depends, required = false }) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
@@ -149,7 +149,7 @@ export default function UploaderInput({ read, edit, value, depends }) {
           name="fileDoc"
           rules={read ? false : [
             {
-              required: true,
+              required: required,
               message: "Пожалуйста, загрузите файл",
             },
           ]}
