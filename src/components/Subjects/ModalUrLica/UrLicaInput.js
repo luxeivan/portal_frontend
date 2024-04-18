@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Divider, AutoComplete } from "antd";
 import axios from "axios";
 import config from "../../../config";
@@ -7,6 +7,11 @@ export default function UrLicaInput() {
   const [form] = Form.useForm();
   const [suggestions, setSuggestions] = useState([]);
 
+
+  useEffect(() => {
+    console.log("Актуальный список предложений:", suggestions);
+  }, [suggestions]);
+  
   const onSearch = async (searchText) => {
     console.log("Ищем ИНН:", searchText);
     if (!searchText) {
@@ -44,26 +49,33 @@ export default function UrLicaInput() {
   };
 
   const onSelect = (value, option) => {
-    console.log("Выбрано значение:", value);
-    console.log("Опция AutoComplete:", option);
-    console.log("Выбранное значение:", value, "Выбранный объект:", option);
-    form.setFieldsValue({ inn: option.value });
+    const onSelect = (value, option) => {
+      console.log("Выбрано значение:", value, "Опция AutoComplete:", option);
+      // Обрати внимание, что мы устанавливаем `value`, а не `inn`, в значение формы
+      form.setFieldsValue({ value: option.value });
+    };
   };
 
-  const renderItem = (organization, index) => ({
-    value: organization.data.inn,
-    label: (
-      <div
-        key={index}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        {organization.value}
-      </div>
-    ),
+  // const renderItem = (organization, index) => ({
+  //   value: organization.data.inn,
+  //   label: (
+  //     <div
+  //       key={index}
+  //       style={{
+  //         display: "flex",
+  //         justifyContent: "space-between",
+  //       }}
+  //     >
+  //       {organization.value}
+  //     </div>
+  //   ),
+  // });
+
+  const renderItem = (suggestion) => ({
+    value: suggestion.data.inn, // Это значение будет использоваться в форме при выборе
+    label: suggestion.value, // Это значение будет отображаться в выпадающем списке
   });
+
   
 
   return (
@@ -76,12 +88,9 @@ export default function UrLicaInput() {
           rules={[{ required: true, message: "Введите ИНН" }]}
         >
           <AutoComplete
-            // defaultValue=""
-            optionLabelProp="label"
             onSearch={onSearch}
             onSelect={onSelect}
-            options={suggestions.map((suggestion, index) => renderItem(suggestion, index))}
-
+            options={suggestions.map(renderItem)}
             notFoundContent="Ничего не найдено"
           >
             <Input placeholder="Введите ИНН для поиска" />
