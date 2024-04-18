@@ -1,8 +1,10 @@
 {
-    "extends": "eslint:recommended",
-    "rules": {
-      "no-unused-vars": "off",
-      "react-hooks/exhaustive-deps": "off"
+  "extends": "eslint:recommended",
+  "rules": {
+    "no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "parserOptions": {
+      "sourceType": "module"
     }
   }
-  
+}

@@ -75,6 +75,7 @@ export default function SelectInput({
             defaultValue={defaultValue}
             placeholder="Выберите вариант"
             options={options}
+            onChange={onChange}
           />
         }
         {read &&

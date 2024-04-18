@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { Form, Divider, ConfigProvider, DatePicker, Typography,Input } from "antd";
-import locale from 'antd/locale/ru_RU'
-import localePicker from 'antd/es/date-picker/locale/ru_RU';
+import {
+  Form,
+  Divider,
+  ConfigProvider,
+  DatePicker,
+  Typography,
+  Input,
+  Select,
+} from "antd";
+import locale from "antd/locale/ru_RU";
+import localePicker from "antd/es/date-picker/locale/ru_RU";
 
 import TextArea from "antd/es/input/TextArea";
 
@@ -15,7 +23,13 @@ import "moment/locale/ru";
 
 moment.locale("ru");
 
-export default function ConfirmationDocument({ form, read, edit, value, name }) {
+export default function ConfirmationDocument({
+  form,
+  read,
+  edit,
+  value,
+  name,
+}) {
   // const [documentType, setDocumentType] = useState("Паспорт гражданина РФ");
   const [documentType, setDocumentType] = useState(
     value.typeDoc || "Паспорт гражданина РФ"
@@ -69,6 +83,7 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
       {/* <Divider orientation="center">Удостоверяющий документ</Divider> */}
 
       {/* _______Тип подтверждающего документа_______ */}
+      {/* <Select options={documentOptions} onChange={onDocumentTypeChange} /> */}
       <SelectInput
         read={read}
         edit={edit}
@@ -101,12 +116,12 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
               maxLength: 4,
               pattern: "\\d*",
             }}
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "",
-          //   },
-          // ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "",
+            //   },
+            // ]}
           />
           {/* Номер паспорта */}
           <TextInput
@@ -121,12 +136,12 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
               maxLength: 6,
               pattern: "\\d*",
             }}
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "",
-          //   },
-          // ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "",
+            //   },
+            // ]}
           />
           {/* Код подразделения */}
           <TextInput
@@ -168,12 +183,12 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
             <Form.Item
               label="Кем выдан"
               name="kemVidan"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "т",
-            //   },
-            // ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "т",
+              //   },
+              // ]}
             >
               <TextArea
                 placeholder="..."
@@ -203,7 +218,11 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
               valuePropName="value"
             >
               <ConfigProvider locale={locale}>
-                <DatePicker format="DD.MM.YYYY" locale={localePicker} style={{ width: "100%" }} />
+                <DatePicker
+                  format="DD.MM.YYYY"
+                  locale={localePicker}
+                  style={{ width: "100%" }}
+                />
               </ConfigProvider>
             </Form.Item>
           )}
@@ -222,12 +241,12 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
             // required={true}
             shortDescription="..."
             inputType="textarea"
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "",
-          //   },
-          // ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "",
+            //   },
+            // ]}
           />
           {/* Реквизиты документа */}
           {read ? (
@@ -238,12 +257,12 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
             <Form.Item
               label="Реквизиты документа"
               name="recvizityOthetDoc"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "",
-            //   },
-            // ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "",
+              //   },
+              // ]}
             >
               <TextArea
                 placeholder="..."
@@ -262,12 +281,12 @@ export default function ConfirmationDocument({ form, read, edit, value, name }) 
             <Form.Item
               label="Кем выдан"
               name="kemVidanOthetDoc"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "",
-            //   },
-            // ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "",
+              //   },
+              // ]}
             >
               <TextArea
                 placeholder="..."
