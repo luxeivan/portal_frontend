@@ -40,7 +40,7 @@ export default function AddressInput({
     manualInputFields.forEach(item => {
       obj[item.name] = undefined
     })
-    console.log(obj)
+    //console.log(obj)
     form.setFieldsValue({ [name]: { ...obj } });
   }
   // if(form.getFieldValue(name)?.manual){
