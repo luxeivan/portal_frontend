@@ -3,7 +3,7 @@ import { Form, Input, Button, Divider, AutoComplete, Typography, InputNumber } f
 import axios from "axios";
 import config from "../../../config";
 import UploaderInput from "../../FormComponents/UploaderInput";
-import {formItemLayout} from "../../configSizeForm";
+import { formItemLayout } from "../../configSizeForm";
 
 export default function UrLicaInput() {
   const [form] = Form.useForm();
@@ -24,10 +24,12 @@ export default function UrLicaInput() {
         }
       );
       if (response.data && response.data.data) {
+        //console.log(response.data.data)
         setSuggestions(
           response.data.data.map((s) => ({
             value: s.data.inn,
             kpp: s.data.kpp,
+            hid: s.data.hid,
             label: s.value,
             ogrn: s.data.ogrn,
             address: s.data.address,
@@ -42,7 +44,10 @@ export default function UrLicaInput() {
   };
 
   const onSelect = (value, option) => {
-    const orgData = suggestions.find((org) => org.kpp === option.key);
+    console.log(option)
+    console.log(suggestions)
+
+    const orgData = suggestions.find((org) => org.hid === option.key);
     if (orgData) {
       form.setFieldsValue({
         inn: orgData.value,
@@ -54,24 +59,27 @@ export default function UrLicaInput() {
     }
   };
 
-  const renderItem = (organization) => ({
-    value: organization.value,
-    key: organization.kpp,
-    label: (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Typography.Text>{organization.label}</Typography.Text>
-        {/* <Typography.Text style={{ fontWeight: 600 }}>
+  const renderItem = (organization) => {
+    console.log(organization)
+    return ({
+      value: organization.hid,
+      key: organization.hid,
+      label: (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography.Text>{organization.label}</Typography.Text>
+          {/* <Typography.Text style={{ fontWeight: 600 }}>
           КПП: {organization.kpp}
         </Typography.Text> */}
-      </div>
-    ),
-  });
+        </div>
+      ),
+    })
+  };
 
   return (
     <>
@@ -95,11 +103,11 @@ export default function UrLicaInput() {
           <Input readOnly />
         </Form.Item>
         <Form.Item name="kpp" label="КПП">
-        {/* <InputNumber readOnly /> */}
+          {/* <InputNumber readOnly /> */}
           <Input readOnly />
         </Form.Item>
         <Form.Item name="ogrn" label="ОГРН">
-        {/* <InputNumber readOnly /> */}
+          {/* <InputNumber readOnly /> */}
           <Input readOnly />
         </Form.Item>
         {/* <Form.Item name="address" label="Адрес">
