@@ -3,6 +3,7 @@ import { Form, Input, Button, Divider, AutoComplete, Typography, InputNumber } f
 import axios from "axios";
 import config from "../../../config";
 import UploaderInput from "../../FormComponents/UploaderInput";
+import {formItemLayout} from "../../configSizeForm";
 
 export default function UrLicaInput() {
   const [form] = Form.useForm();
@@ -65,9 +66,9 @@ export default function UrLicaInput() {
         }}
       >
         <Typography.Text>{organization.label}</Typography.Text>
-        <Typography.Text style={{ fontWeight: 600 }}>
+        {/* <Typography.Text style={{ fontWeight: 600 }}>
           КПП: {organization.kpp}
-        </Typography.Text>
+        </Typography.Text> */}
       </div>
     ),
   });
@@ -75,7 +76,7 @@ export default function UrLicaInput() {
   return (
     <>
       <Divider orientation="center">ИНН</Divider>
-      <Form form={form}>
+      <Form form={form} {...formItemLayout}>
         <Form.Item
           name="inn"
           label="ИНН"
