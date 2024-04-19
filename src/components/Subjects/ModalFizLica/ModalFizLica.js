@@ -3,6 +3,7 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import useSubjects from "../../../stores/Cabinet/useSubjects";
 import NewForm from "../NewForm";
 import fieldsJson from "./FormFizLica.json";
+import moment from "moment";
 const { confirm } = Modal;
 
 export default function ModalFizLica({ setShowModal, read = false, value = {}, }) {
@@ -43,8 +44,10 @@ export default function ModalFizLica({ setShowModal, read = false, value = {}, }
     if (event.matchedWith) {
       obj.addressResidential = obj.addressRegistration
     }
-    //console.log(obj)
+    obj.confirmationDocument.dateIssue = obj.confirmationDocument.dateIssue?.format('DD.MM.YYYY')
+    obj.confirmationDocument.dateIssueOtherDoc = obj.confirmationDocument.dateIssueOtherDoc?.format('DD.MM.YYYY')
     obj.type = "Физическое лицо"
+    console.log(obj)
     submitNewSubject(obj)
     setShowModal(false);
   }

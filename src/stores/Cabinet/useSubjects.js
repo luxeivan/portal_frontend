@@ -10,7 +10,19 @@ const useSubjects = create((set, get) => ({
   error: null,
   showModalView: false,
   showModalAdd: false,
+  showModal: false,
+  typeModal: false,
+  methodModal: false,
 
+  setShowModal: (show) => {
+    set({ showModal: show });
+  },
+  setTypeModal: (type) => {
+    set({ typeModal: type });
+  },
+  setMethodModal: (method) => {
+    set({ methodModal: method });
+  },
   setShowModalView: (show) => {
     set({ showModalView: show });
   },
@@ -42,25 +54,30 @@ const useSubjects = create((set, get) => ({
   },
 
   fetchSubjectItem: async (id) => {
-    try {
-      set({ isLoadingSubjectItem: true });
-      const token = localStorage.getItem("jwt");
-      const response = await axios.get(
-        `${config.backServer}/api/cabinet/subjects/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      set({ subject: response.data, isLoadingSubjectItem: false });
-    } catch (error) {
-      console.log(error);
-      set({
-        error: error.response?.data?.message || error.message,
-        isLoading: false,
-      });
-    }
+    return new Promise(async function (resolve, reject) {
+
+      try {
+        set({ isLoadingSubjectItem: true });
+        const token = localStorage.getItem("jwt");
+        const response = await axios.get(
+          `${config.backServer}/api/cabinet/subjects/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        set({ subject: response.data, isLoadingSubjectItem: false });
+        resolve()
+      } catch (error) {
+        console.log(error);
+        set({
+          error: error.response?.data?.message || error.message,
+          isLoading: false,
+        });
+        reject()
+      }
+    })
   },
 
   submitNewSubject: async (formData) => {
@@ -83,7 +100,7 @@ const useSubjects = create((set, get) => ({
           subjects: [...state.subjects, response.data],
         }));
         return response.data.subject;
-      } 
+      }
     } catch (error) {
       console.log(error)
       throw error;
