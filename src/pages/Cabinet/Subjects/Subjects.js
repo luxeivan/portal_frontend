@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Card, Flex, Modal, Button } from "antd";
+import { Typography, Card, Flex, Modal, Button, Image } from "antd";
 import useSubjects from "../../../stores/Cabinet/useSubjects";
 import styles from "./Subjects.module.css";
 import { PlusOutlined } from "@ant-design/icons";
@@ -7,6 +7,8 @@ import SceletonCard from "../../../components/SceletonCard";
 import ModalFizLica from "../../../components/Subjects/ModalFizLica/ModalFizLica";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import ModalUrLica from "../../../components/Subjects/ModalUrLica/ModalUrLica";
+import person from '../../../img/subjects/person3.svg'
+import organization from '../../../img/subjects/organization.svg'
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -122,8 +124,20 @@ export default function Subjects() {
               setShowModalView(true);
             }}
           >
-            <Typography.Text>{subject?.attributes.name}</Typography.Text>
+            <Typography.Title level={5} className={styles.subjectCardTitle}>{subject?.attributes.name}</Typography.Title>
             <Meta description={subject?.attributes.type} />
+            <Flex
+              justify="flex-end"
+              className={styles.subjectCardImage}
+            >
+              <Image
+
+                width={"50%"}
+                src={subject?.attributes.type === "Физическое лицо" ? person : organization}
+                preview={false}
+              />
+            </Flex>
+
           </Card>
         ))}
         <Card

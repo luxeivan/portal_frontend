@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Divider, AutoComplete } from "antd";
+import { Form, Input, Button, Divider, AutoComplete, Typography } from "antd";
 import axios from "axios";
 import config from "../../../config";
 
 export default function UrLicaInput() {
   const [form] = Form.useForm();
   const [suggestions, setSuggestions] = useState([]);
-
+  const [selectedOrg, setSelectedOrg] = useState(null);
 
   useEffect(() => {
     console.log("Актуальный список предложений:", suggestions);
   }, [suggestions]);
-  
+
   const onSearch = async (searchText) => {
     console.log("Ищем ИНН:", searchText);
     if (!searchText) {
@@ -31,14 +31,18 @@ export default function UrLicaInput() {
         }
       );
       console.log("Ответ от сервера:", response.data);
-      if (response.data && response.data.suggestions) {
+      if (response.data && response.data.data) {
         setSuggestions(
-          response.data.suggestions.map((suggestion) => ({
+          response.data.data.map((suggestion) => ({
             value: suggestion.data.inn,
+            kpp: suggestion.data.kpp,
             label: suggestion.value,
           }))
         );
-        console.log("Установлены предложения для AutoComplete:", suggestions);
+        console.log(
+          "Установлены предложения для AutoComplete:",
+          response.data.data
+        );
       } else {
         setSuggestions([]);
       }
@@ -47,36 +51,56 @@ export default function UrLicaInput() {
       setSuggestions([]);
     }
   };
-
   const onSelect = (value, option) => {
-    const onSelect = (value, option) => {
-      console.log("Выбрано значение:", value, "Опция AutoComplete:", option);
-      // Обрати внимание, что мы устанавливаем `value`, а не `inn`, в значение формы
-      form.setFieldsValue({ value: option.value });
+    console.log("Выбрано значение:", value, "Опция AutoComplete:", option);
+    const orgData = suggestions.find(org => org.value === option.value);
+    if (orgData) {
+      setSelectedOrg({
+        name: orgData.label, // предположим, что label - это строка, а не JSX
+        kpp: orgData.kpp,   // и kpp тоже строка
+      });
+    }
+  };
+
+  const renderItem = (organization, index) => {
+    console.log(organization);
+    return {
+      value: organization.value,
+      label: (
+        <div
+          key={index}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography.Title level={5} style={{ margin: 0 }}>
+            {organization.label}
+          </Typography.Title>
+          <div>
+            <span style={{ fontWeight: 600 }}>КПП:</span> {organization.kpp}
+          </div>
+        </div>
+      ),
     };
   };
 
-  // const renderItem = (organization, index) => ({
-  //   value: organization.data.inn,
-  //   label: (
-  //     <div
-  //       key={index}
-  //       style={{
-  //         display: "flex",
-  //         justifyContent: "space-between",
-  //       }}
-  //     >
-  //       {organization.value}
-  //     </div>
-  //   ),
-  // });
-
-  const renderItem = (suggestion) => ({
-    value: suggestion.data.inn, // Это значение будет использоваться в форме при выборе
-    label: suggestion.value, // Это значение будет отображаться в выпадающем списке
-  });
-
   
+
+  const renderAdditionalFields = () => {
+    if (!selectedOrg) return null;
+    return (
+      <>
+        <Form.Item label="Наименование">
+          <Input value={selectedOrg.name} readOnly />
+        </Form.Item>
+        <Form.Item label="КПП">
+          <Input value={selectedOrg.kpp} readOnly />
+        </Form.Item>
+      </>
+    );
+  };
 
   return (
     <>
@@ -96,6 +120,7 @@ export default function UrLicaInput() {
             <Input placeholder="Введите ИНН для поиска" />
           </AutoComplete>
         </Form.Item>
+        {renderAdditionalFields()}
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Добавить
@@ -107,22 +132,18 @@ export default function UrLicaInput() {
 }
 
 // import React, { useEffect, useState } from "react";
-// import { Form, Input, Button, Divider, AutoComplete } from "antd";
+// import { Form, Input, Button, Divider, AutoComplete, Typography } from "antd";
 // import axios from "axios";
 // import config from "../../../config";
 
 // export default function UrLicaInput() {
 //   const [form] = Form.useForm();
 //   const [suggestions, setSuggestions] = useState([]);
+//   const [selectedOrg, setSelectedOrg] = useState(null);
 
 //   useEffect(() => {
-//     console.log("Updated suggestions:", suggestions);
+//     console.log("Актуальный список предложений:", suggestions);
 //   }, [suggestions]);
-
-//   const options = suggestions.map((suggestion, index) => ({
-//     value: suggestion.value,
-//     label: <div key={index}>{suggestion.label}</div>,
-//   }));
 
 //   const onSearch = async (searchText) => {
 //     console.log("Ищем ИНН:", searchText);
@@ -143,14 +164,18 @@ export default function UrLicaInput() {
 //         }
 //       );
 //       console.log("Ответ от сервера:", response.data);
-//       if (response.data && response.data.suggestions) {
+//       if (response.data && response.data.data) {
 //         setSuggestions(
-//           response.data.suggestions.map((suggestion) => ({
+//           response.data.data.map((suggestion) => ({
 //             value: suggestion.data.inn,
+//             kpp: suggestion.data.kpp,
 //             label: suggestion.value,
 //           }))
 //         );
-//         console.log("Установлены предложения для AutoComplete:", suggestions);
+//         console.log(
+//           "Установлены предложения для AutoComplete:",
+//           response.data.data
+//         );
 //       } else {
 //         setSuggestions([]);
 //       }
@@ -161,26 +186,55 @@ export default function UrLicaInput() {
 //   };
 
 //   const onSelect = (value, option) => {
-//     console.log("Выбрано значение:", value);
-//     form.setFieldsValue({ inn: option.value });
+//     console.log("Выбрано значение:", value, "Опция AutoComplete:", option);
+//     // Устанавливаем выбранное учреждение в состояние
+//     setSelectedOrg(option);
+//     // Устанавливаем значения в форму
+//     form.setFieldsValue({
+//       inn: option.value,
+//       kpp: option.kpp,
+//     });
 //   };
 
-//   const renderTitle = (title) => <span>{title}</span>;
+//   const renderItem = (organization, index) => {
+//     console.log(organization);
+//     return {
+//       value: organization.value,
+//       label: (
+//         <div
+//           key={index}
+//           style={{
+//             display: "flex",
+//             justifyContent: "space-between",
+//             alignItems: "center",
+//           }}
+//         >
+//           <Typography.Title level={5} style={{ margin: 0 }}>
+//             {organization.label}
+//           </Typography.Title>
+//           <div>
+//             <span style={{ fontWeight: 600 }}>КПП:</span> {organization.kpp}
+//           </div>
+//         </div>
+//       ),
+//     };
+//   };
 
-//   const renderItem = (organization, index) => ({
-//     value: organization.data.inn,
-//     label: (
-//       <div
-//         key={index}
-//         style={{
-//           display: "flex",
-//           justifyContent: "space-between",
-//         }}
-//       >
-//         {organization.value}
-//       </div>
-//     ),
-//   });
+  
+
+//   const renderAdditionalFields = (organization) => {
+//     if (!selectedOrg) return null;
+//     return (
+//       <>
+//         <Form.Item label="Наименование">
+//           <Input value={selectedOrg.label} readOnly />
+//         </Form.Item>
+//         <Form.Item label="КПП">
+//           <Input value={selectedOrg.kpp} readOnly />
+//         </Form.Item>
+//       </>
+//     );
+//   };
 
 //   return (
 //     <>
@@ -194,23 +248,13 @@ export default function UrLicaInput() {
 //           <AutoComplete
 //             onSearch={onSearch}
 //             onSelect={onSelect}
-//             options={options}
+//             options={suggestions.map(renderItem)}
 //             notFoundContent="Ничего не найдено"
 //           >
 //             <Input placeholder="Введите ИНН для поиска" />
 //           </AutoComplete>
-
-//           {/* <AutoComplete
-//             // defaultValue=""
-//             onSearch={onSearch}
-//             onSelect={onSelect}
-//             options={suggestions.map((suggestion, index) => renderItem(suggestion, index))}
-
-//             notFoundContent="Ничего не найдено"
-//           >
-//             <Input placeholder="Введите ИНН для поиска" />
-//           </AutoComplete> */}
 //         </Form.Item>
+//         {renderAdditionalFields()}
 //         <Form.Item>
 //           <Button type="primary" htmlType="submit">
 //             Добавить
@@ -221,57 +265,112 @@ export default function UrLicaInput() {
 //   );
 // }
 
-// import { Form, Input, Button, Divider, Typography } from "antd";
+// import React, { useEffect, useState } from "react";
+// import { Form, Input, Button, Divider, AutoComplete, Typography } from "antd";
 // import axios from "axios";
 // import config from "../../../config";
 
 // export default function UrLicaInput() {
 //   const [form] = Form.useForm();
+//   const [suggestions, setSuggestions] = useState([]);
 
-//   //5032137342 - ИНН МосОблЭнерго
-//   //7704217370 - ИНН Озон
-//   const onFinish = async (values) => {
-//     console.log("Отправленные данные ИНН:", values);
+//   useEffect(() => {
+//     console.log("Актуальный список предложений:", suggestions);
+//   }, [suggestions]);
+
+//   const onSearch = async (searchText) => {
+//     console.log("Ищем ИНН:", searchText);
+//     if (!searchText) {
+//       setSuggestions([]);
+//       return;
+//     }
 //     try {
+//       console.log("Делаем запрос по ИНН:", searchText);
 //       const response = await axios.get(
 //         `${config.backServer}/api/cabinet/get-inn/`,
 //         {
-//           params: { searchString: values.inn },
+//           params: { searchString: searchText },
 //           headers: {
 //             "Content-Type": "application/json",
 //             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
 //           },
 //         }
 //       );
-//       console.log(response.data);
-//       if (response.data && response.data.suggestions) {
-//         console.log("Данные организации:", response.data.suggestions);
+//       console.log("Ответ от сервера:", response.data);
+//       if (response.data && response.data.data) {
+//         setSuggestions(
+//           response.data.data.map((suggestion) => ({
+//             value: suggestion.data.inn,
+//             kpp: suggestion.data.kpp,
+//             label: suggestion.value,
+//           }))
+//         );
+//         console.log(
+//           "Установлены предложения для AutoComplete:",
+//           response.data.data
+//         );
 //       } else {
-//         console.log("Нет данных организации для данного ИНН");
+//         setSuggestions([]);
 //       }
 //     } catch (error) {
-//       console.error("Ошибка при получении информации об организации:", error);
+//       console.error("Ошибка при поиске организации:", error);
+//       setSuggestions([]);
 //     }
 //   };
 
-//   const onFinishFailed = (errorInfo) => {
-//     console.log("Ошибка при отправке формы:", errorInfo);
+//   const onSelect = (value, option) => {
+//     const onSelect = (value, option) => {
+//       console.log("Выбрано значение:", value, "Опция AutoComplete:", option);
+//       // Обрати внимание, что мы устанавливаем `value`, а не `inn`, в значение формы
+//       form.setFieldsValue({ value: option.value });
+//     };
+//   };
+
+//   const renderItem = (organization, index) => {
+//     console.log(organization);
+//     return {
+//       value: organization.value,
+//       label: (
+//         <div
+//           key={index}
+//           style={{
+//             display: "flex",
+//             justifyContent: "space-between",
+//             alignItems: "center",
+//           }}
+//         >
+//           <Typography.Title level={5} style={{ margin: 0 }}>
+//             {organization.label}
+//           </Typography.Title>
+//           <div>
+//             <span style={{ fontWeight: 600 }}>КПП:</span> {organization.kpp}
+//           </div>
+//         </div>
+//       ),
+//     };
 //   };
 
 //   return (
 //     <>
 //       <Divider orientation="center">ИНН</Divider>
-//       <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+//       <Form form={form}>
 //         <Form.Item
 //           name="inn"
 //           label="ИНН"
-//           rules={[{ required: true, message: "Пожалуйста, введите ИНН" }]}
+//           rules={[{ required: true, message: "Введите ИНН" }]}
 //         >
-//           <Input maxLength={12} placeholder="Введите ИНН" />
+//           <AutoComplete
+//             onSearch={onSearch}
+//             onSelect={onSelect}
+//             options={suggestions.map(renderItem)}
+//             notFoundContent="Ничего не найдено"
+//           >
+//             <Input placeholder="Введите ИНН для поиска" />
+//           </AutoComplete>
 //         </Form.Item>
 //         <Form.Item>
 //           <Button type="primary" htmlType="submit">
-//             Проверить
+//             Добавить
 //           </Button>
 //         </Form.Item>
 //       </Form>
