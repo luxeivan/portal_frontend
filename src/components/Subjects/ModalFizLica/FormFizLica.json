@@ -86,25 +86,6 @@
     "placeholder": "123-456-789 99",
     "description": "Введите СНИЛС",
     "required": false
-  },
-  {
-    "type": "divider",
-    "name": "Контакты"
-  },
-  {
-    "type": "textInput",
-    "name": "phone",
-    "displayName": "Телефон",
-    "placeholder": "+7 (999) 999-99-99",
-    "description": "Введите номер мобильного телефона",
-    "required": false
-  },
-  {
-    "type": "textInput",
-    "name": "email",
-    "displayName": "E-mail",
-    "placeholder": "mail@mail.ru",
-    "description": "Введите адрес электронной почты",
-    "required": false
   }
+  
 ]

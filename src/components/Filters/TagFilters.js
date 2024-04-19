@@ -23,6 +23,7 @@ export default function TagFilters({ array, handlerFilter }) {
         setSelectedTags([])
         handlerFilter([])
     }
+    console.log(listFilters)
     const handleChange = (tag, checked) => {
         //console.log(tag)
         const nextSelectedTags = checked
@@ -43,9 +44,10 @@ export default function TagFilters({ array, handlerFilter }) {
             if (service.attributes.filters) {
                 service.attributes.filters.forEach(filter => {
                     if (!objectFilters.hasOwnProperty(filter.__component)) {
-                        //console.log(filter.__component)
+                        // console.log(filter)
                         objectFilters[filter.__component] = {}
                         objectFilters[filter.__component].name = filter.name
+                        objectFilters[filter.__component].sort = filter.sort
                         objectFilters[filter.__component].value = new Set()
                     }
                     if (filter.value)
@@ -57,6 +59,7 @@ export default function TagFilters({ array, handlerFilter }) {
         setListFilter(Object.entries(objectFilters).map(item => ({
             component: item[0],
             name: item[1].name,
+            sort: item[1].sort,
             value: Array.from(item[1].value)
         })))
     }, [array])
