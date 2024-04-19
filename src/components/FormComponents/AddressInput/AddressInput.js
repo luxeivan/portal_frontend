@@ -21,13 +21,9 @@ export default function AddressInput({
   const [selectedAddress, setSelectedAddress] = useState("");
   const [addressOptions, setAddressOptions] = useState([]);
   const [searchText, setSearchText] = useState("");
-  // Form.useWatch([name, 'manual'], form)
   Form.useWatch([name, 'matchedWith'], form)
-  // console.log(Form.useWatch([name, 'manual'], form))
-  // console.log(form.getFieldValue([name,'manual']))
-
+  
   if (Form.useWatch([name, 'manual'], form)) {
-    //setSelectedAddress("");
     form.setFieldsValue({
       [name]: {
         [`fullAddress`]: undefined,
@@ -43,18 +39,6 @@ export default function AddressInput({
     //console.log(obj)
     form.setFieldsValue({ [name]: { ...obj } });
   }
-  // if(form.getFieldValue(name)?.manual){
-
-  // }
-
-  // console.log(form.getFieldValue(name)?.manual)
-
-  // useEffect(() => {
-  //   if (manualValue) {
-  //     setManualInput(true);
-  //   }
-  // }, [manualValue]);
-  //console.log(value)
 
   // Функция для выполнения запроса к API и получения адресов
   const fetchAddresses = async (searchText) => {
@@ -105,27 +89,6 @@ export default function AddressInput({
     debouncedFetchAddresses(searchText);
   };
 
-  // const handleManualCheckboxChange = (e) => {
-  //   setManualInput(e.target.checked);
-  //   if (e.target.checked) {
-  //     setSelectedAddress("");
-  //     form.setFieldsValue({
-  //       [name]: {
-  //         [`fullAddress`]: undefined,
-  //         [`fiasId`]: undefined,
-  //       },
-  //     });
-  //   } else {
-  //     let obj = {
-  //     }
-  //     manualInputFields.forEach(item => {
-  //       obj[item.name] = undefined
-  //     })
-  //     console.log(obj)
-  //     form.setFieldsValue({ [name]: { ...obj } });
-  //   }
-  // };
-
   const onSelect = (value, option) => {
     setSelectedAddress(option.value);
     form.setFieldsValue({
@@ -144,9 +107,6 @@ export default function AddressInput({
             {!read && matchedWith &&
               <Form.Item name="matchedWith" valuePropName="checked" initialValue={false}>
                 <Checkbox
-                // onChange={(e) => {
-                //   form.setFieldValue("matchedWith", e.target.checked );
-                // }}
                 >Совпадает с адресом регистрации</Checkbox>
               </Form.Item>
             }

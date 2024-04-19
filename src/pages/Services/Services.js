@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Image, Tag, Button, List } from "antd";
+import { Card, Flex, Typography, Image, Tag, Button, List, Layout } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
@@ -9,7 +9,7 @@ import TagFilter from "../../components/Filters/TagFilter";
 import TagFilters from "../../components/Filters/TagFilters";
 import { LeftOutlined } from "@ant-design/icons";
 const { Title, Text } = Typography;
-
+const { Header, Content, Sider } = Layout;
 
 const serviceDetailsData = [
   {
@@ -218,7 +218,7 @@ export default function Services() {
 
   useEffect(() => {
     setServicesFiltered(services)
-    console.log(services)
+    //console.log(services)
   }, [services])
 
   useEffect(() => {
@@ -235,7 +235,7 @@ export default function Services() {
             <Title level={1} className={styles.title} style={{ marginTop: "65px" }}>
               Каталог услуг
             </Title>
-            <Flex wrap="wrap" gap="large">
+            <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
               {serviceDetailsData.map((item, index) => (
                 <Link
                   key={index}
@@ -253,56 +253,71 @@ export default function Services() {
         )}
         {level2 && (
           <>
+            <Layout>
 
-            <Link to={`/services`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
-            <Title level={1} className={styles.title} style={{ marginTop: "10px" }}>
-              {serviceDetailsData.find((item) => item.url === level2).title}
-            </Title>
-            {/* {services && services.map(item =>
+              <Link to={`/services`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
+              <Title level={1} className={styles.title} style={{ marginTop: "10px" }}>
+                {serviceDetailsData.find((item) => item.url === level2).title}
+              </Title>
+              {/* {services && services.map(item =>
               <TagFilter array={item.attributes.filters.map(item => item.value)} handlerFilter={handlerFilter} />
             )} */}
-            <TagFilters array={services} handlerFilter={handlerFilter} />
+            </Layout>
+            <Layout>
+              <Sider
+                collapsedWidth="0"
+                onBreakpoint={(broken) => {
+                  console.log(broken);
+                }}
+                breakpoint="lg"
+                width={250}
+                theme="light"
+                style={{ backgroundColor: "rgba(255,255,255,0)" }}
+              >
+                <TagFilters array={services} handlerFilter={handlerFilter} />
+              </Sider>
 
-            {notFounded && <Typography.Title>По заданному фильтру услуг не найдено</Typography.Title>}
-            <Flex wrap="wrap" gap="large">
-              {servicesFiltered &&
-                servicesFiltered.map((item) => (
-                  <Link
-                    key={item.id}
-                    to={`/services/${level2}/${item.id}`}
-                    className={styles.styleLink}
-                  >
-                    <Card key={item.id} className={styles.styleCard} hoverable>
-                      <div className={styles.cardContent}>
-                        <Title level={4}>{item.attributes.name}</Title>
-                        {item.attributes.filters.length>0 &&
-                          <List
-                            size="small"
-                            dataSource={item.attributes.filters}
-                            renderItem={(item) => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>}
-                          />
-                        }
-                        {/* {item.attributes.filters.map(item => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>)} */}
-                        {/* <Text>{item.attributes.shortDescription}</Text> */}
-                      </div>
-                      {item.attributes.icon.data && (
-                        <Flex
-                          justify="flex-end"
-                          gap={20}
-                          className={styles.cardImage}
-                        >
-                          <Image
-                            style={{ textAlign: "center" }}
-                            width={"50%"}
-                            src={`${config.apiServer}${item.attributes.icon?.data?.attributes?.url}`}
-                            preview={false}
-                          />
-                        </Flex>
-                      )}
-                    </Card>
-                  </Link>
-                ))}
-            </Flex>
+              {notFounded && <Typography.Title>По заданному фильтру услуг не найдено</Typography.Title>}
+              <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
+                {servicesFiltered &&
+                  servicesFiltered.map((item) => (
+                    <Link
+                      key={item.id}
+                      to={`/services/${level2}/${item.id}`}
+                      className={styles.styleLink}
+                    >
+                      <Card key={item.id} className={styles.styleCard} hoverable>
+                        <div className={styles.cardContent}>
+                          <Title level={4}>{item.attributes.name}</Title>
+                          {item.attributes.filters.length > 0 &&
+                            <List
+                              size="small"
+                              dataSource={item.attributes.filters}
+                              renderItem={(item) => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>}
+                            />
+                          }
+                          {/* {item.attributes.filters.map(item => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>)} */}
+                          {/* <Text>{item.attributes.shortDescription}</Text> */}
+                        </div>
+                        {item.attributes.icon.data && (
+                          <Flex
+                            justify="flex-end"
+                            gap={20}
+                            className={styles.cardImage}
+                          >
+                            <Image
+                              style={{ textAlign: "center" }}
+                              width={"50%"}
+                              src={`${config.apiServer}${item.attributes.icon?.data?.attributes?.url}`}
+                              preview={false}
+                            />
+                          </Flex>
+                        )}
+                      </Card>
+                    </Link>
+                  ))}
+              </Flex>
+            </Layout>
           </>
         )}
       </div>

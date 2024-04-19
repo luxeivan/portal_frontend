@@ -97,25 +97,25 @@ export default function App() {
                   <Route
                     path="/services"
                     element={
-                      <Container>
+                      // <Container>
                         <Services />
-                      </Container>
+                      // </Container>
                     }
                   />
                   <Route
                     path="/services/:level2"
                     element={
-                      <Container>
+                      // <Container>
                         <Services />
-                      </Container>
+                      // </Container>
                     }
                   />
                   <Route
                     path="/services/:level2/:id"
                     element={
-                      <Container>
+                      // <Container>
                         <ServiceItem />
-                      </Container>
+                      // </Container>
                     }
                   />
                   <Route path="/about" element={<About />} />

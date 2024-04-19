@@ -24,7 +24,7 @@ export default function UrLicaInput() {
         }
       );
       if (response.data && response.data.data) {
-        //console.log(response.data.data)
+        console.log(response.data.data)
         setSuggestions(
           response.data.data.map((s) => ({
             value: s.data.inn,
@@ -60,7 +60,7 @@ export default function UrLicaInput() {
   };
 
   const renderItem = (organization) => {
-    console.log(organization)
+    //console.log(organization)
     return ({
       value: organization.hid,
       key: organization.hid,
