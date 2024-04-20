@@ -212,19 +212,23 @@ const stylesForCard = {
 export default function Subjects() {
   const [showModalUrAdd, setShowModalUrAdd] = useState(false);
   const [showModalUrView, setShowModalUrView] = useState(false);
+  
+  // Модалка добавления физ лица
   const showModalAdd = useSubjects((state) => state.showModalAdd);
-  const showModalView = useSubjects((state) => state.showModalView);
   const setShowModalAdd = useSubjects((state) => state.setShowModalAdd);
-  const setShowModalView = useSubjects((state) => state.setShowModalView);
+
+  // Модалка просмотра физ лица
+  const showModalView = useSubjects((state) => state.showModalView);
+  const showSubject = useSubjects((state) => state.showSubject);
+
+  
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
 
   const subject = useSubjects((state) => state.subject);
   const subjects = useSubjects((state) => state.subjects);
   const isLoadingSubjects = useSubjects((state) => state.isLoadingSubjects);
-  const error = useSubjects((state) => state.error);
   const fetchSubjects = useSubjects((state) => state.fetchSubjects);
-  const fetchSubjectItem = useSubjects((state) => state.fetchSubjectItem);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -241,11 +245,6 @@ export default function Subjects() {
       </>
     );
   }
-
-  if (error) {
-    return <p>Ошибка: {error}</p>;
-  }
-
   
   const handleCategorySelect = (type) => {
     setShowCategoryModal(false);
@@ -271,10 +270,10 @@ export default function Subjects() {
             key={subject.id}
             styles={stylesForCard}
             className={styles.subjectCard}
-            onClick={async () => {
-              // console.log(subject.id)
-              await fetchSubjectItem(subject.id);
-              setShowModalView(true);
+            onClick={() => {
+              showSubject(subject.id)
+             // await fetchSubjectItem(subject.id);
+              //setShowModalView(true);
             }}
           >
             <Typography.Title level={5} className={styles.subjectCardTitle}>{subject?.attributes.name}</Typography.Title>
@@ -361,7 +360,7 @@ export default function Subjects() {
       <Modal
         title="Просмотр физического лица"
         open={showModalView}
-        onCancel={() => setShowModalView(false)}
+        onCancel={() =>  showSubject(false)}
         width={650}
         footer={null}
       >
@@ -370,8 +369,8 @@ export default function Subjects() {
           value={{
             ...subject,
           }}
-          onSubmit={() => setShowModalAdd(false)}
-          setShowModal={setShowModalView}
+          //onSubmit={() => setShowModalAdd(false)}
+          setShowModal={showSubject}
           type={selectedType}
         />
       </Modal>

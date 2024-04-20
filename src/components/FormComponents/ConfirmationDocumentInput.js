@@ -4,10 +4,10 @@ import locale from "antd/locale/ru_RU";
 import TextArea from "antd/es/input/TextArea";
 import SelectInput from "./SelectInput";
 import TextInput from "./TextInput";
-import localePicker from "antd/es/date-picker/locale/ru_RU";
 import axios from "axios";
 import config from "../../config";
 import moment from "moment";
+import useSubjects from "../../stores/Cabinet/useSubjects";
 
 const documentOptions = [
   { value: "Паспорт гражданина РФ", label: "Паспорт гражданина РФ" },
@@ -19,8 +19,15 @@ locale.DatePicker.lang = {
 }
 
 export default function ConfirmationDocument({ form, read, edit, value, name, }) {
+  const showModalAdd = useSubjects((state) => state.showModalAdd);
+  const showModalView = useSubjects((state) => state.showModalView);
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
   const [kemVidanOptions, setKemVidanOptions] = useState([]);
+
+  useEffect(() => {
+    setKodPodrazdelenia("")
+    setKemVidanOptions([])
+  }, [showModalAdd, showModalView])
   Form.useWatch([name, 'typeDoc'], form)
   //console.log(value)
   if (form.getFieldValue[name, 'typeDoc'] === "Иной документ") {
@@ -46,9 +53,9 @@ export default function ConfirmationDocument({ form, read, edit, value, name, })
   if (read && value?.[name]?.typeDoc === "Иной документ") {
     form.setFieldValue([name, 'typeDoc'], "Иной документ")
   }
-  
+
   useEffect(() => {
-    if(edit){
+    if (edit) {
       setKodPodrazdelenia(value?.[name]?.kodPodrazdelenia)
     }
     if (kodPodrazdelenia.length === 7) {
@@ -190,7 +197,7 @@ export default function ConfirmationDocument({ form, read, edit, value, name, })
                 {read && <Typography.Text>{value?.[name]?.dateIssue}</Typography.Text>}
                 {!read &&
                   <DatePicker
-                    defaultValue={moment(value?.[name]?.dateIssue, 'DD.MM.YYYY')}
+                    defaultValue={value?.[name]?.dateIssue ? moment(value?.[name]?.dateIssue, 'DD.MM.YYYY') : false}
                     required={true}
                     format="DD.MM.YYYY"
                     locale={locale.DatePicker}
@@ -246,7 +253,7 @@ export default function ConfirmationDocument({ form, read, edit, value, name, })
               <Form.Item label="Когда выдан" name="dateIssueOtherDoc" valuePropName="value" required={read ? false : true}>
                 {!read &&
                   <DatePicker
-                    defaultValue={moment(value?.[name]?.dateIssueOtherDoc, 'DD.MM.YYYY')}
+                    defaultValue={value?.[name]?.dateIssue ? moment(value?.[name]?.dateIssue, 'DD.MM.YYYY') : false}
                     locale={locale.DatePicker}
                     format="DD.MM.YYYY"
                     style={{ width: "100%" }}

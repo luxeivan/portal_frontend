@@ -4,13 +4,18 @@ import useSubjects from "../../../stores/Cabinet/useSubjects";
 import NewForm from "../NewForm";
 import fieldsJson from "./FormFizLica.json";
 import moment from "moment";
+import { useEffect } from "react";
 const { confirm } = Modal;
 
 export default function ModalFizLica({ setShowModal, read = false, value = {}, }) {
-  
+  const showModalAdd = useSubjects((state) => state.showModalAdd);
+  const showModalView = useSubjects((state) => state.showModalView);
   const [form] = Form.useForm();
   const deleteSubjectItem = useSubjects((store) => store.deleteSubjectItem);
   const submitNewSubject = useSubjects((store) => store.submitNewSubject);
+  useEffect(()=>{
+    form.resetFields()
+  },[showModalAdd,showModalView])
   const handlerDelete = (id) => {
     confirm({
       title: "Вы уверены что хотите удалить субъект?",
