@@ -253,32 +253,23 @@ export default function Services() {
         )}
         {level2 && (
           <>
-            <Layout>
 
-              <Link to={`/services`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
-              <Title level={1} className={styles.title} style={{ marginTop: "10px" }}>
-                {serviceDetailsData.find((item) => item.url === level2).title}
-              </Title>
-              {/* {services && services.map(item =>
+
+            <Link to={`/services`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
+            <Title level={1} className={styles.title} style={{ marginTop: "10px" }}>
+              {serviceDetailsData.find((item) => item.url === level2).title}
+            </Title>
+            {/* {services && services.map(item =>
               <TagFilter array={item.attributes.filters.map(item => item.value)} handlerFilter={handlerFilter} />
             )} */}
-            </Layout>
-            <Layout>
-              <Sider
-                collapsedWidth="0"
-                onBreakpoint={(broken) => {
-                  console.log(broken);
-                }}
-                breakpoint="lg"
-                width={250}
-                theme="light"
-                style={{ backgroundColor: "rgba(255,255,255,0)" }}
-              >
+            <Flex gap={"middle"}>
+
+            <div className={styles.filters}>
                 <TagFilters array={services} handlerFilter={handlerFilter} />
-              </Sider>
+              </div>
 
               {notFounded && <Typography.Title>По заданному фильтру услуг не найдено</Typography.Title>}
-              <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
+              <Flex wrap="wrap" gap="large" style={{flex:1}}>
                 {servicesFiltered &&
                   servicesFiltered.map((item) => (
                     <Link
@@ -317,7 +308,9 @@ export default function Services() {
                     </Link>
                   ))}
               </Flex>
-            </Layout>
+              
+            </Flex>
+
           </>
         )}
       </div>

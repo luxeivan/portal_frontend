@@ -10,19 +10,18 @@ const useSubjects = create((set, get) => ({
   error: null,
   showModalView: false,
   showModalAdd: false,
-  showModal: false,
-  typeModal: false,
-  methodModal: false,
 
-  setShowModal: (show) => {
-    set({ showModal: show });
+  showSubject: async (id = false) => {
+    if (id !== false) {
+      console.log(id)
+      await get().fetchSubjectItem(id)
+      set({ showModalView: true });
+    }else{
+
+      set({ showModalView: false, subject: null });
+    }
   },
-  setTypeModal: (type) => {
-    set({ typeModal: type });
-  },
-  setMethodModal: (method) => {
-    set({ methodModal: method });
-  },
+
   setShowModalView: (show) => {
     set({ showModalView: show });
   },
@@ -55,7 +54,6 @@ const useSubjects = create((set, get) => ({
 
   fetchSubjectItem: async (id) => {
     return new Promise(async function (resolve, reject) {
-
       try {
         set({ isLoadingSubjectItem: true });
         const token = localStorage.getItem("jwt");
