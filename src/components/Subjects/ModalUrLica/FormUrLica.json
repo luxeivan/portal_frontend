@@ -89,6 +89,27 @@
     "type": "divider",
     "name": "Представитель организации"
   },
+
+  {
+    "type": "checkboxInput",
+    "name": "checkboxRepresentative",
+    "displayName": "Заполнить по руководителю",
+    "bindFields": [
+      {
+        "source": "fullNameDirector",
+        "target": "fullNameRepresentative"
+      },
+      {
+        "source": "jobTitle",
+        "target": "jobTitleRepresentative"
+      },
+      {
+        "source": "foundingPosition",
+        "target": "foundingRepresentative"
+      }
+    ]
+  },
+
   {
     "type": "textInput",
     "name": "fullNameRepresentative",
@@ -99,7 +120,7 @@
   {
     "type": "textInput",
     "name": "jobTitleRepresentative",
-    "displayName": "Должность",
+    "displayName": "Должность представителя",
     "placeholder": "Директор",
     "description": "Введите  должность руководителя"
   },
@@ -109,7 +130,8 @@
     "displayName": "Основание должности",
     "placeholder": "...",
     "description": "Введите  основание должность лица, подписывающего документы."
-  },{
+  },
+  {
     "type": "divider",
     "name": "Юридический адрес"
   },

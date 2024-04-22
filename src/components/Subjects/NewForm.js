@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Divider, Form, Button, Modal, Flex } from "antd";
 import TextInput from "../FormComponents/TextInput";
+import CheckboxInput from "../FormComponents/CheckboxInput"
 import SelectInput from "../FormComponents/SelectInput";
 import AddressInput from "../FormComponents/AddressInput/AddressInput";
 import SnilsInput from "../FormComponents/SnilsInput";
@@ -102,6 +103,17 @@ const NewForm = ({
             required={field.required}
             description={field.description}
             value={value[field.name]}
+            read={read}
+          />
+        );
+      case "checkboxInput":
+        return (
+          <CheckboxInput
+            key={index}
+            name={field.name}
+            displayName={field.displayName}
+            bindFields={field.bindFields}
+            form={form}
             read={read}
           />
         );
