@@ -8,7 +8,7 @@ export default function SubjectInput({ displayName, name, shortDescription, requ
     const [selectedSubject, setSelectedSubject] = useState()
     // -----------------
     const form = Form.useFormInstance();
-    console.log(Form.useWatch(depends?.showIf ? depends?.showIf?.nameField : '', form))
+    // console.log(Form.useWatch(depends?.showIf ? depends?.showIf?.nameField : '', form))
     let show = true
     let showTemp = Form.useWatch(depends?.showIf ? depends?.showIf?.nameField : '', form) === depends?.showIf?.eq;
     if (depends && showTemp)
@@ -28,10 +28,12 @@ export default function SubjectInput({ displayName, name, shortDescription, requ
         setSelectedSubject(form.getFieldValue(name))
         setShowModal(false)
     }
+    form.getFieldValue(depends?.showIf?.nameField)
     if (show)
         return (
             <>
                 <Form.Item
+                    //dependencies={[depends?.showIf?.nameField]}
                     name={name}
                     label={displayName}
                     rules={[
@@ -40,6 +42,7 @@ export default function SubjectInput({ displayName, name, shortDescription, requ
                             message: "Выберите субъект"
                         }
                     ]}
+                    // hidden={console.log(form.getFieldValue(depends?.showIf?.nameField))&&form.getFieldValue(depends?.showIf?.nameField)}
                 >
                     <Input type='hidden' />
                     <Button style={{ width: 200, height: 200 }} type="dashed" onClick={toggleShowModal}>{selectedSubject ? selectedSubject : <PlusOutlined />}</Button>
