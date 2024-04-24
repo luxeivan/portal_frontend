@@ -28,7 +28,7 @@ export default function TextInput({
     show = true
   else show = false
   // -------------------------------------
-   console.log('Отрисовка')
+  console.log('Отрисовка')
   //   console.log(Form.useWatch(depends?.[0]?.showIf?.nameField, form))
   // }
 
@@ -56,34 +56,34 @@ export default function TextInput({
         // initialValue={value}
         >
           {/* <div style={{ display: "flex", alignItems: "center" }}> */}
-            {!read &&
-              <Input
-                placeholder={placeholder}
-                suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
-                // style={{ paddingRight: "30px" }}
-                {...inputProps}
-                //defaultValue={value}
-              // value={value}
-              />
-            }
-            {read &&
-              <Typography.Text>{value}</Typography.Text>
-            }
-            {/* {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />} */}
+          {!read &&
+            <Input
+              placeholder={placeholder}
+              suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
+              // style={{ paddingRight: "30px" }}
+              {...inputProps}
+              //defaultValue={value}
+              //value={value}
+            />
+          }
+          {read &&
+            <Typography.Text>{value}</Typography.Text>
+          }
+          {/* {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />} */}
           {/* </div> */}
         </Form.Item>
-        
-          <Drawer
-            title={displayName}
-            placement="right"
-            onClose={onClose}
-            open={drawerVisible}
-          >
-            <StrapiRichText
-              content={description}
-            />
-          </Drawer>
-        
+
+        <Drawer
+          title={displayName}
+          placement="right"
+          onClose={onClose}
+          open={drawerVisible}
+        >
+          <StrapiRichText
+            content={description}
+          />
+        </Drawer>
+
       </>
     );
   }

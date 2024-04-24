@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Form, Input, Button, Divider, AutoComplete, Typography, InputNumber } from "antd";
 import axios from "axios";
 import config from "../../config";
-import UploaderInput from "../FormComponents/UploaderInput";
+import UploaderInput from "./UploaderInput";
 import { formItemLayout } from "../configSizeForm";
 
 export default function InnKppOkvedInput({ name }) {
