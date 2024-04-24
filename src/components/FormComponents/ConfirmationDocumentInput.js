@@ -18,7 +18,8 @@ locale.DatePicker.lang = {
   shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек',],
 }
 
-export default function ConfirmationDocument({ form, read, edit, value, name, }) {
+export default function ConfirmationDocument({ read, edit, value, name, }) {
+  const form = Form.useFormInstance();
   const showModalAdd = useSubjects((state) => state.showModalAdd);
   const showModalView = useSubjects((state) => state.showModalView);
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");

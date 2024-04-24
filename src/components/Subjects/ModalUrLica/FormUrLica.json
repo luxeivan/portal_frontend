@@ -1,6 +1,17 @@
 [
   {
     "type": "divider",
+    "name": "Автозаполнение по ИНН"
+  },
+  {
+    "type": "innInput",
+    "name": "inn",
+    "displayName": "ИНН",
+    "placeholder": "...",
+    "description": "ИНН"
+  },
+  {
+    "type": "divider",
     "name": "Наименование организации"
   },
   {
@@ -37,15 +48,9 @@
   },
   {
     "type": "divider",
-    "name": "ИНН, КПП, ОКВЭД"
+    "name": "КПП, ОКВЭД"
   },
-  {
-    "type": "textInput",
-    "name": "inn",
-    "displayName": "ИНН",
-    "placeholder": "...",
-    "description": "ИНН"
-  },
+  
   {
     "type": "textInput",
     "name": "kpp",

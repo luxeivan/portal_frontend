@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Divider, AutoComplete, Typography, InputNumber } from "antd";
 import axios from "axios";
-import config from "../../../config";
-import UploaderInput from "../../FormComponents/UploaderInput";
-import { formItemLayout } from "../../configSizeForm";
+import config from "../../config";
+import UploaderInput from "../FormComponents/UploaderInput";
+import { formItemLayout } from "../configSizeForm";
 
-export default function innKppOkvedInput() {
-  const [form] = Form.useForm();
+export default function InnKppOkvedInput({ name }) {
+  const form = Form.useFormInstance();
   const [suggestions, setSuggestions] = useState([]);
 
   const onSearch = async (searchText) => {
@@ -34,6 +34,7 @@ export default function innKppOkvedInput() {
             label: s.value,
             ogrn: s.data.ogrn,
             address: s.data.address,
+            fullNameDirector: s.data.management?.name,
           }))
         );
       } else {
@@ -45,17 +46,20 @@ export default function innKppOkvedInput() {
   };
 
   const onSelect = (value, option) => {
-    console.log(option)
-    console.log(suggestions)
+    //console.log(option)
+    //console.log(suggestions)
 
     const orgData = suggestions.find((org) => org.hid === option.key);
     if (orgData) {
+      console.log(orgData)
       form.setFieldsValue({
         inn: orgData.value,
-        name: orgData.label,
+        fullName: orgData.label,
+        fullNameDirector: orgData.fullNameDirector,
         kpp: orgData.kpp,
         ogrn: orgData.ogrn,
-        address: orgData.address,
+        urAddress:{fullAddress: orgData.address.value,},
+        mailingAddress:{fullAddress: orgData.address.value,}
       });
     }
   };
@@ -84,43 +88,33 @@ export default function innKppOkvedInput() {
 
   return (
     <>
-      <Divider orientation="center">ИНН</Divider>
-      <Form form={form} {...formItemLayout}>
-        <Form.Item
-          name="inn"
-          label="ИНН"
-          rules={[{ required: true, message: "Введите ИНН" }]}
+      {/* <Divider orientation="center">ИНН</Divider> */}
+      <Form.Item
+        name={name}
+        label="ИНН"
+        rules={[{ required: true, message: "Введите ИНН" }]}
+      >
+        <AutoComplete
+          onSearch={onSearch}
+          onSelect={onSelect}
+          options={suggestions.map(renderItem)}
+          notFoundContent="Ничего не найдено"
         >
-          <AutoComplete
-            onSearch={onSearch}
-            onSelect={onSelect}
-            options={suggestions.map(renderItem)}
-            notFoundContent="Ничего не найдено"
-          >
-            <Input placeholder="Введите ИНН для поиска" />
-          </AutoComplete>
-        </Form.Item>
-        <Form.Item name="name" label="Наименование">
-          <Input readOnly />
-        </Form.Item>
-        <Form.Item name="kpp" label="КПП">
-          {/* <InputNumber readOnly /> */}
-          <Input readOnly />
-        </Form.Item>
-        <Form.Item name="ogrn" label="ОГРН">
-          {/* <InputNumber readOnly /> */}
-          <Input readOnly />
-        </Form.Item>
-        {/* <Form.Item name="address" label="Адрес">
-          <Input readOnly />
+          <Input placeholder="Введите ИНН для поиска" />
+        </AutoComplete>
+      </Form.Item>
+      {/* <Form.Item name="name" label="Наименование">
+          <Input  />
         </Form.Item> */}
-        <UploaderInput />
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Добавить
-          </Button>
-        </Form.Item>
-      </Form>
+      {/* <Form.Item name="kpp" label="КПП">
+          <Input  />
+        </Form.Item> */}
+      {/* <Form.Item name="ogrn" label="ОГРН">
+          <Input  />
+        </Form.Item> */}
+      {/* <Form.Item name="address" label="Адрес">
+          <Input  />
+        </Form.Item> */}
     </>
   );
 }

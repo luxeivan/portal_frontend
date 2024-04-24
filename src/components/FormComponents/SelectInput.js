@@ -12,7 +12,7 @@ export default function SelectInput({
   options,
   onChange,
   depends,
-  defaultValue,
+  // defaultValue,
   read,
   edit,
   value
@@ -72,7 +72,7 @@ export default function SelectInput({
       >
         {!read &&
           <Select
-            defaultValue={defaultValue}
+            // defaultValue={defaultValue}
             placeholder="Выберите вариант"
             options={options}
             onChange={onChange}

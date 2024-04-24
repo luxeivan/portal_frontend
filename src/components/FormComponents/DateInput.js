@@ -16,6 +16,7 @@ const DateInput = ({
   value,
   read = false,
 }) => {
+  const form = Form.useFormInstance();
   const defaultValue =
     value && moment(value, dateFormat).isValid()
       ? moment(value, dateFormat)
@@ -42,7 +43,7 @@ const DateInput = ({
             format={dateFormat}
             placeholder={placeholder}
             style={{ width: "100%" }}
-            defaultValue={defaultValue}
+            // defaultValue={defaultValue}
           />
         )}
       </Form.Item>

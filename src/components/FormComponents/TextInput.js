@@ -19,6 +19,7 @@ export default function TextInput({
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   // -------------------------------------
   const form = Form.useFormInstance();
+  Form.useWatch([], form)
   let show = true
   let showTemp = Form.useWatch(depends?.showIf ? depends?.showIf?.nameField : '', form) === depends?.showIf?.eq;
   if (depends && showTemp)
@@ -60,7 +61,7 @@ export default function TextInput({
                 placeholder={placeholder}
                 style={{ paddingRight: "30px" }}
                 {...inputProps}
-                defaultValue={value}
+                //defaultValue={value}
               // value={value}
               />
             }
