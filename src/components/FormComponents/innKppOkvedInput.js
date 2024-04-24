@@ -51,7 +51,7 @@ export default function InnKppOkvedInput({ name }) {
 
     const orgData = suggestions.find((org) => org.hid === option.key);
     if (orgData) {
-      console.log(orgData)
+      //console.log(orgData)
       form.setFieldsValue({
         inn: orgData.value,
         fullName: orgData.label,
