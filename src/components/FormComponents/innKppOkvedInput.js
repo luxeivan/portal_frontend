@@ -1,10 +1,7 @@
-
 import React, { useState } from "react";
-import { Form, Input, Button, Divider, AutoComplete, Typography, InputNumber } from "antd";
+import { Form, Input, AutoComplete, Typography } from "antd";
 import axios from "axios";
 import config from "../../config";
-import UploaderInput from "../FormComponents/UploaderInput";
-import { formItemLayout } from "../configSizeForm";
 
 export default function InnKppOkvedInput({ name }) {
   const form = Form.useFormInstance();
@@ -25,16 +22,20 @@ export default function InnKppOkvedInput({ name }) {
         }
       );
       if (response.data && response.data.data) {
-        console.log(response.data.data)
+        console.log(response.data.data);
         setSuggestions(
           response.data.data.map((s) => ({
             value: s.data.inn,
             kpp: s.data.kpp,
+            okved: s.data.okved,
             hid: s.data.hid,
             label: s.value,
+            full_with_opf: s.data.name.full_with_opf,
+            short_with_opf: s.data.name.short_with_opf,
             ogrn: s.data.ogrn,
             address: s.data.address,
             fullNameDirector: s.data.management?.name,
+            jobTitle: s.data.management?.post,
           }))
         );
       } else {
@@ -46,27 +47,26 @@ export default function InnKppOkvedInput({ name }) {
   };
 
   const onSelect = (value, option) => {
-    //console.log(option)
-    //console.log(suggestions)
-
     const orgData = suggestions.find((org) => org.hid === option.key);
+    console.log("Тест", orgData);
     if (orgData) {
-      //console.log(orgData)
       form.setFieldsValue({
         inn: orgData.value,
-        fullName: orgData.label,
+        fullName: orgData.full_with_opf,
+        shortName: orgData.short_with_opf,
         fullNameDirector: orgData.fullNameDirector,
+        jobTitle: orgData.jobTitle,
         kpp: orgData.kpp,
+        okved: orgData.okved,
         ogrn: orgData.ogrn,
-        urAddress:{fullAddress: orgData.address.value,},
-        mailingAddress:{fullAddress: orgData.address.value,}
+        urAddress: { fullAddress: orgData.address.value },
+        mailingAddress: { fullAddress: orgData.address.value },
       });
     }
   };
 
   const renderItem = (organization) => {
-    //console.log(organization)
-    return ({
+    return {
       value: organization.hid,
       key: organization.hid,
       label: (
@@ -78,17 +78,13 @@ export default function InnKppOkvedInput({ name }) {
           }}
         >
           <Typography.Text>{organization.label}</Typography.Text>
-          {/* <Typography.Text style={{ fontWeight: 600 }}>
-          КПП: {organization.kpp}
-        </Typography.Text> */}
         </div>
       ),
-    })
+    };
   };
 
   return (
     <>
-      {/* <Divider orientation="center">ИНН</Divider> */}
       <Form.Item
         name={name}
         label="ИНН"
@@ -103,18 +99,6 @@ export default function InnKppOkvedInput({ name }) {
           <Input placeholder="Введите ИНН для поиска" />
         </AutoComplete>
       </Form.Item>
-      {/* <Form.Item name="name" label="Наименование">
-          <Input  />
-        </Form.Item> */}
-      {/* <Form.Item name="kpp" label="КПП">
-          <Input  />
-        </Form.Item> */}
-      {/* <Form.Item name="ogrn" label="ОГРН">
-          <Input  />
-        </Form.Item> */}
-      {/* <Form.Item name="address" label="Адрес">
-          <Input  />
-        </Form.Item> */}
     </>
   );
 }

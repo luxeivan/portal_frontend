@@ -12,7 +12,7 @@ import axios from "axios";
 import config from "../../config";
 import useSubjects from "../../stores/Cabinet/useSubjects";
 import { formItemLayout } from "../configSizeForm";
-import InnKppOkvedInput from "../FormComponents/InnKppOkvedInput";
+import InnKppOkvedInput from "../FormComponents/innKppOkvedInput";
 
 const NewForm = ({
   fields,
@@ -29,55 +29,12 @@ const NewForm = ({
   const showModalAdd = useSubjects((state) => state.showModalAdd);
   const [edit, setEdit] = useState(tempedit);
   const [read, setRead] = useState(tempread);
-  // const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     setEdit(tempedit);
     setRead(tempread);
     form.resetFields();
   }, [showModalView, showModalAdd, tempedit, tempread]);
-
-  // const onSearch = async (searchText) => {
-  //   if (!searchText) {
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.get(
-  //       `${config.backServer}/api/cabinet/get-inn/LEGAL?inn=${searchText}`,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-  //         },
-  //       }
-  //     );
-  //     if (response.data && response.data.data) {
-  //       console.log("организации", response.data.data);
-  //       setSuggestions(
-  //         response.data.data.map((s) => ({
-  //           value: s.data.inn,
-  //           label: `${s.data.name.short} КПП: ${s.data.kpp}`,
-  //           kpp: s.data.kpp,
-  //         }))
-  //       );
-  //     } else {
-  //       setSuggestions([]);
-  //     }
-  //   } catch (error) {
-  //     console.error("Ошибка при поиске организации:", error);
-  //   }
-  // };
-
-  // const onSelect = (value, option) => {
-  //   const orgData = suggestions.find((org) => org.value === value);
-  //   console.log("Тест", orgData);
-  //   if (orgData) {
-  //     form.setFieldsValue({
-  //       inn: value,
-  //       kpp: orgData.kpp,
-  //     });
-  //   }
-  // };
 
   const renderField = (field, index) => {
     switch (field.type) {
@@ -97,7 +54,6 @@ const NewForm = ({
       case "innInput":
         return (
           <InnKppOkvedInput
-            // form={form}
             key={index}
             {...field}
             read={read}
@@ -130,7 +86,6 @@ const NewForm = ({
           <AddressInput
             key={index}
             {...field}
-            // form={form}
             read={read}
             edit={edit}
             value={value[field.name]}
@@ -144,7 +99,6 @@ const NewForm = ({
             read={read}
             edit={edit}
             value={value[field.name]}
-            // form={form}
           />
         );
       case "dateInput":
@@ -167,7 +121,6 @@ const NewForm = ({
             name={field.name}
             displayName={field.displayName}
             bindFields={field.bindFields}
-            // form={form}
             read={read}
           />
         );
@@ -175,7 +128,7 @@ const NewForm = ({
         return (
           <ConfirmationDocumentInput
             key={index}
-            // form={form}
+
             {...field}
             read={read}
             edit={edit}

@@ -27,11 +27,7 @@ export default function TextInput({
     show = true
   else show = false
   // -------------------------------------
-   console.log('Отрисовка')
-  //   console.log(Form.useWatch(depends?.[0]?.showIf?.nameField, form))
-  // }
-
-
+  
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const showDrawer = () => setDrawerVisible(true);
