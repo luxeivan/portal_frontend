@@ -172,7 +172,7 @@ export default function ConfirmationDocument({ read, edit, value, name, }) {
                 shortDescription="123-456"
                 inputProps={{
                   maxLength: 7,
-                  value: kodPodrazdelenia,
+                  //value: kodPodrazdelenia,
                   onChange: handleKodPodrazdeleniaChange,
                 }}
                 rules={[
