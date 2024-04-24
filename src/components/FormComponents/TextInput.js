@@ -11,8 +11,10 @@ export default function TextInput({
   required,
   description = 'Нет описания',
   depends,
+  inputProps,
   read,
   edit,
+  rules,
   value
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
@@ -48,36 +50,37 @@ export default function TextInput({
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
           rules={!read && [{ required, message: `` }]}
-        // initialValue={value}
+          initialValue={value}
         >
           {/* <div style={{ display: "flex", alignItems: "center" }}> */}
-            {!read &&
-              <Input
-                placeholder={placeholder}
-                suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
-                // style={{ paddingRight: "30px" }}
-                //defaultValue={value}
-              // value={value}
-              />
-            }
-            {read &&
-              <Typography.Text>{value}</Typography.Text>
-            }
-            {/* {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />} */}
+          {!read &&
+            <Input
+              placeholder={placeholder}
+              suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
+              // style={{ paddingRight: "30px" }}
+              {...inputProps}
+              //defaultValue={value}
+              //value={value}
+            />
+          }
+          {read &&
+            <Typography.Text>{value}</Typography.Text>
+          }
+          {/* {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />} */}
           {/* </div> */}
         </Form.Item>
-        
-          <Drawer
-            title={displayName}
-            placement="right"
-            onClose={onClose}
-            open={drawerVisible}
-          >
-            <StrapiRichText
-              content={description}
-            />
-          </Drawer>
-        
+
+        <Drawer
+          title={displayName}
+          placement="right"
+          onClose={onClose}
+          open={drawerVisible}
+        >
+          <StrapiRichText
+            content={description}
+          />
+        </Drawer>
+
       </>
     );
   }

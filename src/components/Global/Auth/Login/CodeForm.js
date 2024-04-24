@@ -39,7 +39,7 @@ export default function CodeForm() {
         onFinish={onFinish}
         className={styles.codeFormContainer}
       >
-        <Form.Item name="pin1" rules={[{ required: true }]}>
+              <Form.Item name="pin1" rules={[{ required: true }]}>
           <Input
             className={styles.codeInput}
             ref={inputRef1}
