@@ -11,6 +11,7 @@ export default function TextInput({
   required,
   description = 'Нет описания',
   depends,
+  inputProps,
   read,
   edit,
   value
@@ -60,6 +61,7 @@ export default function TextInput({
                 placeholder={placeholder}
                 suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
                 // style={{ paddingRight: "30px" }}
+                {...inputProps}
                 //defaultValue={value}
               // value={value}
               />
