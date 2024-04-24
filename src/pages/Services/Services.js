@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Image, Tag, Button, List, Layout } from "antd";
+import { Card, Flex, Typography, Image, Tag, Button, List, Layout, theme } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
@@ -129,6 +129,7 @@ const serviceDetailsData = [
 
 
 export default function Services() {
+  const { colorFill } = theme.useToken().token
   const services = useServices((state) => state.services);
   const fetchServices = useServices((state) => state.fetchServices);
   const [servicesFiltered, setServicesFiltered] = useState([])
@@ -264,12 +265,12 @@ export default function Services() {
             )} */}
             <Flex gap={"middle"}>
 
-            <div className={styles.filters}>
+              <div className={styles.filters}>
                 <TagFilters array={services} handlerFilter={handlerFilter} />
               </div>
 
-              {notFounded && <Typography.Title>По заданному фильтру услуг не найдено</Typography.Title>}
-              <Flex wrap="wrap" gap="large" style={{flex:1}}>
+              {notFounded && <Typography.Title style={{color:colorFill}}>По заданному фильтру услуг не найдено</Typography.Title>}
+              <Flex wrap="wrap" gap="large" style={{ flex: 1 }}>
                 {servicesFiltered &&
                   servicesFiltered.map((item) => (
                     <Link
@@ -308,7 +309,7 @@ export default function Services() {
                     </Link>
                   ))}
               </Flex>
-              
+
             </Flex>
 
           </>

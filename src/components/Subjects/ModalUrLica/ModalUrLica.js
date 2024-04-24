@@ -31,7 +31,7 @@ export default function ModalUrLica({
         setShowModal(false);
         deleteSubjectItem(id);
       },
-      onCancel() {},
+      onCancel() { },
     });
   };
 
@@ -49,16 +49,16 @@ export default function ModalUrLica({
     if (event.matchedWith) {
       obj.addressResidential = obj.addressRegistration;
     }
-    obj.confirmationDocument.dateIssue =
-      obj.confirmationDocument.dateIssue?.format("DD.MM.YYYY");
-    obj.confirmationDocument.dateIssueOtherDoc =
-      obj.confirmationDocument.dateIssueOtherDoc?.format("DD.MM.YYYY");
+    // obj.confirmationDocument.dateIssue =
+    //   obj.confirmationDocument.dateIssue?.format("DD.MM.YYYY");
+    // obj.confirmationDocument.dateIssueOtherDoc =
+    //   obj.confirmationDocument.dateIssueOtherDoc?.format("DD.MM.YYYY");
     obj.type = "Юридическое лицо";
     console.log(obj);
-    submitNewSubject(obj);
-    setShowModal(false);
+    //submitNewSubject(obj);
+    //setShowModal(false);
   };
-  
+
   return (
     <NewForm
       form={form}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Flex, Tag, Segmented, Divider, ConfigProvider } from 'antd'
+import { Button, Flex, Tag, Segmented, Divider, ConfigProvider, theme } from 'antd'
 import { CloseOutlined } from "@ant-design/icons";
 function arrToObj(arr, field) {
     const object = {}
@@ -16,6 +16,8 @@ function arrToObj(arr, field) {
 }
 
 export default function TagFilters({ array, handlerFilter }) {
+    // console.log(theme.useToken().token)
+    const { colorFill } = theme.useToken().token
     const [listFilters, setListFilter] = useState([])
     const [selectedTags, setSelectedTags] = useState([]);
     let objectFilters = {}
@@ -100,7 +102,7 @@ export default function TagFilters({ array, handlerFilter }) {
                         >
                             {item.value.map((tag) => (
                                 <Tag.CheckableTag
-                                    // style={{ padding: "5px 10px",border:"1px solid gray",borderRadius:"10px" }}
+                                     style={{ padding: "3px 7px",border:`1px solid ${colorFill}`,borderRadius:"10px",marginBottom: "5px" }}
                                     key={tag}
                                     checked={selectedTags.find(item => item.value === tag)}
                                     onChange={(checked) => handleChange({ component: item.component, value: tag }, checked)}

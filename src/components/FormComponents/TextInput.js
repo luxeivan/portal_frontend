@@ -11,7 +11,6 @@ export default function TextInput({
   required,
   description = 'Нет описания',
   depends,
-  inputProps,
   read,
   edit,
   value
@@ -19,6 +18,7 @@ export default function TextInput({
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   // -------------------------------------
   const form = Form.useFormInstance();
+  //Form.useWatch([], form)
   let show = true
   let showTemp = Form.useWatch(depends?.showIf ? depends?.showIf?.nameField : '', form) === depends?.showIf?.eq;
   if (depends && showTemp)
@@ -27,7 +27,7 @@ export default function TextInput({
     show = true
   else show = false
   // -------------------------------------
-  //  console.log('Отрисовка')
+   console.log('Отрисовка')
   //   console.log(Form.useWatch(depends?.[0]?.showIf?.nameField, form))
   // }
 
@@ -54,21 +54,21 @@ export default function TextInput({
           rules={!read && [{ required, message: `` }]}
         // initialValue={value}
         >
-          <div style={{ display: "flex", alignItems: "center" }}>
+          {/* <div style={{ display: "flex", alignItems: "center" }}> */}
             {!read &&
               <Input
                 placeholder={placeholder}
-                style={{ paddingRight: "30px" }}
-                {...inputProps}
-                defaultValue={value}
+                suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
+                // style={{ paddingRight: "30px" }}
+                //defaultValue={value}
               // value={value}
               />
             }
             {read &&
               <Typography.Text>{value}</Typography.Text>
             }
-            {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
-          </div>
+            {/* {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />} */}
+          {/* </div> */}
         </Form.Item>
         
           <Drawer
