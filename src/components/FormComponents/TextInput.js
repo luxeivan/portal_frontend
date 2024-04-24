@@ -53,7 +53,7 @@ export default function TextInput({
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
           rules={!read && [{ required, message: `` }]}
-        // initialValue={value}
+          initialValue={value}
         >
           {/* <div style={{ display: "flex", alignItems: "center" }}> */}
           {!read &&
@@ -62,8 +62,8 @@ export default function TextInput({
               suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
               // style={{ paddingRight: "30px" }}
               {...inputProps}
-              //defaultValue={value}
-              //value={value}
+            //defaultValue={value}
+            value={value}
             />
           }
           {read &&

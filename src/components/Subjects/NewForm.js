@@ -192,9 +192,9 @@ const NewForm = ({
       form={form}
       {...formItemLayout}
       onFinish={handlerSubmitForm}
-      initialValues={{
-        firstname: "qwerty",
-      }}
+      // initialValues={{
+      //   firstname: "qwerty",
+      // }}
     >
       {fields.map(renderField)}
       {!read && !edit && (

@@ -8,6 +8,7 @@ import axios from "axios";
 import config from "../../config";
 import moment from "moment";
 import useSubjects from "../../stores/Cabinet/useSubjects";
+import { formItemLayout } from "../../components/configSizeForm";
 
 const documentOptions = [
   { value: "Паспорт гражданина РФ", label: "Паспорт гражданина РФ" },
@@ -92,6 +93,7 @@ export default function ConfirmationDocument({ read, edit, value, name, }) {
     } else if (onlyNums.length > 3 && onlyNums.length <= 6) {
       formattedKod = `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
     }
+    //form.setFieldValue('kodPodrazdelenia', formattedKod)
     setKodPodrazdelenia(formattedKod);
   };
 
@@ -144,6 +146,21 @@ export default function ConfirmationDocument({ read, edit, value, name, }) {
                 }}
               />
               {/* Код подразделения */}
+              {/* <Form.Item
+              label="Код подразделения"
+                {...formItemLayout}
+                name={name}
+                initialValue={value}
+              >
+                <Input
+                  placeholder={"XXX-XXX"}
+                  maxLength={7}
+                  value={kodPodrazdelenia}
+                  onChange={handleKodPodrazdeleniaChange}
+
+                //suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
+                />
+              </Form.Item> */}
               <TextInput
                 read={read}
                 edit={edit}
