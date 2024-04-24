@@ -49,14 +49,8 @@ export default function ModalUrLica({
     if (event.matchedWith) {
       obj.addressResidential = obj.addressRegistration;
     }
-    // obj.confirmationDocument.dateIssue =
-    //   obj.confirmationDocument.dateIssue?.format("DD.MM.YYYY");
-    // obj.confirmationDocument.dateIssueOtherDoc =
-    //   obj.confirmationDocument.dateIssueOtherDoc?.format("DD.MM.YYYY");
     obj.type = "Юридическое лицо";
     console.log(obj);
-    //submitNewSubject(obj);
-    //setShowModal(false);
   };
 
   return (
@@ -72,11 +66,3 @@ export default function ModalUrLica({
     />
   );
 }
-
-// import React from "react";
-// import UrLicaInput from "./UrLicaInput";
-// import { Form } from "antd";
-
-// export default function ModalUrLica() {
-//   return <UrLicaInput />;
-// }

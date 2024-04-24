@@ -8,7 +8,8 @@
     "name": "inn",
     "displayName": "ИНН",
     "placeholder": "...",
-    "description": "ИНН"
+    "description": "ИНН",
+    "entityType": "LEGAL"
   },
   {
     "type": "divider",
