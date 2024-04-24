@@ -19,6 +19,7 @@ export default function ModalUrLica({
   useEffect(() => {
     form.resetFields();
   }, [showModalAdd, showModalView]);
+
   const handlerDelete = (id) => {
     confirm({
       title: "Вы уверены что хотите удалить субъект?",
@@ -33,6 +34,7 @@ export default function ModalUrLica({
       onCancel() {},
     });
   };
+
   const handlerEdit = (id) => {
     console.log("Обновить", id);
     console.log(form.getFieldValue());
@@ -56,6 +58,7 @@ export default function ModalUrLica({
     submitNewSubject(obj);
     setShowModal(false);
   };
+  
   return (
     <NewForm
       form={form}
