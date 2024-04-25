@@ -53,7 +53,7 @@ export default function ModalIP({
       obj.confirmationDocument.dateIssue?.format("DD.MM.YYYY");
     obj.confirmationDocument.dateIssueOtherDoc =
       obj.confirmationDocument.dateIssueOtherDoc?.format("DD.MM.YYYY");
-    obj.type = "Индивидуальный предприниматель";
+    obj.type = "ИП";
     console.log(obj);
     submitNewSubject(obj);
     setShowModal(false);
