@@ -6,11 +6,7 @@ import fieldsJson from "./FormIP.json";
 import { useEffect } from "react";
 const { confirm } = Modal;
 
-export default function ModalIP({
-  setShowModal,
-  read = false,
-  value = {},
-}) {
+export default function ModalIP({ setShowModal, read = false, value = {} }) {
   const showModalAdd = useSubjects((state) => state.showModalAdd);
   const showModalView = useSubjects((state) => state.showModalView);
   const [form] = Form.useForm();
@@ -58,7 +54,7 @@ export default function ModalIP({
     submitNewSubject(obj);
     setShowModal(false);
   };
-  
+
   return (
     <NewForm
       form={form}

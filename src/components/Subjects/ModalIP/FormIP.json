@@ -13,6 +13,13 @@
   },
   {
     "type": "textInput",
+    "name": "name",
+    "displayName": "Наименование",
+    "placeholder": "...",
+    "description": "Наименование"
+  },
+  {
+    "type": "textInput",
     "name": "okved",
     "displayName": "ОКВЭД",
     "placeholder": "...",
