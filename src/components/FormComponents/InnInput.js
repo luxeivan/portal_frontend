@@ -23,16 +23,17 @@ export default function InnInput({ name, type }) {
         },
       });
       if (response.data && response.data.data) {
+        console.log("Главный тест", response.data.data)
         setSuggestions(
           response.data.data.map((s) => ({
             value: s.data.inn,
             kpp: s.data.kpp,
             okved: s.data.okved,
-            full_with_opf: s.data.name.full_with_opf,
+            short_with_opf: s.data.name.short_with_opf,
             hid: s.data.hid,
             label: s.value,
             fullName: s.value,
-            short_with_opf: s.data.name.short_with_opf,
+            short: s.data.name.short,
             ogrn: s.data.ogrn,
             address: s.data.address,
             fullNameDirector: s.data.management?.name,
@@ -49,12 +50,12 @@ export default function InnInput({ name, type }) {
 
   const onSelect = (value, option) => {
     const orgData = suggestions.find((org) => org.hid === option.key);
-    console.log("Тест", orgData);
+    // console.log("Тест", orgData);
     if (orgData) {
       form.setFieldsValue({
         inn: orgData.value,
-        fullName: orgData.full_with_opf,
-        shortName: orgData.short_with_opf,
+        fullName: orgData.short_with_opf,
+        shortName: orgData.short,
         fullNameDirector: orgData.fullNameDirector,
         jobTitle: orgData.jobTitle,
         kpp: orgData.kpp,
