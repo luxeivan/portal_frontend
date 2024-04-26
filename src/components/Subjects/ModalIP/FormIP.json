@@ -13,7 +13,7 @@
   },
   {
     "type": "textInput",
-    "name": "name",
+    "name": "fullName",
     "displayName": "Наименование",
     "placeholder": "...",
     "description": "Наименование"
