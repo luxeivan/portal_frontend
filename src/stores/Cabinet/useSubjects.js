@@ -9,16 +9,30 @@ const useSubjects = create((set, get) => ({
   isLoadingSubjectItem: false,
   error: null,
   showModalView: false,
+  showModalYurView: false,
+  showModalIPView: false,
   showModalAdd: false,
 
   showSubject: async (id = false) => {
     if (id !== false) {
       console.log(id)
       await get().fetchSubjectItem(id)
-      set({ showModalView: true });
-    }else{
+      console.log(get().subject.attributes.type)
+      switch (get().subject.attributes.type) {
+        case 'Физическое лицо':
+          set({ showModalView: true });
+          break;
+        case 'Юридическое лицо':
+          set({ showModalYurView: true });
+          break;
+        case 'ИП':
+          console.log('123')
+          set({ showModalIPView: true });
+          break;
+      }
+    } else {
 
-      set({ showModalView: false, subject: null });
+      set({ showModalView: false, showModalYurView: false, showModalIPView: false, subject: null });
     }
   },
 

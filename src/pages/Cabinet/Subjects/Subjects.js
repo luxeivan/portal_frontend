@@ -36,9 +36,12 @@ export default function Subjects() {
   // Модалка просмотра физ лица
   const showModalView = useSubjects((state) => state.showModalView);
   const showSubject = useSubjects((state) => state.showSubject);
-
-  const showModaIPView = useSubjects((state) => state.showModalIPView);
-  const showSubjectIP = useSubjects((state) => state.showSubjectIP);
+  
+  // Модалка просмотра ИП
+  const showModalIPView = useSubjects((state) => state.showModalIPView);
+  
+  // Модалка просмотра Юр лиц
+  const showModalYurView = useSubjects((state) => state.showModaYurView);
 
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
@@ -229,8 +232,8 @@ export default function Subjects() {
       {/* Модалка для просмотра ИП*/}
       <Modal
         title="Просмотр ИП"
-        open={showModaIPView}
-        onCancel={() => showSubjectIP(false)}
+        open={showModalIPView}
+        onCancel={() => showSubject(false)}
         width={650}
         footer={null}
       >
@@ -240,7 +243,25 @@ export default function Subjects() {
             ...subject,
           }}
           //onSubmit={() => setShowModalAdd(false)}
-          setShowModal={showSubjectIP}
+          setShowModal={showSubject}
+          type={selectedType}
+        />
+      </Modal>
+      {/* Модалка для просмотра юр лиц*/}
+      <Modal
+        title="Просмотр юридического лица"
+        open={showModalYurView}
+        onCancel={() => showSubject(false)}
+        width={650}
+        footer={null}
+      >
+        <ModalIP
+          read
+          value={{
+            ...subject,
+          }}
+          //onSubmit={() => setShowModalAdd(false)}
+          setShowModal={showSubject}
           type={selectedType}
         />
       </Modal>
