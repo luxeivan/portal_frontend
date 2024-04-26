@@ -28,7 +28,7 @@ export default function InnInput({ name, type }) {
             value: s.data.inn,
             kpp: s.data.kpp,
             okved: s.data.okved,
-            full_with_opf: s.data.name,
+            full_with_opf: s.data.name.full_with_opf,
             hid: s.data.hid,
             label: s.value,
             name: s.value,

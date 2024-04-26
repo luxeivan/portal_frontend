@@ -31,7 +31,7 @@ export default function ModalUrLica({
         setShowModal(false);
         deleteSubjectItem(id);
       },
-      onCancel() { },
+      onCancel() {},
     });
   };
 
@@ -51,6 +51,8 @@ export default function ModalUrLica({
     }
     obj.type = "Юридическое лицо";
     console.log(obj);
+    submitNewSubject(obj);
+    setShowModal(false);
   };
 
   return (

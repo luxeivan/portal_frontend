@@ -37,6 +37,9 @@ export default function Subjects() {
   const showModalView = useSubjects((state) => state.showModalView);
   const showSubject = useSubjects((state) => state.showSubject);
 
+  const showModaIPView = useSubjects((state) => state.showModalIPView);
+  const showSubjectIP = useSubjects((state) => state.showSubjectIP);
+
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
 
@@ -173,24 +176,6 @@ export default function Subjects() {
           type={selectedType}
         />
       </Modal>
-      {/* Модалка для просмотра физ.лица */}
-      <Modal
-        title="Просмотр физического лица"
-        open={showModalView}
-        onCancel={() => showSubject(false)}
-        width={650}
-        footer={null}
-      >
-        <ModalFizLica
-          read
-          value={{
-            ...subject,
-          }}
-          //onSubmit={() => setShowModalAdd(false)}
-          setShowModal={showSubject}
-          type={selectedType}
-        />
-      </Modal>
 
       {/* Модалка для добавления юр.лица */}
       <Modal
@@ -218,6 +203,44 @@ export default function Subjects() {
         <ModalIP
           onSubmit={() => setShowModalIPAdd(false)}
           setShowModal={setShowModalIPAdd}
+          type={selectedType}
+        />
+      </Modal>
+
+      {/* Модалка для просмотра физ.лица */}
+      <Modal
+        title="Просмотр физического лица"
+        open={showModalView}
+        onCancel={() => showSubject(false)}
+        width={650}
+        footer={null}
+      >
+        <ModalFizLica
+          read
+          value={{
+            ...subject,
+          }}
+          //onSubmit={() => setShowModalAdd(false)}
+          setShowModal={showSubject}
+          type={selectedType}
+        />
+      </Modal>
+
+      {/* Модалка для просмотра ИП*/}
+      <Modal
+        title="Просмотр ИП"
+        open={showModaIPView}
+        onCancel={() => showSubjectIP(false)}
+        width={650}
+        footer={null}
+      >
+        <ModalIP
+          read
+          value={{
+            ...subject,
+          }}
+          //onSubmit={() => setShowModalAdd(false)}
+          setShowModal={showSubjectIP}
           type={selectedType}
         />
       </Modal>
