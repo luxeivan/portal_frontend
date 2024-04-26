@@ -41,7 +41,7 @@ export default function Subjects() {
   const showModalIPView = useSubjects((state) => state.showModalIPView);
   
   // Модалка просмотра Юр лиц
-  const showModalYurView = useSubjects((state) => state.showModaYurView);
+  const showModalYurView = useSubjects((state) => state.showModalYurView);
 
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
