@@ -29,10 +29,10 @@ export default function InnInput({ name, type, read, value }) {
             value: s.data.inn,
             kpp: s.data.kpp,
             okved: s.data.okved,
+            fullName: s.value,
             short_with_opf: s.data.name.short_with_opf,
             hid: s.data.hid,
             label: s.value,
-            fullName: s.value,
             short: s.data.name.short,
             ogrn: s.data.ogrn,
             address: s.data.address,
@@ -53,13 +53,14 @@ export default function InnInput({ name, type, read, value }) {
     // console.log("Тест", orgData);
     if (orgData) {
       form.setFieldsValue({
-        inn: orgData.value,
-        fullName: orgData.short_with_opf,
+        inn: orgData.value, //для ЮР и для ИП
+        okved: orgData.okved, //для ЮР и для ИП
+        // fullName: orgData.short_with_opf,
+        fullName: orgData.label,
         shortName: orgData.short,
         fullNameDirector: orgData.fullNameDirector,
         jobTitle: orgData.jobTitle,
         kpp: orgData.kpp,
-        okved: orgData.okved,
         name: orgData.name,
         ogrn: orgData.ogrn,
         urAddress: { fullAddress: orgData.address.value },
