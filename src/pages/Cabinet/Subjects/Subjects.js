@@ -247,6 +247,7 @@ export default function Subjects() {
           type={selectedType}
         />
       </Modal>
+      
       {/* Модалка для просмотра юр лиц*/}
       <Modal
         title="Просмотр юридического лица"

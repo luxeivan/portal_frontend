@@ -15,24 +15,28 @@ const useSubjects = create((set, get) => ({
 
   showSubject: async (id = false) => {
     if (id !== false) {
-      console.log(id)
-      await get().fetchSubjectItem(id)
-      console.log(get().subject.attributes.type)
+      console.log(id);
+      await get().fetchSubjectItem(id);
+      console.log(get().subject.attributes.type);
       switch (get().subject.attributes.type) {
-        case 'Физическое лицо':
+        case "Физическое лицо":
           set({ showModalView: true });
           break;
-        case 'Юридическое лицо':
+        case "Юридическое лицо":
           set({ showModalYurView: true });
           break;
-        case 'ИП':
-          console.log('123')
+        case "ИП":
+          console.log("123");
           set({ showModalIPView: true });
           break;
       }
     } else {
-
-      set({ showModalView: false, showModalYurView: false, showModalIPView: false, subject: null });
+      set({
+        showModalView: false,
+        showModalYurView: false,
+        showModalIPView: false,
+        subject: null,
+      });
     }
   },
 
@@ -80,16 +84,16 @@ const useSubjects = create((set, get) => ({
           }
         );
         set({ subject: response.data, isLoadingSubjectItem: false });
-        resolve()
+        resolve();
       } catch (error) {
         console.log(error);
         set({
           error: error.response?.data?.message || error.message,
           isLoading: false,
         });
-        reject()
+        reject();
       }
-    })
+    });
   },
 
   submitNewSubject: async (formData) => {
@@ -114,11 +118,10 @@ const useSubjects = create((set, get) => ({
         return response.data.subject;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       throw error;
     }
   },
-
 
   deleteSubjectItem: async (id) => {
     try {
@@ -132,7 +135,9 @@ const useSubjects = create((set, get) => ({
           },
         }
       );
-      set((state) => ({ subjects: state.subjects.filter(item => item.id !== id) }));
+      set((state) => ({
+        subjects: state.subjects.filter((item) => item.id !== id),
+      }));
     } catch (error) {
       console.log(error);
       set({
@@ -144,4 +149,3 @@ const useSubjects = create((set, get) => ({
 }));
 
 export default useSubjects;
-
