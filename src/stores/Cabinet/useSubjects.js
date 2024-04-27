@@ -13,6 +13,7 @@ const useSubjects = create((set, get) => ({
   showModalIPView: false,
   showModalAdd: false,
 
+  // Показать модальное окно для субъекта или скрыть его
   showSubject: async (id = false) => {
     if (id !== false) {
       console.log(id);
@@ -40,14 +41,17 @@ const useSubjects = create((set, get) => ({
     }
   },
 
+  // Установить отображение модального окна для просмотра
   setShowModalView: (show) => {
     set({ showModalView: show });
   },
 
+  // Установить отображение модального окна для добавления
   setShowModalAdd: (show) => {
     set({ showModalAdd: show });
   },
 
+  // Получить список всех субъектов
   fetchSubjects: async () => {
     try {
       set({ isLoadingSubjects: true });
@@ -70,6 +74,7 @@ const useSubjects = create((set, get) => ({
     }
   },
 
+  // Получить детали конкретного субъекта
   fetchSubjectItem: async (id) => {
     return new Promise(async function (resolve, reject) {
       try {
@@ -96,6 +101,7 @@ const useSubjects = create((set, get) => ({
     });
   },
 
+  // Добавить новый субъект
   submitNewSubject: async (formData) => {
     try {
       const response = await axios.post(
@@ -123,6 +129,7 @@ const useSubjects = create((set, get) => ({
     }
   },
 
+  // Удалить субъект
   deleteSubjectItem: async (id) => {
     try {
       set({ isLoadingSubjectItem: true });
