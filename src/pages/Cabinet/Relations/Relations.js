@@ -19,6 +19,8 @@ const stylesForCard = {
   header: { backgroundColor: "red" },
 };
 
+console.log("")
+
 export default function Relations() {
   return (
     <div>
