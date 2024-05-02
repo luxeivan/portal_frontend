@@ -30,8 +30,6 @@ export default function TextInput({
   else show = false
   // -------------------------------------
   
-
-
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const showDrawer = () => setDrawerVisible(true);

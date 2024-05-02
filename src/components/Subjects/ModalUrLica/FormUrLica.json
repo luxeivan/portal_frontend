@@ -1,14 +1,15 @@
 [
   {
     "type": "divider",
-    "name": "Автозаполнение по ИНН"
+    "name": "Автозаполнение по ИНН (5032137342)"
   },
   {
     "type": "innInput",
     "name": "inn",
     "displayName": "ИНН",
     "placeholder": "...",
-    "description": "ИНН"
+    "description": "ИНН",
+    "entityType": "LEGAL"
   },
   {
     "type": "divider",

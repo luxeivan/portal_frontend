@@ -9,27 +9,49 @@ const useSubjects = create((set, get) => ({
   isLoadingSubjectItem: false,
   error: null,
   showModalView: false,
+  showModalYurView: false,
+  showModalIPView: false,
   showModalAdd: false,
 
+  // Показать модальное окно для субъекта или скрыть его
   showSubject: async (id = false) => {
     if (id !== false) {
-      console.log(id)
-      await get().fetchSubjectItem(id)
-      set({ showModalView: true });
-    }else{
-
-      set({ showModalView: false, subject: null });
+      console.log(id);
+      await get().fetchSubjectItem(id);
+      console.log(get().subject.attributes.type);
+      switch (get().subject.attributes.type) {
+        case "Физическое лицо":
+          set({ showModalView: true });
+          break;
+        case "Юридическое лицо":
+          set({ showModalYurView: true });
+          break;
+        case "ИП":
+          console.log("123");
+          set({ showModalIPView: true });
+          break;
+      }
+    } else {
+      set({
+        showModalView: false,
+        showModalYurView: false,
+        showModalIPView: false,
+        subject: null,
+      });
     }
   },
 
+  // Установить отображение модального окна для просмотра
   setShowModalView: (show) => {
     set({ showModalView: show });
   },
 
+  // Установить отображение модального окна для добавления
   setShowModalAdd: (show) => {
     set({ showModalAdd: show });
   },
 
+  // Получить список всех субъектов
   fetchSubjects: async () => {
     try {
       set({ isLoadingSubjects: true });
@@ -52,6 +74,7 @@ const useSubjects = create((set, get) => ({
     }
   },
 
+  // Получить детали конкретного субъекта
   fetchSubjectItem: async (id) => {
     return new Promise(async function (resolve, reject) {
       try {
@@ -66,18 +89,19 @@ const useSubjects = create((set, get) => ({
           }
         );
         set({ subject: response.data, isLoadingSubjectItem: false });
-        resolve()
+        resolve();
       } catch (error) {
         console.log(error);
         set({
           error: error.response?.data?.message || error.message,
           isLoading: false,
         });
-        reject()
+        reject();
       }
-    })
+    });
   },
 
+  // Добавить новый субъект
   submitNewSubject: async (formData) => {
     try {
       const response = await axios.post(
@@ -100,12 +124,12 @@ const useSubjects = create((set, get) => ({
         return response.data.subject;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       throw error;
     }
   },
 
-
+  // Удалить субъект
   deleteSubjectItem: async (id) => {
     try {
       set({ isLoadingSubjectItem: true });
@@ -118,7 +142,9 @@ const useSubjects = create((set, get) => ({
           },
         }
       );
-      set((state) => ({ subjects: state.subjects.filter(item => item.id !== id) }));
+      set((state) => ({
+        subjects: state.subjects.filter((item) => item.id !== id),
+      }));
     } catch (error) {
       console.log(error);
       set({
@@ -130,4 +156,3 @@ const useSubjects = create((set, get) => ({
 }));
 
 export default useSubjects;
-
