@@ -68,12 +68,76 @@ export default function Objects() {
 
   return (
     <div>
-      {/* <AppHelmet title={"Объекты"} desc={"Объекты подключения"} />
+      <AppHelmet title={"Объекты"} desc={"Объекты подключения"} />
       <Title level={1}>Объекты подключения</Title>
 
-      <Skeleton active avatar paragraph={{ rows: 2 }} />
-      <Skeleton active avatar paragraph={{ rows: 2 }} />
-      <Skeleton active avatar paragraph={{ rows: 2 }} /> */}
+      
+      <Flex wrap="wrap" gap="large">
+        {objects.map((object) => (
+          <Card
+            hoverable
+            key={object.id}
+            styles={stylesForCard}
+            className={styles.objectCard}
+            onClick={() => {
+              showObject(object.id);
+              // await fetchSubjectItem(subject.id);
+              //setShowModalView(true);
+            }}
+          >
+            <Typography.Title level={5} className={styles.objectCardTitle}>
+              {object?.attributes.name}
+            </Typography.Title>
+            <Meta description={object?.attributes.type} />
+            <Flex justify="flex-end" className={styles.objectCardImage}>
+              <Image
+                width={"50%"}
+                src={
+                  object?.attributes.type === "Объект"
+                    ? person
+                    : organization
+                }
+                preview={false}
+              />
+            </Flex>
+          </Card>
+        ))}
+        <Card
+          hoverable
+          styles={stylesForCard}
+          className={styles.objectCard}
+          onClick={() => setShowCategoryModal(true)}
+        >
+          <Flex
+            align="stretch"
+            justify="center"
+            style={{ minHeight: "100%", width: "100%" }}
+          >
+            <PlusOutlined />
+          </Flex>
+        </Card>
+      </Flex>
+      {objects.length === 0 && <p>Объекты не найдены</p>}
+
+      <Modal
+        title="Выберите тип объекта(если есть)"
+        open={showCategoryModal}
+        onCancel={() => setShowCategoryModal(false)}
+        footer={null}
+        width={700}
+        name="type"
+      >
+        <Flex gap="large" wrap="wrap" justify="center">
+          <Button
+            className={styles.buttontypenewobject}
+            onClick={() => handleCategorySelect("object")}
+          >
+            Объект
+            <br /> 
+          </Button>
+        </Flex>
+      </Modal>
+
     </div>
   );
 }
