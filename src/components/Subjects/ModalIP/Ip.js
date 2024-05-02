@@ -1,6 +1,6 @@
-import React from 'react';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import React from "react";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Form, Input } from "antd";
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -33,7 +33,7 @@ const formItemLayoutWithOutLabel = {
 };
 const Ip = () => {
   const onFinish = (values) => {
-    console.log('Received values of form:', values);
+    console.log("Received values of form:", values);
   };
   return (
     <Form
@@ -50,7 +50,7 @@ const Ip = () => {
           {
             validator: async (_, names) => {
               if (!names || names.length < 2) {
-                return Promise.reject(new Error('At least 2 passengers'));
+                return Promise.reject(new Error("At least 2 passengers"));
               }
             },
           },
@@ -61,18 +61,19 @@ const Ip = () => {
             {fields.map((field, index) => (
               <Form.Item
                 {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                label={index === 0 ? 'Passengers' : ''}
+                label={index === 0 ? "Passengers" : ""}
                 required={false}
                 key={field.key}
               >
                 <Form.Item
                   {...field}
-                  validateTrigger={['onChange', 'onBlur']}
+                  validateTrigger={["onChange", "onBlur"]}
                   rules={[
                     {
                       required: true,
                       whitespace: true,
-                      message: "Please input passenger's name or delete this field.",
+                      message:
+                        "Please input passenger's name or delete this field.",
                     },
                   ]}
                   noStyle
@@ -80,7 +81,7 @@ const Ip = () => {
                   <Input
                     placeholder="passenger name"
                     style={{
-                      width: '60%',
+                      width: "60%",
                     }}
                   />
                 </Form.Item>
@@ -97,7 +98,7 @@ const Ip = () => {
                 type="dashed"
                 onClick={() => add()}
                 style={{
-                  width: '60%',
+                  width: "60%",
                 }}
                 icon={<PlusOutlined />}
               >
@@ -106,11 +107,11 @@ const Ip = () => {
               <Button
                 type="dashed"
                 onClick={() => {
-                  add('The head item', 0);
+                  add("The head item", 0);
                 }}
                 style={{
-                  width: '60%',
-                  marginTop: '20px',
+                  width: "60%",
+                  marginTop: "20px",
                 }}
                 icon={<PlusOutlined />}
               >

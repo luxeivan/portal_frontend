@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Input, Form, Typography } from "antd";
 // import SnilsJson from "../Subjects/SnilsJson.json";
 
-export default function SnilsInput({ form, read, value = "", name = "snils" }) {
+export default function SnilsInput({ read, value = "", name = "snils" }) {
+  const form = Form.useFormInstance();
   // const [snils, setSnils] = useState(123)
   const { label, placeholder, maxLength } = {
     dividerText: "СНИЛС",

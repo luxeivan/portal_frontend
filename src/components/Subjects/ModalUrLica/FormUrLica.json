@@ -1,0 +1,176 @@
+[
+  {
+    "type": "divider",
+    "name": "Автозаполнение по ИНН (5032137342)"
+  },
+  {
+    "type": "innInput",
+    "name": "inn",
+    "displayName": "ИНН",
+    "placeholder": "...",
+    "description": "ИНН",
+    "entityType": "LEGAL"
+  },
+  {
+    "type": "divider",
+    "name": "Наименование организации"
+  },
+  {
+    "type": "textInput",
+    "name": "fullName",
+    "displayName": "Полное",
+    "placeholder": "АО 'Райан Гослинг'",
+    "description": "Введите поолное наименование организации"
+  },
+  {
+    "type": "textInput",
+    "name": "shortName",
+    "displayName": "Сокращённое",
+    "placeholder": "Райан Гослинг",
+    "description": "Введите сокращённое наименование организации"
+  },
+  {
+    "type": "divider",
+    "name": "ЕГРЮЛ"
+  },
+  {
+    "type": "textInput",
+    "name": "numberEgrul",
+    "displayName": "Номер записи в ЕГРЮЛ",
+    "placeholder": "1234567890987",
+    "description": "Введите номер записи в ЕГРЮЛ"
+  },
+  {
+    "type": "dateInput",
+    "name": "dateIssueEgrul",
+    "displayName": "Дата выдачи EГРЮЛ",
+    "placeholder": "10.04.1995",
+    "description": "Введите дату выдачи ЕГРЮЛ"
+  },
+  {
+    "type": "divider",
+    "name": "КПП, ОКВЭД"
+  },
+  
+  {
+    "type": "textInput",
+    "name": "kpp",
+    "displayName": "КПП",
+    "placeholder": "...",
+    "description": "КПП"
+  },
+  {
+    "type": "textInput",
+    "name": "okved",
+    "displayName": "ОКВЭД",
+    "placeholder": "...",
+    "description": "ОКВЭД"
+  },
+  {
+    "type": "divider",
+    "name": "Данные руководителя организации"
+  },
+  {
+    "type": "textInput",
+    "name": "fullNameDirector",
+    "displayName": "ФИО руководителя",
+    "placeholder": "Гослинг Райан Драйвович",
+    "description": "Введите ФИО руководителя. Отчество укажите, если оно есть"
+  },
+  {
+    "type": "textInput",
+    "name": "jobTitle",
+    "displayName": "Должность",
+    "placeholder": "Директор",
+    "description": "Введите  должность руководителя"
+  },
+  {
+    "type": "textInput",
+    "name": "foundingPosition",
+    "displayName": "Основание должности",
+    "placeholder": "...",
+    "description": "Введите  основание должность руководителя"
+  },
+  {
+    "type": "divider",
+    "name": "Представитель организации"
+  },
+
+  {
+    "type": "checkboxInput",
+    "name": "checkboxRepresentative",
+    "displayName": "Заполнить по руководителю",
+    "bindFields": [
+      {
+        "source": "fullNameDirector",
+        "target": "fullNameRepresentative"
+      },
+      {
+        "source": "jobTitle",
+        "target": "jobTitleRepresentative"
+      },
+      {
+        "source": "foundingPosition",
+        "target": "foundingRepresentative"
+      }
+    ]
+  },
+
+  {
+    "type": "textInput",
+    "name": "fullNameRepresentative",
+    "displayName": "ФИО лица, подписывающего документы",
+    "placeholder": "Гослинг Райан Драйвович",
+    "description": "Введите ФИО лица, подписывающего документы. Отчество укажите, если оно есть"
+  },
+  {
+    "type": "textInput",
+    "name": "jobTitleRepresentative",
+    "displayName": "Должность представителя",
+    "placeholder": "Директор",
+    "description": "Введите  должность руководителя"
+  },
+  {
+    "type": "textInput",
+    "name": "foundingRepresentative",
+    "displayName": "Основание должности",
+    "placeholder": "...",
+    "description": "Введите  основание должность лица, подписывающего документы."
+  },
+  {
+    "type": "divider",
+    "name": "Юридический адрес"
+  },
+  {
+    "type": "addressInput",
+    "name": "urAddress",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Выберите или введите вручную юридический адрес",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Почтовый адрес"
+  },
+  {
+    "type": "addressInput",
+    "name": "mailingAddress",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Выберите или введите вручную почтовый адрес",
+    "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Файлы"
+  },
+  {
+    "type": "uploaderInput",
+    "name": "fileDoc",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Выберите или введите вручную адрес проживания",
+    "required": false
+  }
+]

@@ -8,7 +8,7 @@ import config from "../../../config";
 import manualInputFields from "./ManualInputFields.json";
 
 export default function AddressInput({
-  form,
+  
   read,
   edit,
   value = [],
@@ -17,6 +17,7 @@ export default function AddressInput({
   matchedWith = false
   // manualInputFields,
 }) {
+  const form = Form.useFormInstance();
   const [manualInput, setManualInput] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState("");
   const [addressOptions, setAddressOptions] = useState([]);
@@ -158,7 +159,8 @@ export default function AddressInput({
                       >
                         <TextArea
                           placeholder="Начните вводить адрес"
-                          style={{ height: 60 }}
+                          autoSize={true}
+                          // style={{ height: 60 }}
                         />
                       </AutoComplete>
                     )}

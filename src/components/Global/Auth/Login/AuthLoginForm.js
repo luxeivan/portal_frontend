@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Alert, Space, Flex } from "antd";
+import { Button, Form, Input, Alert, Space, Flex,Typography } from "antd";
 import useAuth from "../../../../stores/useAuth";
 import CodeForm from "./CodeForm";
 import styles from "./AuthLoginForm.module.css";
@@ -77,6 +77,7 @@ export default function AuthLoginForm() {
         >
           <Input.Password />
         </Form.Item>
+        <Typography.Text>Если забыли пароль или поменялся номер телефона то пройдите регистрацию заново с тем же E-mail</Typography.Text>
 
         <Form.Item
           {...tailFormItemLayout}

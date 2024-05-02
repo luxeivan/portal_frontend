@@ -8,6 +8,7 @@ import axios from "axios";
 import config from "../../config";
 import moment from "moment";
 import useSubjects from "../../stores/Cabinet/useSubjects";
+import { formItemLayout } from "../../components/configSizeForm";
 
 const documentOptions = [
   { value: "Паспорт гражданина РФ", label: "Паспорт гражданина РФ" },
@@ -18,7 +19,8 @@ locale.DatePicker.lang = {
   shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек',],
 }
 
-export default function ConfirmationDocument({ form, read, edit, value, name, }) {
+export default function ConfirmationDocument({ read, edit, value, name, }) {
+  const form = Form.useFormInstance();
   const showModalAdd = useSubjects((state) => state.showModalAdd);
   const showModalView = useSubjects((state) => state.showModalView);
   const [kodPodrazdelenia, setKodPodrazdelenia] = useState("");
@@ -91,6 +93,7 @@ export default function ConfirmationDocument({ form, read, edit, value, name, })
     } else if (onlyNums.length > 3 && onlyNums.length <= 6) {
       formattedKod = `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
     }
+    //form.setFieldValue('kodPodrazdelenia', formattedKod)
     setKodPodrazdelenia(formattedKod);
   };
 
@@ -143,6 +146,21 @@ export default function ConfirmationDocument({ form, read, edit, value, name, })
                 }}
               />
               {/* Код подразделения */}
+              {/* <Form.Item
+              label="Код подразделения"
+                {...formItemLayout}
+                name={name}
+                initialValue={value}
+              >
+                <Input
+                  placeholder={"XXX-XXX"}
+                  maxLength={7}
+                  value={kodPodrazdelenia}
+                  onChange={handleKodPodrazdeleniaChange}
+
+                //suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
+                />
+              </Form.Item> */}
               <TextInput
                 read={read}
                 edit={edit}
@@ -154,7 +172,7 @@ export default function ConfirmationDocument({ form, read, edit, value, name, })
                 shortDescription="123-456"
                 inputProps={{
                   maxLength: 7,
-                  value: kodPodrazdelenia,
+                  //value: kodPodrazdelenia,
                   onChange: handleKodPodrazdeleniaChange,
                 }}
                 rules={[

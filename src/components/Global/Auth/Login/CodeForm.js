@@ -31,15 +31,15 @@ export default function CodeForm() {
 
   return (
     <>
-      <Title level={5}>Сейчас Вам поступит телефонный звонок, отвечать на него не нужно.</Title>
-      <Typography.Text level={5}>Введите последние 4 цифры:</Typography.Text>
+      {/* <Title level={5}>Сейчас Вам поступит телефонный звонок, отвечать на него не нужно.</Title> */}
+      <Typography.Text level={5}>Введите код из СМС:</Typography.Text>
       <Form
         ref={formRef}
         name="codeForm"
         onFinish={onFinish}
         className={styles.codeFormContainer}
       >
-        <Form.Item name="pin1" rules={[{ required: true }]}>
+              <Form.Item name="pin1" rules={[{ required: true }]}>
           <Input
             className={styles.codeInput}
             ref={inputRef1}
