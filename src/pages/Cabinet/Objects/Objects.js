@@ -5,7 +5,7 @@ import SceletonCard from "../../../components/SceletonCard";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import person from "../../../img/subjects/person3.svg";
 import organization from "../../../img/subjects/organization.svg";
-import useSubjects from "../../../stores/Cabinet/useObject";
+import useObjects from "../../../stores/Cabinet/useObject";
 import styles from "./Objects.module.css";
 
 // import ModalFizLica from "../../../components/Subjects/ModalFizLica/ModalFizLica";
@@ -26,6 +26,46 @@ const stylesForCard = {
 };
 
 export default function Objects() {
+  // Модалка добавления физ лица
+  const showModalAdd = useObjects((state) => state.showModalAdd);
+  const setShowModalAdd = useObjects((state) => state.setShowModalAdd);
+
+  // Модалка просмотра физ лица
+  const showModalView = useObjects((state) => state.showModalView);
+  const showObject = useObjects((state) => state.showObject);
+
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [selectedType, setSelectedType] = useState(null);
+
+  const object = useObjects((state) => state.object);
+  const objects = useObjects((state) => state.objects);
+  const isLoadingObjects = useObjects((state) => state.isLoadingObjects);
+  const fetchObjects = useObjects((state) => state.fetchObjects);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      fetchObjects();
+    }
+  }, [fetchObjects]);
+
+  if (isLoadingObjects) {
+    return (
+      <>
+        <Title level={1}>Объекты</Title>
+        <SceletonCard />
+      </>
+    );
+  }
+
+  const handleCategorySelect = (type) => {
+    setShowCategoryModal(false);
+    setSelectedType(type); // Сохраняем выбранный тип
+    if (type === "object") {
+      setShowModalAdd(true);
+    }
+  };
+
   return (
     <div>
       {/* <AppHelmet title={"Объекты"} desc={"Объекты подключения"} />
@@ -35,5 +75,5 @@ export default function Objects() {
       <Skeleton active avatar paragraph={{ rows: 2 }} />
       <Skeleton active avatar paragraph={{ rows: 2 }} /> */}
     </div>
-  )
+  );
 }
