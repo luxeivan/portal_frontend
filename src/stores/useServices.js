@@ -8,7 +8,7 @@ const useServices = create((set) => ({
     
     fetchServices: async (url, type) => {
         set((state) => ({ services: [] }))
-        const res = await axios.get(`${config.apiServer}/api/${url}?populate[0]=icon&populate[1]=filters&pagination=100&sort=sort`)
+        const res = await axios.get(`${config.apiServer}/api/${url}?populate[0]=icon&populate[1]=filters&pagination[pageSize]=100&sort=sort`)
         set((state) => {
             return {
                 services: res.data.data
