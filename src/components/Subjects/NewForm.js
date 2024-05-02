@@ -84,16 +84,16 @@ const NewForm = ({
       case "divider":
         return <Divider key={index}>{field.name}</Divider>;
       case "textInput":
-          return (
-            <TextInput
-              // form={form}
-              key={index}
-              {...field}
-              read={read}
-              edit={edit}
-              value={value[field.name]}
-            />
-          );        
+        return (
+          <TextInput
+            // form={form}
+            key={index}
+            {...field}
+            read={read}
+            edit={edit}
+            value={value[field.name]}
+          />
+        );
       case "innInput":
         return (
           <InnKppOkvedInput
@@ -144,7 +144,7 @@ const NewForm = ({
             read={read}
             edit={edit}
             value={value[field.name]}
-            // form={form}
+          // form={form}
           />
         );
       case "dateInput":
@@ -192,9 +192,7 @@ const NewForm = ({
       form={form}
       {...formItemLayout}
       onFinish={handlerSubmitForm}
-      // initialValues={{
-      //   firstname: "qwerty",
-      // }}
+      initialValues={edit ? value : false}
     >
       {fields.map(renderField)}
       {!read && !edit && (
