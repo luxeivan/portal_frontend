@@ -1,0 +1,11 @@
+[
+      {
+        "type": "nameObjectInput",
+        "name": "fullName",
+        "displayName": "Наименование",
+        "placeholder": "...",
+        "description": "Наименование присоединяемого объекта потребления электрической энергии",
+        "required": true
+      }
+
+]
