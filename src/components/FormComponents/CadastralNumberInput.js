@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Checkbox, Space } from 'antd';
+import React, { useState } from "react";
+import { Form, Input, Button, Checkbox, Space } from "antd";
 
 const CadastralNumberInput = ({ form }) => {
-  const [inputList, setInputList] = useState([{ value: '' }]);
+  const [inputList, setInputList] = useState([{ value: "" }]);
   const [isCadastralNumberAbsent, setIsCadastralNumberAbsent] = useState(false);
 
   // Функция для форматирования ввода кадастрового номера
   const formatCadastralNumber = (value) => {
-    const numbers = value.replace(/[^0-9]/g, '');
-    let result = '';
+    const numbers = value.replace(/[^0-9]/g, "");
+    let result = "";
     for (let i = 0; i < numbers.length && i < 16; i++) {
-      if (i === 2 || i === 4 || i === 11) {
-        result += numbers[i] + ':';
-      } else {
-        result += numbers[i];
+      result += numbers[i];
+      if (i === 1 || i === 3) {
+        result += ":";
+      } else if (i === 9 && numbers.length <= 13) {
+        result += ":";
+      } else if (i === 10 && numbers.length > 13) {
+        result += ":";
       }
     }
     return result;
@@ -28,11 +31,11 @@ const CadastralNumberInput = ({ form }) => {
 
   // Функция для добавления нового поля кадастрового номера
   const handleAddClick = () => {
-    setInputList([...inputList, { value: '' }]);
+    setInputList([...inputList, { value: "" }]);
   };
 
   // Функция для удаления поля кадастрового номера
-  const handleRemoveClick = index => {
+  const handleRemoveClick = (index) => {
     const list = [...inputList];
     list.splice(index, 1);
     setInputList(list);
@@ -48,33 +51,38 @@ const CadastralNumberInput = ({ form }) => {
       <Checkbox
         checked={isCadastralNumberAbsent}
         onChange={handleCheckboxChange}
-        style={{ marginBottom: '10px' }}
+        style={{ marginBottom: "10px" }}
       >
         Кадастровый номер отсутствует
       </Checkbox>
 
       {!isCadastralNumberAbsent && (
-        <Space direction="vertical" style={{ width: '100%' }}>
+        <Space direction="vertical" style={{ width: "100%" }}>
           {inputList.map((item, index) => (
-            <Space key={index} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+            <div
+              key={index}
+              style={{ display: "flex", marginBottom: 8 }}
+              align="baseline"
+            >
               <Input
                 placeholder="Введите кадастровый номер"
                 value={item.value}
-                onChange={e => handleInputChange(e, index)}
-                style={{ width: '100%' }}
+                onChange={(e) => handleInputChange(e, index)}
+                style={{ width: "100%" }}
               />
               {inputList.length !== 1 && (
-                <Button
-                  type="danger"
-                  onClick={() => handleRemoveClick(index)}
-                >
+                <Button type="danger" onClick={() => handleRemoveClick(index)}>
                   Удалить
                 </Button>
               )}
-            </Space>
+            </div>
           ))}
           {inputList.length < 5 && (
-            <Button type="dashed" onClick={handleAddClick} style={{ width: '100%' }}>
+            <Button
+              type="dashed"
+              onClick={handleAddClick}
+              style={{ width: "100%" }}
+            >
               Добавить номер
             </Button>
           )}
@@ -86,8 +94,7 @@ const CadastralNumberInput = ({ form }) => {
 
 export default CadastralNumberInput;
 
-
-// кадастровые номера -  в виде поля ввода с маской кадастра 
-// и возможностью добавления нескольких 
-// (должна быть кнопка с плюсиком для добавления нескольких полей, можно пока ограничить пятью) 
+// кадастровые номера -  в виде поля ввода с маской кадастра
+// и возможностью добавления нескольких
+// (должна быть кнопка с плюсиком для добавления нескольких полей, можно пока ограничить пятью)
 // и еще галочка "кадастровый номер отсутствует"
