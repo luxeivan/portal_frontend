@@ -11,8 +11,8 @@ export default function ModalObject({ setShowModal, read = false, value = {}, })
   const showModalAdd = useObject((state) => state.showModalAdd);
   const showModalView = useObject((state) => state.showModalView);
   const [form] = Form.useForm();
-  const deleteSubjectItem = useObject((store) => store.deleteSubjectItem);
-  const submitNewSubject = useObject((store) => store.submitNewSubject);
+  const deleteObjectItem = useObject((store) => store.deleteObjectItem);
+  const submitNewObject = useObject((store) => store.submitNewObject);
   useEffect(()=>{
     form.resetFields()
   },[showModalAdd,showModalView])
@@ -26,7 +26,7 @@ export default function ModalObject({ setShowModal, read = false, value = {}, })
       onOk() {
        // console.log("del", id);
        setShowModal(false);
-       deleteSubjectItem(id);
+       deleteObjectItem(id);
       },
       onCancel() {
         // console.log("Cancel");
@@ -49,11 +49,8 @@ export default function ModalObject({ setShowModal, read = false, value = {}, })
     if (event.matchedWith) {
       obj.addressResidential = obj.addressRegistration
     }
-    obj.confirmationDocument.dateIssue = obj.confirmationDocument.dateIssue?.format('DD.MM.YYYY')
-    obj.confirmationDocument.dateIssueOtherDoc = obj.confirmationDocument.dateIssueOtherDoc?.format('DD.MM.YYYY')
-    obj.type = "Объект"
     console.log(obj)
-    submitNewSubject(obj)
+    submitNewObject(obj)
     setShowModal(false);
   }
   return (

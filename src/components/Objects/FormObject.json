@@ -17,7 +17,7 @@
   },
   {
     "type": "сadastralNumberInput",
-    "name": "сadastralNumbePlot",
+    "name": "сadastralNumber",
     "displayName": "Номер участка",
     "placeholder": "12:34:1234567:1234",
     "description": "Введите кадастровый номер участка",
