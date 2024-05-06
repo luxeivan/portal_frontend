@@ -29,7 +29,7 @@ export default function TextInput({
     show = true
   else show = false
   // -------------------------------------
-  
+
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const showDrawer = () => setDrawerVisible(true);
@@ -49,7 +49,18 @@ export default function TextInput({
           {...formItemLayout}
           name={name}
           label={<Typography.Text>{displayName}</Typography.Text>}
-          rules={!read && [{ required, message: `` }]}
+          rules={
+            // () => {
+            //   if (!read) {
+            //     if (rules) {
+            //       return [{ required, message: `` }, ...rules]
+            //     } else {                  
+            //       return [{ required, message: `` }]
+            //     }
+            //   }
+            // }
+            !read && rules ? [{ required, message: `` }, ...rules] : [{ required, message: `` }]
+          }
           initialValue={value}
         >
           {/* <div style={{ display: "flex", alignItems: "center" }}> */}
@@ -59,8 +70,8 @@ export default function TextInput({
               suffix={<InfoCircleOutlined style={iconStyle} onClick={showDrawer} />}
               // style={{ paddingRight: "30px" }}
               {...inputProps}
-              //defaultValue={value}
-              //value={value}
+            //defaultValue={value}
+            //value={value}
             />
           }
           {read &&

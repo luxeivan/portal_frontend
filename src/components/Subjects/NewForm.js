@@ -141,6 +141,7 @@ const NewForm = ({
 
   return (
     <Form
+      scrollToFirstError
       form={form}
       {...formItemLayout}
       onFinish={handlerSubmitForm}
