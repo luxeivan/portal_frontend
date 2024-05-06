@@ -1,37 +1,3 @@
-// import React from "react";
-// import { Form, Checkbox } from "antd";
-
-// const CheckboxInput = ({ name, displayName, bindFields, form, read }) => {
-//   const onChange = (e) => {
-//     console.log("Checkbox changed", e.target.checked);
-//     const checked = e.target.checked;
-//     const fieldsValue = {};
-
-//     bindFields.forEach(({ source, target }) => {
-//         console.log(
-//           "Setting",
-//           target,
-//           "to",
-//           checked ? form.getFieldValue(source) : undefined
-//         );
-//         fieldsValue[target] = checked ? form.getFieldValue(source) : undefined;
-//       });
-
-//       console.log("Fields to set", fieldsValue);
-//       form.setFieldsValue(fieldsValue);
-//     };
-
-//   return (
-//     <Form.Item name={name} valuePropName="checked">
-//       <Checkbox onChange={onChange} disabled={read}>
-//         {displayName}
-//       </Checkbox>
-//     </Form.Item>
-//   );
-// };
-
-// export default CheckboxInput;
-
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Checkbox, Form, Popover, theme, Drawer } from "antd";
 import React, { useState } from "react";
