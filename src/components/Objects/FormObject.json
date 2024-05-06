@@ -6,6 +6,14 @@
         "placeholder": "...",
         "description": "Наименование присоединяемого объекта потребления электрической энергии",
         "required": true
+      },
+      {
+        "type": "сadastralNumberInput",
+        "name": "сadastralNumbePlot",
+        "displayName": "Номер участка",
+        "placeholder": "12:34:1234567:1234",
+        "description": "Введите кадастровый номер участка",
+        "required": true
       }
 
 ]
