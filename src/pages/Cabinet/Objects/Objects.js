@@ -7,6 +7,7 @@ import person from "../../../img/subjects/person3.svg";
 import organization from "../../../img/subjects/organization.svg";
 import useObjects from "../../../stores/Cabinet/useObject";
 import styles from "./Objects.module.css";
+import ModalObject from "../../../components/Objects/ModalObject";
 
 // import ModalFizLica from "../../../components/Subjects/ModalFizLica/ModalFizLica";
 // import ModalUrLica from "../../../components/Subjects/ModalUrLica/ModalUrLica";
@@ -136,6 +137,21 @@ export default function Objects() {
             <br /> 
           </Button>
         </Flex>
+      </Modal>
+
+      {/* Модалка для добавления объекта */}
+      <Modal
+        title="Добавление объекта"
+        open={showModalAdd}
+        onCancel={() => setShowModalAdd(false)}
+        width={650}
+        footer={null}
+      >
+        <ModalObject
+          onSubmit={() => setShowModalAdd(false)}
+          setShowModal={setShowModalAdd}
+          type={selectedType}
+        />
       </Modal>
 
     </div>

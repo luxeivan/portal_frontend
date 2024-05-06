@@ -11,6 +11,7 @@ import DateInput from "../FormComponents/DateInput";
 import useSubjects from "../../stores/Cabinet/useSubjects";
 import { formItemLayout } from "../configSizeForm";
 import InnInput from "../FormComponents/InnInput";
+import NameObjectInput from "../FormComponents/NameObjectInput";
 
 const NewForm = ({
   fields,
@@ -90,6 +91,16 @@ const NewForm = ({
             value={value[field.name]}
           />
         );
+      case "nameObjectInput":
+        return (
+          <NameObjectInput
+            key={index}
+            {...field}
+            read={read}
+            edit={edit}
+            value={value[field.name]}
+          />
+        );
       case "snilsInput":
         return (
           <SnilsInput
@@ -127,7 +138,6 @@ const NewForm = ({
         return (
           <ConfirmationDocumentInput
             key={index}
-
             {...field}
             read={read}
             edit={edit}
