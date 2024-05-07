@@ -13,18 +13,6 @@
   },
   {
     "type": "divider",
-    "name": "Кадастр"
-  },
-  {
-    "type": "сadastralNumberInput",
-    "name": "сadastralNumber",
-    "displayName": "Номер участка",
-    "placeholder": "12:34:1234567:1234",
-    "description": "Введите кадастровый номер участка",
-    "required": true
-  },
-  {
-    "type": "divider",
     "name": "Адрес"
   },
   {
@@ -34,5 +22,17 @@
     "placeholder": "...",
     "description": "Введите полный адрес присоединяемого объекта",
     "required": false
+  },
+  {
+    "type": "divider",
+    "name": "Кадастр"
+  },
+  {
+    "type": "сadastralNumberInput",
+    "name": "сadastralNumber",
+    "displayName": "Номер участка",
+    "placeholder": "12:34:1234567:1234",
+    "description": "Введите кадастровый номер участка",
+    "required": true
   }
 ]
