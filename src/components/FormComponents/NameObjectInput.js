@@ -1,9 +1,24 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Form, AutoComplete, Typography } from "antd";
 import { debounce } from "lodash";
+import axios from "axios";
+import config from "../../config";
 
-export default function NameObjectInput({ read, value, name }) {
+
+export default function NameObjectInput({ read, value, name, displayName }) {
   const [options, setOptions] = useState([]);
+  const [listName, setListName] = useState([]);
+  const [arrayName, setArrayName] = useState([]);
+  useEffect(() => {
+    axios.get(`${config.apiServer}/api/naimenovanie-obektovs`)
+      .then(res => {
+        if (res.data.data) {
+          // console.log(res.data)
+          setArrayName(res.data.data.map((item, index) => ({ value: item.attributes.name, key: index })))
+          setListName(res.data.data.map((item, index) => ({ value: item.attributes.name, key: index })))
+        }
+      })
+  }, [])
 
   // Моковые данные для автокомплита
   const mockData = [
@@ -27,16 +42,22 @@ export default function NameObjectInput({ read, value, name }) {
   );
 
   const onSearch = (searchText) => {
-    debouncedFetchNames(searchText);
+    // debouncedFetchNames(searchText);
+    if (searchText === '') {
+      return setListName(arrayName)
+    }
+    setListName(arrayName.filter(item => {      
+      return item.value.toLowerCase().includes(searchText.toLowerCase()) 
+    }))
   };
 
   return (
-    <Form.Item label="Наименование" name={name}>
+    <Form.Item label={displayName} name={name}>
       {!read && (
         <AutoComplete
-          options={options}
+          options={listName}
           onSearch={onSearch}
-          onSelect={(value, option) => console.log(`Selected: ${option.value}`)}
+          // onSelect={(value, option) => console.log(`Selected: ${option.value}`)}
           style={{ width: "100%" }}
           placeholder="Введите наименование объекта"
         />

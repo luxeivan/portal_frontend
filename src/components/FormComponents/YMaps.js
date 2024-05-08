@@ -20,7 +20,7 @@ const YMapsComponent = ({ onAddressSelect }) => {
   const onMapClick = useCallback(
     async (e) => {
       const coords = e.get("coords");
-      console.log(e)
+      //console.log(e)
       form.setFieldValue('latitude', coords[0])
       form.setFieldValue('longitude', coords[1])
       setNewCoords(() => coords);
