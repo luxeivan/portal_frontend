@@ -14,6 +14,7 @@ import InnInput from "../FormComponents/InnInput";
 import NameObjectInput from "../FormComponents/NameObjectInput";
 import CadastralNumberInput from "../FormComponents/CadastralNumberInput";
 import AddressObjectInput from "../FormComponents/AddressInput/AddressObjectInput";
+import YMaps from "../FormComponents/YMaps";
 
 const NewForm = ({
   fields,
@@ -167,6 +168,16 @@ const NewForm = ({
                 value={value[field.name]}
               />
             );
+            case "ymaps":
+              return (
+                <YMaps
+                  key={index}
+                  {...field}
+                  read={read}
+                  edit={edit}
+                  value={value[field.name]}
+                />
+              );
       default:
         return null;
     }
