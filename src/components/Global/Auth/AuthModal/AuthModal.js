@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Tabs } from "antd";
+import { Modal, Tabs, Drawer, Flex } from "antd";
 import AuthLoginForm from "../Login/AuthLoginForm";
 import AuthRegForm from "../Registration/AuthRegForm/AuthRegForm";
 import useAuth from "../../../../stores/useAuth";
@@ -22,18 +22,21 @@ const AuthModal = () => {
     ];
 
     return (
-        <Modal
-            title=""
+        <Drawer
+            title="Авторизация/Регистрация"
             open={isAuthModalOpen}
-            onCancel={() => toggleModal('isAuthModalOpen', false)}
-            footer={null}
-            maskClosable={false}
-            width = "50%"
-            className={styles.auth__modal}
-            // bodyStyle={{height: '50vh'}}
+            onClose={() => toggleModal('isAuthModalOpen', false)}
+        // size="large"
+        // footer={null}
+        // maskClosable={false}
+        // width = "50%"
+        // className={styles.auth__modal}
+        // bodyStyle={{height: '50vh'}}
         >
-            <Tabs defaultActiveKey="1" items={tabItems}/>
-        </Modal>
+            <Flex align="center" style={{ height: "100%" }}>
+                <Tabs defaultActiveKey="1" items={tabItems} />
+            </Flex>
+        </Drawer>
     );
 };
 

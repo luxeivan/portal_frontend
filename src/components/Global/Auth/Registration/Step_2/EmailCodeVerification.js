@@ -26,8 +26,8 @@ const EmailCodeVerification = () => {
 
   return (
     <>
-      <Title level={5}>Сейчас Вам поступит телефонный звонок, отвечать на него не нужно.</Title>
-      <Typography.Text level={5}>Введите последние 4 цифры:</Typography.Text>
+      {/* <Title level={5}>Сейчас Вам поступит телефонный звонок, отвечать на него не нужно.</Title> */}
+      <Typography.Text level={5}>Введите код из письма:</Typography.Text>
       <Form ref={formRef} onFinish={onFinish} className={styles.codeFormContainer}>
         {Array.from({ length: 4 }, (_, index) => (
           <Form.Item

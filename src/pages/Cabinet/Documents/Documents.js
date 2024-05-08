@@ -21,16 +21,11 @@ const stylesForCard = {
 
 console.log("")
 
-export default function Relations() {
+export default function Documents() {
   return (
     <div>
-
-      <AppHelmet title={"Доверенности"} desc={"Доверенности"} />
-      <Title level={1}>Доверенности</Title>
-
-      
-
-      
+      <AppHelmet title={"Документы"} desc={"Документы"} />
+      <Title level={1}>Документы</Title>  
     </div>
   )
 }

@@ -4,19 +4,13 @@ import {
   UserOutlined,
   ProfileOutlined,
   EnvironmentOutlined,
-  PlusSquareOutlined,
-  RetweetOutlined,
-  CheckCircleOutlined,
-  FolderOpenOutlined,
-  DownOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
   FileSearchOutlined,
   MenuOutlined,
   FileSyncOutlined,
   FileZipOutlined,
   FileUnknownOutlined,
-  FileAddOutlined
+  FileAddOutlined,
+  FileOutlined
 } from "@ant-design/icons";
 import styles from "./CabinetMenu.module.css";
 import { useNavigate } from "react-router-dom";
@@ -74,8 +68,8 @@ const menuItems = [
   },
   {
     key: "/cabinet/relations",
-    icon: <RetweetOutlined className={styles.icon} style={iconStyle}  />,
-    label: <Text className={styles.labelSizeMobile}>Доверенности</Text>,
+    icon: <FileOutlined  className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>Документы</Text>,
   },
   {
     key: "/cabinet/objects",

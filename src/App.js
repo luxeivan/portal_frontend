@@ -21,7 +21,7 @@ import NewService from "./pages/Cabinet/NewService";
 import Profile from "./pages/Cabinet/Profile/Profile";
 import Subjects from "./pages/Cabinet/Subjects/Subjects";
 import Objects from "./pages/Cabinet/Objects/Objects";
-import Relations from "./pages/Cabinet/Relations/Relations";
+import Documents from "./pages/Cabinet/Documents/Documents";
 import Drafts from "./pages/Cabinet/Drafts/Drafts";
 import Checking from "./pages/Cabinet/Checking/Checking";
 import Claims from "./pages/Cabinet/Claims/Claims";
@@ -137,7 +137,7 @@ export default function App() {
                   />
                   <Route path="/cabinet/profile" element={<Profile />} />
                   <Route path="/cabinet/subjects" element={<Subjects />} />
-                  <Route path="/cabinet/relations" element={<Relations />} />
+                  <Route path="/cabinet/relations" element={<Documents />} />
                   <Route path="/cabinet/objects" element={<Objects />} />
                   <Route path="/cabinet/drafts" element={<Drafts />} />
                   <Route path="/cabinet/checking" element={<Checking />} />
