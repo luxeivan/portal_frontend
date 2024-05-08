@@ -34,5 +34,17 @@
     "placeholder": "12:34:1234567:1234",
     "description": "Введите кадастровый номер участка",
     "required": true
+  },
+  {
+    "type": "divider",
+    "name": "Координаты ЭРУ"
+  },
+  {
+    "type": "ymaps",
+    "name": "ymaps",
+    "displayName": "Номер участка",
+    "placeholder": "12:34:1234567:1234",
+    "description": "Введите кадастровый номер участка",
+    "required": true
   }
 ]

@@ -68,7 +68,6 @@ export default function Objects() {
       <AppHelmet title={"Объекты"} desc={"Объекты подключения"} />
       <Title level={1}>Объекты подключения</Title>
 
-      
       <Flex wrap="wrap" gap="large">
         {objects.map((object) => (
           <Card
@@ -78,20 +77,17 @@ export default function Objects() {
             className={styles.objectCard}
             onClick={() => {
               showObject(object.id);
-
             }}
           >
             <Typography.Title level={5} className={styles.objectCardTitle}>
-              {object?.attributes.name}
+              {object?.attributes.fullName}
             </Typography.Title>
             <Meta description={object?.attributes.type} />
             <Flex justify="flex-end" className={styles.objectCardImage}>
               <Image
                 width={"50%"}
                 src={
-                  object?.attributes.type === "Объект"
-                    ? person
-                    : organization
+                  object?.attributes.type === "Объект" ? person : organization
                 }
                 preview={false}
               />
@@ -129,7 +125,7 @@ export default function Objects() {
             onClick={() => handleCategorySelect("object")}
           >
             Объект
-            <br /> 
+            <br />
           </Button>
         </Flex>
       </Modal>
@@ -148,7 +144,6 @@ export default function Objects() {
           type={selectedType}
         />
       </Modal>
-
     </div>
   );
 }
