@@ -12,6 +12,8 @@ import useSubjects from "../../stores/Cabinet/useSubjects";
 import { formItemLayout } from "../configSizeForm";
 import InnInput from "../FormComponents/InnInput";
 import NameObjectInput from "../FormComponents/NameObjectInput";
+import CadastralNumberInput from "../FormComponents/CadastralNumberInput";
+import AddressObjectInput from "../FormComponents/AddressInput/AddressObjectInput";
 
 const NewForm = ({
   fields,
@@ -91,16 +93,7 @@ const NewForm = ({
             value={value[field.name]}
           />
         );
-      case "nameObjectInput":
-        return (
-          <NameObjectInput
-            key={index}
-            {...field}
-            read={read}
-            edit={edit}
-            value={value[field.name]}
-          />
-        );
+      
       case "snilsInput":
         return (
           <SnilsInput
@@ -144,6 +137,36 @@ const NewForm = ({
             value={value}
           />
         );
+        case "nameObjectInput":
+        return (
+          <NameObjectInput
+            key={index}
+            {...field}
+            read={read}
+            edit={edit}
+            value={value[field.name]}
+          />
+        );
+        case "сadastralNumberInput":
+          return (
+            <CadastralNumberInput
+              key={index}
+              {...field}
+              read={read}
+              edit={edit}
+              value={value[field.name]}
+            />
+          );
+          case "addressObjectInput":
+            return (
+              <AddressObjectInput
+                key={index}
+                {...field}
+                read={read}
+                edit={edit}
+                value={value[field.name]}
+              />
+            );
       default:
         return null;
     }

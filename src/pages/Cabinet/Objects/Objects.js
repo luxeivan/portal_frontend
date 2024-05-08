@@ -4,14 +4,10 @@ import { PlusOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import person from "../../../img/subjects/person3.svg";
-import organization from "../../../img/subjects/organization.svg";
+import organization from "../../../img/object/object2 (фон удален).png";
 import useObjects from "../../../stores/Cabinet/useObject";
 import styles from "./Objects.module.css";
 import ModalObject from "../../../components/Objects/ModalObject";
-
-// import ModalFizLica from "../../../components/Subjects/ModalFizLica/ModalFizLica";
-// import ModalUrLica from "../../../components/Subjects/ModalUrLica/ModalUrLica";
-// import ModalIP from "../../../components/Subjects/ModalIP/ModalIP";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -82,8 +78,7 @@ export default function Objects() {
             className={styles.objectCard}
             onClick={() => {
               showObject(object.id);
-              // await fetchSubjectItem(subject.id);
-              //setShowModalView(true);
+
             }}
           >
             <Typography.Title level={5} className={styles.objectCardTitle}>

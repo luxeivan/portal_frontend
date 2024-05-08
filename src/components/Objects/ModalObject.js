@@ -11,8 +11,8 @@ export default function ModalObject({ setShowModal, read = false, value = {}, })
   const showModalAdd = useObject((state) => state.showModalAdd);
   const showModalView = useObject((state) => state.showModalView);
   const [form] = Form.useForm();
-  const deleteSubjectItem = useObject((store) => store.deleteSubjectItem);
-  const submitNewSubject = useObject((store) => store.submitNewSubject);
+  const deleteObjectItem = useObject((store) => store.deleteObjectItem);
+  const submitNewObject = useObject((store) => store.submitNewObject);
   useEffect(()=>{
     form.resetFields()
   },[showModalAdd,showModalView])
@@ -24,12 +24,10 @@ export default function ModalObject({ setShowModal, read = false, value = {}, })
       okType: "danger",
       cancelText: "Нет",
       onOk() {
-       // console.log("del", id);
        setShowModal(false);
-       deleteSubjectItem(id);
+       deleteObjectItem(id);
       },
       onCancel() {
-        // console.log("Cancel");
       },
     });
   };
@@ -40,22 +38,20 @@ export default function ModalObject({ setShowModal, read = false, value = {}, })
   
 
   const handlerSubmitForm = (event) => {
-    //console.log(event)
     let list = fieldsJson.filter(item => item.type !== "divider")
     const obj = {}
     list.forEach(item => {
       obj[item.name] = event[item.name]
     });
     if (event.matchedWith) {
-      obj.addressResidential = obj.addressRegistration
+      obj.addressObject = obj.addressObject
     }
-    obj.confirmationDocument.dateIssue = obj.confirmationDocument.dateIssue?.format('DD.MM.YYYY')
-    obj.confirmationDocument.dateIssueOtherDoc = obj.confirmationDocument.dateIssueOtherDoc?.format('DD.MM.YYYY')
-    obj.type = "Объект"
-    console.log(obj)
-    submitNewSubject(obj)
+    console.log("Data to submit:", obj);
+    obj.type = "Объект";
+    submitNewObject(obj)
     setShowModal(false);
   }
+
   return (
     <NewForm
       form={form}

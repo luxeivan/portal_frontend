@@ -12,21 +12,19 @@ export default function SelectInput({
   options,
   onChange,
   depends,
-  // defaultValue,
   read,
   edit,
-  value
+  value,
 }) {
   const { colorBorder, customfontSizeIcon } = theme.useToken().token;
   // ----------------------------------------
   const form = Form.useFormInstance();
-  let show = true
-  let showTemp = Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
-  if (depends && showTemp)
-    show = true
-  else if (!depends)
-    show = true
-  else show = false
+  let show = true;
+  let showTemp =
+    Form.useWatch(depends?.showIf?.nameField, form) === depends?.showIf?.eq;
+  if (depends && showTemp) show = true;
+  else if (!depends) show = true;
+  else show = false;
   // ----------------------------------------
   const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -42,64 +40,20 @@ export default function SelectInput({
 
   if (show) {
     return (
-
-      // <Form.Item
-      //   {...formItemLayout}
-      //   name={name}
-      //   label={<Typography.Text>{displayName}</Typography.Text>}
-      //   rules={!read && [{ required, message: `` }]}
-      // >
-      //   <div style={{ display: "flex", alignItems: "center" }}>
-      //     {!read &&
-      //       <Select
-      //         defaultValue={defaultValue}                
-      //         placeholder="Выберите вариант"
-      //         options={options}
-      //       />
-      //     }
-      //     {read &&
-      //       <Typography.Text>{value}</Typography.Text>
-      //     }
-
-      //     {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer}/>}
-      //   </div>
-      // </Form.Item>
-      // <div style={{ display: "flex", alignItems: "center" }}>
       <Form.Item
         {...formItemLayout}
         label={<Typography.Text>{displayName}</Typography.Text>}
         name={name}
       >
-        {!read &&
+        {!read && (
           <Select
-            // defaultValue={defaultValue}
             placeholder="Выберите вариант"
             options={options}
             onChange={onChange}
           />
-        }
-        {read &&
-          <Typography.Text>{value}</Typography.Text>
-        }
-        {/* <Select
-            defaultValue={defaultValue}
-            placeholder="Выберите вариант"
-            options={options}
-          /> */}
+        )}
+        {read && <Typography.Text>{value}</Typography.Text>}
       </Form.Item>
-      /* {!read && <InfoCircleOutlined style={iconStyle} onClick={showDrawer} />} */
-      // </div>
-      /* <Drawer
-        title={displayName}
-        placement="right"
-        onClose={onClose}
-        open={drawerVisible}
-      >
-        <StrapiRichText
-          content={Array.isArray(description) ? description : [description]}
-        />
-      </Drawer> */
-
     );
   }
 }
