@@ -8,7 +8,7 @@ const CadastralNumberInput = ({ form }) => {
   // Функция для обработки изменения поля кадастрового номера
   const handleInputChange = (e, index) => {
     const list = [...inputList];
-    list[index].value = e.target.value;  
+    list[index].value = e.target.value;  // Просто сохраняем введённые данные без изменений
     setInputList(list);
   };
 
