@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Divider, Form, Button, Flex, AutoComplete } from "antd";
+import { Divider, Form, Button, Flex, AutoComplete, Typography } from "antd";
 import TextInput from "../FormComponents/TextInput";
 import CheckboxInput from "../FormComponents/CheckboxInput";
 import SelectInput from "../FormComponents/SelectInput";
@@ -14,6 +14,7 @@ import InnInput from "../FormComponents/InnInput";
 import NameObjectInput from "../FormComponents/NameObjectInput";
 import CadastralNumberInput from "../FormComponents/CadastralNumberInput";
 import AddressObjectInput from "../FormComponents/AddressInput/AddressObjectInput";
+import YMaps from "../FormComponents/YMaps";
 
 const NewForm = ({
   fields,
@@ -41,6 +42,8 @@ const NewForm = ({
     switch (field.type) {
       case "divider":
         return <Divider key={index}>{field.name}</Divider>;
+      case "description":
+        return <Typography.Paragraph key={index}>{field.description}</Typography.Paragraph>;
       case "textInput":
         return (
           <TextInput
@@ -167,6 +170,16 @@ const NewForm = ({
                 value={value[field.name]}
               />
             );
+            case "ymaps":
+              return (
+                <YMaps
+                  key={index}
+                  {...field}
+                  read={read}
+                  edit={edit}
+                  value={value[field.name]}
+                />
+              );
       default:
         return null;
     }

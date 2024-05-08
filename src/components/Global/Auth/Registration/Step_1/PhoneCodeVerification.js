@@ -31,8 +31,8 @@ const PhoneCodeVerification = () => {
 
   return (
     <>
-    <Title level={5}>Сейчас Вам поступит телефонный звонок, отвечать на него не нужно.</Title>
-    <Typography.Text level={5}>Введите последние 4 цифры:</Typography.Text>
+    {/* <Title level={5}>Сейчас Вам поступит телефонный звонок, отвечать на него не нужно.</Title> */}
+    <Typography.Text level={5}>Введите код из СМС:</Typography.Text>
     <Form
       ref={formRef}
       onFinish={onFinish}

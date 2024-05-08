@@ -24,12 +24,10 @@ export default function ModalObject({ setShowModal, read = false, value = {}, })
       okType: "danger",
       cancelText: "Нет",
       onOk() {
-       // console.log("del", id);
        setShowModal(false);
        deleteObjectItem(id);
       },
       onCancel() {
-        // console.log("Cancel");
       },
     });
   };
@@ -40,19 +38,20 @@ export default function ModalObject({ setShowModal, read = false, value = {}, })
   
 
   const handlerSubmitForm = (event) => {
-    //console.log(event)
     let list = fieldsJson.filter(item => item.type !== "divider")
     const obj = {}
     list.forEach(item => {
       obj[item.name] = event[item.name]
     });
     if (event.matchedWith) {
-      obj.addressResidential = obj.addressRegistration
+      obj.addressObject = obj.addressObject
     }
-    console.log(obj)
+    console.log("Data to submit:", obj);
+    obj.type = "Объект";
     submitNewObject(obj)
     setShowModal(false);
   }
+
   return (
     <NewForm
       form={form}

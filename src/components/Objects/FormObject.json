@@ -13,6 +13,18 @@
   },
   {
     "type": "divider",
+    "name": "Адрес"
+  },
+  {
+    "type": "addressObjectInput",
+    "name": "addressObject",
+    "displayName": "Адрес",
+    "placeholder": "...",
+    "description": "Введите полный адрес присоединяемого объекта",
+    "required": false
+  },
+  {
+    "type": "divider",
     "name": "Кадастр"
   },
   {
@@ -25,14 +37,18 @@
   },
   {
     "type": "divider",
-    "name": "Адрес"
+    "name": "Координаты ЭПУ"
   },
   {
-    "type": "addressObjectInput",
-    "name": "addressObject",
-    "displayName": "Адрес",
-    "placeholder": "...",
-    "description": "Введите полный адрес присоединяемого объекта",
-    "required": false
+    "type": "description",
+    "description": "Обозначьте координаты расположения ЭПУ (Энерго Принимающего Устройства) на земельном участке"
+  },
+  {
+    "type": "ymaps",
+    "name": "ymaps",
+    "displayName": "Номер участка",
+    "placeholder": "12:34:1234567:1234",
+    "description": "Введите кадастровый номер участка",
+    "required": true
   }
 ]

@@ -4,14 +4,10 @@ import { PlusOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import person from "../../../img/subjects/person3.svg";
-import organization from "../../../img/subjects/organization.svg";
+import organization from "../../../img/object/object2 (фон удален).png";
 import useObjects from "../../../stores/Cabinet/useObject";
 import styles from "./Objects.module.css";
 import ModalObject from "../../../components/Objects/ModalObject";
-
-// import ModalFizLica from "../../../components/Subjects/ModalFizLica/ModalFizLica";
-// import ModalUrLica from "../../../components/Subjects/ModalUrLica/ModalUrLica";
-// import ModalIP from "../../../components/Subjects/ModalIP/ModalIP";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -72,7 +68,6 @@ export default function Objects() {
       <AppHelmet title={"Объекты"} desc={"Объекты подключения"} />
       <Title level={1}>Объекты подключения</Title>
 
-      
       <Flex wrap="wrap" gap="large">
         {objects.map((object) => (
           <Card
@@ -82,21 +77,17 @@ export default function Objects() {
             className={styles.objectCard}
             onClick={() => {
               showObject(object.id);
-              // await fetchSubjectItem(subject.id);
-              //setShowModalView(true);
             }}
           >
             <Typography.Title level={5} className={styles.objectCardTitle}>
-              {object?.attributes.name}
+              {object?.attributes.fullName}
             </Typography.Title>
             <Meta description={object?.attributes.type} />
             <Flex justify="flex-end" className={styles.objectCardImage}>
               <Image
                 width={"50%"}
                 src={
-                  object?.attributes.type === "Объект"
-                    ? person
-                    : organization
+                  object?.attributes.type === "Объект" ? person : organization
                 }
                 preview={false}
               />
@@ -134,7 +125,7 @@ export default function Objects() {
             onClick={() => handleCategorySelect("object")}
           >
             Объект
-            <br /> 
+            <br />
           </Button>
         </Flex>
       </Modal>
@@ -153,7 +144,6 @@ export default function Objects() {
           type={selectedType}
         />
       </Modal>
-
     </div>
   );
 }

@@ -62,19 +62,7 @@
     "description": "Выберите или введите вручную адрес проживания",
     "required": false,
     "matchedWith": true
-  },
-  {
-    "type": "divider",
-    "name": "Файлы"
-  },
-  {
-    "type": "uploaderInput",
-    "name": "fileDoc",
-    "displayName": "Адрес",
-    "placeholder": "...",
-    "description": "Выберите или введите вручную адрес проживания",
-    "required": false
-  },
+  },  
   {
     "type": "divider",
     "name": "СНИЛС"
