@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Divider, Form, Button, Flex, AutoComplete } from "antd";
+import { Divider, Form, Button, Flex, AutoComplete, Typography } from "antd";
 import TextInput from "../FormComponents/TextInput";
 import CheckboxInput from "../FormComponents/CheckboxInput";
 import SelectInput from "../FormComponents/SelectInput";
@@ -42,6 +42,8 @@ const NewForm = ({
     switch (field.type) {
       case "divider":
         return <Divider key={index}>{field.name}</Divider>;
+      case "description":
+        return <Typography.Paragraph key={index}>{field.description}</Typography.Paragraph>;
       case "textInput":
         return (
           <TextInput
