@@ -32,7 +32,7 @@
   },
   {
     "type": "сadastralNumberInput",
-    "name": "сadastralNumber",
+    "name": "cadastralNumber",
     "displayName": "Номер участка",
     "placeholder": "12:34:1234567:1234",
     "description": "Введите кадастровый номер участка",
@@ -82,7 +82,7 @@
   },
   {
     "type": "ymaps",
-    "name": "ymaps",
+    "name": "coordinates",
     "displayName": "Номер участка",
     "placeholder": "12:34:1234567:1234",
     "description": "Введите кадастровый номер участка",

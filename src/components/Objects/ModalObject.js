@@ -46,7 +46,7 @@ export default function ModalObject({
     list.forEach((item) => {
       obj[item.name] = event[item.name];
     });
-    console.log("Data to submit:", obj);
+    console.log("Data:", obj);
     submitNewObject(obj);
     setShowModal(false);
   };

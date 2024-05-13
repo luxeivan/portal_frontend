@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Checkbox, Space, Typography } from "antd";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { formItemLayout } from "../configSizeForm";
 
 const CadastralNumberInput = ({ name, read }) => {
   const form = Form.useFormInstance();
@@ -41,56 +43,60 @@ const CadastralNumberInput = ({ name, read }) => {
   };
 
   return (
-    <Form.Item label="Кадастровые номера">
-      <Checkbox
-        checked={isCadastralNumberAbsent}
-        onChange={handleCheckboxChange}
-        style={{ marginBottom: "10px" }}
-      >
-        Кадастровый номер отсутствует
-      </Checkbox>
+    <>
+      <Form.Item>
+        <Checkbox
+          checked={isCadastralNumberAbsent}
+          onChange={handleCheckboxChange}
+          style={{ marginBottom: "10px" }}
+        >
+          Кадастровый номер отсутствует
+        </Checkbox>
+      </Form.Item >
 
       {!isCadastralNumberAbsent && !read && (
-        <Space direction="vertical" style={{ width: "100%" }}>
-          {inputList.map((item, index) => (
-            <div
-              key={index}
-              style={{ display: "flex", marginBottom: 8 }}
-              align="baseline"
-            >
-              <Input
-                placeholder="Введите кадастровый номер"
-                value={item.value}
-                onChange={(e) => handleInputChange(e, index)}
-                style={{ width: "calc(100% - 90px)" }}
-              />
-              {inputList.length !== 1 && (
-                <Button type="danger" onClick={() => handleRemoveClick(index)}>
-                  Удалить
-                </Button>
-              )}
-            </div>
-          ))}
-          {inputList.length < 5 && (
-            <Button
-              type="dashed"
-              onClick={handleAddClick}
-              style={{ width: "100%" }}
-            >
-              Добавить номер
-            </Button>
-          )}
-        </Space>
-      )}
+        <Form.List name={name} {...formItemLayout}>
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, }, index) => (
+                <Space
+                  key={key}
+                  style={{
+                    display: 'flex',
+                  }}
+                  align="baseline"
+                >
+                  <Form.Item 
+                  label={'Номер'}
+                  name={name}
+                  >
+                    <Input placeholder="Кадастровый номер" />
+                  </Form.Item>
 
-      {read && (
-        <Typography.Text>
-          {inputList.map((item, index) => (
-            <div key={index}>{item.value}</div>
-          ))}
-        </Typography.Text>
-      )}
-    </Form.Item>
+                  <MinusCircleOutlined onClick={() => remove(name)} />
+                </Space>
+              ))}
+              <Form.Item>
+                <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                  Добавить номер
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
+      )
+      }
+
+      {
+        read && (
+          <Typography.Text>
+            {inputList.map((item, index) => (
+              <div key={index}>{item.value}</div>
+            ))}
+          </Typography.Text>
+        )
+      }
+    </>
   );
 };
 
