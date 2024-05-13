@@ -20,25 +20,9 @@ const YMapsComponent = ({ onAddressSelect }) => {
   const onMapClick = useCallback(
     async (e) => {
       const coords = e.get("coords");
-      //console.log(e)
       form.setFieldValue('latitude', coords[0])
       form.setFieldValue('longitude', coords[1])
       setNewCoords(() => coords);
-      // try {
-      //   const response = await axios.get(
-      //     `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=fd781d3b-b40d-4f6a-a236-865c242547cb&geocode=${coords.join(
-      //       ","
-      //     )}`
-      //   );
-
-      //   const address =
-      //     response.data.response.GeoObjectCollection.featureMember[0].GeoObject
-      //       .metaDataProperty.GeocoderMetaData.text;
-      //   onAddressSelect(address);
-      //   setSelectedAddress(address);
-      // } catch (error) {
-      //   console.error("Ошибка при получении адреса по координатам:", error);
-      // }
     },
     [onAddressSelect]
   );
@@ -83,8 +67,6 @@ const YMapsComponent = ({ onAddressSelect }) => {
               openEmptyHint: true
             }}
             properties={{
-              // iconContent: "+",
-              // hintContent: '123'
             }}
           />
         </Map>
