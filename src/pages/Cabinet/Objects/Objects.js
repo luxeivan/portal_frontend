@@ -100,7 +100,6 @@ export default function Objects() {
           </Flex>
         </Card>
       </Flex>
-      {/* {objects.length === 0 && <p>Объекты не найдены</p>} */}
 
       <Modal
         title="Выберите тип объекта(если есть)"
