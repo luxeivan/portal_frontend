@@ -1,7 +1,7 @@
 import { Modal, Form } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import useSubjects from "../../../stores/Cabinet/useSubjects";
-import NewForm from "../NewForm";
+import NewForm from "../../NewForm";
 import fieldsJson from "./FormFizLica.json";
 import moment from "moment";
 import { useEffect } from "react";
