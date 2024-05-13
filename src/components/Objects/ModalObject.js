@@ -3,19 +3,24 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import useObject from "../../stores/Cabinet/useObject";
 import NewForm from "../NewForm";
 import fieldsJson from "./FormObject.json";
-import moment from "moment";
 import { useEffect } from "react";
 const { confirm } = Modal;
 
-export default function ModalObject({ setShowModal, read = false, value = {}, }) {
+export default function ModalObject({
+  setShowModal,
+  read = false,
+  value = {},
+}) {
   const showModalAdd = useObject((state) => state.showModalAdd);
   const showModalView = useObject((state) => state.showModalView);
   const [form] = Form.useForm();
   const deleteObjectItem = useObject((store) => store.deleteObjectItem);
   const submitNewObject = useObject((store) => store.submitNewObject);
-  useEffect(()=>{
-    form.resetFields()
-  },[showModalAdd,showModalView])
+
+  useEffect(() => {
+    form.resetFields();
+  }, [showModalAdd, showModalView]);
+
   const handlerDelete = (id) => {
     confirm({
       title: "Вы уверены что хотите удалить объект?",
@@ -24,33 +29,27 @@ export default function ModalObject({ setShowModal, read = false, value = {}, })
       okType: "danger",
       cancelText: "Нет",
       onOk() {
-       setShowModal(false);
-       deleteObjectItem(id);
+        setShowModal(false);
+        deleteObjectItem(id);
       },
-      onCancel() {
-      },
+      onCancel() {},
     });
   };
   const handlerEdit = (id) => {
-     console.log("Обновить",id);
-     console.log(form.getFieldValue());
-  }
-  
+    console.log("Обновить", id);
+    console.log(form.getFieldValue());
+  };
 
   const handlerSubmitForm = (event) => {
-    let list = fieldsJson.filter(item => item.type !== "divider")
-    const obj = {}
-    list.forEach(item => {
-      obj[item.name] = event[item.name]
+    let list = fieldsJson.filter((item) => item.type !== "new_divider");
+    const obj = {};
+    list.forEach((item) => {
+      obj[item.name] = event[item.name];
     });
-    if (event.matchedWith) {
-      obj.addressObject = obj.addressObject
-    }
-    console.log("Data to submit:", obj);
-    obj.type = "Объект";
-    submitNewObject(obj)
+    console.log("Data:", obj);
+    submitNewObject(obj);
     setShowModal(false);
-  }
+  };
 
   return (
     <NewForm
