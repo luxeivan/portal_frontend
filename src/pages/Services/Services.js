@@ -266,10 +266,10 @@ export default function Services() {
                 <TagFilters array={services} handlerFilter={handlerFilter} />
               </div>
               <Container>
-              <Link to={`/services`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
-              <Title level={1} className={styles.title} style={{ marginTop: "10px" }}>
-                {serviceDetailsData.find((item) => item.url === level2).title}
-              </Title>
+                <Link to={`/services`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
+                <Title level={1} className={styles.title} style={{ marginTop: "10px" }}>
+                  {serviceDetailsData.find((item) => item.url === level2).title}
+                </Title>
 
                 {notFounded && <Typography.Title style={{ color: colorFill }}>По заданному фильтру услуг не найдено</Typography.Title>}
                 <Flex wrap="wrap" gap="large" style={{ flex: 1 }}>
@@ -287,7 +287,7 @@ export default function Services() {
                               <List
                                 size="small"
                                 dataSource={item.attributes.filters}
-                                renderItem={(item) => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>}
+                                renderItem={(item) => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span> {item.value1?.map((val, index) => <span>{val + (index === item.value1.length - 1 ? '' : ',')} </span>)}</Typography.Paragraph>}
                               />
                             }
                             {/* {item.attributes.filters.map(item => <Typography.Paragraph><span style={{ fontWeight: 700 }}>{item.name}:</span> <span>{item.value}</span></Typography.Paragraph>)} */}

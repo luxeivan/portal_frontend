@@ -23,12 +23,11 @@ const stylesForCard = {
 };
 
 export default function Objects() {
-  // Модалка добавления физ лица
+  // Модалка добавления
   const showModalAdd = useObjects((state) => state.showModalAdd);
   const setShowModalAdd = useObjects((state) => state.setShowModalAdd);
 
-  // Модалка просмотра физ лица
-  const showModalView = useObjects((state) => state.showModalView);
+  // Модалка просмотра
   const showObject = useObjects((state) => state.showObject);
 
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -46,15 +45,6 @@ export default function Objects() {
     }
   }, [fetchObjects]);
 
-  if (isLoadingObjects) {
-    return (
-      <>
-        <Title level={1}>Объекты</Title>
-        <SceletonCard />
-      </>
-    );
-  }
-
   const handleCategorySelect = (type) => {
     setShowCategoryModal(false);
     setSelectedType(type); // Сохраняем выбранный тип
@@ -66,7 +56,8 @@ export default function Objects() {
   return (
     <div>
       <AppHelmet title={"Объекты"} desc={"Объекты подключения"} />
-      <Title level={1}>Объекты подключения</Title>
+      <Title level={1}>Объекты присоединения</Title>
+      {isLoadingObjects && <SceletonCard />}
 
       <Flex wrap="wrap" gap="large">
         {objects.map((object) => (
@@ -109,7 +100,7 @@ export default function Objects() {
           </Flex>
         </Card>
       </Flex>
-      {objects.length === 0 && <p>Объекты не найдены</p>}
+      {/* {objects.length === 0 && <p>Объекты не найдены</p>} */}
 
       <Modal
         title="Выберите тип объекта(если есть)"

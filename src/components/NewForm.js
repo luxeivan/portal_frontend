@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Divider, Form, Button, Flex, AutoComplete, Typography } from "antd";
-import TextInput from "../FormComponents/TextInput";
-import CheckboxInput from "../FormComponents/CheckboxInput";
-import SelectInput from "../FormComponents/SelectInput";
-import AddressInput from "../FormComponents/AddressInput/AddressInput";
-import SnilsInput from "../FormComponents/SnilsInput";
-import UploaderInput from "../FormComponents/UploaderInput";
-import ConfirmationDocumentInput from "../FormComponents/ConfirmationDocumentInput";
-import DateInput from "../FormComponents/DateInput";
-import useSubjects from "../../stores/Cabinet/useSubjects";
-import { formItemLayout } from "../configSizeForm";
-import InnInput from "../FormComponents/InnInput";
-import NameObjectInput from "../FormComponents/NameObjectInput";
-import CadastralNumberInput from "../FormComponents/CadastralNumberInput";
-import AddressObjectInput from "../FormComponents/AddressInput/AddressObjectInput";
-import YMaps from "../FormComponents/YMaps";
+import TextInput from "./FormComponents/TextInput";
+import CheckboxInput from "./FormComponents/CheckboxInput";
+import SelectInput from "./FormComponents/SelectInput";
+import AddressInput from "./FormComponents/AddressInput/AddressInput";
+import SnilsInput from "./FormComponents/SnilsInput";
+import UploaderInput from "./FormComponents/UploaderInput";
+import ConfirmationDocumentInput from "./FormComponents/ConfirmationDocumentInput";
+import DateInput from "./FormComponents/DateInput";
+import useSubjects from "../stores/Cabinet/useSubjects";
+import { formItemLayout } from "./configSizeForm";
+import InnInput from "./FormComponents/InnInput";
+import NameObjectInput from "./FormComponents/NameObjectInput";
+import CadastralNumberInput from "./FormComponents/CadastralNumberInput";
+import AddressObjectInput from "./FormComponents/AddressInput/AddressObjectInput";
+import YMaps from "./FormComponents/YMaps";
 
 const NewForm = ({
   fields,

@@ -36,10 +36,10 @@ export default function Subjects() {
   // Модалка просмотра физ лица
   const showModalView = useSubjects((state) => state.showModalView);
   const showSubject = useSubjects((state) => state.showSubject);
-  
+
   // Модалка просмотра ИП
   const showModalIPView = useSubjects((state) => state.showModalIPView);
-  
+
   // Модалка просмотра Юр лиц
   const showModalYurView = useSubjects((state) => state.showModalYurView);
 
@@ -84,6 +84,7 @@ export default function Subjects() {
     <div>
       <AppHelmet title={"Субъекты"} desc={"Субъекты"} />
       <Title level={1}>Субъекты</Title>
+      {isLoadingSubjects && <SceletonCard />}
 
       <Flex wrap="wrap" gap="large">
         {subjects.map((subject) => (
@@ -130,7 +131,7 @@ export default function Subjects() {
           </Flex>
         </Card>
       </Flex>
-      {subjects.length === 0 && <p>Субъекты не найдены</p>}
+      {/* {subjects.length === 0 && <p>Субъекты не найдены</p>} */}
 
       <Modal
         title="Выберите тип субъекта"
@@ -247,7 +248,7 @@ export default function Subjects() {
           type={selectedType}
         />
       </Modal>
-      
+
       {/* Модалка для просмотра юр лиц*/}
       <Modal
         title="Просмотр юридического лица"

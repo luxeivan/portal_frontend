@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { ConfigProvider, Flex, Layout, theme } from "antd";
 import "./App.css";
-import { Route, BrowserRouter, Routes } from "react-router-dom";
+import { Route, BrowserRouter, Routes, redirect, Navigate } from "react-router-dom";
 import Main from "./pages/Main";
 import AppHeader from "./components/Global/AppHeader";
 import AppFooter from "./components/Global/AppFooter";
@@ -65,6 +65,14 @@ export default function App() {
 
   const { colorPrimary } = theme.useToken().token;
 
+  const loader = () => {
+    console.log(1)
+    if (!auth) {
+      return redirect("/");
+    }
+    return null;
+  };
+
   return (
     <ConfigProvider
       theme={{
@@ -98,7 +106,7 @@ export default function App() {
                     path="/services"
                     element={
                       // <Container>
-                        <Services />
+                      <Services />
                       // </Container>
                     }
                   />
@@ -106,16 +114,16 @@ export default function App() {
                     path="/services/:level2"
                     element={
                       // <Container>
-                        <Services />
+                      <Services />
                       // </Container>
                     }
                   />
                   <Route
                     path="/services/:level2/:id"
                     element={
-                       <Container>
+                      <Container>
                         <ServiceItem />
-                       </Container>
+                      </Container>
                     }
                   />
                   <Route path="/about" element={<About />} />
@@ -123,30 +131,22 @@ export default function App() {
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/docs" element={<Documentation />} />
                   {/* ----------------------------------------- */}
-                  <Route
-                    path="/cabinet/new-claim/:url/:id"
-                    element={
-                      auth ? (
-                        <Container>
-                          <NewService />
-                        </Container>
-                      ) : (
-                        <Calc />
-                      )
-                    }
-                  />
-                  <Route path="/cabinet/profile" element={<Profile />} />
-                  <Route path="/cabinet/subjects" element={<Subjects />} />
-                  <Route path="/cabinet/relations" element={<Documents />} />
-                  <Route path="/cabinet/objects" element={<Objects />} />
-                  <Route path="/cabinet/drafts" element={<Drafts />} />
-                  <Route path="/cabinet/checking" element={<Checking />} />
-                  <Route path="/cabinet/claimers/" element={<Claimers />} />
-                  <Route path="/cabinet/claimers/:id" element={<Claims />} />
-                  <Route path="/cabinet/archives/" element={<Archives />} />
+
+
+                  <Route path="/cabinet/new-claim/:url/:id" element={auth ? <Container><NewService /></Container> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/profile" element={auth ? <Profile /> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/subjects" element={auth ? <Subjects /> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/relations" element={auth ? <Documents /> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/objects" element={auth ? <Objects /> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/drafts" element={auth ? <Drafts /> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/checking" element={auth ? <Checking /> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/claimers/" element={auth ? <Claimers /> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/claimers/:id" element={auth ? <Claims /> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/archives/" element={auth ? <Archives /> : <Navigate to="/" replace />} />
+
                   {/* ----------------------------------------- */}
-                  <Route path="*" element={<Page404 />} />
                   <Route path="/puzzle-game" element={<PuzzleGame />} />
+                  <Route path="*" element={<Page404 />} />
                   {/* <Route path="/jump-game" element={<JumpGame />} /> */}
                 </Routes>
               </Content>
