@@ -47,6 +47,7 @@ export default function AuthLoginForm() {
         <Form.Item
           label="Email"
           name="email"
+          validateTrigger="onBlur"
           rules={[
             {
               required: true,
@@ -64,6 +65,7 @@ export default function AuthLoginForm() {
         <Form.Item
           label="Пароль"
           name="password"
+          validateTrigger="onBlur"
           rules={[
             {
               required: true,
