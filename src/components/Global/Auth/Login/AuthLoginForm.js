@@ -55,7 +55,7 @@ export default function AuthLoginForm() {
             },
             {
               type: "email",
-              message: "Пожалуйста, введите корректный email",
+              message: "Пожалуйста, введите корректный Email",
             },
           ]}
         >
@@ -79,7 +79,7 @@ export default function AuthLoginForm() {
         >
           <Input.Password />
         </Form.Item>
-        <Typography.Text>Если забыли пароль или поменялся номер телефона то пройдите регистрацию заново с тем же E-mail</Typography.Text>
+        <Typography.Text>Забыли пароль или поменялся номер телефона - пройдите регистрацию заново с тем же Email</Typography.Text>
 
         <Form.Item
           {...tailFormItemLayout}
@@ -101,7 +101,7 @@ export default function AuthLoginForm() {
               className={styles.submitButton}
               disabled={authTimer > 0}
             >
-              {authTimer > 0 ? `Повторить через ${authTimer} секунд(ы)` : 'Повторить звонок'}
+              {authTimer > 0 ? `Повторить через ${authTimer} секунд(ы)` : 'Отправить СМС еще раз'}
             </Button>
           }
         </Form.Item>
