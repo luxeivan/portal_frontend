@@ -19,6 +19,13 @@
     "description": "Наименование"
   },
   {
+    "type": "textInput",
+    "name": "okved",
+    "displayName": "ОКВЭД",
+    "placeholder": "...",
+    "description": "ОКВЭД"
+  },
+  {
     "type": "divider",
     "name": "ФИО"
   },

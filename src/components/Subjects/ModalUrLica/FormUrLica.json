@@ -49,15 +49,22 @@
   },
   {
     "type": "divider",
-    "name": "КПП"
+    "name": "КПП, ОКВЭД"
   },
-
+  
   {
     "type": "textInput",
     "name": "kpp",
     "displayName": "КПП",
     "placeholder": "...",
     "description": "КПП"
+  },
+  {
+    "type": "textInput",
+    "name": "okved",
+    "displayName": "ОКВЭД",
+    "placeholder": "...",
+    "description": "ОКВЭД"
   },
   {
     "type": "divider",
@@ -153,5 +160,5 @@
     "placeholder": "...",
     "description": "Выберите или введите вручную почтовый адрес",
     "required": false
-  }
+  }  
 ]
