@@ -8,6 +8,7 @@ import {
   Drawer,
   Flex,
   Steps,
+  Table,
   Typography,
   theme,
 } from "antd";
@@ -16,6 +17,7 @@ import StrapiRichText from "../../components/StrapiRichText";
 import styles from "./ServicesItem.module.css";
 import { motion } from "framer-motion";
 import { LeftOutlined } from "@ant-design/icons";
+import Markdown from "markdown-to-jsx";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -27,7 +29,7 @@ export default function ServiceItem() {
   const { level2, id } = useParams();
   useEffect(() => {
     fetchServiceItem(level2, id);
-  }, [level2,  id]);
+  }, [level2, id]);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -39,10 +41,10 @@ export default function ServiceItem() {
     <div>
       {serviceItem && (
         <>
-        
-        <Link to={`/services/${level2}`}><Button style={{marginTop:"20px"}}><LeftOutlined /></Button></Link>
-          <Title level={1} style={{marginTop:"10px"}}>
-          <span style={{color:"gray"}}>Услуга:</span><br/>{serviceItem.attributes.name}
+
+          <Link to={`/services/${level2}`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
+          <Title level={1} style={{ marginTop: "10px" }}>
+            <span style={{ color: "gray" }}>Услуга:</span><br />{serviceItem.attributes.name}
           </Title>
           {/* <Divider /> */}
 
@@ -58,6 +60,21 @@ export default function ServiceItem() {
                     <StrapiRichText
                       content={serviceItem.attributes.description}
                     />
+                    <Markdown options={{
+                      overrides: {
+                        h1: {
+                          component: Typography.Title,
+                          props: {
+                            className: 'foo',
+                          },
+                        },
+                        table: {
+                          props: {
+                            className: styles.table,
+                          },
+                        },
+                      },
+                    }}>{serviceItem.attributes.descriptionMarkDown}</Markdown>
                     <Paragraph>
                       <b>Срок подготовки документов:</b>{" "}
                       {serviceItem.attributes.periodPreparationDocuments}
