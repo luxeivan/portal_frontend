@@ -6972,6 +6972,11 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
+markdown-to-jsx@^7.4.7:
+  version "7.4.7"
+  resolved "https://registry.npmjs.org/markdown-to-jsx/-/markdown-to-jsx-7.4.7.tgz"
+  integrity sha512-0+ls1IQZdU6cwM1yu0ZjjiVWYtkbExSyUIFU2ZeDIFuZM1W42Mh4OlJ4nb4apX4H8smxDHRdFaoIVJGwfv5hkg==
+
 match-sorter@^6.0.2:
   version "6.3.4"
   resolved "https://registry.npmjs.org/match-sorter/-/match-sorter-6.3.4.tgz"
@@ -8868,7 +8873,7 @@ react-yandex-maps@^4.6.0:
     prop-types "^15.7.2"
     react-display-name "^0.2.5"
 
-react@*, "react@^0.14.0 || ^15.0.0 || ^16.0.0", "react@^0.14.9 || ^15.x || ^16.x || ^17.x", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 15.0.0", "react@>= 16", react@>=0.14.0, react@>=16.0.0, react@>=16.11.0, react@>=16.3.0, react@>=16.8, react@>=16.9.0:
+react@*, "react@^0.14.0 || ^15.0.0 || ^16.0.0", "react@^0.14.9 || ^15.x || ^16.x || ^17.x", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 0.14.0", "react@>= 15.0.0", "react@>= 16", react@>=0.14.0, react@>=16.0.0, react@>=16.11.0, react@>=16.3.0, react@>=16.8, react@>=16.9.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
