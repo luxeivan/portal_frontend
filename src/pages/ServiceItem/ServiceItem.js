@@ -36,7 +36,7 @@ export default function ServiceItem() {
   const onClose = () => {
     setOpen(false);
   };
-  // console.log(serviceItem)
+  console.log(serviceItem)
   return (
     <div>
       {serviceItem && (
@@ -90,7 +90,7 @@ export default function ServiceItem() {
                 ),
               },
               {
-                key: "32",
+                key: "2",
                 label: "Необходимая информация для подачи заявки",
                 children: (
                   <Paragraph>

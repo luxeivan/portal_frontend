@@ -136,7 +136,7 @@ export default function App() {
                   <Route path="/cabinet/new-claim/:url/:id" element={auth ? <Container><NewService /></Container> : <Navigate to="/" replace />} />
                   <Route path="/cabinet/profile" element={auth ? <Profile /> : <Navigate to="/" replace />} />
                   <Route path="/cabinet/subjects" element={auth ? <Subjects /> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/relations" element={auth ? <Documents /> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/documents" element={auth ? <Documents /> : <Navigate to="/" replace />} />
                   <Route path="/cabinet/objects" element={auth ? <Objects /> : <Navigate to="/" replace />} />
                   <Route path="/cabinet/drafts" element={auth ? <Drafts /> : <Navigate to="/" replace />} />
                   <Route path="/cabinet/checking" element={auth ? <Checking /> : <Navigate to="/" replace />} />

@@ -67,14 +67,14 @@ const menuItems = [
     label: <Text className={styles.labelSizeMobile}>Субъекты</Text>,
   },
   {
-    key: "/cabinet/relations",
-    icon: <FileOutlined  className={styles.icon} style={iconStyle}  />,
-    label: <Text className={styles.labelSizeMobile}>Документы</Text>,
-  },
-  {
     key: "/cabinet/objects",
     icon: <EnvironmentOutlined className={styles.icon} style={iconStyle}  />,
     label: <Text className={styles.labelSizeMobile}>Объекты</Text>,
+  },
+  {
+    key: "/cabinet/documents",
+    icon: <FileOutlined  className={styles.icon} style={iconStyle}  />,
+    label: <Text className={styles.labelSizeMobile}>Документы</Text>,
   },
   {
     type: 'group', 
