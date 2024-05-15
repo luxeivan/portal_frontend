@@ -53,18 +53,32 @@ export default function NameObjectInput({ read, value, name, displayName }) {
 
   return (
     <Form.Item label={displayName} name={name}>
-      {!read && (
-        <AutoComplete
-          options={listName}
-          onSearch={onSearch}
-          // onSelect={(value, option) => console.log(`Selected: ${option.value}`)}
-          style={{ width: "100%" }}
-          placeholder="Введите наименование объекта"
-        />
-      )}
-      {read && (
-        <Typography.Text>{value}</Typography.Text>
-      )}
-    </Form.Item>
+    {!read && (
+      <AutoComplete
+        options={listName}
+        onSearch={onSearch}
+        style={{ width: "100%" }}
+        placeholder="Введите наименование объекта"
+      />
+    )}
+    {read && (
+      <Typography.Text>{value}</Typography.Text>
+    )}
+  </Form.Item>
+  
+    // <Form.Item label={displayName} name={name}>
+    //   {!read && (
+    //     <AutoComplete
+    //       options={listName}
+    //       onSearch={onSearch}
+    //       // onSelect={(value, option) => console.log(`Selected: ${option.value}`)}
+    //       style={{ width: "100%" }}
+    //       placeholder="Введите наименование объекта"
+    //     />
+    //   )}
+    //   {read && (
+    //     <Typography.Text>{value}</Typography.Text>
+    //   )}
+    // </Form.Item>
   );
 }

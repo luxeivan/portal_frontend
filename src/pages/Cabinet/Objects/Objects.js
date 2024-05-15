@@ -87,7 +87,9 @@ export default function Objects() {
               <Flex justify="flex-end" className={styles.objectCardImage}>
                 <Image
                   width={"50%"}
-                  src={object?.attributes.type === "Объект" ? person : organization}
+                  src={
+                    object?.attributes.type === "Объект" ? person : organization
+                  }
                   preview={false}
                 />
               </Flex>
@@ -118,7 +120,6 @@ export default function Objects() {
         </Card>
       </Flex>
 
-
       <Modal
         title="Выберите тип объекта(если есть)"
         open={showCategoryModal}
@@ -137,7 +138,6 @@ export default function Objects() {
           </Button>
         </Flex>
       </Modal>
-
 
       <Modal
         title="Добавление объекта"
@@ -160,13 +160,18 @@ export default function Objects() {
         width={650}
         footer={null}
       >
-        <ModalObject
-          read
-          value={{...object}}
-          setShowModal={showObject}
-          type={selectedType}
-        />
+        {object && object.attributes ? (
+          <ModalObject
+            read
+            value={{ ...object.attributes }}
+            setShowModal={showObject}
+            type={selectedType}
+          />
+        ) : (
+          <Typography.Text>Данные объекта не найдены</Typography.Text>
+        )}
       </Modal>
+
     </div>
   );
 }

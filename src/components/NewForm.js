@@ -257,6 +257,16 @@ const NewForm = ({
               Удалить
             </Button>
           </Form.Item>
+
+          {/* <Form.Item>
+            <Button
+              type="primary"
+              danger
+              onClick={() => handlerDelete(value.id)}
+            >
+              Удалить
+            </Button>
+          </Form.Item> */}
           <Form.Item>
             <Button onClick={() => setShowModal(false)}>Закрыть</Button>
           </Form.Item>

@@ -10,10 +10,26 @@ export default function ModalObject({ setShowModal, read = false, value = {} }) 
   const [form] = Form.useForm();
   const deleteObjectItem = useObject((store) => store.deleteObjectItem);
   const submitNewObject = useObject((store) => store.submitNewObject);
+  const fetchObjects = useObject((store) => store.fetchObjects);
 
   useEffect(() => {
     form.resetFields();
   }, [read, value]);
+
+  // const handlerDelete = (id) => {
+  //   confirm({
+  //     title: "Вы уверены что хотите удалить объект?",
+  //     icon: <ExclamationCircleFilled />,
+  //     okText: "Да",
+  //     okType: "danger",
+  //     cancelText: "Нет",
+  //     onOk() {
+  //       setShowModal(false);
+  //       deleteObjectItem(id);
+  //     },
+  //     onCancel() {},
+  //   });
+  // };
 
   const handlerDelete = (id) => {
     confirm({
@@ -24,11 +40,19 @@ export default function ModalObject({ setShowModal, read = false, value = {} }) 
       cancelText: "Нет",
       onOk() {
         setShowModal(false);
-        deleteObjectItem(id);
+        deleteObjectItem(id)
+          .then(() => {
+            fetchObjects(); // Обновление списка объектов после удаления
+          })
+          .catch((error) => {
+            console.error("Ошибка при удалении объекта:", error);
+          });
       },
       onCancel() {},
     });
   };
+  
+  
 
   const handlerEdit = (id) => {
     console.log("Обновить", id);

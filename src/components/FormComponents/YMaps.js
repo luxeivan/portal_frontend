@@ -45,7 +45,32 @@ const YMapsComponent = ({
       <Form.List name={name}>
         {(fields) => (
           <>
-            <Form.Item
+            <Form.Item name={"latitude"} label={"Широта"}>
+              {read ? (
+                <Typography.Text>{value?.latitude}</Typography.Text>
+              ) : (
+                <Input
+                  onChange={(event) => {
+                    form.setFieldValue("latitude", event.target.value);
+                    setNewCoords(() => [event.target.value, newCoords[1]]);
+                  }}
+                />
+              )}
+            </Form.Item>
+            <Form.Item name={"longitude"} label={"Долгота"}>
+              {read ? (
+                <Typography.Text>{value?.longitude}</Typography.Text>
+              ) : (
+                <Input
+                  onChange={(event) => {
+                    form.setFieldValue("longitude", event.target.value);
+                    setNewCoords(() => [newCoords[0], event.target.value]);
+                  }}
+                />
+              )}
+            </Form.Item>
+
+            {/* <Form.Item
               name={"latitude"}
               label={"Широта"}
               initialValue={value.latitude}
@@ -76,7 +101,7 @@ const YMapsComponent = ({
               ) : (
                 <Typography.Text>{value.longitude}</Typography.Text>
               )}
-            </Form.Item>
+            </Form.Item> */}
             <YMaps>
               <Map
                 state={mapState}
