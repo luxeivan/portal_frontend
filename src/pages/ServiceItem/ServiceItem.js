@@ -17,7 +17,8 @@ import StrapiRichText from "../../components/StrapiRichText";
 import styles from "./ServicesItem.module.css";
 import { motion } from "framer-motion";
 import { LeftOutlined } from "@ant-design/icons";
-import Markdown from "markdown-to-jsx";
+import MarkDownText from "../../components/MarkDownText/MarkDownText";
+
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -57,24 +58,8 @@ export default function ServiceItem() {
                 children: (
                   <div>
                     <Paragraph>{serviceItem.attributes.shortDescription}</Paragraph>
-                    <StrapiRichText
-                      content={serviceItem.attributes.description}
-                    />
-                    <Markdown options={{
-                      overrides: {
-                        h1: {
-                          component: Typography.Title,
-                          props: {
-                            className: 'foo',
-                          },
-                        },
-                        table: {
-                          props: {
-                            className: styles.table,
-                          },
-                        },
-                      },
-                    }}>{serviceItem.attributes.descriptionMarkDown}</Markdown>
+                    {/* <StrapiRichText content={serviceItem.attributes.description} /> */}
+                    <MarkDownText>{serviceItem.attributes.description}</MarkDownText>
                     <Paragraph>
                       <b>Срок подготовки документов:</b>{" "}
                       {serviceItem.attributes.periodPreparationDocuments}
