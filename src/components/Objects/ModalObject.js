@@ -67,8 +67,8 @@ export default function ModalObject({
       fields={fieldsJson}
       read={read}
       setShowModal={setShowModal}
-      value={value}
-      // value={{ ...value?.attributes, id: value.id }}
+      // value={value}
+      value={{ ...value?.attributes, id: value.id }}
     />
   );
 }
