@@ -29,6 +29,7 @@ export default function ModalObject({
       cancelText: "Нет",
       onOk() {
         setShowModal(false);
+
         deleteObjectItem(id)
           .then(() => {
             fetchObjects(); // Обновление списка объектов после удаления
@@ -67,6 +68,7 @@ export default function ModalObject({
       read={read}
       setShowModal={setShowModal}
       value={value}
+      // value={{ ...value?.attributes, id: value.id }}
     />
   );
 }
