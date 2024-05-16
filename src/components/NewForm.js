@@ -37,6 +37,8 @@ const NewForm = ({
   const showDrawer = () => setDrawerVisible(true);
   const onClose = () => setDrawerVisible(false);
 
+  console.log("value!!!!!!!", value);
+
   useEffect(() => {
     setEdit(tempedit);
     setRead(tempread);
