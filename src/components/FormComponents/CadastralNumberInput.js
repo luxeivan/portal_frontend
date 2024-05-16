@@ -10,6 +10,7 @@ const CadastralNumberInput = ({ name, read, value }) => {
   const handleCheckboxChange = (e) => {
     setIsCadastralNumberAbsent(e.target.checked);
   };
+  console.log(value)
 
   return (
     <>
@@ -32,12 +33,12 @@ const CadastralNumberInput = ({ name, read, value }) => {
                   <Form.Item
                     label={'Номер'}
                     name={name}
-                    
+
                   >
-                    <Input placeholder="Кадастровый номер" suffix={<MinusCircleOutlined style={{color:"red"}} onClick={() => remove(name)} />}/>
+                    <Input placeholder="Кадастровый номер" suffix={<MinusCircleOutlined style={{ color: "red" }} onClick={() => remove(name)} />} />
                   </Form.Item>
 
-                  
+
                 </>
               ))}
               <Form.Item>
@@ -55,7 +56,7 @@ const CadastralNumberInput = ({ name, read, value }) => {
         read && (
           <Typography.Text>
             {value && value.map((item, index) => (
-              <div key={index}>{item.value}</div>
+              <div key={index}>{item !== null ? item : ''}</div>
             ))}
           </Typography.Text>
         )

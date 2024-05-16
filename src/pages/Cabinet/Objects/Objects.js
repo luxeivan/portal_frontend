@@ -71,14 +71,14 @@ export default function Objects() {
               style={stylesForCard.body}
               className={styles.objectCard}
               onClick={() => showObject(object.id)}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-                e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.2)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
-              }}
+              // onMouseEnter={(e) => {
+              //   e.currentTarget.style.transform = "scale(1.05)";
+              //   e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.2)";
+              // }}
+              // onMouseLeave={(e) => {
+              //   e.currentTarget.style.transform = "scale(1)";
+              //   e.currentTarget.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
+              // }}
             >
               <Typography.Title level={5} className={styles.objectCardTitle}>
                 {object?.attributes.fullName}
@@ -101,14 +101,14 @@ export default function Objects() {
           style={stylesForCard.body}
           className={styles.objectCard}
           onClick={() => setShowCategoryModal(true)}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "scale(1.05)";
-            e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.2)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "scale(1)";
-            e.currentTarget.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
-          }}
+          // onMouseEnter={(e) => {
+          //   e.currentTarget.style.transform = "scale(1.05)";
+          //   e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.2)";
+          // }}
+          // onMouseLeave={(e) => {
+          //   e.currentTarget.style.transform = "scale(1)";
+          //   e.currentTarget.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
+          // }}
         >
           <Flex
             align="stretch"
@@ -163,7 +163,7 @@ export default function Objects() {
         {object && object.attributes ? (
           <ModalObject
             read
-            value={{ ...object.attributes }}
+            value={{ ...object }}
             setShowModal={showObject}
             type={selectedType}
           />

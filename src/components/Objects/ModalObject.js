@@ -37,7 +37,7 @@ export default function ModalObject({
             console.error("Ошибка при удалении объекта:", error);
           });
       },
-      onCancel() {},
+      onCancel() { },
     });
   };
 
@@ -66,7 +66,7 @@ export default function ModalObject({
       fields={fieldsJson}
       read={read}
       setShowModal={setShowModal}
-      value={value}
+      value={{ ...value?.attributes, id: value.id }}
     />
   );
 }
