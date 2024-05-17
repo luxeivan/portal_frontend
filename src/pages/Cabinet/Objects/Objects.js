@@ -150,7 +150,8 @@ export default function Objects() {
         {object && object.attributes ? (
           <ModalObject
             read
-            value={{ ...object }}
+            // value={{ ...object}}
+            value={{ ...object}}
             setShowModal={showObject}
             type={selectedType}
           />
