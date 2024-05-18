@@ -119,7 +119,7 @@ export default function App() {
                     }
                   />
                   <Route
-                    path="/services/:level2/:id"
+                    path="/services/:level2/:key"
                     element={
                       <Container>
                         <ServiceItem />
