@@ -11,36 +11,34 @@ const useObjects = create((set, get) => ({
   showModalView: false,
   showModalAdd: false,
 
-  // Показать модальное окно для объекта или скрыть его
   showObject: async (id = false) => {
     if (id !== false) {
-      console.log(id);
+      console.log("Объект с ID:", id);
       await get().fetchObjectItem(id);
-      console.log(get().object.attributes.type);
-      switch (get().object.attributes.type) {
-        case "Объект":
-          set({ showModalView: true });
-          break;
+      const object = get().object;
+      console.log("Выбранный объект:", object);
+      if (object && object.attributes) {
+        set({ showModalView: true });
+        console.log("Установка showModalView в значение true");
       }
     } else {
       set({
         showModalView: false,
         object: null,
       });
+      console.log("Установка showModalView в значение false");
     }
   },
 
-  // Установить отображение модального окна для просмотра
   setShowModalView: (show) => {
+    console.log("setShowModalView called with:", show);
     set({ showModalView: show });
   },
 
-  // Установить отображение модального окна для добавления
   setShowModalAdd: (show) => {
     set({ showModalAdd: show });
   },
 
-  // Получить список всех объектов
   fetchObjects: async () => {
     try {
       set({ isLoadingObjects: true });
@@ -63,7 +61,6 @@ const useObjects = create((set, get) => ({
     }
   },
 
-  // Получить детали конкретного объекта
   fetchObjectItem: async (id) => {
     return new Promise(async function (resolve, reject) {
       try {
@@ -90,7 +87,6 @@ const useObjects = create((set, get) => ({
     });
   },
 
-  // Добавить новый объект
   submitNewObject: async (formData) => {
     try {
       const response = await axios.post(
@@ -106,7 +102,6 @@ const useObjects = create((set, get) => ({
       );
 
       if (response.status === 201) {
-        //console.log(response.data);
         set((state) => ({
           objects: [...state.objects, response.data],
         }));
@@ -118,7 +113,6 @@ const useObjects = create((set, get) => ({
     }
   },
 
-  // Удалить объект
   deleteObjectItem: async (id) => {
     try {
       set({ isLoadingObjectItem: true });

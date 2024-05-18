@@ -37,6 +37,8 @@ const NewForm = ({
   const showDrawer = () => setDrawerVisible(true);
   const onClose = () => setDrawerVisible(false);
 
+  console.log("value!!!!!!!", value);
+
   useEffect(() => {
     setEdit(tempedit);
     setRead(tempread);
@@ -257,6 +259,16 @@ const NewForm = ({
               Удалить
             </Button>
           </Form.Item>
+
+          {/* <Form.Item>
+            <Button
+              type="primary"
+              danger
+              onClick={() => handlerDelete(value.id)}
+            >
+              Удалить
+            </Button>
+          </Form.Item> */}
           <Form.Item>
             <Button onClick={() => setShowModal(false)}>Закрыть</Button>
           </Form.Item>

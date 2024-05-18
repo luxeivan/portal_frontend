@@ -1,27 +1,70 @@
-.content{
+.content {
   padding: 0 48px;
 }
+
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Georgia", serif;
+  transition: color 0.3s;
+}
+
+button,
+.ant-btn {
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  border-radius: 5px;
+}
+
+[data-theme="dark"] body {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: #ffffff;
+}
+
+[data-theme="dark"] button,
+[data-theme="dark"] .ant-btn {
+  background-color: #333333;
+  color: #ffffff;
+  border-color: #444444;
+}
+
 @media (max-width: 1199px) {
-  html{
+  html {
     font-size: 14px;
   }
-  .content{
+  .content {
     padding: 0 30px;
   }
 }
 @media (max-width: 991px) {
-  html{
+  html {
     font-size: 12px;
   }
-  .content{
+  .content {
     padding: 0 20px;
   }
 }
 @media (max-width: 575px) {
-  html{
+  html {
     font-size: 10px;
   }
-  .content{
+  .content {
     padding: 0 10px;
   }
 }
