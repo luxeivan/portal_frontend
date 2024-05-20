@@ -136,6 +136,34 @@ const useObjects = create((set, get) => ({
       });
     }
   },
+
+  updateObjectItem: async (id, data) => {
+    try {
+      set({ isLoadingObjectItem: true });
+      const token = localStorage.getItem("jwt");
+      const response = await axios.put(
+        `${config.backServer}/api/cabinet/objects/${id}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      set((state) => ({
+        objects: state.objects.map((item) =>
+          item.id === id ? response.data : item
+        ),
+        isLoadingObjectItem: false,
+      }));
+      console.log("Объект успешно обновлен", response.data);
+    } catch (error) {
+      console.log("Ошибка при обновлении объекта", error);
+      set({ error: error.response?.data?.message || error.message, isLoading: false });
+    }
+  },
+
+
 }));
 
 export default useObjects;

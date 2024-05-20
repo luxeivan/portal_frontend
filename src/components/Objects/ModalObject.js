@@ -15,6 +15,7 @@ export default function ModalObject({
   const deleteObjectItem = useObject((store) => store.deleteObjectItem);
   const submitNewObject = useObject((store) => store.submitNewObject);
   const fetchObjects = useObject((store) => store.fetchObjects); // добавляем fetchObjects
+  const updateObjectItem = useObject((store) => store.updateObjectItem);
 
   useEffect(() => {
     form.resetFields();
@@ -38,14 +39,26 @@ export default function ModalObject({
             console.error("Ошибка при удалении объекта:", error);
           });
       },
-      onCancel() { },
+      onCancel() {},
     });
   };
 
-  const handlerEdit = (id) => {
-    console.log("Обновить", id);
-    console.log(form.getFieldValue());
+  // const handlerEdit = (id) => {
+  //   console.log("Обновить", id);
+  //   console.log(form.getFieldValue());
+  // };
+
+  const handlerEdit = async (id) => {
+    try {
+      const formData = form.getFieldsValue();
+      console.log("Обновление данных для объекта с ID:", id, formData);
+      await updateObjectItem(id, formData);
+      setShowModal(false);
+    } catch (error) {
+      console.error("Ошибка при обновлении объекта:", error);
+    }
   };
+  
 
   const handlerSubmitForm = (event) => {
     let list = fieldsJson.filter((item) => item.type !== "new_divider");
