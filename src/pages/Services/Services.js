@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Image, Tag, Button, List, Layout, theme } from "antd";
+import { Card, Flex, Typography, Image, Tag, Button, List, Layout, theme,Spin } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
@@ -10,16 +10,10 @@ import { LeftOutlined,FolderOutlined,FileTextOutlined} from "@ant-design/icons";
 import Container from "../../components/Container";
 const { Title, Text } = Typography;
 
-// const services = [
-//   {
-//     url:'123123',
-//     title:'123123',
-//     content:'12312323423423',
-//   }
-// ]
-
 export default function Services() {
+  const isLoading = useServices((state) => state.isLoading);
   const services = useServices((state) => state.services);
+  const serviceItem = useServices((state) => state.serviceItem);
   const fetchServices = useServices((state) => state.fetchServices);
   const { level2 } = useParams();
   useEffect(()=>{
@@ -27,22 +21,27 @@ export default function Services() {
   },[level2])
   return (
     <>
-      <AppHelmet title={"Каталог услуг"} desc={"Услуги компании"} />
+      <AppHelmet title={serviceItem?serviceItem.Description:'Каталог услуг'} desc={"Услуги компании"} />
       <Container>
-      {level2 &&
-        <Link to={`/services`}><Button style={{ margin: "20px 0" }}>Каталог услуг</Button></Link>
-      }
-        {!level2 &&
+        {serviceItem&&
+        <Link to={`/services/${serviceItem&&serviceItem.Parent_Key}`}><Button style={{ margin: "20px 0" }}><LeftOutlined /></Button></Link>
+        }       
+        {isLoading&&
+        <Flex style={{height:"300px"}} align="center" justify="center">
+
+        <Spin size="large" />
+        </Flex>
+        }    
+        {!isLoading&&
         <>
-          <Title level={1} className={styles.title}>
-            Каталог услуг
-          </Title>
-        </>
-        }
+        <Title level={1} className={styles.title}>
+          {serviceItem?serviceItem.Description:'Каталог услуг'}
+        </Title>
+        
         <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
             {services.map((item, index) => (
             <Link
-              key={index}
+            key={index}
               to={item.IsFolder?`/services/${item.Ref_Key}`:`/services/item/${item.Ref_Key}`}
               className={styles.styleLink}
             >
@@ -53,6 +52,8 @@ export default function Services() {
             </Link>
           ))}
         </Flex>
+          </>
+          }    
       </Container>
     </>
   );
