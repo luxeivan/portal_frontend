@@ -17,7 +17,7 @@ import ListDocs from "../../components/ServiceItem/ListDocs";
 import StrapiRichText from "../../components/StrapiRichText";
 import styles from "./ServicesItem.module.css";
 import { motion } from "framer-motion";
-import { LeftOutlined } from "@ant-design/icons";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
 
 
@@ -29,8 +29,12 @@ export default function ServiceItem() {
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
   const { level2, key } = useParams();
+
+  const chain = useServices((state) => state.chain);
+  const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   useEffect(() => {
     fetchServiceItem(key);
+    fetchServiceChain(key)
   }, [level2, key]);
   const showDrawer = () => {
     setOpen(true);
@@ -43,10 +47,13 @@ export default function ServiceItem() {
     <div>
       {serviceItem && (
         <>
-
-          <Link to={`/services/${serviceItem.Parent_Key}`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
+          <Flex style={{ margin: "20px 0" }}>
+            {chain && chain.map((item, index) => <><Link to={`/services/${item.Ref_Key}`} key={index}>{item.Description}</Link><RightOutlined /></>)}
+          </Flex>
+          {/* <Link to={`/services/${serviceItem.Parent_Key}`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link> */}
           <Title level={1} style={{ marginTop: "10px" }}>
-            <span style={{ color: "gray" }}>Услуга:</span><br />{serviceItem.Description}
+            {/* <span style={{ color: "gray" }}>Услуга:</span><br /> */}
+            {serviceItem.Description}
           </Title>
           {/* <Divider /> */}
 
@@ -61,17 +68,17 @@ export default function ServiceItem() {
                     <Paragraph>{serviceItem.Description}</Paragraph>
                     {/* <StrapiRichText content={serviceItem.attributes.description} /> */}
                     {/* <MarkDownText>{serviceItem.Description}</MarkDownText> */}
-                    {/* <Paragraph>
+                    <Paragraph>
                       <b>Срок подготовки документов:</b>{" "}
-                      {serviceItem.attributes.periodPreparationDocuments}
+                      {serviceItem.DescriptionOfDocumentPreparationPeriod}
                     </Paragraph>
                     <Paragraph>
                       <b>Срок оказания услуги:</b>{" "}
-                      {serviceItem.attributes.periodServiceProvision}
+                      {serviceItem.DescriptionOfPeriodService}
                     </Paragraph>
                     <Paragraph>
-                      <b>Стоимость:</b> {serviceItem.attributes.price}
-                    </Paragraph> */}
+                      <b>Стоимость:</b> {serviceItem.DescriptionOfCost}
+                    </Paragraph>
                   </div>
                 ),
               },
@@ -84,7 +91,7 @@ export default function ServiceItem() {
                       serviceItem.Fields.map((item, index) =>
                         <Flex vertical key={index}>
                           <Paragraph>
-                            {item.LineNumber}
+                            {item.Value}
                           </Paragraph>
                           <Paragraph>
                             {item.ShortDescription}
