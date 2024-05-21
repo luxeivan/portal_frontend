@@ -6,25 +6,34 @@ import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
 import config from "../../config";
 import TagFilters from "../../components/Filters/TagFilters";
-import { LeftOutlined,FolderOutlined,FileTextOutlined} from "@ant-design/icons";
+import { LeftOutlined,FolderOutlined,FileTextOutlined,RightOutlined} from "@ant-design/icons";
 import Container from "../../components/Container";
 const { Title, Text } = Typography;
 
 export default function Services() {
   const isLoading = useServices((state) => state.isLoading);
   const services = useServices((state) => state.services);
+  const chain = useServices((state) => state.chain);
+  const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServices = useServices((state) => state.fetchServices);
   const { level2 } = useParams();
   useEffect(()=>{
     fetchServices(level2)
+    fetchServiceChain(level2)
   },[level2])
   return (
     <>
       <AppHelmet title={serviceItem?serviceItem.Description:'Каталог услуг'} desc={"Услуги компании"} />
       <Container>
         {serviceItem&&
-        <Link to={`/services/${serviceItem&&serviceItem.Parent_Key}`}><Button style={{ margin: "20px 0" }}><LeftOutlined /></Button></Link>
+        <>
+        <Flex style={{ margin: "20px 0" }}>
+
+        {chain && chain.map((item,index)=><><Link to={`/services/${item.Ref_Key}`} key={index}>{item.Description}</Link><RightOutlined /></>)}
+        </Flex>
+        {/* <Link to={`/services/${serviceItem&&serviceItem.Parent_Key}`}><Button style={{ margin: "20px 0" }}><LeftOutlined /></Button></Link> */}
+        </>
         }       
         {isLoading&&
         <Flex style={{height:"300px"}} align="center" justify="center">
