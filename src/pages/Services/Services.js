@@ -11,6 +11,7 @@ import Container from "../../components/Container";
 const { Title, Text } = Typography;
 
 export default function Services() {
+  const { colorPrimaryText } = theme.useToken().token
   const isLoading = useServices((state) => state.isLoading);
   const services = useServices((state) => state.services);
   const chain = useServices((state) => state.chain);
@@ -30,7 +31,7 @@ export default function Services() {
         <>
         <Flex style={{ margin: "20px 0" }}>
 
-        {chain && chain.map((item,index)=><><Link to={`/services/${item.Ref_Key}`} key={index}>{item.Description}</Link><RightOutlined /></>)}
+        {chain && chain.map((item,index)=><><Link to={`/services/${item.Ref_Key}`} key={index}>{item.Description}</Link><RightOutlined style={{color:colorPrimaryText}}/></>)}
         </Flex>
         {/* <Link to={`/services/${serviceItem&&serviceItem.Parent_Key}`}><Button style={{ margin: "20px 0" }}><LeftOutlined /></Button></Link> */}
         </>
@@ -46,7 +47,7 @@ export default function Services() {
         <Title level={1} className={styles.title}>
           {serviceItem?serviceItem.Description:'Каталог услуг'}
         </Title>
-        
+        {services.length>0 &&
         <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
             {services.map((item, index) => (
             <Link
@@ -61,6 +62,12 @@ export default function Services() {
             </Link>
           ))}
         </Flex>
+        }
+        {services.length<1 &&
+         <Title level={2} className={styles.title} style={{color:"#999"}}>
+         Услуг в данной категории не найдено
+       </Title>
+        }
           </>
           }    
       </Container>
