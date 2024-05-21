@@ -43,6 +43,7 @@ const NewForm = ({
     setEdit(tempedit);
     setRead(tempread);
     form.resetFields();
+    form.setFieldsValue(value);
   }, [showModalView, showModalAdd, tempedit, tempread]);
 
   const renderField = (field, index) => {
@@ -66,7 +67,6 @@ const NewForm = ({
       case "textInput":
         return (
           <TextInput
-            // form={form}
             key={index}
             {...field}
             read={read}
@@ -213,7 +213,8 @@ const NewForm = ({
       initialValues={edit ? value : false}
     >
       {fields.map(renderField)}
-      {!read && !edit && (
+      {!read
+      && !edit && (
         <Flex gap="middle">
           <Form.Item>
             <Button type="primary" onClick={() => form.submit()}>
@@ -259,16 +260,6 @@ const NewForm = ({
               Удалить
             </Button>
           </Form.Item>
-
-          {/* <Form.Item>
-            <Button
-              type="primary"
-              danger
-              onClick={() => handlerDelete(value.id)}
-            >
-              Удалить
-            </Button>
-          </Form.Item> */}
           <Form.Item>
             <Button onClick={() => setShowModal(false)}>Закрыть</Button>
           </Form.Item>
@@ -280,16 +271,10 @@ const NewForm = ({
 
 export default NewForm;
 
+
+
 // import React, { useEffect, useState } from "react";
-// import {
-//   Divider,
-//   Form,
-//   Button,
-//   Flex,
-//   AutoComplete,
-//   Typography,
-//   Drawer,
-// } from "antd";
+// import { Divider, Form, Button, Flex, Typography } from "antd";
 // import TextInput from "./FormComponents/TextInput";
 // import CheckboxInput from "./FormComponents/CheckboxInput";
 // import SelectInput from "./FormComponents/SelectInput";
@@ -305,8 +290,7 @@ export default NewForm;
 // import CadastralNumberInput from "./FormComponents/CadastralNumberInput";
 // import AddressObjectInput from "./FormComponents/AddressInput/AddressObjectInput";
 // import YMaps from "./FormComponents/YMaps";
-// import { InfoCircleOutlined } from "@ant-design/icons";
-// import StrapiRichText from "./StrapiRichText";
+// import CustomDivider from "./FormComponents/CustomDivider";
 
 // const NewForm = ({
 //   fields,
@@ -323,6 +307,12 @@ export default NewForm;
 //   const showModalAdd = useSubjects((state) => state.showModalAdd);
 //   const [edit, setEdit] = useState(tempedit);
 //   const [read, setRead] = useState(tempread);
+//   const [drawerVisible, setDrawerVisible] = useState(false);
+
+//   const showDrawer = () => setDrawerVisible(true);
+//   const onClose = () => setDrawerVisible(false);
+
+//   console.log("value!!!!!!!", value);
 
 //   useEffect(() => {
 //     setEdit(tempedit);
@@ -332,6 +322,14 @@ export default NewForm;
 
 //   const renderField = (field, index) => {
 //     switch (field.type) {
+//       case "new_divider":
+//         return (
+//           <CustomDivider
+//             key={index}
+//             name={field.name}
+//             description={field.description}
+//           />
+//         );
 //       case "divider":
 //         return <Divider key={index}>{field.name}</Divider>;
 //       case "description":
@@ -466,32 +464,6 @@ export default NewForm;
 //             value={value[field.name]}
 //           />
 //         );
-
-//       // case "new_divider":
-//       //   const [drawerVisible, setDrawerVisible] = useState(false);
-//       //   const showDrawer = () => setDrawerVisible(true);
-//       //   const onClose = () => setDrawerVisible(false);
-
-//       //   return (
-//       //     <>
-//       //       <Divider key={index} orientation="left" plain>
-//       //         {field.name}
-//       //         <InfoCircleOutlined
-//       //           onClick={showDrawer}
-//       //           style={{ marginLeft: 10, color: "rgba(0, 0, 0, 0.45)" }}
-//       //         />
-//       //       </Divider>
-//       //       <Drawer
-//       //         title={field.name}
-//       //         placement="right"
-//       //         onClose={onClose}
-//       //         open={drawerVisible}
-//       //       >
-//       //         <StrapiRichText content={field.description || "Нет описания"} />
-//       //       </Drawer>
-//       //     </>
-//       //   );
-
 //       case "ymaps":
 //         return (
 //           <YMaps
@@ -562,6 +534,16 @@ export default NewForm;
 //               Удалить
 //             </Button>
 //           </Form.Item>
+
+//           {/* <Form.Item>
+//             <Button
+//               type="primary"
+//               danger
+//               onClick={() => handlerDelete(value.id)}
+//             >
+//               Удалить
+//             </Button>
+//           </Form.Item> */}
 //           <Form.Item>
 //             <Button onClick={() => setShowModal(false)}>Закрыть</Button>
 //           </Form.Item>
