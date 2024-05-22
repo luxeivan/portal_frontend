@@ -1,4 +1,4 @@
-.footer {
+/* .footer {
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     color: white;
     text-align: center;
@@ -54,14 +54,13 @@
       padding: 10px 0;
     }
   }
-  
+   */
 
-/* .footer {}
+.footer {
+}
 
 @media (max-width: 575px) {
-    .footer {
-        margin-bottom: 50px;
-    }
-
-
-} */
+  .footer {
+    margin-bottom: 50px;
+  }
+}

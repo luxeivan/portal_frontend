@@ -1,3 +1,50 @@
+
+//ТУТ НУЖНА ВАНИНА ПОМОЩЬ (РАСКОМЕНТИ, РАЗЛОГИНЬСЯ НА САЙТЕ И ЗАПРОСИ КОД ПОДТВЕРЖДЕНИЯ, ДАЛЬШЕ БУДЕТ ОШИБКА, ВОТ КАК С НЕЙ ЖИТЬ - НЕПОНЯТНО)
+// import React, { useRef } from "react";
+// import { Form, Input, Typography } from "antd";
+// import useAuth from "../../../../stores/useAuth";
+// import styles from "./CodeForm.module.css";
+
+// export default function CodeForm() {
+//   const { verifyPincode } = useAuth();
+//   const formRef = useRef(null);
+
+//   const onFinish = (values) => {
+//     const pincode = values.otp;
+//     verifyPincode(pincode);
+//   };
+
+//   const handleChange = (value) => {
+//     if (value.length === 4) {
+//       formRef.current.submit();
+//     }
+//   };
+
+//   return (
+//     <>
+//       <Typography.Text level={5}>Введите код из СМС:</Typography.Text>
+//       <Form
+//         name="codeForm"
+//         onFinish={onFinish}
+//         className={styles.codeFormContainer}
+//       >
+//         <Form.Item
+//           name="otp"
+//           rules={[
+//             { required: true, message: "Пожалуйста, введите код из СМС" },
+//           ]}
+//         >
+//           <Input.OTP
+//             onChange={handleChange}
+//             maxLength={4}
+//             formatter={(str) => str.toUpperCase()}
+//           />
+//         </Form.Item>
+//       </Form>
+//     </>
+//   );
+// }
+
 import React, { useRef } from "react";
 import { Form, Input, Typography } from "antd";
 import Title from "antd/es/typography/Title";
@@ -75,67 +122,3 @@ export default function CodeForm() {
     </>
   );
 }
-
-// import React from "react";
-// import { Button, Form, Input, notification } from "antd";
-// import useAuth from "../../../../stores/useAuth";
-// import styles from './CodeForm.js.module.css'
-// import Title from "antd/es/typography/Title";
-// import { formItemLayout, tailFormItemLayout } from '../../../../components/configSizeForm'
-
-// export default function CodeForm() {
-//   const { verifyPincode } = useAuth();
-
-//   const onFinish = (values) => {
-//     verifyPincode(values.pincode)
-//       .then(() => {
-//         notification.success({
-//           message: "Код подтверждения успешно проверен",
-//         });
-//       })
-//       .catch((error) => {
-//         notification.error({
-//           message: "Ошибка ввода кода",
-//           description: error.message,
-//         });
-//       });
-//   };
-
-//   const onFinishFailed = (errorInfo) => {
-//     notification.error({
-//       message: "Ошибка ввода кода",
-//       description: errorInfo.errorFields
-//         .map((field) => field.errors)
-//         .join(", "),
-//     });
-//   };
-
-//   return (
-//     <Form
-//       {...formItemLayout}
-//       name="codeForm"
-//       initialValues={{ remember: true }}
-//       onFinish={onFinish}
-//       onFinishFailed={onFinishFailed}
-//       autoComplete="off"
-//       className={styles.codeFormContainer}
-//     >
-//       <Title level={5}>Сейчас Вам поступит телефонный звонок, отвечать на него не нужно.</Title>
-//       <Form.Item
-//         label="Код подтверждения"
-//         name="pincode"
-//         rules={[{ required: true, message: "Введите код подтверждения" }]}
-//         >
-//         <Input placeholder="Введите последние 4 цифры" />
-//       </Form.Item>
-
-//       <Form.Item
-//         {...tailFormItemLayout}
-//       >
-//         <Button type="primary" htmlType="submit" className={styles.sendCodeButton}>
-//           Получить код
-//         </Button>
-//       </Form.Item>
-//     </Form>
-//   );
-// }

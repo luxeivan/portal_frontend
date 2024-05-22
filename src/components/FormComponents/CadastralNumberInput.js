@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox, Space, Typography } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { formItemLayout } from "../configSizeForm";
 
-const CadastralNumberInput = ({ name, read, value }) => {
+const CadastralNumberInput = ({ name, read, value, edit }) => {
   const form = Form.useFormInstance();
   const [isCadastralNumberAbsent, setIsCadastralNumberAbsent] = useState(false);
 
