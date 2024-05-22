@@ -72,7 +72,7 @@ const useServices = create((set) => ({
         }
         try {
             await getService(key)            
-            chain.push({ Description: "Каталог услуг", Ref_Key: "/" })
+            chain.push({ Description: "Каталог услуг", Ref_Key: "" })
             chain.reverse().pop()
             set((state) => {
                 return {
