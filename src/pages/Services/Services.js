@@ -23,7 +23,7 @@ export default function Services() {
     fetchServices(level2)
     fetchServiceChain(level2)
   },[level2])
-  console.log(services)
+  // console.log(services)
   return (
     <>
       <AppHelmet title={serviceItem?serviceItem.Description:'Каталог услуг'} desc={"Услуги компании"} />
