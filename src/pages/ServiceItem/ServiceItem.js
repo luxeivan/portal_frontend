@@ -23,6 +23,16 @@ import MarkDownText from "../../components/MarkDownText/MarkDownText";
 
 const { Title, Text, Paragraph } = Typography;
 
+const sklonenie = (day) => {
+  if (day === 1) {
+    return 'день'
+  } else if (day > 1 && day < 5) {
+    return 'дня'
+  } else {
+    return 'дней'
+  }
+}
+
 export default function ServiceItem() {
   const [open, setOpen] = useState(false);
   const { colorPrimary } = theme.useToken().token;
@@ -67,7 +77,7 @@ export default function ServiceItem() {
                   <div>
                     <Paragraph>{serviceItem.ShortDescription}</Paragraph>
                     {/* <StrapiRichText content={serviceItem.attributes.description} /> */}
-                     <MarkDownText>{serviceItem.FullDescription}</MarkDownText>
+                    <MarkDownText>{serviceItem.FullDescription}</MarkDownText>
                     <Paragraph>
                       <b>Срок подготовки документов:</b>{" "}
                       {serviceItem.DescriptionOfDocumentPreparationPeriod}
@@ -121,7 +131,7 @@ export default function ServiceItem() {
                       ),
                       title: item.Name,
                       description: item.ShortDescription,
-                      subTitle: `${item.period ? item.period : ''}`,
+                      subTitle: `${item.Period ? item.Period : ''} ${item.WorkingDays ? 'рабочих' : 'календарных'} ${sklonenie(item.Period)}`,
                     }))}
                   />
                 ),
