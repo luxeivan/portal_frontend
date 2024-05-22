@@ -23,6 +23,7 @@ export default function Services() {
     fetchServices(level2)
     fetchServiceChain(level2)
   },[level2])
+  // console.log(services)
   return (
     <>
       <AppHelmet title={serviceItem?serviceItem.Description:'Каталог услуг'} desc={"Услуги компании"} />
@@ -49,7 +50,7 @@ export default function Services() {
         </Title>
         {services.length>0 &&
         <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
-            {services.map((item, index) => (
+            {services.sort((a,b)=>a.Order-b.Order).map((item, index) => (
             <Link
             key={index}
               to={item.IsFolder?`/services/${item.Ref_Key}`:`/services/item/${item.Ref_Key}`}

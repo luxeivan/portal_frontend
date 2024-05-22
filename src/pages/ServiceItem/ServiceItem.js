@@ -65,9 +65,9 @@ export default function ServiceItem() {
                 label: "Описание",
                 children: (
                   <div>
-                    <Paragraph>{serviceItem.Description}</Paragraph>
+                    <Paragraph>{serviceItem.ShortDescription}</Paragraph>
                     {/* <StrapiRichText content={serviceItem.attributes.description} /> */}
-                    {/* <MarkDownText>{serviceItem.Description}</MarkDownText> */}
+                     <MarkDownText>{serviceItem.FullDescription}</MarkDownText>
                     <Paragraph>
                       <b>Срок подготовки документов:</b>{" "}
                       {serviceItem.DescriptionOfDocumentPreparationPeriod}
