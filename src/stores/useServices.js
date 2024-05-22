@@ -4,6 +4,7 @@ import axios from "axios";
 
 const useServices = create((set) => ({
     services: [],
+    chain: [],
     serviceItem: null,
     isLoading: false,
 
@@ -31,7 +32,7 @@ const useServices = create((set) => ({
         try {
             const res = await Promise.all([axios.get(`${config.backServer}/api/services/${key}`), axios.get(`${config.backServer}/api/services/item/${key}`)])
             // const res = await axios.get(`${config.backServer}/api/services/${key}`)
-            console.log(res)
+            // console.log(res)
             set((state) => {
                 return {
                     services: res[0].data.value,
@@ -47,11 +48,35 @@ const useServices = create((set) => ({
         set((state) => ({ serviceItem: null, isLoading: true }))
         try {
             const res = await axios.get(`${config.backServer}/api/services/item/${key}`)
-            console.log(res)
+            // console.log(res)
             set((state) => {
                 return {
                     serviceItem: res.data.value[0],
                     isLoading: false
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    fetchServiceChain: async (key) => {
+        // set((state) => ({ serviceItem: null, isLoading: true }))
+        let chain = []
+        async function getService(key) {
+            const res = await axios.get(`${config.backServer}/api/services/item/${key}`)
+            // console.log(res.data)
+            chain.push({ Description: res.data.value[0]?.Description, Ref_Key: res.data.value[0]?.Ref_Key })
+            if (res.data.value[0]?.Parent_Key && res.data.value[0].Parent_Key !== "00000000-0000-0000-0000-000000000000") {
+                await getService(res.data.value[0].Parent_Key)
+            }
+        }
+        try {
+            await getService(key)            
+            chain.push({ Description: "Каталог услуг", Ref_Key: "/" })
+            chain.reverse().pop()
+            set((state) => {
+                return {
+                    chain
                 }
             })
         } catch (error) {
