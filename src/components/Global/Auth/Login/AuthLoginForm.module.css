@@ -1,5 +1,15 @@
+
 .submitButton {
+  display: inline-block;
+  min-width: 160px;
+  white-space: normal;
+  width: auto;
+  padding: 0 16px; 
+}
+
+
+/* .submitButton {
   min-width: 160px;
   white-space: normal;
 }
-
+ */
