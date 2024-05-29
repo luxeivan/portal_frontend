@@ -108,8 +108,22 @@ const useAuth = create((set) => {
         auth: false,
         email: "",
         password: "",
+        isCodeRequested: false, // Обнуляем флаг запроса кода
+        loginError: "", // Очищаем сообщения об ошибках
+        isAuthModalOpen: false, // Закрываем модальное окно аутентификации, если оно открыто
+        isCodeModalOpen: false // Закрываем модальное окно ввода кода, если оно открыто
       }));
     },
+    
+
+    // logout: () => {
+    //   localStorage.removeItem("jwt");
+    //   set(() => ({
+    //     auth: false,
+    //     email: "",
+    //     password: "",
+    //   }));
+    // },
 
     checkJWT: async () => {
       let validJwt = false;

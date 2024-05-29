@@ -63,6 +63,11 @@ export default function App() {
     checkDarkMode();
   }, []);
 
+  useEffect(() => {
+    useAuth.getState().checkJWT();
+  }, []);
+  
+
   const { colorPrimary } = theme.useToken().token;
 
   const loader = () => {

@@ -131,7 +131,7 @@ export default function ServiceItem() {
                       ),
                       title: item.Name,
                       description: item.ShortDescription,
-                      subTitle: `${item.Period ? item.Period : ''} ${item.WorkingDays ? 'рабочих' : 'календарных'} ${sklonenie(item.Period)}`,
+                      subTitle: item.PeriodDescription,
                     }))}
                   />
                 ),
