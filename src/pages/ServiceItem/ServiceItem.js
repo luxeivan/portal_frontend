@@ -17,7 +17,7 @@ import ListDocs from "../../components/ServiceItem/ListDocs";
 import StrapiRichText from "../../components/StrapiRichText";
 import styles from "./ServicesItem.module.css";
 import { motion } from "framer-motion";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { LeftOutlined, RightOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
 
 
@@ -35,6 +35,7 @@ const sklonenie = (day) => {
 
 export default function ServiceItem() {
   const [open, setOpen] = useState(false);
+  const [openDrawerSteps, setOpenDrawerSteps] = useState(false);
   const { colorPrimary } = theme.useToken().token;
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
@@ -53,6 +54,7 @@ export default function ServiceItem() {
     setOpen(false);
   };
   console.log(serviceItem)
+
   return (
     <div>
       {serviceItem && (
@@ -129,8 +131,18 @@ export default function ServiceItem() {
                           <Text className={styles.iconText}>{index + 1}</Text>
                         </div>
                       ),
-                      title: item.Name,
-                      description: item.ShortDescription,
+                      title: <><span>{item.Name}</span><InfoCircleOutlined onClick={() => { setOpenDrawerSteps(index + 1) }} style={{ marginLeft: 2, color: "rgba(0, 0, 0, 0.45)" }} /></>,
+                      description: <>
+                        <span>{item.ShortDescription}</span>
+                        <Drawer
+                          title={item.Name}
+                          placement="right"
+                          onClose={() => { setOpenDrawerSteps(false) }}
+                          open={openDrawerSteps === (index + 1)}
+                        >
+                           <MarkDownText>{item.FullDescription || "Нет описания"}</MarkDownText>
+                        </Drawer>
+                      </>,
                       subTitle: item.PeriodDescription,
                     }))}
                   />
