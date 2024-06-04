@@ -58,14 +58,14 @@ export default function Subjects() {
     }
   }, [fetchSubjects]);
 
-  if (isLoadingSubjects) {
-    return (
-      <>
-        <Title level={1}>Субъекты</Title>
-        <SceletonCard />
-      </>
-    );
-  }
+  // if (isLoadingSubjects) {
+  //   return (
+  //     <>
+  //       <Title level={1}>Субъекты</Title>
+  //       <SceletonCard />
+  //     </>
+  //   );
+  // }
 
   const handleCategorySelect = (type) => {
     setShowCategoryModal(false);
