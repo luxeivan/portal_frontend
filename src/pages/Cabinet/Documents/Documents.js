@@ -56,8 +56,6 @@ export default function Documents() {
     // Логика для обработки успешной загрузки файла
     console.log("Файл успешно загружен:", file);
     message.success(`Файл "${file.name}" успешно загружен`);
-    // Где-то тут мы попозже добавим логику для обновления состояния новыми загруженными файлами
-    // Где-то тут мы попозже обновим бэк для сохранения информации о файле
   };
 
   const getFile = async (relativePath) => {
@@ -105,6 +103,7 @@ export default function Documents() {
         ]);
         onSuccess(relativePath, file);
         message.success(`Файлы успешно загружены`);
+        setShowModalAdd(false); // Закрываем модальное окно после успешной загрузки файла
       })
       .catch((error) => {
         console.error("Ошибка при загрузке файла", error);
@@ -119,8 +118,31 @@ export default function Documents() {
     message.error(`Файл "${file.name}" не удалось загрузить`);
   };
 
-  const handleUpload = () => {
-    // Логика для загрузки файла
+  const handleUpload = (values) => {
+    // Логика для отправки данных на бэкэнд
+    const formData = new FormData();
+    formData.append("documentName", values.documentName);
+    formData.append("file", values.files.file);
+
+    const token = localStorage.getItem("jwt");
+
+    axios
+      .post(`${config.backServer}/api/documents`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        message.success("Документ успешно загружен");
+        setShowModalAdd(false); // Закрываем модальное окно
+        fetchDocuments(); // Обновляем список документов
+      })
+      .catch((error) => {
+        console.error("Ошибка при загрузке документа:", error);
+        message.error("Не удалось загрузить документ");
+      });
   };
 
   return (
@@ -170,14 +192,16 @@ export default function Documents() {
               ]}
             >
               <Select onChange={handleDocumentNameChange}>
-                <Option value="Document 1">Документ 1</Option>
-                <Option value="Document 2">Документ 2</Option>
+                <Option value="Document 1">Паспорт</Option>
+                <Option value="Document 2">Доверенность</Option>
               </Select>
             </Form.Item>
             {/* Компонент для загрузки файла */}
             <Form.Item
               label="Загрузить файл"
               name="files"
+              valuePropName="fileList"
+              getValueFromEvent={(e) => (Array.isArray(e) ? e : e && [e.file])}
               rules={[
                 { required: true, message: "Пожалуйста, загрузите файлы" },
               ]}
@@ -204,6 +228,445 @@ export default function Documents() {
     </div>
   );
 }
+
+
+
+// import React, { useEffect, useState } from "react";
+// import {
+//   Typography,
+//   Card,
+//   Flex,
+//   Modal,
+//   Button,
+//   Upload,
+//   message,
+//   Form,
+//   Select,
+// } from "antd";
+// import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+// import axios from "axios";
+// import config from "../../../config";
+
+// const { Title } = Typography;
+// const { Option } = Select;
+
+// const stylesForCard = {
+//   body: {
+//     height: "100%",
+//     width: 250,
+//     minHeight: 250,
+//   },
+//   actions: { marginTop: "-20px" },
+//   header: { backgroundColor: "red" },
+// };
+
+// export default function Documents() {
+//   const [showModalAdd, setShowModalAdd] = useState(false);
+//   const [fileList, setFileList] = useState([]);
+//   const [documentName, setDocumentName] = useState("");
+
+//   useEffect(() => {
+//     // Загружаем существующие документы при монтировании компонента
+//     fetchDocuments();
+//   }, []);
+
+//   const fetchDocuments = async () => {
+//     // Загружаем существующие документы с бэкенда и обновляем состояние
+//     try {
+//       const response = await axios.get(`${config.backServer}/api/documents`);
+//       setFileList(response.data.documents);
+//     } catch (error) {
+//       console.error("Ошибка при загрузке документов:", error);
+//       message.error("Не удалось загрузить документы");
+//     }
+//   };
+
+//   const handleDocumentNameChange = (value) => {
+//     setDocumentName(value);
+//   };
+
+//   const handleUploadSuccess = (file) => {
+//     // Логика для обработки успешной загрузки файла
+//     console.log("Файл успешно загружен:", file);
+//     message.success(`Файл "${file.name}" успешно загружен`);
+//   };
+
+//   const getFile = async (relativePath) => {
+//     const fileblob = await axios.get(
+//       `${config.backServer}/api/cabinet/get-file/${relativePath}`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+//         },
+//         withCredentials: true,
+//         responseType: "blob",
+//       }
+//     );
+//     if (!fileblob.data) throw new Error("Ошибка получения файла");
+
+//     return window.URL.createObjectURL(fileblob.data);
+//   };
+
+//   const customRequest = ({ file, onSuccess, onError }) => {
+//     // Своя логика для загрузки файла
+//     const formData = new FormData();
+//     formData.append("file", file);
+//     const token = localStorage.getItem("jwt");
+
+//     axios
+//       .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//           Authorization: `Bearer ${token}`,
+//         },
+//         withCredentials: true,
+//       })
+//       .then(async (response) => {
+//         const relativePath = response.data.files[0];
+//         const fileUrl = await getFile(relativePath);
+//         setFileList((prev) => [
+//           ...prev,
+//           {
+//             crossOrigin: "use-credentials",
+//             uid: relativePath,
+//             name: file.name,
+//             status: "done",
+//             url: fileUrl,
+//           },
+//         ]);
+//         onSuccess(relativePath, file);
+//         message.success(`Файлы успешно загружены`);
+//       })
+//       .catch((error) => {
+//         console.error("Ошибка при загрузке файла", error);
+//         onError(error);
+//         message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
+//       });
+//   };
+
+//   const handleUploadError = (error, file) => {
+//     // Логика для обработки ошибок при загрузке файла
+//     console.error("Ошибка при загрузке файла:", error);
+//     message.error(`Файл "${file.name}" не удалось загрузить`);
+//   };
+
+//   const handleUpload = (values) => {
+//     // Логика для отправки данных на бэкэнд
+//     const formData = new FormData();
+//     formData.append("documentName", values.documentName);
+//     formData.append("file", values.files.file);
+
+//     const token = localStorage.getItem("jwt");
+
+//     axios
+//       .post(`${config.backServer}/api/documents`, formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//           Authorization: `Bearer ${token}`,
+//         },
+//         withCredentials: true,
+//       })
+//       .then((response) => {
+//         message.success("Документ успешно загружен");
+//         setShowModalAdd(false); // Закрываем модальное окно
+//         fetchDocuments(); // Обновляем список документов
+//       })
+//       .catch((error) => {
+//         console.error("Ошибка при загрузке документа:", error);
+//         message.error("Не удалось загрузить документ");
+//       });
+//   };
+
+//   return (
+//     <div>
+//       <Title level={1}>Документы</Title>
+//       <Flex wrap="wrap" gap="large">
+//         {/* Существующие документы */}
+//         {fileList.map((document, index) => (
+//           <Card key={index} hoverable styles={stylesForCard}>
+//             {/* Отображение информации о документе */}
+//           </Card>
+//         ))}
+//         {/* Карточка для добавления нового документа */}
+//         <Card
+//           hoverable
+//           styles={stylesForCard}
+//           onClick={() => setShowModalAdd(true)}
+//         >
+//           <Flex
+//             align="stretch"
+//             justify="center"
+//             style={{ minHeight: "100%", width: "100%" }}
+//           >
+//             <PlusOutlined />
+//           </Flex>
+//         </Card>
+//       </Flex>
+//       {/* Модальное окно для загрузки нового документа */}
+//       <Modal
+//         title="Загрузить новый документ"
+//         visible={showModalAdd}
+//         onCancel={() => setShowModalAdd(false)}
+//         footer={null}
+//         width={700}
+//       >
+//         <Flex gap="large" wrap="wrap" justify="center">
+//           <Form onFinish={handleUpload}>
+//             {/* Выпадающий список для выбора названия документа */}
+//             <Form.Item
+//               label="Название"
+//               name="documentName"
+//               rules={[
+//                 {
+//                   required: true,
+//                   message: "Пожалуйста, выберите название документа",
+//                 },
+//               ]}
+//             >
+//               <Select onChange={handleDocumentNameChange}>
+//                 <Option value="Document 1">Паспорт</Option>
+//                 <Option value="Document 2">Доверенность</Option>
+//               </Select>
+//             </Form.Item>
+//             {/* Компонент для загрузки файла */}
+//             <Form.Item
+//               label="Загрузить файл"
+//               name="files"
+//               valuePropName="fileList"
+//               getValueFromEvent={(e) => (Array.isArray(e) ? e : e && [e.file])}
+//               rules={[
+//                 { required: true, message: "Пожалуйста, загрузите файлы" },
+//               ]}
+//             >
+//               <Upload
+//                 listType="picture"
+//                 customRequest={customRequest}
+//                 onUploadSuccess={handleUploadSuccess}
+//                 onUploadError={handleUploadError}
+//                 multiple
+//               >
+//                 <Button icon={<UploadOutlined />}>Загрузить</Button>
+//               </Upload>
+//             </Form.Item>
+//             {/* Кнопка для отправки формы */}
+//             <Form.Item>
+//               <Button type="primary" htmlType="submit">
+//                 Отправить файлы
+//               </Button>
+//             </Form.Item>
+//           </Form>
+//         </Flex>
+//       </Modal>
+//     </div>
+//   );
+// }
+
+// import React, { useEffect, useState } from "react";
+// import {
+//   Typography,
+//   Card,
+//   Flex,
+//   Modal,
+//   Button,
+//   Upload,
+//   message,
+//   Form,
+//   Select,
+// } from "antd";
+// import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+// import axios from "axios";
+// import config from "../../../config";
+
+// const { Title } = Typography;
+// const { Option } = Select;
+
+// const stylesForCard = {
+//   body: {
+//     height: "100%",
+//     width: 250,
+//     minHeight: 250,
+//   },
+//   actions: { marginTop: "-20px" },
+//   header: { backgroundColor: "red" },
+// };
+
+// export default function Documents() {
+//   const [showModalAdd, setShowModalAdd] = useState(false);
+//   const [fileList, setFileList] = useState([]);
+//   const [documentName, setDocumentName] = useState("");
+
+//   useEffect(() => {
+//     // Загружаем существующие документы при монтировании компонента
+//     fetchDocuments();
+//   }, []);
+
+//   const fetchDocuments = async () => {
+//     // Загружаем существующие документы с бэкенда и обновляем состояние
+//     try {
+//       const response = await axios.get(`${config.backServer}/api/documents`);
+//       setFileList(response.data.documents);
+//     } catch (error) {
+//       console.error("Ошибка при загрузке документов:", error);
+//       message.error("Не удалось загрузить документы");
+//     }
+//   };
+
+//   const handleDocumentNameChange = (value) => {
+//     setDocumentName(value);
+//   };
+
+//   const handleUploadSuccess = (file) => {
+//     // Логика для обработки успешной загрузки файла
+//     console.log("Файл успешно загружен:", file);
+//     message.success(`Файл "${file.name}" успешно загружен`);
+//     // Где-то тут мы попозже добавим логику для обновления состояния новыми загруженными файлами
+//     // Где-то тут мы попозже обновим бэк для сохранения информации о файле
+//   };
+
+//   const getFile = async (relativePath) => {
+//     const fileblob = await axios.get(
+//       `${config.backServer}/api/cabinet/get-file/${relativePath}`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+//         },
+//         withCredentials: true,
+//         responseType: "blob",
+//       }
+//     );
+//     if (!fileblob.data) throw new Error("Ошибка получения файла");
+
+//     return window.URL.createObjectURL(fileblob.data);
+//   };
+
+//   const customRequest = ({ file, onSuccess, onError }) => {
+//     // Своя логика для загрузки файла
+//     const formData = new FormData();
+//     formData.append("file", file);
+//     const token = localStorage.getItem("jwt");
+
+//     axios
+//       .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//           Authorization: `Bearer ${token}`,
+//         },
+//         withCredentials: true,
+//       })
+//       .then(async (response) => {
+//         const relativePath = response.data.files[0];
+//         const fileUrl = await getFile(relativePath);
+//         setFileList((prev) => [
+//           ...prev,
+//           {
+//             crossOrigin: "use-credentials",
+//             uid: relativePath,
+//             name: file.name,
+//             status: "done",
+//             url: fileUrl,
+//           },
+//         ]);
+//         onSuccess(relativePath, file);
+//         message.success(`Файлы успешно загружены`);
+//       })
+//       .catch((error) => {
+//         console.error("Ошибка при загрузке файла", error);
+//         onError(error);
+//         message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
+//       });
+//   };
+
+//   const handleUploadError = (error, file) => {
+//     // Логика для обработки ошибок при загрузке файла
+//     console.error("Ошибка при загрузке файла:", error);
+//     message.error(`Файл "${file.name}" не удалось загрузить`);
+//   };
+
+//   const handleUpload = () => {
+//     // Логика для загрузки файла
+//   };
+
+//   return (
+//     <div>
+//       <Title level={1}>Документы</Title>
+//       <Flex wrap="wrap" gap="large">
+//         {/* Существующие документы */}
+//         {fileList.map((document, index) => (
+//           <Card key={index} hoverable styles={stylesForCard}>
+//             {/* Отображение информации о документе */}
+//           </Card>
+//         ))}
+//         {/* Карточка для добавления нового документа */}
+//         <Card
+//           hoverable
+//           styles={stylesForCard}
+//           onClick={() => setShowModalAdd(true)}
+//         >
+//           <Flex
+//             align="stretch"
+//             justify="center"
+//             style={{ minHeight: "100%", width: "100%" }}
+//           >
+//             <PlusOutlined />
+//           </Flex>
+//         </Card>
+//       </Flex>
+//       {/* Модальное окно для загрузки нового документа */}
+//       <Modal
+//         title="Загрузить новый документ"
+//         visible={showModalAdd}
+//         onCancel={() => setShowModalAdd(false)}
+//         footer={null}
+//         width={700}
+//       >
+//         <Flex gap="large" wrap="wrap" justify="center">
+//           <Form onFinish={handleUpload}>
+//             {/* Выпадающий список для выбора названия документа */}
+//             <Form.Item
+//               label="Название"
+//               name="documentName"
+//               rules={[
+//                 {
+//                   required: true,
+//                   message: "Пожалуйста, выберите название документа",
+//                 },
+//               ]}
+//             >
+//               <Select onChange={handleDocumentNameChange}>
+//                 <Option value="Document 1">Паспорт</Option>
+//                 <Option value="Document 2">Доверенность</Option>
+//               </Select>
+//             </Form.Item>
+//             {/* Компонент для загрузки файла */}
+//             <Form.Item
+//               label="Загрузить файл"
+//               name="files"
+//               rules={[
+//                 { required: true, message: "Пожалуйста, загрузите файлы" },
+//               ]}
+//             >
+//               <Upload
+//                 listType="picture"
+//                 customRequest={customRequest}
+//                 onUploadSuccess={handleUploadSuccess}
+//                 onUploadError={handleUploadError}
+//                 multiple
+//               >
+//                 <Button icon={<UploadOutlined />}>Загрузить</Button>
+//               </Upload>
+//             </Form.Item>
+//             {/* Кнопка для отправки формы */}
+//             <Form.Item>
+//               <Button type="primary" htmlType="submit">
+//                 Отправить файлы
+//               </Button>
+//             </Form.Item>
+//           </Form>
+//         </Flex>
+//       </Modal>
+//     </div>
+//   );
+// }
 
 //Первый вариант
 // import React, { useEffect, useState } from "react";
