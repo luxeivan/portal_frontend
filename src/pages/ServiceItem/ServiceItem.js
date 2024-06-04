@@ -80,17 +80,23 @@ export default function ServiceItem() {
                     <Paragraph>{serviceItem.ShortDescription}</Paragraph>
                     {/* <StrapiRichText content={serviceItem.attributes.description} /> */}
                     <MarkDownText>{serviceItem.FullDescription}</MarkDownText>
-                    <Paragraph>
-                      <b>Срок подготовки документов:</b>{" "}
-                      {serviceItem.DescriptionOfDocumentPreparationPeriod}
-                    </Paragraph>
-                    <Paragraph>
-                      <b>Срок оказания услуги:</b>{" "}
-                      {serviceItem.DescriptionOfPeriodService}
-                    </Paragraph>
-                    <Paragraph>
-                      <b>Стоимость:</b> {serviceItem.DescriptionOfCost}
-                    </Paragraph>
+                    {serviceItem.DescriptionOfDocumentPreparationPeriod &&
+                      <Paragraph>
+                        <b>Срок подготовки документов:</b>{" "}
+                        {serviceItem.DescriptionOfDocumentPreparationPeriod}
+                      </Paragraph>
+                    }
+                    {serviceItem.DescriptionOfPeriodService &&
+                      <Paragraph>
+                        <b>Срок оказания услуги:</b>{" "}
+                        {serviceItem.DescriptionOfPeriodService}
+                      </Paragraph>
+                    }
+                    {serviceItem.DescriptionOfCost &&
+                      <Paragraph>
+                        <b>Стоимость:</b> {serviceItem.DescriptionOfCost}
+                      </Paragraph>
+                    }
                   </div>
                 ),
               },
@@ -140,7 +146,7 @@ export default function ServiceItem() {
                           onClose={() => { setOpenDrawerSteps(false) }}
                           open={openDrawerSteps === (index + 1)}
                         >
-                           <MarkDownText>{item.FullDescription || "Нет описания"}</MarkDownText>
+                          <MarkDownText>{item.FullDescription || "Нет описания"}</MarkDownText>
                         </Drawer>
                       </>,
                       subTitle: item.PeriodDescription,
