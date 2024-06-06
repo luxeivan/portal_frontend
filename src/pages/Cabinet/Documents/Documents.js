@@ -103,7 +103,7 @@ const Documents = () => {
         })),
       };
 
-      console.log(formData);
+      // console.log(formData);
 
       const token = localStorage.getItem("jwt");
 
