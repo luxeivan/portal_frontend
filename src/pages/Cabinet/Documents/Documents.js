@@ -37,7 +37,7 @@ const Documents = () => {
 
     try {
       const response = await axios.post(
-        "/api/upload", // URL вашего бэкенда
+        "/api/upload",
         formData,
         {
           headers: {
