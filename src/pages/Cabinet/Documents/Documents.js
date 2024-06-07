@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Card,
@@ -36,6 +36,33 @@ const Documents = () => {
   const [uploadPercent, setUploadPercent] = useState(0);
   const [savePercent, setSavePercent] = useState(0);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
+
+  const fetchDocuments = async () => {
+    try {
+      const response = await axios.get(
+        `${config.backServer}/api/cabinet/documents`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+          withCredentials: true,
+        }
+      );
+      setFileList(
+        response.data.documents.map((doc) => ({
+          ...doc,
+          documentName: doc.documentName || doc.name,
+        }))
+      );
+    } catch (error) {
+      console.error("Ошибка при загрузке документов", error);
+      message.error("Не удалось загрузить документы");
+    }
+  };
 
   let files = [];
 
@@ -147,24 +174,26 @@ const Documents = () => {
         }
       );
 
-      clearInterval(interval); // Останавливаем имитацию
-      setSavePercent(100); // Устанавливаем прогресс на 100%
+      clearInterval(interval);
+      setSavePercent(100);
 
       console.log("response", response);
       message.success("Документ успешно сохранен");
+
+      fetchDocuments();
 
       setShowModalAdd(false);
       form.resetFields();
       setFileList([]);
       setLoading(false);
       setLoadingMessage("");
-      setSavePercent(0); // Сбрасываем процент сохранения
+      setSavePercent(0);
     } catch (error) {
       console.error("Ошибка при сохранении документа:", error);
       message.error("Не удалось сохранить документ");
       setLoading(false);
       setLoadingMessage("");
-      setSavePercent(0); // Сбрасываем процент сохранения
+      setSavePercent(0);
     }
   };
 
@@ -184,7 +213,7 @@ const Documents = () => {
             style={{ width: 250, height: 250 }}
             cover={<img alt={file.name} src={file.url} />}
           >
-            <Card.Meta title={file.name} />
+            <Card.Meta title={file.documentName || file.name} />
           </Card>
         ))}
         <Card
