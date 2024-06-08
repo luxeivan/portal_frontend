@@ -51,6 +51,7 @@ const useDocuments = create((set, get) => ({
 
   fetchDocument: async (id) => {
     set({ loadingDocument: true });
+    // console.log('id',id)
     try {
       const response = await axios.get(
         `${config.backServer}/api/cabinet/documents/${id}`,
@@ -61,11 +62,9 @@ const useDocuments = create((set, get) => ({
           withCredentials: true,
         }
       );
+      console.log(response.data)
       set({
-        document: response.data.documents.map((doc) => ({
-          ...doc,
-          documentName: doc.documentName || doc.name,
-        })), loadingDocument: false
+        document:response.data.document , loadingDocument: false
       });
 
     } catch (error) {

@@ -7,10 +7,12 @@ export default function ModalViewDocument() {
     const setOpenModalView = useDocuments(state => state.setOpenModalView)
     const fetchDocument = useDocuments(state => state.fetchDocument)
     const document = useDocuments(state => state.document)
-    useEffect(()=>{
-        fetchDocument(openModalView)
-    },[])
-    console.log(openModalView)
+    useEffect(() => {
+        if (openModalView) {
+            fetchDocument(openModalView)
+        }
+    }, [openModalView])
+    console.log(document)
     return (
         <Modal
             open={openModalView}
@@ -18,7 +20,9 @@ export default function ModalViewDocument() {
             onCancel={() => setOpenModalView()}
             footer={null}
         >
-            123
+            {document &&
+                document.Description
+            }
         </Modal>
     )
 }

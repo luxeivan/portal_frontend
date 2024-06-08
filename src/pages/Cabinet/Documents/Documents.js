@@ -54,7 +54,7 @@ console.log(documents)
             key={document.uid}
             hoverable
             style={{ width: 250, height: 250 }}
-            cover={<img alt={document.name} src={document.url} />}
+            // cover={<img alt={document.name} src={document.url} />}
             onClick={() => setOpenModalView(document.Ref_Key)}
           >
             <Card.Meta title={document.Description} description={`Количество файлов: ${document.files.length}`} />
