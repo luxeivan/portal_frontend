@@ -14,9 +14,12 @@ import {
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import config from "../../../config";
+import useDocuments from "../../../stores/Cabinet/useDocuments";
+import ModalAddDocument from "../../../components/Cabinet/Documents/ModalAddDocument";
+import ModalViewDocument from "../../../components/Cabinet/Documents/ModalViewDocument";
 
 const { Title } = Typography;
-const { Option } = Select;
+
 
 const stylesForCard = {
   body: {
@@ -29,191 +32,32 @@ const stylesForCard = {
 };
 
 const Documents = () => {
-  const [showModalAdd, setShowModalAdd] = useState(false);
-  const [fileList, setFileList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState("");
-  const [uploadPercent, setUploadPercent] = useState(0);
-  const [savePercent, setSavePercent] = useState(0);
-  const [form] = Form.useForm();
+  const documents = useDocuments(state => state.documents)
+  const loadingDocuments = useDocuments(state => state.loadingDocuments)
+  const openModalAdd = useDocuments(state => state.openModalAdd)
+  const setOpenModalAdd = useDocuments(state => state.setOpenModalAdd)
+  const openModalView = useDocuments(state => state.openModalView)
+  const openModalUpdate = useDocuments(state => state.openModalUpdate)
+  const setOpenModalView = useDocuments(state => state.setOpenModalView)
+  const fetchDocuments = useDocuments(state => state.fetchDocuments)
 
   useEffect(() => {
     fetchDocuments();
   }, []);
-
-  const fetchDocuments = async () => {
-    try {
-      const response = await axios.get(
-        `${config.backServer}/api/cabinet/documents`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-          },
-          withCredentials: true,
-        }
-      );
-      setFileList(
-        response.data.documents.map((doc) => ({
-          ...doc,
-          documentName: doc.documentName || doc.name,
-        }))
-      );
-    } catch (error) {
-      console.error("Ошибка при загрузке документов", error);
-      message.error("Не удалось загрузить документы");
-    }
-  };
-
-  let files = [];
-
-  const getFile = async (relativePath) => {
-    const fileblob = await axios.get(
-      `${config.backServer}/api/cabinet/get-file/${relativePath}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
-        withCredentials: true,
-        responseType: "blob",
-      }
-    );
-
-    if (!fileblob.data) throw new Error("Ошибка получения файла");
-
-    return window.URL.createObjectURL(fileblob.data);
-  };
-
-  function customRequest({ file, onSuccess, onError }) {
-    setLoading(true);
-    setLoadingMessage("Пожалуйста, подождите, файл загружается");
-
-    const formData = new FormData();
-    formData.append("file", file);
-    const token = localStorage.getItem("jwt");
-
-    axios
-      .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-        onUploadProgress: (progressEvent) => {
-          const percent = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          setUploadPercent(percent);
-        },
-      })
-      .then(async (response) => {
-        const relativePath = response.data.files[0];
-        files.push(relativePath);
-
-        const fileUrl = await getFile(relativePath);
-        setFileList((prev) => [
-          ...prev,
-          {
-            crossOrigin: "use-credentials",
-            uid: relativePath,
-            name: file.name,
-            status: "done",
-            url: fileUrl,
-          },
-        ]);
-
-        onSuccess(relativePath, file);
-        message.success(`Файлы успешно загружены`);
-        setLoading(false);
-        setLoadingMessage("");
-        setUploadPercent(0);
-      })
-      .catch((error) => {
-        console.error("Ошибка при загрузке файла", error);
-        onError(error);
-        message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
-        setLoading(false);
-        setLoadingMessage("");
-        setUploadPercent(0);
-      });
-  }
-
-  const handleSaveDocument = async (values) => {
-    try {
-      setLoading(true);
-      setLoadingMessage("Пожалуйста, подождите, файл сохраняется");
-
-      const formData = {
-        documentName: values.documentName,
-        files: fileList.map((file) => ({
-          name: file.name,
-          originFileObj: file.originFileObj,
-        })),
-      };
-
-      const token = localStorage.getItem("jwt");
-
-      // Имитация процесса сохранения
-      let percent = 0;
-      const interval = setInterval(() => {
-        percent += 20; // Увеличиваем процент на 20 каждый раз
-        setSavePercent(percent);
-        if (percent >= 100) {
-          clearInterval(interval);
-        }
-      }, 200); // Обновляем каждые 200 миллисекунд
-
-      const response = await axios.post(
-        `${config.backServer}/api/cabinet/documents`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        }
-      );
-
-      clearInterval(interval);
-      setSavePercent(100);
-
-      console.log("response", response);
-      message.success("Документ успешно сохранен");
-
-      fetchDocuments();
-
-      setShowModalAdd(false);
-      form.resetFields();
-      setFileList([]);
-      setLoading(false);
-      setLoadingMessage("");
-      setSavePercent(0);
-    } catch (error) {
-      console.error("Ошибка при сохранении документа:", error);
-      message.error("Не удалось сохранить документ");
-      setLoading(false);
-      setLoadingMessage("");
-      setSavePercent(0);
-    }
-  };
-
-  const handleModalClose = () => {
-    setShowModalAdd(false);
-    form.resetFields();
-  };
-
+console.log(documents)
   return (
     <div>
       <Title level={1}>Документы</Title>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-        {fileList.map((file) => (
+        {documents.map((document) => (
           <Card
-            key={file.uid}
+            key={document.uid}
             hoverable
             style={{ width: 250, height: 250 }}
-            cover={<img alt={file.name} src={file.url} />}
+            cover={<img alt={document.name} src={document.url} />}
+            onClick={() => setOpenModalView(document.Ref_Key)}
           >
-            <Card.Meta title={file.documentName || file.name} />
+            <Card.Meta title={document.Description} description={`Количество файлов: ${document.files.length}`} />
           </Card>
         ))}
         <Card
@@ -225,68 +69,14 @@ const Documents = () => {
             alignItems: "center",
             justifyContent: "center",
           }}
-          onClick={() => setShowModalAdd(true)}
+          onClick={() => setOpenModalAdd(true)}
         >
           <PlusOutlined style={{ fontSize: "24px" }} />
         </Card>
       </div>
-      <Modal
-        title="Загрузить новый документ"
-        visible={showModalAdd}
-        onCancel={handleModalClose}
-        footer={null}
-      >
-        <Form form={form} onFinish={handleSaveDocument}>
-          <Form.Item
-            label="Название"
-            name="documentName"
-            rules={[
-              {
-                required: true,
-                message: "Пожалуйста, выберите название документа",
-              },
-            ]}
-          >
-            <Select>
-              <Option value="passport">Паспорт</Option>
-              <Option value="authorization">Доверенность</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Загрузить файл"
-            name="files"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => (Array.isArray(e) ? e : e && [e.file])}
-            rules={[{ required: true, message: "Пожалуйста, загрузите файлы" }]}
-          >
-            <Upload
-              listType="picture"
-              customRequest={customRequest}
-              onChange={({ fileList: newFileList }) => setFileList(newFileList)}
-              multiple
-            >
-              <Button icon={<UploadOutlined />}>Загрузить</Button>
-            </Upload>
-            {loading && (
-              <div style={{ marginTop: 16 }}>
-                <Spin tip={loadingMessage} />
-                <Progress
-                  percent={
-                    loadingMessage === "Пожалуйста, подождите, файл загружается"
-                      ? uploadPercent
-                      : savePercent
-                  }
-                />
-              </div>
-            )}
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" disabled={loading}>
-              Сохранить файлы
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+        <ModalViewDocument />
+        <ModalAddDocument />
+      
     </div>
   );
 };
