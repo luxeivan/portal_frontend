@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Typography,
   Card,
@@ -22,10 +22,26 @@ export default function ModalAddDocument() {
   const setOpenModalAdd = useDocuments(state => state.setOpenModalAdd)
   const fetchDocuments = useDocuments(state => state.fetchDocuments)
   const [fileList, setFileList] = useState([]);
+  const [listNameDocs, setListNameDocs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [uploadPercent, setUploadPercent] = useState(0);
   const [savePercent, setSavePercent] = useState(0);
+  useEffect(() => {
+
+    axios.get(
+      `${config.backServer}/api/cabinet/documents/getNameDocs`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      }
+    ).then(response => {
+      console.log(response.data.nameDocs)
+      setListNameDocs(response.data.nameDocs)
+    })
+
+  }, [])
 
   const [form] = Form.useForm();
   const getFile = async (relativePath) => {
@@ -180,8 +196,7 @@ export default function ModalAddDocument() {
           ]}
         >
           <Select>
-            <Option value="Паспорт">Паспорт</Option>
-            <Option value="Доверенность">Доверенность</Option>
+            {listNameDocs&& listNameDocs.map((nameDocs,index)=><Option key={index} value={nameDocs.Ref_Key}>{nameDocs.Description}</Option>)}
           </Select>
         </Form.Item>
         <Form.Item
