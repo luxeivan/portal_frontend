@@ -11,6 +11,7 @@ import {
   Spin,
   Progress,
 } from "antd";
+import SceletonCard from "../../../components/SceletonCard";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import config from "../../../config";
@@ -34,30 +35,34 @@ const stylesForCard = {
 const Documents = () => {
   const documents = useDocuments(state => state.documents)
   const loadingDocuments = useDocuments(state => state.loadingDocuments)
-  const openModalAdd = useDocuments(state => state.openModalAdd)
   const setOpenModalAdd = useDocuments(state => state.setOpenModalAdd)
-  const openModalView = useDocuments(state => state.openModalView)
-  const openModalUpdate = useDocuments(state => state.openModalUpdate)
   const setOpenModalView = useDocuments(state => state.setOpenModalView)
   const fetchDocuments = useDocuments(state => state.fetchDocuments)
+  const nameDocs = useDocuments(state => state.nameDocs)
+  const getNameDocs = useDocuments(state => state.getNameDocs)
 
   useEffect(() => {
+    getNameDocs();
     fetchDocuments();
   }, []);
-console.log(documents)
+  //console.log(documents)
   return (
     <div>
       <Title level={1}>Документы</Title>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-        {documents.map((document) => (
+        {loadingDocuments && <SceletonCard />}
+        {documents.map((document, index) => (
           <Card
-            key={document.uid}
+            key={index}
             hoverable
             style={{ width: 250, height: 250 }}
             // cover={<img alt={document.name} src={document.url} />}
             onClick={() => setOpenModalView(document.Ref_Key)}
           >
-            <Card.Meta title={document.Description} description={`Количество файлов: ${document.files.length}`} />
+            <Card.Meta
+              title={nameDocs.find(item => item.Ref_Key == document.nameDoc_Key)?.Description}
+              //title={document.Description}
+              description={`Количество файлов: ${document.files.length}`} />
           </Card>
         ))}
         <Card
@@ -74,9 +79,9 @@ console.log(documents)
           <PlusOutlined style={{ fontSize: "24px" }} />
         </Card>
       </div>
-        <ModalViewDocument />
-        <ModalAddDocument />
-      
+      <ModalViewDocument />
+      <ModalAddDocument />
+
     </div>
   );
 };

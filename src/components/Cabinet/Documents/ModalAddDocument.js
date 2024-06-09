@@ -21,27 +21,13 @@ export default function ModalAddDocument() {
   const openModalAdd = useDocuments(state => state.openModalAdd)
   const setOpenModalAdd = useDocuments(state => state.setOpenModalAdd)
   const fetchDocuments = useDocuments(state => state.fetchDocuments)
+  const nameDocs = useDocuments(state => state.nameDocs)
   const [fileList, setFileList] = useState([]);
-  const [listNameDocs, setListNameDocs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [uploadPercent, setUploadPercent] = useState(0);
   const [savePercent, setSavePercent] = useState(0);
-  useEffect(() => {
 
-    axios.get(
-      `${config.backServer}/api/cabinet/documents/getNameDocs`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
-      }
-    ).then(response => {
-      console.log(response.data.nameDocs)
-      setListNameDocs(response.data.nameDocs)
-    })
-
-  }, [])
 
   const [form] = Form.useForm();
   const getFile = async (relativePath) => {
@@ -125,6 +111,7 @@ export default function ModalAddDocument() {
 
       const formData = {
         documentName: values.documentName,
+        nameDoc_Key: values.documentName,
         files: fileList.map((file) => ({
           name: file.name,
           originFileObj: file.originFileObj,
@@ -196,7 +183,7 @@ export default function ModalAddDocument() {
           ]}
         >
           <Select>
-            {listNameDocs&& listNameDocs.map((nameDocs,index)=><Option key={index} value={nameDocs.Ref_Key}>{nameDocs.Description}</Option>)}
+            {nameDocs && nameDocs.map((nameDocs, index) => <Option key={index} value={nameDocs.Ref_Key}>{nameDocs.Description}</Option>)}
           </Select>
         </Form.Item>
         <Form.Item
