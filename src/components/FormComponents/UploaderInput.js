@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
-import {
-  Form,
-  Upload,
-  message,
-  theme,
-  Image,
-  Flex,
-} from "antd";
+import { Form, Upload, message, theme, Image, Flex } from "antd";
 import axios from "axios";
 import config from "../../config";
 import iconPdf from "../../img/pdf.svg";
@@ -76,8 +69,14 @@ export default function UploaderInput({
   }, [value?.fileDoc]);
 
   useEffect(() => {
-    form.setFieldsValue({ fileDoc: fileList.map((item) => item.uid) });
+    form.setFieldsValue({
+      fileDoc: fileList.map((item) => ({ uid: item.uid, name: item.name })),
+    });
   }, [fileList]);
+
+  // useEffect(() => {
+  //   form.setFieldsValue({ fileDoc: fileList.map((item) => item.uid) });
+  // }, [fileList]);
 
   const previewFile = async (file) => {
     if (file?.name.includes(".pdf")) return window.open(file.url, "_blank");
@@ -112,6 +111,59 @@ export default function UploaderInput({
       authorization: "authorization-text",
     },
     onPreview: previewFile,
+
+    // customRequest({ file, onSuccess, onError }) {
+    //   setLoading(true);
+    //   setLoadingMessage("Пожалуйста, подождите, файл загружается");
+
+    //   const formData = new FormData();
+    //   formData.append("file", file);
+    //   const token = localStorage.getItem("jwt");
+    //   axios
+    //     .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //       withCredentials: true,
+    //       onUploadProgress: (progressEvent) => {
+    //         const percent = Math.round(
+    //           (progressEvent.loaded * 100) / progressEvent.total
+    //         );
+    //         setUploadPercent(percent);
+    //       },
+    //     })
+    //     .then(async (response) => {
+    //       const relativePath = response.data.files[0];
+    //       files.push(relativePath);
+    //       const fileUrl = await getFile(relativePath);
+    //       setFileList((prev) => [
+    //         ...prev,
+    //         {
+    //           crossOrigin: "use-credentials",
+    //           uid: relativePath,
+    //           name: file.name,
+    //           status: "done",
+    //           url: fileUrl,
+    //         },
+    //       ]);
+    //       onSuccess(relativePath, file);
+    //       message.success(`Файлы успешно загружены`);
+    //       setLoading(false);
+    //       setLoadingMessage("");
+    //       setUploadPercent(0);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Ошибка при загрузке файла", error);
+    //       onError(error);
+    //       message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
+    //       setLoading(false);
+    //       setLoadingMessage("");
+    //       setUploadPercent(0);
+    //     });
+    // },
+
+    // В UploaderInput.js
     customRequest({ file, onSuccess, onError }) {
       setLoading(true);
       setLoadingMessage("Пожалуйста, подождите, файл загружается");
@@ -135,7 +187,10 @@ export default function UploaderInput({
         })
         .then(async (response) => {
           const relativePath = response.data.files[0];
-          files.push(relativePath);
+          files.push({
+            path: relativePath,
+            name: file.name,
+          });
           const fileUrl = await getFile(relativePath);
           setFileList((prev) => [
             ...prev,

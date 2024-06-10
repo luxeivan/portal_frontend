@@ -25,17 +25,21 @@ export default function ModalAddDocument() {
     setSavePercent(0);
   };
 
+  // В ModalAddDocument.js
   const handleSaveDocument = async (values) => {
     try {
       setLoading(true);
       setLoadingMessage("Пожалуйста, подождите, файл сохраняется");
 
+      const files = form.getFieldValue("fileDoc").map((file) => ({
+        path: file.uid,
+        name: file.name,
+      }));
+
       const formData = {
         documentName: values.documentName,
         nameDoc_Key: values.documentName,
-        files: form.getFieldValue("fileDoc").map((file) => ({
-          name: file,
-        })),
+        files,
       };
 
       const token = localStorage.getItem("jwt");
@@ -83,6 +87,65 @@ export default function ModalAddDocument() {
       setSavePercent(0);
     }
   };
+
+  // const handleSaveDocument = async (values) => {
+  //   try {
+  //     setLoading(true);
+  //     setLoadingMessage("Пожалуйста, подождите, файл сохраняется");
+
+  //     const formData = {
+  //       documentName: values.documentName,
+  //       nameDoc_Key: values.documentName,
+  //       files: form.getFieldValue("fileDoc").map((file) => ({
+  //         name: file,
+  //       })),
+  //     };
+
+  //     const token = localStorage.getItem("jwt");
+
+  //     // Имитация процесса сохранения
+  //     let percent = 0;
+  //     const interval = setInterval(() => {
+  //       percent += 20; // Увеличиваем процент на 20 каждый раз
+  //       setSavePercent(percent);
+  //       if (percent >= 100) {
+  //         clearInterval(interval);
+  //       }
+  //     }, 200); // Обновляем каждые 200 миллисекунд
+
+  //     const response = await axios.post(
+  //       `${config.backServer}/api/cabinet/documents`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         withCredentials: true,
+  //       }
+  //     );
+
+  //     clearInterval(interval);
+  //     setSavePercent(100);
+
+  //     console.log("response", response);
+  //     message.success("Документ успешно сохранен");
+
+  //     fetchDocuments();
+
+  //     setOpenModalAdd(false);
+  //     form.resetFields();
+  //     setLoading(false);
+  //     setLoadingMessage("");
+  //     setSavePercent(0);
+  //   } catch (error) {
+  //     console.error("Ошибка при сохранении документа:", error);
+  //     message.error("Не удалось сохранить документ");
+  //     setLoading(false);
+  //     setLoadingMessage("");
+  //     setSavePercent(0);
+  //   }
+  // };
 
   return (
     <Modal
