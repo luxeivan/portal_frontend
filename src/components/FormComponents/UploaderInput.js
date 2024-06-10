@@ -145,8 +145,8 @@ export default function UploaderInput({ read, edit, value, depends, required = f
     return (
       <>
         <Form.Item
-          label={read ? "Документы" : "Загрузить документ"}
-          name="fileDoc"
+          label={read ? "Файлы" : "Загрузить Файлы"}
+          name={"fileDoc"}
           rules={read ? false : [
             {
               required: required,
