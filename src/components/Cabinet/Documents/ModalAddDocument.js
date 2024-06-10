@@ -28,80 +28,10 @@ export default function ModalAddDocument() {
   const [savePercent, setSavePercent] = useState(0);
 
   const [form] = Form.useForm();
-  // const getFile = async (relativePath) => {
-  //   const fileblob = await axios.get(
-  //     `${config.backServer}/api/cabinet/get-file/${relativePath}`,
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-  //       },
-  //       withCredentials: true,
-  //       responseType: "blob",
-  //     }
-  //   );
-
-  //   if (!fileblob.data) throw new Error("Ошибка получения файла");
-
-  //   return window.URL.createObjectURL(fileblob.data);
-  // };
-  // let files = [];
-  // function customRequest({ file, onSuccess, onError }) {
-  //   setLoading(true);
-  //   setLoadingMessage("Пожалуйста, подождите, файл загружается");
-
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   const token = localStorage.getItem("jwt");
-
-  //   axios
-  //     .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       withCredentials: true,
-  //       onUploadProgress: (progressEvent) => {
-  //         const percent = Math.round(
-  //           (progressEvent.loaded * 100) / progressEvent.total
-  //         );
-  //         setUploadPercent(percent);
-  //       },
-  //     })
-  //     .then(async (response) => {
-  //       const relativePath = response.data.files[0];
-  //       files.push(relativePath);
-
-  //       const fileUrl = await getFile(relativePath);
-  //       setFileList((prev) => [
-  //         ...prev,
-  //         {
-  //           crossOrigin: "use-credentials",
-  //           uid: relativePath,
-  //           name: file.name,
-  //           status: "done",
-  //           url: fileUrl,
-  //         },
-  //       ]);
-
-  //       onSuccess(relativePath, file);
-  //       message.success(`Файлы успешно загружены`);
-  //       setLoading(false);
-  //       setLoadingMessage("");
-  //       setUploadPercent(0);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Ошибка при загрузке файла", error);
-  //       onError(error);
-  //       message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
-  //       setLoading(false);
-  //       setLoadingMessage("");
-  //       setUploadPercent(0);
-  //     });
-  // }
   const handleModalClose = () => {
     setOpenModalAdd(false);
     form.resetFields();
-    setFileList([]); // Очищаем список файлов при закрытии модального окна
+    setFileList([]);
   };
 
   const handleSaveDocument = async (values) => {
@@ -115,7 +45,6 @@ export default function ModalAddDocument() {
         nameDoc_Key: values.documentName,
         files: form.getFieldValue("fileDoc").map((file) => ({
           name: file,
-          // originFileObj: file.originFileObj,
         })),
       };
 
@@ -195,35 +124,6 @@ export default function ModalAddDocument() {
               ))}
           </Select>
         </Form.Item>
-        {/* <Form.Item
-          label="Загрузить файл"
-          name="files"
-          valuePropName="fileList"
-          getValueFromEvent={(e) => (Array.isArray(e) ? e : e && [e.file])}
-          rules={[{ required: true, message: "Пожалуйста, загрузите файлы" }]}
-        >
-          <Upload
-            listType="text"
-            customRequest={customRequest}
-            // onChange={({ fileList: newFileList }) => setFileList(newFileList)}
-            fileList={fileList}
-            multiple
-          >
-            <Button icon={<UploadOutlined />}>Загрузить</Button>
-          </Upload>
-          {loading && (
-            <div style={{ marginTop: 16 }}>
-              <Spin tip={loadingMessage} />
-              <Progress
-                percent={
-                  loadingMessage === "Пожалуйста, подождите, файл загружается"
-                    ? uploadPercent
-                    : savePercent
-                }
-              />
-            </div>
-          )}
-        </Form.Item> */}
         <UploaderInput />
         <Form.Item>
           <Button type="primary" htmlType="submit" disabled={loading}>
