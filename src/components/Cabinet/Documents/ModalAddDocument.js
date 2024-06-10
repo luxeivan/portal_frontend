@@ -15,6 +15,7 @@ import config from '../../../config';
 import axios from 'axios';
 import useDocuments from '../../../stores/Cabinet/useDocuments';
 import { UploadOutlined } from "@ant-design/icons";
+import UploaderInput from '../../FormComponents/UploaderInput';
 const { Option } = Select;
 
 export default function ModalAddDocument() {
@@ -30,81 +31,82 @@ export default function ModalAddDocument() {
 
 
   const [form] = Form.useForm();
-  const getFile = async (relativePath) => {
-    const fileblob = await axios.get(
-      `${config.backServer}/api/cabinet/get-file/${relativePath}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
-        withCredentials: true,
-        responseType: "blob",
-      }
-    );
+  // const getFile = async (relativePath) => {
+  //   const fileblob = await axios.get(
+  //     `${config.backServer}/api/cabinet/get-file/${relativePath}`,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  //       },
+  //       withCredentials: true,
+  //       responseType: "blob",
+  //     }
+  //   );
 
-    if (!fileblob.data) throw new Error("Ошибка получения файла");
+  //   if (!fileblob.data) throw new Error("Ошибка получения файла");
 
-    return window.URL.createObjectURL(fileblob.data);
-  };
-  let files = [];
-  function customRequest({ file, onSuccess, onError }) {
-    setLoading(true);
-    setLoadingMessage("Пожалуйста, подождите, файл загружается");
+  //   return window.URL.createObjectURL(fileblob.data);
+  // };
+  // let files = [];
+  // function customRequest({ file, onSuccess, onError }) {
+  //   setLoading(true);
+  //   setLoadingMessage("Пожалуйста, подождите, файл загружается");
 
-    const formData = new FormData();
-    formData.append("file", file);
-    const token = localStorage.getItem("jwt");
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   const token = localStorage.getItem("jwt");
 
-    axios
-      .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-        onUploadProgress: (progressEvent) => {
-          const percent = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          setUploadPercent(percent);
-        },
-      })
-      .then(async (response) => {
-        const relativePath = response.data.files[0];
-        files.push(relativePath);
+  //   axios
+  //     .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       withCredentials: true,
+  //       onUploadProgress: (progressEvent) => {
+  //         const percent = Math.round(
+  //           (progressEvent.loaded * 100) / progressEvent.total
+  //         );
+  //         setUploadPercent(percent);
+  //       },
+  //     })
+  //     .then(async (response) => {
+  //       const relativePath = response.data.files[0];
+  //       files.push(relativePath);
 
-        const fileUrl = await getFile(relativePath);
-        setFileList((prev) => [
-          ...prev,
-          {
-            crossOrigin: "use-credentials",
-            uid: relativePath,
-            name: file.name,
-            status: "done",
-            url: fileUrl,
-          },
-        ]);
+  //       const fileUrl = await getFile(relativePath);
+  //       setFileList((prev) => [
+  //         ...prev,
+  //         {
+  //           crossOrigin: "use-credentials",
+  //           uid: relativePath,
+  //           name: file.name,
+  //           status: "done",
+  //           url: fileUrl,
+  //         },
+  //       ]);
 
-        onSuccess(relativePath, file);
-        message.success(`Файлы успешно загружены`);
-        setLoading(false);
-        setLoadingMessage("");
-        setUploadPercent(0);
-      })
-      .catch((error) => {
-        console.error("Ошибка при загрузке файла", error);
-        onError(error);
-        message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
-        setLoading(false);
-        setLoadingMessage("");
-        setUploadPercent(0);
-      });
-  }
+  //       onSuccess(relativePath, file);
+  //       message.success(`Файлы успешно загружены`);
+  //       setLoading(false);
+  //       setLoadingMessage("");
+  //       setUploadPercent(0);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Ошибка при загрузке файла", error);
+  //       onError(error);
+  //       message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
+  //       setLoading(false);
+  //       setLoadingMessage("");
+  //       setUploadPercent(0);
+  //     });
+  // }
   const handleModalClose = () => {
     setOpenModalAdd(false);
     form.resetFields();
   };
   const handleSaveDocument = async (values) => {
+    console.log(form.getFieldValue('fileDoc'))
     try {
       setLoading(true);
       setLoadingMessage("Пожалуйста, подождите, файл сохраняется");
@@ -112,9 +114,9 @@ export default function ModalAddDocument() {
       const formData = {
         documentName: values.documentName,
         nameDoc_Key: values.documentName,
-        files: fileList.map((file) => ({
-          name: file.name,
-          originFileObj: file.originFileObj,
+        files: form.getFieldValue('fileDoc').map((file) => ({
+          name: file,
+          // originFileObj: file.originFileObj,
         })),
       };
 
@@ -186,7 +188,7 @@ export default function ModalAddDocument() {
             {nameDocs && nameDocs.map((nameDocs, index) => <Option key={index} value={nameDocs.Ref_Key}>{nameDocs.Description}</Option>)}
           </Select>
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label="Загрузить файл"
           name="files"
           valuePropName="fileList"
@@ -194,9 +196,10 @@ export default function ModalAddDocument() {
           rules={[{ required: true, message: "Пожалуйста, загрузите файлы" }]}
         >
           <Upload
-            listType="picture"
+            listType="text"
             customRequest={customRequest}
-            onChange={({ fileList: newFileList }) => setFileList(newFileList)}
+            // onChange={({ fileList: newFileList }) => setFileList(newFileList)}
+            fileList={fileList}
             multiple
           >
             <Button icon={<UploadOutlined />}>Загрузить</Button>
@@ -213,7 +216,8 @@ export default function ModalAddDocument() {
               />
             </div>
           )}
-        </Form.Item>
+        </Form.Item> */}
+        <UploaderInput />
         <Form.Item>
           <Button type="primary" htmlType="submit" disabled={loading}>
             Сохранить файлы
