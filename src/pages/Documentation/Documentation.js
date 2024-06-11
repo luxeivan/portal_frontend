@@ -1,6 +1,7 @@
 import React from 'react'
 import { Typography, Tabs, Flex, Image } from 'antd'
 import mistakesImg from '../../img/docs/mistakes.jpg'
+import Law from '../../components/Documentation/Law'
 const onChange = (key) => {
     console.log(key);
 };
@@ -13,7 +14,7 @@ const items = [
     {
         key: '2',
         label: 'Законодательство',
-        children: 'Content of Tab Pane 2',
+        children: <Law/>,
     },
     {
         key: '3',

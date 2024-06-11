@@ -24,9 +24,18 @@ export default function ModalViewDocument() {
         >
             {loadingDocument && <Flex style={{ width: "100%", height: "100px" }} align='center' justify='center'><div><Spin size='large' /></div></Flex>}
             {!loadingDocument && document.files &&
-                <Descriptions title={nameDocs.find(item => item.Ref_Key == document.nameDoc_Key)?.Description}>
+                <Descriptions
+                    column={{
+                        xs: 1,
+                        sm: 1,
+                        md: 1,
+                        lg: 1,
+                        xl: 1,
+                        xxl: 1,
+                    }}
+                    title={nameDocs.find(item => item.Ref_Key == document.nameDoc_Key)?.Description}>
                     {document.files.map((item, index) =>
-                        <Descriptions.Item key={index} label={`Имя файла №${index+1}`}>{item.fileName}</Descriptions.Item>                        
+                        <Descriptions.Item key={index} label={`Имя файла №${index + 1}`}>{item.fileName}</Descriptions.Item>
                     )}
                 </Descriptions>
             }
