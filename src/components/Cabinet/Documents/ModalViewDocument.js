@@ -9,12 +9,13 @@ export default function ModalViewDocument() {
   const fetchDocument = useDocuments((state) => state.fetchDocument);
   const nameDocs = useDocuments((state) => state.nameDocs);
   const document = useDocuments((state) => state.document);
+
   useEffect(() => {
     if (openModalView) {
       fetchDocument(openModalView);
     }
   }, [openModalView]);
-  //console.log(document)
+
   return (
     <Modal
       open={openModalView}
@@ -35,6 +36,14 @@ export default function ModalViewDocument() {
       )}
       {!loadingDocument && document.files && (
         <Descriptions
+          column={{
+            xs: 1,
+            sm: 1,
+            md: 1,
+            lg: 1,
+            xl: 1,
+            xxl: 1,
+          }}
           title={
             nameDocs.find((item) => item.Ref_Key == document.nameDoc_Key)
               ?.Description
