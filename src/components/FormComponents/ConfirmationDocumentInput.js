@@ -98,6 +98,13 @@ export default function ConfirmationDocument({ read, edit, value, name, }) {
   }, [kodPodrazdelenia])
 
   // Обрабатывает изменения в коде подразделения, форматируя его
+  const handleSerialPassportChange = (e) => {
+    form.setFieldValue([name, 'serialPassport'], e.target.value.replace(/[^\d]/g, ""))
+  }
+  const handleNumberPassportChange = (e) => {
+    form.setFieldValue([name, 'numberPassport'], e.target.value.replace(/[^\d]/g, ""))
+  }
+
   const handleKodPodrazdeleniaChange = (e) => {
     const { value } = e.target;
     const onlyNums = value.replace(/[^\d]/g, "");
@@ -144,7 +151,7 @@ export default function ConfirmationDocument({ read, edit, value, name, }) {
                   description="1234"
                   inputProps={{
                     maxLength: 4,
-                    pattern: "\\d*",
+                    onChange: handleSerialPassportChange,
                   }}
                   rules={[
                     {
@@ -187,7 +194,7 @@ export default function ConfirmationDocument({ read, edit, value, name, }) {
                   description="567890"
                   inputProps={{
                     maxLength: 6,
-                    onChange: handleKodPodrazdeleniaChange,
+                    onChange: handleNumberPassportChange,
                   }}
                   rules={[
                     {

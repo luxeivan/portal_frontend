@@ -1,12 +1,16 @@
 import { Modal, Form } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
-import useSubjects from "../../../stores/Cabinet/useSubjects";
-import NewForm from "../../NewForm";
-import fieldsJson from "./FormIP.json";
+import useSubjects from "../../../../stores/Cabinet/useSubjects";
+import NewForm from "../../../NewForm";
+import fieldsJson from "./FormUrLica.json";
 import { useEffect } from "react";
 const { confirm } = Modal;
 
-export default function ModalIP({ setShowModal, read = false, value = {} }) {
+export default function ModalUrLica({
+  setShowModal,
+  read = false,
+  value = {},
+}) {
   const showModalAdd = useSubjects((state) => state.showModalAdd);
   const showModalView = useSubjects((state) => state.showModalView);
   const [form] = Form.useForm();
@@ -45,11 +49,7 @@ export default function ModalIP({ setShowModal, read = false, value = {} }) {
     if (event.matchedWith) {
       obj.addressResidential = obj.addressRegistration;
     }
-    obj.confirmationDocument.dateIssue =
-      obj.confirmationDocument.dateIssue?.format("DD.MM.YYYY");
-    obj.confirmationDocument.dateIssueOtherDoc =
-      obj.confirmationDocument.dateIssueOtherDoc?.format("DD.MM.YYYY");
-    obj.type = "ИП";
+    obj.type = "Юридическое лицо";
     console.log(obj);
     submitNewSubject(obj);
     setShowModal(false);

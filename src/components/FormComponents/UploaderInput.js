@@ -145,8 +145,8 @@ export default function UploaderInput({ read, edit, value, depends, required = f
     return (
       <>
         <Form.Item
-          label={read ? "Документы" : "Загрузить документ"}
-          name="fileDoc"
+          label={read ? "Файлы" : "Загрузить файлы"}
+          name={"fileDoc"}
           rules={read ? false : [
             {
               required: required,
@@ -174,7 +174,7 @@ export default function UploaderInput({ read, edit, value, depends, required = f
                   style={{ color: colorPrimaryText, fontSize: "48px" }}
                 />
               </div>
-              <p className="ant-upload-text">Файл размером не более 10МБ</p>
+              <p className="ant-upload-text">Файлы размером не более 10МБ</p>
               <p className="ant-upload-hint">форматы PDF, JPEG, PNG</p>
             </Dragger>
           }

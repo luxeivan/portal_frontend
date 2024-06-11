@@ -7,7 +7,7 @@ import person from "../../../img/subjects/person3.svg";
 import organization from "../../../img/object/object2 (фон удален).png";
 import useObjects from "../../../stores/Cabinet/useObject";
 import styles from "./Objects.module.css";
-import ModalObject from "../../../components/Objects/ModalObject";
+import ModalObject from "../../../components/Cabinet/Objects/ModalObject";
 
 const { Title } = Typography;
 const { Meta } = Card;

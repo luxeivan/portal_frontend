@@ -4,12 +4,12 @@ import useSubjects from "../../../stores/Cabinet/useSubjects";
 import styles from "./Subjects.module.css";
 import { PlusOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
-import ModalFizLica from "../../../components/Subjects/ModalFizLica/ModalFizLica";
+import ModalFizLica from "../../../components/Cabinet/Subjects/ModalFizLica/ModalFizLica";
 import AppHelmet from "../../../components/Global/AppHelmet";
-import ModalUrLica from "../../../components/Subjects/ModalUrLica/ModalUrLica";
+import ModalUrLica from "../../../components/Cabinet/Subjects/ModalUrLica/ModalUrLica";
 import person from "../../../img/subjects/person3.svg";
 import organization from "../../../img/subjects/organization.svg";
-import ModalIP from "../../../components/Subjects/ModalIP/ModalIP";
+import ModalIP from "../../../components/Cabinet/Subjects/ModalIP/ModalIP";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -58,14 +58,14 @@ export default function Subjects() {
     }
   }, [fetchSubjects]);
 
-  if (isLoadingSubjects) {
-    return (
-      <>
-        <Title level={1}>Субъекты</Title>
-        <SceletonCard />
-      </>
-    );
-  }
+  // if (isLoadingSubjects) {
+  //   return (
+  //     <>
+  //       <Title level={1}>Субъекты</Title>
+  //       <SceletonCard />
+  //     </>
+  //   );
+  // }
 
   const handleCategorySelect = (type) => {
     setShowCategoryModal(false);

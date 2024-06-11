@@ -1,6 +1,6 @@
 import { Modal, Form, Typography } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
-import useSubjects from "../../stores/Cabinet/useSubjects";
+import useSubjects from "../../../stores/Cabinet/useSubjectsS";
 import NewForm from "./NewForm";
 import fieldsJson from "./ModalFizLica/FormFizLica.json";
 const { confirm } = Modal;
