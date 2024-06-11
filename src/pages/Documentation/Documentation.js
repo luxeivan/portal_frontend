@@ -9,7 +9,7 @@ const items = [
     {
         key: '1',
         label: 'Инструкции',
-        children: 'Content of Tab Pane 1',
+        children: 'Content of Tab Pane 1_',
     },
     {
         key: '2',
