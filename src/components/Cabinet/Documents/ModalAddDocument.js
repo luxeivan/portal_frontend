@@ -188,35 +188,6 @@ export default function ModalAddDocument() {
             {nameDocs && nameDocs.map((nameDocs, index) => <Option key={index} value={nameDocs.Ref_Key}>{nameDocs.Description}</Option>)}
           </Select>
         </Form.Item>
-        {/* <Form.Item
-          label="Загрузить файл"
-          name="files"
-          valuePropName="fileList"
-          getValueFromEvent={(e) => (Array.isArray(e) ? e : e && [e.file])}
-          rules={[{ required: true, message: "Пожалуйста, загрузите файлы" }]}
-        >
-          <Upload
-            listType="text"
-            customRequest={customRequest}
-            // onChange={({ fileList: newFileList }) => setFileList(newFileList)}
-            fileList={fileList}
-            multiple
-          >
-            <Button icon={<UploadOutlined />}>Загрузить</Button>
-          </Upload>
-          {loading && (
-            <div style={{ marginTop: 16 }}>
-              <Spin tip={loadingMessage} />
-              <Progress
-                percent={
-                  loadingMessage === "Пожалуйста, подождите, файл загружается"
-                    ? uploadPercent
-                    : savePercent
-                }
-              />
-            </div>
-          )}
-        </Form.Item> */}
         <UploaderInput />
         <Form.Item>
           <Button type="primary" htmlType="submit" disabled={loading}>
