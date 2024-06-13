@@ -178,6 +178,7 @@ export default function UploaderInput({ read, edit, value, depends, required = f
               <p className="ant-upload-hint">форматы PDF, JPEG, PNG</p>
             </Dragger>
           }
+        </Form.Item>
           {previewImage && (
             <Image
               wrapperStyle={{
@@ -191,7 +192,6 @@ export default function UploaderInput({ read, edit, value, depends, required = f
               src={previewImage}
             />
           )}
-        </Form.Item>
       </>
     );
   }
