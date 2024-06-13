@@ -102,35 +102,33 @@ export default function ModalViewDocument() {
             {document.files.map((item, index) => (
               <Descriptions.Item key={index} style={{ textAlign: "center" }}>
                 {item.fileName.endsWith(".pdf") ? (
-                  <Card
-                    hoverable
-                    style={{ width: "100%", marginBottom: 16 }}
-                    cover={
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: "100px",
-                        }}
-                      >
-                        <img
-                          src={pdf}
-                          alt="PDF"
-                          style={{ width: "64px", color: "#ff4d4f" }}
-                        />
-                      </div>
-                    }
+                  <a
+                    href={fileUrls[index]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#e37020", fontSize: "16px", width: "100%" }}
                   >
-                    <a
-                      href={fileUrls[index]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: "#e37020", fontSize: "16px" }}
+                    <Card
+                      hoverable
+                      style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginBottom: 16 }}
                     >
-                      Открыть PDF
-                    </a>
-                  </Card>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            height: "100px",
+                          }}
+                        >
+                          <img
+                            src={pdf}
+                            alt="PDF"
+                            style={{ width: "64px", color: "#ff4d4f" }}
+                          />
+                        </div>
+                    </Card>
+                  </a>
                 ) : (
                   <Image
                     src={fileUrls[index]}
