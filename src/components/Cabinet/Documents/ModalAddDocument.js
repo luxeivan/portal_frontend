@@ -174,24 +174,8 @@ export default function ModalAddDocument() {
               ))}
           </Select>
         </Form.Item>
-        <UploaderInput
-          setLoading={setLoading}
-          setLoadingMessage={setLoadingMessage}
-          setUploadPercent={setUploadPercent}
-        />
+        <UploaderInput />
         <Form.Item>
-          {loading && (
-            <div style={{ marginBottom: 16 }}>
-              <Spin tip={loadingMessage} />
-              <Progress
-                percent={
-                  loadingMessage === "Пожалуйста, подождите, файл загружается"
-                    ? uploadPercent
-                    : savePercent
-                }
-              />
-            </div>
-          )}
           <Button type="primary" htmlType="submit" disabled={loading}>
             Сохранить файлы
           </Button>
