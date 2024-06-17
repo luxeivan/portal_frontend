@@ -16,7 +16,7 @@ export default function Services() {
   const { colorPrimaryText } = theme.useToken().token;
   const isLoading = useServices((state) => state.isLoading);
   const services = useServices((state) => state.services);
-  const filteredServices = useServices((state) => state.filteredServices) || [];
+  const filteredServices = useServices((state) => state.filteredServices);
   const chain = useServices((state) => state.chain);
   const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   const serviceItem = useServices((state) => state.serviceItem);
@@ -32,6 +32,8 @@ export default function Services() {
   useEffect(() => {
     filterServices();
   }, [services, filterServices]);
+
+  console.log("Filtered Services in Component:", filteredServices);
 
   return (
     <>

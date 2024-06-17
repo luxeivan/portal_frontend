@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 import config from "../config";
 import axios from "axios";
 
@@ -16,11 +16,16 @@ const useServices = create((set, get) => ({
                 axios.get(`${config.backServer}/api/services/${key}`),
                 axios.get(`${config.backServer}/api/services/item/${key}`)
             ]);
+
+            console.log("API Response Services:", res[0].data.value);
+            console.log("API Response Service Item:", res[1].data.value[0]);
+
             set({
                 services: res[0].data.value,
                 serviceItem: res[1].data.value[0],
                 isLoading: false
             });
+
             get().filterServices();
         } catch (error) {
             console.error(error);
@@ -32,8 +37,11 @@ const useServices = create((set, get) => ({
         const services = get().services;
         const savedValues = JSON.parse(localStorage.getItem("userCategories")) || ['Физические лица', 'Юридические лица', 'Индивидуальные предприниматели'];
 
+        console.log("Services for filtering:", services);
+        console.log("Saved Values for filtering:", savedValues);
+
         const filtered = services.filter((service) => {
-            return savedValues.some((category) => {
+            const matches = savedValues.some((category) => {
                 if (
                     category === "Физические лица" &&
                     service.Description.includes("Для физических лиц")
@@ -54,7 +62,12 @@ const useServices = create((set, get) => ({
                 }
                 return false;
             });
+
+            console.log(`Service: ${service.Description}, Matches: ${matches}`);
+            return matches;
         });
+
+        console.log("Filtered Services:", filtered);
 
         set({ filteredServices: filtered });
     },
@@ -82,7 +95,6 @@ const useServices = create((set, get) => ({
 export default useServices;
 
 
-
 // import { create } from 'zustand'
 // import config from "../config";
 // import axios from "axios";
@@ -92,25 +104,6 @@ export default useServices;
 //     chain: [],
 //     serviceItem: null,
 //     isLoading: false,
-
-//     // fetchServices: async (url, type) => {
-//     //     set((state) => ({ services: [] }))
-//     //     const res = await axios.get(`${config.apiServer}/api/${url}?populate[0]=icon&populate[1]=filters&pagination[pageSize]=100&sort=sort`)
-//     //     set((state) => {
-//     //         return {
-//     //             services: res.data.data
-//     //         }
-//     //     })
-//     // },
-//     // fetchServiceItem: async (url, id) => {
-//     //     set((state) => ({ serviceItem: null }))
-//     //     const res = await axios.get(`${config.apiServer}/api/${url}/${id}?populate[0]=fields&populate[1]=icon&populate[2]=fields.common&populate[3]=steps&populate[4]=filters`)
-//     //     set((state) => {
-//     //         return {
-//     //             serviceItem: res.data.data
-//     //         }
-//     //     })
-//     // },
 
 //     fetchServices: async (key = "00000000-0000-0000-0000-000000000000") => {
 //         set((state) => ({ services: [], isLoading: true }))
@@ -129,6 +122,7 @@ export default useServices;
 //             console.log(error)
 //         }
 //     },
+
 //     fetchServiceItem: async (key) => {
 //         set((state) => ({ serviceItem: null, isLoading: true }))
 //         try {
@@ -144,8 +138,8 @@ export default useServices;
 //             console.log(error)
 //         }
 //     },
+
 //     fetchServiceChain: async (key) => {
-//         // set((state) => ({ serviceItem: null, isLoading: true }))
 //         let chain = []
 //         async function getService(key) {
 //             const res = await axios.get(`${config.backServer}/api/services/item/${key}`)
