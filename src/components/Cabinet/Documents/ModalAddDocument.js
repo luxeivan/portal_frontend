@@ -30,76 +30,6 @@ export default function ModalAddDocument() {
   const [savePercent, setSavePercent] = useState(0);
 
   const [form] = Form.useForm();
-  // const getFile = async (relativePath) => {
-  //   const fileblob = await axios.get(
-  //     `${config.backServer}/api/cabinet/get-file/${relativePath}`,
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-  //       },
-  //       withCredentials: true,
-  //       responseType: "blob",
-  //     }
-  //   );
-
-  //   if (!fileblob.data) throw new Error("Ошибка получения файла");
-
-  //   return window.URL.createObjectURL(fileblob.data);
-  // };
-  // let files = [];
-  // function customRequest({ file, onSuccess, onError }) {
-  //   setLoading(true);
-  //   setLoadingMessage("Пожалуйста, подождите, файл загружается");
-
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   const token = localStorage.getItem("jwt");
-
-  //   axios
-  //     .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       withCredentials: true,
-  //       onUploadProgress: (progressEvent) => {
-  //         const percent = Math.round(
-  //           (progressEvent.loaded * 100) / progressEvent.total
-  //         );
-  //         setUploadPercent(percent);
-  //       },
-  //     })
-  //     .then(async (response) => {
-  //       const relativePath = response.data.files[0];
-  //       files.push(relativePath);
-
-  //       const fileUrl = await getFile(relativePath);
-  //       setFileList((prev) => [
-  //         ...prev,
-  //         {
-  //           crossOrigin: "use-credentials",
-  //           uid: relativePath,
-  //           name: file.name,
-  //           status: "done",
-  //           url: fileUrl,
-  //         },
-  //       ]);
-
-  //       onSuccess(relativePath, file);
-  //       message.success(`Файлы успешно загружены`);
-  //       setLoading(false);
-  //       setLoadingMessage("");
-  //       setUploadPercent(0);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Ошибка при загрузке файла", error);
-  //       onError(error);
-  //       message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
-  //       setLoading(false);
-  //       setLoadingMessage("");
-  //       setUploadPercent(0);
-  //     });
-  // }
   const handleModalClose = () => {
     setOpenModalAdd(false);
     form.resetFields();
@@ -115,7 +45,6 @@ export default function ModalAddDocument() {
         nameDoc_Key: values.documentName,
         files: form.getFieldValue("fileDoc").map((file) => ({
           name: file,
-          // originFileObj: file.originFileObj,
         })),
       };
 
@@ -124,12 +53,12 @@ export default function ModalAddDocument() {
       // Имитация процесса сохранения
       let percent = 0;
       const interval = setInterval(() => {
-        percent += 20; // Увеличиваем процент на 20 каждый раз
+        percent += 20; 
         setSavePercent(percent);
         if (percent >= 100) {
           clearInterval(interval);
         }
-      }, 200); // Обновляем каждые 200 миллисекунд
+      }, 200); 
 
       const response = await axios.post(
         `${config.backServer}/api/cabinet/documents`,
