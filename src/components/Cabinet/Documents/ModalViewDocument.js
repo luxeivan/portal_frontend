@@ -87,31 +87,37 @@ export default function ModalViewDocument() {
       ) : (
         document &&
         document.files && (
-          <>
-            <Descriptions
-              column={{
-                xs: 1,
-                sm: 1,
-                md: 1,
-                lg: 1,
-                xl: 1,
-                xxl: 1,
-              }}
-              title={
-                nameDocs.find((item) => item.Ref_Key === document.nameDoc_Key)
-                  ?.Description
-              }
-            >
-              {document.files.map((item, index) => (
-                <Descriptions.Item key={index} style={{ textAlign: "center" }}>
-                  {item.fileName.endsWith(".pdf") ? (
+          <Descriptions
+            column={{
+              xs: 1,
+              sm: 1,
+              md: 1,
+              lg: 1,
+              xl: 1,
+              xxl: 1,
+            }}
+            title={
+              nameDocs.find((item) => item.Ref_Key === document.nameDoc_Key)
+                ?.Description
+            }
+          >
+            {document.files.map((item, index) => (
+              <Descriptions.Item key={index} style={{ textAlign: "center" }}>
+                {item.fileName.endsWith(".pdf") ? (
+                  <a
+                    href={fileUrls[index]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#e37020", fontSize: "16px", width: "100%" }}
+                  >
                     <Card
                       hoverable
-                      style={{ width: "100%", marginBottom: 16 }}
-                      cover={
+                      style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginBottom: 16 }}
+                    >
                         <div
                           style={{
                             display: "flex",
+                            flexDirection: "column",
                             justifyContent: "center",
                             alignItems: "center",
                             height: "100px",
@@ -123,38 +129,22 @@ export default function ModalViewDocument() {
                             style={{ width: "64px", color: "#ff4d4f" }}
                           />
                         </div>
-                      }
-                    >
-                      <a
-                        href={fileUrls[index]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: "#e37020", fontSize: "16px" }}
-                      >
-                        Открыть PDF
-                      </a>
                     </Card>
-                  ) : (
-                    <Image
-                      src={fileUrls[index]}
-                      alt={item.fileName}
-                      style={{
-                        maxWidth: "50%",
-                        display: "block",
-                        margin: "0 auto",
-                      }}
-                    />
-                  )}
-                </Descriptions.Item>
-              ))}
-            </Descriptions>
-            <Button
-              type="primary"
-              onClick={() => setOpenModalUpdate(document.Ref_Key)}
-            >
-              Редактировать
-            </Button>
-          </>
+                  </a>
+                ) : (
+                  <Image
+                    src={fileUrls[index]}
+                    alt={item.fileName}
+                    style={{
+                      maxWidth: "50%",
+                      display: "block",
+                      margin: "0 auto",
+                    }}
+                  />
+                )}
+              </Descriptions.Item>
+            ))}
+          </Descriptions>
         )
       )}
       <ModalUpdateDocument />

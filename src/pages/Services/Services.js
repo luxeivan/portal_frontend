@@ -32,7 +32,7 @@ export default function Services() {
         <>
         <Flex style={{ margin: "20px 0" }}>
 
-        {chain && chain.map((item,index)=><><Link to={`/services/${item.Ref_Key}`} key={index}>{item.Description}</Link><RightOutlined style={{color:colorPrimaryText}}/></>)}
+        {chain && chain.map((item,index)=><div key={index}><Link to={`/services/${item.Ref_Key}`}>{item.Description}</Link><RightOutlined style={{color:colorPrimaryText}}/></div>)}
         </Flex>
         {/* <Link to={`/services/${serviceItem&&serviceItem.Parent_Key}`}><Button style={{ margin: "20px 0" }}><LeftOutlined /></Button></Link> */}
         </>
