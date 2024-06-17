@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Card,
@@ -11,24 +11,23 @@ import {
   Spin,
   Progress,
 } from "antd";
-import config from '../../../config';
-import axios from 'axios';
-import useDocuments from '../../../stores/Cabinet/useDocuments';
+import config from "../../../config";
+import axios from "axios";
+import useDocuments from "../../../stores/Cabinet/useDocuments";
 import { UploadOutlined } from "@ant-design/icons";
-import UploaderInput from '../../FormComponents/UploaderInput';
+import UploaderInput from "../../FormComponents/UploaderInput";
 const { Option } = Select;
 
 export default function ModalAddDocument() {
-  const openModalAdd = useDocuments(state => state.openModalAdd)
-  const setOpenModalAdd = useDocuments(state => state.setOpenModalAdd)
-  const fetchDocuments = useDocuments(state => state.fetchDocuments)
-  const nameDocs = useDocuments(state => state.nameDocs)
+  const openModalAdd = useDocuments((state) => state.openModalAdd);
+  const setOpenModalAdd = useDocuments((state) => state.setOpenModalAdd);
+  const fetchDocuments = useDocuments((state) => state.fetchDocuments);
+  const nameDocs = useDocuments((state) => state.nameDocs);
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [uploadPercent, setUploadPercent] = useState(0);
   const [savePercent, setSavePercent] = useState(0);
-
 
   const [form] = Form.useForm();
   // const getFile = async (relativePath) => {
@@ -106,7 +105,7 @@ export default function ModalAddDocument() {
     form.resetFields();
   };
   const handleSaveDocument = async (values) => {
-    console.log(form.getFieldValue('fileDoc'))
+    console.log(form.getFieldValue("fileDoc"));
     try {
       setLoading(true);
       setLoadingMessage("Пожалуйста, подождите, файл сохраняется");
@@ -114,7 +113,7 @@ export default function ModalAddDocument() {
       const formData = {
         documentName: values.documentName,
         nameDoc_Key: values.documentName,
-        files: form.getFieldValue('fileDoc').map((file) => ({
+        files: form.getFieldValue("fileDoc").map((file) => ({
           name: file,
           // originFileObj: file.originFileObj,
         })),
@@ -185,7 +184,12 @@ export default function ModalAddDocument() {
           ]}
         >
           <Select>
-            {nameDocs && nameDocs.map((nameDocs, index) => <Option key={index} value={nameDocs.Ref_Key}>{nameDocs.Description}</Option>)}
+            {nameDocs &&
+              nameDocs.map((nameDocs, index) => (
+                <Option key={index} value={nameDocs.Ref_Key}>
+                  {nameDocs.Description}
+                </Option>
+              ))}
           </Select>
         </Form.Item>
         <UploaderInput />
@@ -196,5 +200,5 @@ export default function ModalAddDocument() {
         </Form.Item>
       </Form>
     </Modal>
-  )
+  );
 }
