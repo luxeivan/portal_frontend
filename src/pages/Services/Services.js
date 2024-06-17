@@ -7,6 +7,8 @@ import styles from "./Services.module.css";
 import config from "../../config";
 import TagFilters from "../../components/Filters/TagFilters";
 import { LeftOutlined,FolderOutlined,FileTextOutlined,RightOutlined} from "@ant-design/icons";
+import folder from '../../img/catalog/folder.png'
+import element from '../../img/catalog/element.png'
 import Container from "../../components/Container";
 const { Title, Text } = Typography;
 
@@ -57,8 +59,20 @@ export default function Services() {
               className={styles.styleLink}
             >
               <Card className={styles.styleCard} hoverable>
-                <Title level={4}>{item.Description}</Title>
-                <Text>{item.IsFolder?<FolderOutlined style={{fontSize:"50px"}}/>:<FileTextOutlined style={{fontSize:"50px"}}/>}</Text>
+                <Title level={4}>{item.Description}</Title>                   
+                  <Flex
+                    justify="flex-end"
+                    gap={20}
+                    className={styles.cardImage}
+                  >
+                    <Image
+                      style={{ textAlign: "center" }}
+                      width={"30%"}
+                      src={item.IsFolder?folder:element}
+                      preview={false}
+                    />
+                  </Flex>
+                          
               </Card>
             </Link>
           ))}
