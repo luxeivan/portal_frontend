@@ -1,19 +1,16 @@
 import React, { useEffect } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Spin, theme } from "antd";
+import { Card, Flex, Typography, Spin, theme,Image } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
+import folder from '../../img/catalog/folder.png'
+import element from '../../img/catalog/element.png'
 import {
   FolderOutlined,
   FileTextOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import config from "../../config";
-import TagFilters from "../../components/Filters/TagFilters";
-import { LeftOutlined } from "@ant-design/icons";
-import folder from '../../img/catalog/folder.png'
-import element from '../../img/catalog/element.png'
 import Container from "../../components/Container";
 const { Title, Text } = Typography;
 
@@ -47,70 +44,60 @@ export default function Services() {
         desc="Услуги компании"
       />
       <Container>
-        {serviceItem && (
-          <>
-            <Flex style={{ margin: "20px 0" }}>
-              {chain &&
-                chain.map((item, index) => (
-                  <div key={index}>
-                    <Link to={`/services/${item.Ref_Key}`}>
-                      {item.Description}
-                    </Link>
-                    <RightOutlined style={{ color: colorPrimaryText }} />
-                  </div>
-                ))}
-            </Flex>
+        {serviceItem&&
+        <>
+        <Flex className={styles.chainFlex}>
+
+        {chain && chain.map((item,index)=><div key={index}><Link to={`/services/${item.Ref_Key}`}>{item.Description}</Link><RightOutlined style={{color:colorPrimaryText}}/></div>)}
+        </Flex>
+        {/* <Link to={`/services/${serviceItem&&serviceItem.Parent_Key}`}><Button style={{ margin: "20px 0" }}><LeftOutlined /></Button></Link> */}
+        </>
+        }       
+        {isLoading&&
+        <Flex style={{height:"300px"}} align="center" justify="center">
+
+        <Spin size="large" />
+        </Flex>
+        }    
+        {!isLoading&&
+        <>
+        <Title level={1} className={styles.title}>
+          {serviceItem?serviceItem.Description:'Каталог услуг'}
+        </Title>
+        {services.length>0 &&
+        <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
+            {services.sort((a,b)=>a.Order-b.Order).map((item, index) => (
+            <Link
+            key={index}
+              to={item.IsFolder?`/services/${item.Ref_Key}`:`/services/item/${item.Ref_Key}`}
+              className={styles.styleLink}
+            >
+              <Card className={styles.styleCard} hoverable>
+                <Title level={4}>{item.Description}</Title>
+                <Flex
+                    justify="flex-end"
+                    gap={20}
+                    className={styles.cardImage}
+                  >
+                    <Image
+                      style={{ textAlign: "center" }}
+                      width={"30%"}
+                      src={item.IsFolder?folder:element}
+                      preview={false}
+                    />
+                  </Flex>
+              </Card>
+            </Link>
+          ))}
+        </Flex>
+        }
+        {services.length<1 &&
+         <Title level={2} className={styles.title} style={{color:"#999"}}>
+         Услуг в данной категории не найдено
+       </Title>
+        }
           </>
-        )}
-        {isLoading && (
-          <Flex style={{ height: "300px" }} align="center" justify="center">
-            <Spin size="large" />
-          </Flex>
-        )}
-        {!isLoading && (
-          <>
-            <Title level={1} className={styles.title}>
-              {serviceItem ? serviceItem.Description : "Каталог услуг"}
-            </Title>
-            {filteredServices.length > 0 && (
-              <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
-                {filteredServices
-                  .sort((a, b) => a.Order - b.Order)
-                  .map((item, index) => (
-                    <Link
-                      key={index}
-                      to={
-                        item.IsFolder
-                          ? `/services/${item.Ref_Key}`
-                          : `/services/item/${item.Ref_Key}`
-                      }
-                      className={styles.styleLink}
-                    >
-                      <Card className={styles.styleCard} hoverable>
-                        <Title level={4}>{item.Description}</Title>
-                        <Text>
-                          {item.IsFolder ? (
-                            <FolderOutlined style={{ fontSize: "50px" }} />
-                          ) : (
-                            <FileTextOutlined style={{ fontSize: "50px" }} />
-                          )}
-                        </Text>
-                      </Card>
-                    </Link>
-                  ))}
-              </Flex>
-            )}
-            {filteredServices.length < 1 && (
-              <Title
-                level={2}
-                className={styles.title}
-                style={{ color: "#999" }}
-              >
-                Услуг в данной категории не найдено
-              </Title>
-            )}
-          </>
-        )}
+        }
       </Container>
     </>
   );
