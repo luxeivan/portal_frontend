@@ -9,6 +9,11 @@ import {
   FileTextOutlined,
   RightOutlined,
 } from "@ant-design/icons";
+import config from "../../config";
+import TagFilters from "../../components/Filters/TagFilters";
+import { LeftOutlined } from "@ant-design/icons";
+import folder from '../../img/catalog/folder.png'
+import element from '../../img/catalog/element.png'
 import Container from "../../components/Container";
 const { Title, Text } = Typography;
 
