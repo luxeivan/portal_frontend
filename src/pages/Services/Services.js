@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Spin, theme } from "antd";
+import { Card, Flex, Typography, Spin, theme,Image } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
+import folder from '../../img/catalog/folder.png'
+import element from '../../img/catalog/element.png'
 import {
   FolderOutlined,
   FileTextOutlined,
@@ -44,7 +46,7 @@ export default function Services() {
       <Container>
         {serviceItem&&
         <>
-        <Flex style={{ margin: "20px 0" }}>
+        <Flex className={styles.chainFlex}>
 
         {chain && chain.map((item,index)=><div key={index}><Link to={`/services/${item.Ref_Key}`}>{item.Description}</Link><RightOutlined style={{color:colorPrimaryText}}/></div>)}
         </Flex>
@@ -72,7 +74,18 @@ export default function Services() {
             >
               <Card className={styles.styleCard} hoverable>
                 <Title level={4}>{item.Description}</Title>
-                <Text>{item.IsFolder?<FolderOutlined style={{fontSize:"50px"}}/>:<FileTextOutlined style={{fontSize:"50px"}}/>}</Text>
+                <Flex
+                    justify="flex-end"
+                    gap={20}
+                    className={styles.cardImage}
+                  >
+                    <Image
+                      style={{ textAlign: "center" }}
+                      width={"30%"}
+                      src={item.IsFolder?folder:element}
+                      preview={false}
+                    />
+                  </Flex>
               </Card>
             </Link>
           ))}

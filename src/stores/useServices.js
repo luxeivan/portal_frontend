@@ -32,7 +32,7 @@ const useServices = create((set, get) => ({
             set({ isLoading: false });
         }
     },
-    
+
     filterServices: () => {
         const services = get().services;
         const savedValues = JSON.parse(localStorage.getItem("userCategories")) || ['Физические лица', 'Юридические лица', 'Индивидуальные предприниматели'];
@@ -70,6 +70,21 @@ const useServices = create((set, get) => ({
         console.log("Filtered Services:", filtered);
 
         set({ filteredServices: filtered });
+    },
+    fetchServiceItem: async (key) => {
+        set((state) => ({ serviceItem: null, isLoading: true }))
+        try {
+            const res = await axios.get(`${config.backServer}/api/services/item/${key}`)
+            // console.log(res)
+            set((state) => {
+                return {
+                    serviceItem: res.data.value[0],
+                    isLoading: false
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
     },
 
     fetchServiceChain: async (key) => {

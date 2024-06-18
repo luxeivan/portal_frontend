@@ -28,6 +28,9 @@
     z-index: 10;
     padding-bottom: 80px;
  }
+ .chainFlex{
+   margin: 20px 0;
+ }
  
  @media (max-width: 1900px) {
     .styleLink {
@@ -46,6 +49,9 @@
     .filters{
        display: none;
     }
+    .chainFlex{
+       flex-direction: column;
+     }
  }
  @media (max-width: 575px) {
  }
