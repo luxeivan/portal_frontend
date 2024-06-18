@@ -23,7 +23,7 @@ export default function Services() {
   const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServices = useServices((state) => state.fetchServices);
-  const filterServices = useServices((state) => state.filterServices);
+  // const filterServices = useServices((state) => state.filterServices);
   const { level2 } = useParams();
 
   useEffect(() => {
@@ -31,9 +31,9 @@ export default function Services() {
     fetchServiceChain(level2);
   }, [level2, fetchServices, fetchServiceChain]);
 
-  useEffect(() => {
-    filterServices();
-  }, [services, filterServices]);
+  // useEffect(() => {
+  //   filterServices();
+  // }, [services, filterServices]);
 
   console.log("Filtered Services in Component:", filteredServices);
 
