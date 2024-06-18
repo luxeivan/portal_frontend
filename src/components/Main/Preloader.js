@@ -21,7 +21,7 @@ const arr = [
 
 export const Preloader = () => {    
     return (        
-        <div className={styles.container}>
+        // <div className={styles.container}>
             <motion.svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 275.8 300.5"
@@ -66,7 +66,7 @@ export const Preloader = () => {
                     />
                 ))}
             </motion.svg>
-        </div>
+        // </div>
 
     )
 };
