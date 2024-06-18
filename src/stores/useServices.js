@@ -114,7 +114,7 @@ import { create } from 'zustand'
 import config from "../config";
 import axios from "axios";
 
-const useServices = create((set) => ({
+const useServices = create((set, get) => ({
     services: [],
     chain: [],
     serviceItem: null,
@@ -122,10 +122,11 @@ const useServices = create((set) => ({
 
     fetchServices: async (key = "00000000-0000-0000-0000-000000000000") => {
         set((state) => ({ services: [], isLoading: true }))
+        
         try {
-            const res = await Promise.all([axios.get(`${config.backServer}/api/services/${key}`), axios.get(`${config.backServer}/api/services/item/${key}`)])
+            const res = await Promise.all([axios.get(`${config.backServer}/api/services/${key}`), axios.get(`${config.backServer}/api/services/item/${key}`),get().fetchServiceChain(key)])
             // const res = await axios.get(`${config.backServer}/api/services/${key}`)
-            // console.log(res)
+            //console.log(res)
             set((state) => {
                 return {
                     services: res[0].data.value,
@@ -154,28 +155,23 @@ const useServices = create((set) => ({
         }
     },
 
-    fetchServiceChain: async (key) => {
-        let chain = []
-        async function getService(key) {
-            const res = await axios.get(`${config.backServer}/api/services/item/${key}`)
-            // console.log(res.data)
-            chain.push({ Description: res.data.value[0]?.Description, Ref_Key: res.data.value[0]?.Ref_Key })
-            if (res.data.value[0]?.Parent_Key && res.data.value[0].Parent_Key !== "00000000-0000-0000-0000-000000000000") {
-                await getService(res.data.value[0].Parent_Key)
+    fetchServiceChain: (key) => {
+        return new Promise(async (resolve, reject) => {
+            let chain = []
+            async function getService(key) {
+                const res = await axios.get(`${config.backServer}/api/services/item/${key}`)
+                // console.log(res.data)
+                chain.push({ Description: res.data.value[0]?.Description, Ref_Key: res.data.value[0]?.Ref_Key })
+                if (res.data.value[0]?.Parent_Key && res.data.value[0].Parent_Key !== "00000000-0000-0000-0000-000000000000") {
+                    await getService(res.data.value[0].Parent_Key)
+                }
             }
-        }
-        try {
             await getService(key)
             chain.push({ Description: "Каталог услуг", Ref_Key: "" })
             chain.reverse().pop()
-            set((state) => {
-                return {
-                    chain
-                }
-            })
-        } catch (error) {
-            console.log(error)
-        }
+            resolve({ chain })
+            set((state) => ({ chain }))
+        })
     },
 
 }));
