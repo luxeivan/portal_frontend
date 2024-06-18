@@ -1,7 +1,128 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { Modal, Button, Form, Select, Upload, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import useDocuments from "../../../stores/Cabinet/useDocuments";
+import config from "../../../config";
+import axios from "axios";
+
+const { Option } = Select;
 
 export default function ModalUpdateDocument() {
+  const openModalUpdate = useDocuments((state) => state.openModalUpdate);
+  const setOpenModalUpdate = useDocuments((state) => state.setOpenModalUpdate);
+  const fetchDocuments = useDocuments((state) => state.fetchDocuments);
+  const document = useDocuments((state) => state.document);
+  const nameDocs = useDocuments((state) => state.nameDocs);
+  const updateDocument = useDocuments((state) => state.updateDocument);
+  const [fileList, setFileList] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (document && document.files) {
+      form.setFieldsValue({
+        documentName: document.nameDoc_Key,
+        fileDoc: document.files.map((file) => ({
+          name: file.fileName,
+          status: "done",
+          uid: file.fileName,
+        })),
+      });
+      setFileList(
+        document.files.map((file) => ({
+          name: file.fileName,
+          status: "done",
+          uid: file.fileName,
+        }))
+      );
+    }
+  }, [document, form]);
+
+  const handleModalClose = () => {
+    setOpenModalUpdate(false);
+    form.resetFields();
+    setFileList([]);
+  };
+
+  const handleUpdateDocument = async (values) => {
+    try {
+      setLoading(true);
+      const updatedData = {
+        documentName: values.documentName,
+        nameDoc_Key: values.documentName,
+        files: fileList.map((file) => ({
+          name: file.name,
+        })),
+      };
+
+      await updateDocument(document.Ref_Key, updatedData);
+
+      message.success("Документ успешно обновлен");
+
+      fetchDocuments();
+      setOpenModalUpdate(false);
+      form.resetFields();
+      setFileList([]);
+      setLoading(false);
+    } catch (error) {
+      console.error("Ошибка при обновлении документа:", error);
+      message.error("Не удалось обновить документ");
+      setLoading(false);
+    }
+  };
+
+  const handleRemove = (file) => {
+    setFileList(fileList.filter((item) => item.uid !== file.uid));
+  };
+
+  const handleChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
   return (
-    <div>ModalUpdateDocument</div>
-  )
+    <Modal
+      title="Редактировать документ"
+      open={openModalUpdate}
+      onCancel={handleModalClose}
+      footer={null}
+    >
+      <Form form={form} onFinish={handleUpdateDocument}>
+        <Form.Item
+          label="Название"
+          name="documentName"
+          rules={[
+            {
+              required: true,
+              message: "Пожалуйста, выберите название документа",
+            },
+          ]}
+        >
+          <Select>
+            {nameDocs &&
+              nameDocs.map((nameDocs, index) => (
+                <Option key={index} value={nameDocs.Ref_Key}>
+                  {nameDocs.Description}
+                </Option>
+              ))}
+          </Select>
+        </Form.Item>
+        <Form.Item label="Файлы" name="fileDoc">
+          <Upload
+            fileList={fileList}
+            onRemove={handleRemove}
+            onChange={handleChange}
+            beforeUpload={() => false}
+          >
+            <Button icon={<UploadOutlined />}>Добавить файл</Button>
+          </Upload>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" disabled={loading}>
+            Сохранить изменения
+          </Button>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
 }

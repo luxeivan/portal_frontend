@@ -9,7 +9,12 @@ export default function MarkDownText({ children }) {
   }
   return (
     <Markdown options={{
-      overrides: {
+      overrides: {    
+        p:{
+          props:{
+            className: styles.para
+          }
+        },    
         h1: {
           component: Typography.Title,
           props: {

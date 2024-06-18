@@ -20,6 +20,9 @@
 .table tr td:last-child, .table tr th:last-child {
 	border-right: none;
 }
+.para{
+	text-indent: 20px;
+}
 
 
 .tableDescription tr td:last-child, .tableDescription tr th:last-child {
