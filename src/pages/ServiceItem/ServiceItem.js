@@ -19,6 +19,7 @@ import styles from "./ServicesItem.module.css";
 import { motion } from "framer-motion";
 import { LeftOutlined, RightOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
+import { Preloader } from "../../components/Main/Preloader";
 
 
 const { Title, Text, Paragraph } = Typography;
@@ -34,18 +35,20 @@ const sklonenie = (day) => {
 }
 
 export default function ServiceItem() {
+  const { colorPrimaryText } = theme.useToken().token;
   const [open, setOpen] = useState(false);
   const [openDrawerSteps, setOpenDrawerSteps] = useState(false);
   const { colorPrimary } = theme.useToken().token;
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
+  const isLoading = useServices((state) => state.isLoading);
   const { level2, key } = useParams();
 
   const chain = useServices((state) => state.chain);
   const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   useEffect(() => {
     fetchServiceItem(key);
-    fetchServiceChain(key)
+    //fetchServiceChain(key)
   }, [level2, key]);
   const showDrawer = () => {
     setOpen(true);
@@ -57,10 +60,12 @@ export default function ServiceItem() {
 
   return (
     <div>
-      {serviceItem && (
+      {serviceItem &&
         <>
-          <Flex style={{ margin: "20px 0" }}>
-            {chain && chain.map((item, index) => <><Link to={`/services/${item.Ref_Key}`} key={index}>{item.Description}</Link><RightOutlined /></>)}
+
+          <Flex className={styles.chainFlex}>
+
+            {chain && chain.map((item, index) => <div key={index}><Link to={`/services/${item.Ref_Key}`}>{item.Description}</Link><RightOutlined style={{ color: colorPrimaryText }} /></div>)}
           </Flex>
           {/* <Link to={`/services/${serviceItem.Parent_Key}`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link> */}
           <Title level={1} style={{ marginTop: "10px" }}>
@@ -68,6 +73,16 @@ export default function ServiceItem() {
             {serviceItem.Description}
           </Title>
           {/* <Divider /> */}
+        </>
+      }
+      {isLoading &&
+          <Flex style={{ height: "300px" }} align="center" justify="center">
+            <Preloader />
+          </Flex>
+        }
+      {serviceItem &&
+        <>
+
 
           <Collapse
             defaultActiveKey={["1"]}
@@ -190,7 +205,8 @@ export default function ServiceItem() {
             <Paragraph>Скоро механизм подачи заявок заработает</Paragraph>
           </Drawer>
         </>
-      )}
+      }
+
     </div>
   );
 }

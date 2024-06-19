@@ -121,10 +121,10 @@ const useServices = create((set, get) => ({
     isLoading: false,
 
     fetchServices: async (key = "00000000-0000-0000-0000-000000000000") => {
-        set((state) => ({ services: [], isLoading: true }))
-        
+        set((state) => ({ services: [], isLoading: true, chain:[] }))
+
         try {
-            const res = await Promise.all([axios.get(`${config.backServer}/api/services/${key}`), axios.get(`${config.backServer}/api/services/item/${key}`),get().fetchServiceChain(key)])
+            const res = await Promise.all([axios.get(`${config.backServer}/api/services/${key}`), axios.get(`${config.backServer}/api/services/item/${key}`), get().fetchServiceChain(key)])
             // const res = await axios.get(`${config.backServer}/api/services/${key}`)
             //console.log(res)
             set((state) => {
@@ -140,13 +140,13 @@ const useServices = create((set, get) => ({
     },
 
     fetchServiceItem: async (key) => {
-        set((state) => ({ serviceItem: null, isLoading: true }))
+        set((state) => ({ serviceItem: null, isLoading: true, chain:[] }))
         try {
-            const res = await axios.get(`${config.backServer}/api/services/item/${key}`)
+            const res = await Promise.all([axios.get(`${config.backServer}/api/services/item/${key}`), get().fetchServiceChain(key)])
             // console.log(res)
             set((state) => {
                 return {
-                    serviceItem: res.data.value[0],
+                    serviceItem: res[0].data.value[0],
                     isLoading: false
                 }
             })

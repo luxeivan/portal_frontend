@@ -21,3 +21,12 @@
     line-height: 1;
 
 }
+.chainFlex{
+    margin: 20px 0;
+  }
+  
+@media (max-width: 991px) {
+    .chainFlex{
+       flex-direction: column;
+     }
+ }

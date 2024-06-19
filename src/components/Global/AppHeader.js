@@ -36,6 +36,11 @@ const items = [
     label: `Документация`,
     url: '/docs'
   },
+  {
+    key: 6,
+    label: `Тестовая форма с 1С`,
+    url: '/formonec'
+  },
 ];
 
 export default function AppHeader() {

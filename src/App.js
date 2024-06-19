@@ -31,6 +31,7 @@ import Claimers from "./pages/Cabinet/Claims/Claimers";
 import Archives from "./pages/Cabinet/Claims/Archives";
 import Law from "./pages/Documentation/Law";
 import Documentation from "./pages/Documentation/Documentation";
+import FormOneC from "./components/test/FormOneC";
 // import JumpGame from "./pages/Game/JumpGame";
 
 const { Content } = Layout;
@@ -107,6 +108,7 @@ export default function App() {
               >
                 <Routes>
                   <Route path="/" element={<Main />} />
+                  <Route path="/formonec" element={<FormOneC />} />
                   <Route
                     path="/services"
                     element={
