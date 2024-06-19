@@ -17,7 +17,7 @@ const FormOneC = () => {
     // const formJson = useStore(state => state.json)
     const [form] = Form.useForm();
     useEffect(() => {
-        axios.get("https://luxeivan.ru:5443/api/formonec", {
+        axios.get("https://luxeivan.ru:5443/api/formonec/ea7c57cb-16ab-11ef-8681-c8d9d20cde1f", {
             headers: {
                 Authorization: "Basic b2RhdGEudXNlcjoxMjM0NQ=="
             }
