@@ -7,12 +7,6 @@ import styles from "./Calc.module.css";
 const { Title } = Typography;
 const { Panel } = Collapse;
 
-const formulaCalculation = {
-  "area": (inputValue, formula) => eval(formula.replace('area', inputValue)),
-  "count": (inputValue, formula) => eval(formula.replace('count', inputValue)),
-  "length": (inputValue, formula) => eval(formula.replace('length', inputValue))
-};
-
 export default function Calc() {
   const [form] = Form.useForm();
   const [totalPower, setTotalPower] = useState(0);
@@ -26,9 +20,17 @@ export default function Calc() {
         const [sectionIndex, itemIndex] = key.split("-");
         const item = jsonData[sectionIndex].items[itemIndex];
         const inputValue = parseFloat(values[key]);
+        const countKey = `${key}-count`;
+        const countValue = parseFloat(values[countKey]) || 1;
+
         if (!isNaN(inputValue) && item.formula) {
-          const formulaType = item.formula.includes('area') ? 'area' : (item.formula.includes('count') ? 'count' : 'length');
-          total += formulaCalculation[formulaType](inputValue, item.formula);
+          const result = eval(
+            item.formula
+              .replace("count", countValue)
+              .replace("area", inputValue)
+              .replace("length", inputValue)
+          );
+          total += result;
         }
       });
       setTotalPower(total.toFixed(2));
@@ -46,7 +48,10 @@ export default function Calc() {
             {jsonData.map((section, sectionIndex) => (
               <Panel header={section.section} key={sectionIndex}>
                 {section.items.map((item, itemIndex) => (
-                  <div key={`${sectionIndex}-${itemIndex}`} className={styles.inputGroup}>
+                  <div
+                    key={`${sectionIndex}-${itemIndex}`}
+                    className={styles.inputGroup}
+                  >
                     <Form.Item
                       label={item.name}
                       name={`${sectionIndex}-${itemIndex}`}
@@ -81,7 +86,6 @@ export default function Calc() {
     </>
   );
 }
-
 
 //Старый калькулятор
 // import React, { useState } from "react";
