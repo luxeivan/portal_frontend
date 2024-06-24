@@ -3,10 +3,11 @@ import AppHelmet from "../../components/Global/AppHelmet";
 import { Typography, InputNumber, Button, Form, Collapse, Spin } from "antd";
 import jsonData from "./powerData.json";
 import styles from "./Calc.module.css";
+import { formItemLayoutForCalc } from '../../components/configSizeForm'
 
 const { Title } = Typography;
 const { Panel } = Collapse;
-
+const formItemLayout = formItemLayoutForCalc
 export default function Calc() {
   const [form] = Form.useForm();
   const [totalPower, setTotalPower] = useState(0);
@@ -43,7 +44,7 @@ export default function Calc() {
       <AppHelmet title={"Калькулятор"} desc={"Калькулятор мощности"} />
       <div>
         <Title level={1}>Калькулятор мощности</Title>
-        <Form form={form} onFinish={handleFinish}>
+        <Form form={form} onFinish={handleFinish} {...formItemLayout} labelWrap>
           <Collapse>
             {jsonData.map((section, sectionIndex) => (
               <Panel header={section.section} key={sectionIndex}>
