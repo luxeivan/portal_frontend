@@ -2,30 +2,78 @@
   {
     "section": "Электроприборы инженерного обеспечения",
     "items": [
-      { "name": "Теплые полы", "formula": "area * 0.03" },
-      { "name": "Кондиционер", "formula": "count * 1.2" },
-      { "name": "Тепловой насос", "formula": "count * 3.0" },
-      { "name": "Обогрев труб", "formula": "length * 0.02" },
-      { "name": "Обогрев дорожек", "formula": "area * 0.03" },
-      { "name": "Водяной насос", "formula": "count * 1.0" },
-      { "name": "Бойлер", "formula": "count * 2.0" },
-      { "name": "Проточный водонагреватель", "formula": "count * 8.0" },
-      { "name": "ИБП различных мощностей", "formula": "count * 0.5" },
-      { "name": "Освещение (по площади)", "formula": "area * 0.2" }
+      {
+        "name": "Теплые полы",
+        "formula": "value * 0.03",
+        "description": "Из расчета мощности 30 Вт/м²",
+        "defaultValue": 1.2
+      },
+      { "name": "Кондиционер", "formula": "count * 1.2", "defaultValue": 1.2 },
+      {
+        "name": "Тепловой насос",
+        "formula": "count * 3.0",
+        "defaultValue": 3.0
+      },
+      {
+        "name": "Обогрев труб",
+        "formula": "value * 0.02",
+        "description": "Из расчета мощности 20 Вт/метр трубы",
+        "defaultValue": 0.02
+      },
+      {
+        "name": "Обогрев дорожек",
+        "formula": "value * 0.03",
+        "defaultValue": 0.03
+      },
+      {
+        "name": "Водяной насос",
+        "formula": "count * 1.0",
+        "defaultValue": 1.0
+      },
+      { "name": "Бойлер", "formula": "count * 2.0", "defaultValue": 2.0 },
+      {
+        "name": "Проточный водонагреватель",
+        "formula": "count * 8.0",
+        "defaultValue": 8.0
+      },
+      {
+        "name": "ИБП различных мощностей",
+        "formula": "count * 0.5",
+        "defaultValue": 0.5
+      },
+      {
+        "name": "Освещение (по площади)",
+        "formula": "value * 0.2",
+        "description": "Исходя из использования светодиодных светильников потребляемой мощности 50Вт",
+        "defaultValue": 0.2
+      }
     ]
   },
   {
     "section": "Электроприборы бытового назначения",
     "items": [
-      { "name": "Варочная панель", "formula": "count * 8.0" },
-      { "name": "Духовой шкаф", "formula": "count * 4.0" },
-      { "name": "Печь СВЧ", "formula": "count * 1.5" },
-      { "name": "Холодильник", "formula": "count * 1.0" },
-      { "name": "Посудомоечная машина", "formula": "count * 1.7" },
-      { "name": "Стиральная машина", "formula": "count * 2.0" },
+      {
+        "name": "Варочная панель",
+        "formula": "count * 8.0",
+        "defaultValue": 8.0
+      },
+      { "name": "Духовой шкаф", "formula": "count * 4.0", "defaultValue": 4.0 },
+      { "name": "Печь СВЧ", "formula": "count * 1.5", "defaultValue": 1.5 },
+      { "name": "Холодильник", "formula": "count * 1.0", "defaultValue": 1.0 },
+      {
+        "name": "Посудомоечная машина",
+        "formula": "count * 1.7",
+        "defaultValue": 1.7
+      },
+      {
+        "name": "Стиральная машина",
+        "formula": "count * 2.0",
+        "defaultValue": 2.0
+      },
       {
         "name": "Телевизор с диагональю более 40 дюймов",
-        "formula": "count * 0.3"
+        "formula": "count * 0.3",
+        "defaultValue": 0.3
       }
     ]
   },
@@ -34,19 +82,34 @@
     "items": [
       {
         "name": "Зарядные устройства для телефонов, ручного инструмента",
-        "formula": "count * 0.025"
+        "formula": "count * 0.025",
+        "defaultValue": 0.025
       },
       {
         "name": "Светильники на светодиодных лампах (не более 3-х ламп)",
-        "formula": "count * 0.015"
+        "formula": "count * 0.015",
+        "defaultValue": 0.015
       },
       {
         "name": "Электробритвы, машинки для стрижки",
-        "formula": "count * 0.02"
+        "formula": "count * 0.02",
+        "defaultValue": 0.02
       },
-      { "name": "Дверные звонки, электрозамки", "formula": "count * 0.01" },
-      { "name": "Электрочасы", "formula": "count * 0.005" },
-      { "name": "Спутниковая антенна ТВ", "formula": "count * 0.01" }
+      {
+        "name": "Дверные звонки, электрозамки",
+        "formula": "count * 0.01",
+        "defaultValue": 0.01
+      },
+      {
+        "name": "Электрочасы",
+        "formula": "count * 0.005",
+        "defaultValue": 0.005
+      },
+      {
+        "name": "Спутниковая антенна ТВ",
+        "formula": "count * 0.01",
+        "defaultValue": 0.01
+      }
     ]
   },
   {
@@ -54,74 +117,131 @@
     "items": [
       {
         "name": "Зарядные устройства/блоки питания для ноутбуков",
-        "formula": "count * 0.05"
+        "formula": "count * 0.05",
+        "defaultValue": 0.05
       },
-      { "name": "Телевизоры (до 40дюймов)", "formula": "count * 0.1" },
+      {
+        "name": "Телевизоры (до 40дюймов)",
+        "formula": "count * 0.1",
+        "defaultValue": 0.1
+      },
       {
         "name": "Светильник до 10 светодиодных ламп",
-        "formula": "count * 0.1"
+        "formula": "count * 0.1",
+        "defaultValue": 0.1
       },
       {
         "name": "Кухонные миксеры, кофемолки, вытяжная вентиляция (вытяжка)",
-        "formula": "count * 0.05"
+        "formula": "count * 0.05",
+        "defaultValue": 0.05
       },
-      { "name": "Вентиляторы", "formula": "count * 0.05" },
-      { "name": "Телевизоры, мониторы до 20 дюймов", "formula": "count * 0.1" },
-      { "name": "Музыкальный центр", "formula": "count * 0.1" },
+      {
+        "name": "Вентиляторы",
+        "formula": "count * 0.05",
+        "defaultValue": 0.05
+      },
+      {
+        "name": "Телевизоры, мониторы до 20 дюймов",
+        "formula": "count * 0.1",
+        "defaultValue": 0.1
+      },
+      {
+        "name": "Музыкальный центр",
+        "formula": "count * 0.1",
+        "defaultValue": 0.1
+      },
       {
         "name": "Компьютер с монитором до 20 дюймов",
-        "formula": "count * 0.1"
+        "formula": "count * 0.1",
+        "defaultValue": 0.1
       },
       {
         "name": "Зарядные устройства для тяжелого ручного инструмента",
-        "formula": "count * 0.05"
+        "formula": "count * 0.05",
+        "defaultValue": 0.05
       }
     ]
   },
   {
     "section": "Приборы средней мощности",
     "items": [
-      { "name": "Электромясорубки", "formula": "count * 0.3" },
+      {
+        "name": "Электромясорубки",
+        "formula": "count * 0.3",
+        "defaultValue": 0.3
+      },
       {
         "name": "Электрорубанки, лобзики, пилки, дрели, шлифмашинки и тп.",
-        "formula": "count * 0.3"
+        "formula": "count * 0.3",
+        "defaultValue": 0.3
       },
-      { "name": "Холодильники", "formula": "count * 0.2" },
-      { "name": "Люстры от 10 светодиодных ламп", "formula": "count * 0.2" },
-      { "name": "Плойки, выпрямители волос", "formula": "count * 0.15" },
-      { "name": "Телевизоры от 42 дюймов", "formula": "count * 0.3" },
-      { "name": "ТВ проекторы", "formula": "count * 0.3" },
+      { "name": "Холодильники", "formula": "count * 0.2", "defaultValue": 0.2 },
+      {
+        "name": "Люстры от 10 светодиодных ламп",
+        "formula": "count * 0.2",
+        "defaultValue": 0.2
+      },
+      {
+        "name": "Плойки, выпрямители волос",
+        "formula": "count * 0.15",
+        "defaultValue": 0.15
+      },
+      {
+        "name": "Телевизоры от 42 дюймов",
+        "formula": "count * 0.3",
+        "defaultValue": 0.3
+      },
+      { "name": "ТВ проекторы", "formula": "count * 0.3", "defaultValue": 0.3 },
       {
         "name": "Источники бесперебойного питания компьютеров",
-        "formula": "count * 0.3"
+        "formula": "count * 0.3",
+        "defaultValue": 0.3
       },
-      { "name": "Газовый котел", "formula": "count * 0.5" }
+      { "name": "Газовый котел", "formula": "count * 0.5", "defaultValue": 0.5 }
     ]
   },
   {
     "section": "Приборы большой мощности",
     "items": [
-      { "name": "Электрообогреватели всех типов", "formula": "count * 1" },
-      { "name": "Насосы для скважин, колодцев", "formula": "count * 1" },
-      { "name": "Кондиционеры", "formula": "count * 1" },
-      { "name": "Электрические плиты", "formula": "count * 1" },
-      { "name": "Духовые шкафы", "formula": "count * 1" },
-      { "name": "Утюги", "formula": "count * 0.8" },
+      {
+        "name": "Электрообогреватели всех типов",
+        "formula": "count * 1",
+        "defaultValue": 1
+      },
+      {
+        "name": "Насосы для скважин, колодцев",
+        "formula": "count * 1",
+        "defaultValue": 1
+      },
+      { "name": "Кондиционеры", "formula": "count * 1", "defaultValue": 1 },
+      {
+        "name": "Электрические плиты",
+        "formula": "count * 1",
+        "defaultValue": 1
+      },
+      { "name": "Духовые шкафы", "formula": "count * 1", "defaultValue": 1 },
+      { "name": "Утюги", "formula": "count * 0.8", "defaultValue": 0.8 },
       {
         "name": "Микроволновые печи, шашлычницы, аэрогрили, пароварки, скороварки",
-        "formula": "count * 1"
+        "formula": "count * 1",
+        "defaultValue": 1
       },
       {
         "name": "Водонагреватели накопительные (бойлеры)",
-        "formula": "count * 1"
+        "formula": "count * 1",
+        "defaultValue": 1
       },
-      { "name": "Электрочайники", "formula": "count * 0.8" },
-      { "name": "Пылесосы", "formula": "count * 0.5" },
-      { "name": "Посудомоечные машины", "formula": "count * 1" },
-      { "name": "Фены", "formula": "count * 0.5" },
-      { "name": "Теплые полы", "formula": "count * 1" },
-      { "name": "Цепные электропилы, перфораторы", "formula": "count * 1" },
-      { "name": "Кабельные системы обогрева", "formula": "count * 1" }
+      {
+        "name": "Электрочайники",
+        "formula": "count * 0.8",
+        "defaultValue": 0.8
+      },
+      { "name": "Пылесосы", "formula": "count * 0.5", "defaultValue": 0.5 },
+      {
+        "name": "Посудомоечные машины",
+        "formula": "count * 1",
+        "defaultValue": 1
+      }
     ]
   }
 ]
