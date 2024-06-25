@@ -143,7 +143,7 @@ export default function ServiceItem() {
                     // size="small"
                     direction="vertical"
                     current={100}
-                    items={serviceItem.Steps.map((item, index) => ({
+                    items={serviceItem?.Steps?.map((item, index) => ({
                       icon: (
                         <div
                           className={styles.icon}
@@ -186,7 +186,7 @@ export default function ServiceItem() {
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <Link to={`/cabinet/new-claim/${level2}/${serviceItem.id}`}>
+              <Link to={`/cabinet/new-claim/${serviceItem.Ref_Key}`}>
                 <Button type="primary" size="large" onClick={showDrawer}>
                   Получить услугу
                 </Button>
