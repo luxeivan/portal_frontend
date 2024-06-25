@@ -19,6 +19,27 @@ const formItemLayout = {
         maxWidth: 600,
     }
 };
+const formItemLayoutForCalc = {
+    labelCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 10,
+        },
+    },
+    wrapperCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 24,
+        },
+    },
+    style: {
+        maxWidth: 900,
+    }
+};
 const tailFormItemLayout = {
     wrapperCol: {
         xs: {
@@ -31,4 +52,4 @@ const tailFormItemLayout = {
         },
     },
 };
-export { formItemLayout, tailFormItemLayout }
+export { formItemLayout, tailFormItemLayout,formItemLayoutForCalc }
