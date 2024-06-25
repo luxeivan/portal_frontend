@@ -241,6 +241,18 @@
         "name": "Посудомоечные машины",
         "formula": "count * 1",
         "defaultValue": 1
+      },
+      { "name": "Фены", "formula": "count * 0.5", "defaultValue": 0.5 },
+      { "name": "Теплые полы", "formula": "count * 1", "defaultValue": 1 },
+      {
+        "name": "Цепные электропилы, перфораторы",
+        "formula": "count * 1",
+        "defaultValue": 1
+      },
+      {
+        "name": "Кабельные системы обогрева",
+        "formula": "count * 1",
+        "defaultValue": 1
       }
     ]
   }
