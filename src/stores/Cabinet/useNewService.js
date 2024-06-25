@@ -8,9 +8,9 @@ const useNewService = create((set) => ({
         set((state) => ({ claim: null }))
         const res = await axios.get(`${config.backServer}/api/services/item/${key}`)
         set((state) => {
-            console.log(res.data[0])
+            console.log(res.data)
             return {
-                claim: res.data[0]
+                claim: res.data
             }
         })
     },
