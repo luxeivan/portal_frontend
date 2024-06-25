@@ -48,12 +48,12 @@ export default function NewService() {
                     >
                         {claim.Fields?.map((item, index) => {
                             console.log(item)
-                            if (item.Component_Type.includes("ComponentsDivider"))
-                                return <DividerForm key={index} {...item} label={item.Label}/>
-                            if (item.Component_Type.includes("ComponentsTextInput"))
-                                return <TextInput key={index} label={item.Label} {...item} name={item.Name.Ref_Key}/>
-                            if (item.Component_Type.includes("ComponentsSliderInput"))
-                                return <SliderInput key={index} label={item.Label} {...item} name={item.Name.Ref_Key}/>
+                            if (item.component_Type.includes("ComponentsDivider"))
+                                return <DividerForm key={index} {...item.component_Expanded} label={item.label}/>
+                            if (item.component_Type.includes("ComponentsTextInput"))
+                                return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key}/>
+                            if (item.component_Type.includes("ComponentsSliderInput"))
+                                return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key}/>
                            
 
                         })}

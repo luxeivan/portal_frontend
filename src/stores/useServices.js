@@ -146,7 +146,7 @@ const useServices = create((set, get) => ({
              console.log(res)
             set((state) => {
                 return {
-                    serviceItem: res[0].data[0],
+                    serviceItem: res[0].data,
                     isLoading: false
                 }
             })
