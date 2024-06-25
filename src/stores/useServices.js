@@ -130,7 +130,7 @@ const useServices = create((set, get) => ({
             set((state) => {
                 return {
                     services: res[0].data.value,
-                    serviceItem: res[1].data.value[0],
+                    serviceItem: res[1].data,
                     isLoading: false
                 }
             })
@@ -143,10 +143,10 @@ const useServices = create((set, get) => ({
         set((state) => ({ serviceItem: null, isLoading: true, chain:[] }))
         try {
             const res = await Promise.all([axios.get(`${config.backServer}/api/services/item/${key}`), get().fetchServiceChain(key)])
-            // console.log(res)
+             console.log(res)
             set((state) => {
                 return {
-                    serviceItem: res[0].data.value[0],
+                    serviceItem: res[0].data[0],
                     isLoading: false
                 }
             })
@@ -161,9 +161,9 @@ const useServices = create((set, get) => ({
             async function getService(key) {
                 const res = await axios.get(`${config.backServer}/api/services/item/${key}`)
                 // console.log(res.data)
-                chain.push({ Description: res.data.value[0]?.Description, Ref_Key: res.data.value[0]?.Ref_Key })
-                if (res.data.value[0]?.Parent_Key && res.data.value[0].Parent_Key !== "00000000-0000-0000-0000-000000000000") {
-                    await getService(res.data.value[0].Parent_Key)
+                chain.push({ Description: res.data.Description, Ref_Key: res.data.Ref_Key })
+                if (res.data.Parent_Key && res.data.Parent_Key !== "00000000-0000-0000-0000-000000000000") {
+                    await getService(res.data.Parent_Key)
                 }
             }
             await getService(key)

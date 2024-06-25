@@ -1,8 +1,10 @@
 import { Form, Typography, Button, Drawer, Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import useNewClaim from '../../stores/useNewService'
-import TextInput from '../../components/FormComponents/TextInput'
+import useNewClaim from '../../stores/Cabinet/useNewService'
+import TextInput from '../../components/test/formComponents/TextInput'
+import SliderInput from '../../components/test/formComponents/SliderInput'
+import DividerForm from '../../components/test/formComponents/DividerForm'
 import SubjectInput from '../../components/FormComponents/SubjectInput'
 import CheckboxInput from '../../components/FormComponents/CheckboxInput'
 
@@ -13,11 +15,11 @@ export default function NewService() {
     const [formValue, setFormValue] = useState(false);
     const claim = useNewClaim(state => state.claim)
     const fetchClaim = useNewClaim(state => state.fetchClaim)
-    const { id, url } = useParams()
+    const { id } = useParams()
     const [form] = Form.useForm()
-    
+
     useEffect(() => {
-        fetchClaim(url, id)
+        fetchClaim(id)
     }, [])
     const showDrawer = () => {
         setOpen(true);
@@ -36,40 +38,23 @@ export default function NewService() {
             {claim &&
                 <>
                     <Title>
-                        <span style={{ color: "gray" }}>Услуга:</span><br /> {claim.attributes?.name}
+                        {/* <span style={{ color: "gray" }}>Услуга:</span><br />  */}
+                        {claim.Description}
                     </Title>
                     <Form
                         form={form}
                         layout="vertical"
                         onFinish={onFinish}
                     >
-                        {claim.attributes?.fields.map((item, index) => {
-                            if (item.__component === "field-types.text")
-                                return <TextInput
-                                    displayName={item.displayName}
-                                    name={item.common.name}
-                                    shortDescription={item.common.shortDescription}
-                                    required={item.common.required}
-                                    description={item.common.description}
-                                    depends={item.common.depends}
-                                />
-                            if (item.__component === "field-types.switch")
-                                return <CheckboxInput
-                                    displayName={item.displayName}
-                                    name={item.common.name}
-                                    shortDescription={item.common.shortDescription}
-                                    required={item.common.required}
-                                    description={item.common.description}
-                                    depends={item.common.depends}
-                                />
-                            if (item.__component === "field-types.subject")
-                                return <SubjectInput
-                                    displayName={item.displayName}
-                                    name={item.common.name}
-                                    shortDescription={item.common.shortDescription}
-                                    required={item.common.required}
-                                    depends={item.common.depends}
-                                />
+                        {claim.Fields?.map((item, index) => {
+                            console.log(item)
+                            if (item.Component_Type.includes("ComponentsDivider"))
+                                return <DividerForm key={index} {...item} label={item.Label}/>
+                            if (item.Component_Type.includes("ComponentsTextInput"))
+                                return <TextInput key={index} label={item.Label} {...item} name={item.Name.Ref_Key}/>
+                            if (item.Component_Type.includes("ComponentsSliderInput"))
+                                return <SliderInput key={index} label={item.Label} {...item} name={item.Name.Ref_Key}/>
+                           
 
                         })}
                         <Form.Item>
@@ -90,7 +75,7 @@ export default function NewService() {
                         })}
                         <Descriptions
                             bordered
-                            title="Info"
+                            title="Данные для отправки в 1С"
                             items={Object.keys(formValue)
                                 .filter((item, index) => formValue[item] && typeof formValue[item] != 'boolean')
                                 .map((item, index) => ({
