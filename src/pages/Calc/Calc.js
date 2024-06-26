@@ -25,6 +25,7 @@ const formItemLayout = formItemLayoutForCalc;
 export default function Calc() {
   const [form] = Form.useForm();
   const [totalPower, setTotalPower] = useState(0);
+  console.log(totalPower);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDevice, setSelectedDevice] = useState(null);
