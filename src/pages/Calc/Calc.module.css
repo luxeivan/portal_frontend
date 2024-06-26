@@ -1,3 +1,10 @@
+.totalPower {
+  margin-top: 20px;
+  text-align: right;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
 .inputGroup {
   display: flex;
   flex-direction: column;
@@ -5,4 +12,8 @@
 
 .inputGroup .ant-form-item {
   margin-bottom: 0;
+}
+
+.calculateButton {
+  margin-top: 16px;
 }
