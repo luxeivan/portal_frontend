@@ -9,16 +9,6 @@
         "defaultValue": 1.2
       },
       {
-        "name": "Кондиционер, шт.",
-        "formula": "count * 1.2",
-        "defaultValue": 1.2
-      },
-      {
-        "name": "Тепловой насос, шт.",
-        "formula": "count * 3.0",
-        "defaultValue": 3.0
-      },
-      {
         "name": "Обогрев труб, кв.м.",
         "formula": "value * 0.02",
         "description": "Из расчета мощности 20 Вт/метр трубы",
@@ -29,6 +19,23 @@
         "formula": "value * 0.03",
         "defaultValue": 0.03
       },
+      {
+        "name": "Освещение (по площади), кв.м.",
+        "formula": "value * 0.2",
+        "description": "Исходя из использования светодиодных светильников потребляемой мощности 50Вт",
+        "defaultValue": 0.2
+      },
+      {
+        "name": "Кондиционер, шт.",
+        "formula": "count * 1.2",
+        "defaultValue": 1.2
+      },
+      {
+        "name": "Тепловой насос, шт.",
+        "formula": "count * 3.0",
+        "defaultValue": 3.0
+      },
+
       {
         "name": "Водяной насос, шт.",
         "formula": "count * 1.0",
@@ -45,11 +52,11 @@
         "formula": "count * 0.4",
         "defaultValue": 0.4
       },
+
       {
-        "name": "Освещение (по площади), кв.м.",
-        "formula": "value * 0.2",
-        "description": "Исходя из использования светодиодных светильников потребляемой мощности 50Вт",
-        "defaultValue": 0.2
+        "name": "Прочие электроприборы, шт.",
+        "formula": "count * 0.5",
+        "defaultValue": 0.0
       }
     ]
   },
@@ -104,7 +111,7 @@
       {
         "name": "Прочие электроприборы, шт.",
         "formula": "count * 0.5",
-        "defaultValue": 0.5
+        "defaultValue": 0.0
       }
     ]
   }
