@@ -2,6 +2,8 @@ import { create } from 'zustand'
 import config from "../config";
 import axios from "axios";
 
+const backServerTest = process.env.REACT_APP_BACK_SERVER_TEST
+
 const useServicesTest = create((set, get) => ({
     services: [],
     chain: [],
@@ -12,7 +14,7 @@ const useServicesTest = create((set, get) => ({
         set((state) => ({ services: [], isLoading: true, chain:[] }))
 
         try {
-            const res = await Promise.all([axios.get(`${config.backServerTest}/api/servicestest/${key}`), axios.get(`${config.backServerTest}/api/servicestest/item/${key}`), get().fetchServiceChain(key)])
+            const res = await Promise.all([axios.get(`${backServerTest}/api/servicestest/${key}`), axios.get(`${backServerTest}/api/servicestest/item/${key}`), get().fetchServiceChain(key)])
             // const res = await axios.get(`${config.backServer}/api/services/${key}`)
             //console.log(res)
             set((state) => {
@@ -30,7 +32,7 @@ const useServicesTest = create((set, get) => ({
     fetchServiceItem: async (key) => {
         set((state) => ({ serviceItem: null, isLoading: true, chain:[] }))
         try {
-            const res = await Promise.all([axios.get(`${config.backServerTest}/api/servicestest/item/${key}`), get().fetchServiceChain(key)])
+            const res = await Promise.all([axios.get(`${backServerTest}/api/servicestest/item/${key}`), get().fetchServiceChain(key)])
              console.log(res)
             set((state) => {
                 return {
