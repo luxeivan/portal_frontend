@@ -18,6 +18,7 @@ import ServiceItem from "./pages/ServiceItem/ServiceItem";
 import Page404 from "./pages/Page404";
 import Container from "./components/Container";
 import NewService from "./pages/Cabinet/NewService";
+import NewServicetest from "./pages/Cabinet/NewServicetest";
 import Profile from "./pages/Cabinet/Profile/Profile";
 import Subjects from "./pages/Cabinet/Subjects/Subjects";
 import Objects from "./pages/Cabinet/Objects/Objects";
@@ -32,6 +33,8 @@ import Archives from "./pages/Cabinet/Claims/Archives";
 import Law from "./pages/Documentation/Law";
 import Documentation from "./pages/Documentation/Documentation";
 import FormOneC from "./components/test/FormOneC";
+import ServiceItemTest from "./pages/ServicesItemTest/ServiceItemTest";
+import ServicesTest from "./pages/ServicesTest/ServicesTest";
 // import JumpGame from "./pages/Game/JumpGame";
 
 const { Content } = Layout;
@@ -133,6 +136,34 @@ export default function App() {
                       </Container>
                     }
                   />
+
+
+                  {/* ---Тестовая база-------------------------------------------------------------------- */}
+                  <Route
+                    path="/servicestest"
+                    element={
+                      // <Container>
+                      <ServicesTest />
+                      // </Container>
+                    }
+                    />
+                  <Route
+                    path="/servicestest/:level2"
+                    element={
+                      // <Container>
+                      <ServicesTest />
+                      // </Container>
+                    }
+                    />
+                  <Route
+                    path="/servicestest/:level2/:key"
+                    element={
+                      <Container>
+                        <ServiceItemTest />
+                      </Container>
+                    }
+                    />
+                    {/* ----------------------------------------------------------------------- */}
                   <Route path="/about" element={<About />} />
                   <Route path="/calc" element={<Calc />} />
                   <Route path="/contacts" element={<Contacts />} />
@@ -141,6 +172,7 @@ export default function App() {
 
 
                   <Route path="/cabinet/new-claim/:id" element={auth ? <Container><NewService /></Container> : <Navigate to="/" replace />} />
+                  <Route path="/cabinet/new-claimtest/:id" element={auth ? <Container><NewServicetest /></Container> : <Navigate to="/" replace />} />
                   <Route path="/cabinet/profile" element={auth ? <Profile /> : <Navigate to="/" replace />} />
                   <Route path="/cabinet/subjects" element={auth ? <Subjects /> : <Navigate to="/" replace />} />
                   <Route path="/cabinet/documents" element={auth ? <Documents /> : <Navigate to="/" replace />} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form, Input, InputNumber, message, Space, Col, Row, Slider } from 'antd';
+import { Button, Form, Input, InputNumber, message, Space, Col, Row, Slider, Flex } from 'antd';
 
 export default function SliderInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, depend = false, min = 0, max = 100, step = 1 }) {
     const form = Form.useFormInstance()
@@ -13,33 +13,33 @@ export default function SliderInput({ name = 'name', label = 'Label', disabled =
         setInputValue(value);
     };
     return (
-        <>
-            <Form.Item
-                name={name}
-                label={label}
-                rules={!(depend && !(depend.value == fieldDepends)) && [
-                    {
-                        required: required,
-                        message: 'Это поле обязательное'
-                    }
-                ]}
-                hidden={depend && !(depend.value == fieldDepends)}
-            >
-                <InputNumber
-                    min={min}
-                    max={max}
-                    step={step}
-                    value={inputValue}
-                    onChange={onChange}
-                    disabled={disabled}
-                />
-            </Form.Item>
-            <Row>
-                <Col span={4}>
-                </Col>
-                <Col span={12}>
-
+        <Flex align='center' gap={10}>
+            
+                    <Form.Item
+                        name={name}
+                        label={label}
+                        rules={[
+                            {
+                                required: required,
+                                message: 'Это поле обязательное'
+                            }
+                        ]}
+                        initialValue={min}
+                    >
+                        <InputNumber
+                            controls={false}
+                            precision={2}
+                            min={min}
+                            max={max}
+                            step={step}
+                            value={inputValue}
+                            onChange={onChange}
+                            disabled={disabled}
+                        />
+                    </Form.Item>
+                
                     <Slider
+                    style={{flex:1}}
                         min={min}
                         max={max}
                         onChange={onChange}
@@ -47,9 +47,7 @@ export default function SliderInput({ name = 'name', label = 'Label', disabled =
                         step={step}
                         disabled={disabled}
                     />
-                </Col>
-            </Row>
-
-        </>
+                
+        </Flex>
     )
 }
