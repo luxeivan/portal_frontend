@@ -1,48 +1,52 @@
 [
   {
-    "section": "Электроприборы инженерного обеспечения",
+    "section": "Электроприборы инженерного назначения",
     "items": [
       {
-        "name": "Теплые полы",
+        "name": "Теплые полы, кв.м.",
         "formula": "value * 0.03",
         "description": "Из расчета мощности 30 Вт/м²",
         "defaultValue": 1.2
       },
-      { "name": "Кондиционер", "formula": "count * 1.2", "defaultValue": 1.2 },
       {
-        "name": "Тепловой насос",
+        "name": "Кондиционер, шт.",
+        "formula": "count * 1.2",
+        "defaultValue": 1.2
+      },
+      {
+        "name": "Тепловой насос, шт.",
         "formula": "count * 3.0",
         "defaultValue": 3.0
       },
       {
-        "name": "Обогрев труб",
+        "name": "Обогрев труб, кв.м.",
         "formula": "value * 0.02",
         "description": "Из расчета мощности 20 Вт/метр трубы",
         "defaultValue": 0.02
       },
       {
-        "name": "Обогрев дорожек",
+        "name": "Обогрев дорожек, кв.м.",
         "formula": "value * 0.03",
         "defaultValue": 0.03
       },
       {
-        "name": "Водяной насос",
+        "name": "Водяной насос, шт.",
         "formula": "count * 1.0",
         "defaultValue": 1.0
       },
-      { "name": "Бойлер", "formula": "count * 1.8", "defaultValue": 1.8 },
+      { "name": "Бойлер, шт.", "formula": "count * 1.8", "defaultValue": 1.8 },
       {
-        "name": "Проточный водонагреватель",
+        "name": "Проточный водонагреватель, шт.",
         "formula": "count * 2.5",
         "defaultValue": 2.5
       },
       {
-        "name": "ИБП различных мощностей",
+        "name": "ИБП различных мощностей, шт.",
         "formula": "count * 0.4",
         "defaultValue": 0.4
       },
       {
-        "name": "Освещение (по площади)",
+        "name": "Освещение (по площади), кв.м.",
         "formula": "value * 0.2",
         "description": "Исходя из использования светодиодных светильников потребляемой мощности 50Вт",
         "defaultValue": 0.2
@@ -53,40 +57,52 @@
     "section": "Электроприборы бытового назначения",
     "items": [
       {
-        "name": "Варочная панель",
-        "formula": "count * 8.0",
-        "defaultValue": 8.0
-      },
-      { "name": "Духовой шкаф", "formula": "count * 4.0", "defaultValue": 4.0 },
-      { "name": "Печь СВЧ", "formula": "count * 1.5", "defaultValue": 1.5 },
-      {
-        "name": "Электрочайник",
-        "formula": "count * 1.7",
-        "defaultValue": 1.7
-      },
-      {
-        "name": "Посудомоечная машина",
-        "formula": "count * 1.7",
-        "defaultValue": 1.7
-      },
-      { "name": "Холодильник", "formula": "count * 0.3", "defaultValue": 0.3 },
-      {
-        "name": "Электрическая сауна",
+        "name": "Варочная панель, шт.",
         "formula": "count * 8.0",
         "defaultValue": 8.0
       },
       {
-        "name": "Стиральная машина",
-        "formula": "count * 1.0",
-        "defaultValue": 1.0
+        "name": "Духовой шкаф, шт.",
+        "formula": "count * 4.0",
+        "defaultValue": 4.0
       },
       {
-        "name": "Телевизор с диагональю более 40 дюймов",
+        "name": "Печь СВЧ, шт.",
+        "formula": "count * 1.5",
+        "defaultValue": 1.5
+      },
+      {
+        "name": "Электрочайник, шт.",
+        "formula": "count * 1.7",
+        "defaultValue": 1.7
+      },
+      {
+        "name": "Посудомоечная машина, шт.",
+        "formula": "count * 1.7",
+        "defaultValue": 1.7
+      },
+      {
+        "name": "Холодильник, шт.",
         "formula": "count * 0.3",
         "defaultValue": 0.3
       },
       {
-        "name": "Прочие (редко используемые) электроприборы",
+        "name": "Электрическая сауна, шт.",
+        "formula": "count * 8.0",
+        "defaultValue": 8.0
+      },
+      {
+        "name": "Стиральная машина, шт.",
+        "formula": "count * 1.0",
+        "defaultValue": 1.0
+      },
+      {
+        "name": "Телевизор с диагональю более 40 дюймов, шт.",
+        "formula": "count * 0.3",
+        "defaultValue": 0.3
+      },
+      {
+        "name": "Прочие электроприборы, шт.",
         "formula": "count * 0.5",
         "defaultValue": 0.5
       }

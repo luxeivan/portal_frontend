@@ -81,7 +81,7 @@ export default function Calc() {
         ),
     },
     {
-      title: "Паспортная мощность (кВт)",
+      title: "Средняя/удельная мощность (кВт)",
       dataIndex: "value",
       key: "value",
       render: (_, record) =>
