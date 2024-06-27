@@ -9,6 +9,7 @@ import SubjectInput from '../../components/FormComponents/SubjectInput'
 import CheckboxInput from '../../components/FormComponents/CheckboxInput'
 import SwitchInput from '../../components/test/formComponents/SwitchInput'
 import SelectInput from '../../components/test/formComponents/SelectInput'
+import axios from 'axios'
 
 
 const { Title, Paragraph, Text } = Typography
@@ -17,6 +18,7 @@ export default function NewServicetest() {
     const [formValue, setFormValue] = useState(false);
     const claim = useNewClaim(state => state.claim)
     const fetchClaim = useNewClaim(state => state.fetchClaim)
+    const createClaim = useNewClaim(state => state.createClaim)
     const { id } = useParams()
     const [form] = Form.useForm()
 
@@ -31,12 +33,16 @@ export default function NewServicetest() {
     };
     //console.log(claim)
     const onFinish = (values) => {
-        claim.fields = claim.fields.map(item => {
+        const dataString = JSON.stringify(claim)
+        const data = JSON.parse(dataString)
+        data.fields = claim.fields.map(item => {
             item.value = values[item.name] || undefined
             item.value_Type = item.in1C?.typeODATA || undefined
+            return item
         })
         console.log('value', values)
-        console.log('claim', claim)
+        console.log('claim', data)
+        createClaim(data)
 
         setFormValue(values)
         showDrawer()
