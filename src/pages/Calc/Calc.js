@@ -111,7 +111,7 @@ export default function Calc() {
   return (
     <>
       <AppHelmet title={"Калькулятор"} desc={"Калькулятор мощности"} />
-      <div>
+      <div className={styles.container}>
         <Title level={1}>Калькулятор мощности</Title>
         <Form form={form} onFinish={handleFinish} {...formItemLayout} labelWrap>
           <Table
@@ -119,6 +119,7 @@ export default function Calc() {
             dataSource={dataSource}
             pagination={false}
             locale={{ emptyText: "Нет данных" }}
+            className={styles.table}
           />
           <Form.Item>
             <Button
@@ -130,7 +131,7 @@ export default function Calc() {
             </Button>
           </Form.Item>
         </Form>
-        <div className={styles.totalPower}>
+        <div className={styles.totalPowerContainer}>
           <Title level={4}>
             Итого требуемая электрическая мощность (оценочно):{" "}
             <TweenOne animation={animation} style={{ fontSize: 24 }}>

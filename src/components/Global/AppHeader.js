@@ -38,8 +38,8 @@ const items = [
   },
   {
     key: 6,
-    label: `Тестовая форма с 1С`,
-    url: '/formonec'
+    label: `Каталог услуг(тест)`,
+    url: '/servicestest'
   },
 ];
 
