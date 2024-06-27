@@ -30,9 +30,15 @@ export default function NewServicetest() {
         setOpen(false);
     };
     //console.log(claim)
-    const onFinish = (value) => {
-        console.log(value)
-        setFormValue(value)
+    const onFinish = (values) => {
+        claim.fields = claim.fields.map(item => {
+            item.value = values[item.name] || undefined
+            item.value_Type = item.in1C?.typeODATA || undefined
+        })
+        console.log('value', values)
+        console.log('claim', claim)
+
+        setFormValue(values)
         showDrawer()
     }
     console.log(claim)
@@ -55,13 +61,13 @@ export default function NewServicetest() {
                                 if (item.component_Type.includes("ComponentsDivider"))
                                     return <DividerForm key={index} {...item.component_Expanded} />
                                 if (item.component_Type.includes("ComponentsTextInput"))
-                                    return <TextInput key={index} {...item.component_Expanded} {...item} name={item.name || item.in1C.Description + '_' + index} />
+                                    return <TextInput key={index} {...item.component_Expanded} {...item} />
                                 if (item.component_Type.includes("ComponentsSliderInput"))
-                                    return <SliderInput key={index} {...item.component_Expanded} {...item} name={item.name || item.in1C.Description + '_' + index} />
+                                    return <SliderInput key={index} {...item.component_Expanded} {...item} />
                                 if (item.component_Type.includes("ComponentsSwitchInput"))
-                                    return <SwitchInput key={index} {...item.component_Expanded} {...item} name={item.name || item.in1C.Description + '_' + index} />
+                                    return <SwitchInput key={index} {...item.component_Expanded} {...item} />
                                 if (item.component_Type.includes("ComponentsCatalogInput"))
-                                    return <SelectInput key={index} {...item.component_Expanded} {...item} name={item.name || item.in1C.Description + '_' + index} />
+                                    return <SelectInput key={index} {...item.component_Expanded} {...item} />
 
 
                             })}
