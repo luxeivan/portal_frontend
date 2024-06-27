@@ -49,7 +49,7 @@ const useServicesTest = create((set, get) => ({
         return new Promise(async (resolve, reject) => {
             let chain = []
             async function getService(key) {
-                const res = await axios.get(`${config.backServerTest}/api/servicestest/item/${key}`)
+                const res = await axios.get(`${backServerTest}/api/servicestest/item/${key}`)
                 // console.log(res.data)
                 chain.push({ Description: res.data.Description, Ref_Key: res.data.Ref_Key })
                 if (res.data.Parent_Key && res.data.Parent_Key !== "00000000-0000-0000-0000-000000000000") {
