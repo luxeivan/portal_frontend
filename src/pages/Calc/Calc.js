@@ -23,11 +23,13 @@ export default function Calc() {
   const [form] = Form.useForm();
   const [totalPower, setTotalPower] = useState(0);
   const [animation, setAnimation] = useState(null);
+  const [calculatedData, setCalculatedData] = useState({});
 
   // Функция, которая вызывается при отправке формы
   const handleFinish = (values) => {
     let total = 0;
     const tableData = [];
+    const newCalculatedData = {};
 
     // Перебираем каждый раздел и элемент в jsonData
     jsonData.forEach((section, sectionIndex) => {
@@ -35,11 +37,11 @@ export default function Calc() {
         const key = `${sectionIndex}-${itemIndex}`;
         const inputValue = parseFloat(values[key].value);
         const countValue = parseFloat(values[key].count) || 1;
-        const formula = item.formula;
         const usageCoefficient =
           section.section === "Электроприборы инженерного назначения"
             ? 0.6
             : 0.3;
+        const formula = item.formula;
 
         // Проверяем, что значение введено корректно и есть формула
         if (!isNaN(inputValue) && formula) {
@@ -47,15 +49,19 @@ export default function Calc() {
           const result = eval(
             formula.replace("count", countValue).replace("value", inputValue)
           );
-          total += result;
+          // Вычисляем потребляемую мощность
+          const consumedPower = inputValue * countValue * usageCoefficient; // Исправленный расчет потребляемой мощности
+          total += consumedPower;
           // Добавляем данные для таблицы
           tableData.push([
             item.name,
             inputValue.toFixed(2),
             countValue.toFixed(0),
             usageCoefficient.toFixed(2),
-            result.toFixed(2),
+            consumedPower.toFixed(2),
           ]);
+
+          newCalculatedData[key] = consumedPower.toFixed(2);
         }
       });
     });
@@ -68,6 +74,7 @@ export default function Calc() {
 
     // Устанавливаем итоговую мощность
     setTotalPower(total.toFixed(2));
+    setCalculatedData(newCalculatedData);
     // Генерируем PDF с результатами
     generatePDF(tableData, total);
   };
@@ -87,7 +94,7 @@ export default function Calc() {
                 "Мощность (кВт)",
                 "Количество",
                 "Коэффициент использования",
-                "Результат (кВт)",
+                "Потребляемая мощность (кВт)",
               ],
               ...tableData,
             ],
@@ -195,6 +202,18 @@ export default function Calc() {
       render: (text, record) =>
         !record.isSection && <span>{record.usageCoefficient.toFixed(1)}</span>,
     },
+    {
+      title: "Потребляемая мощность (кВт)",
+      dataIndex: "consumedPower",
+      key: "consumedPower",
+      render: (text, record) => {
+        if (record.isSection) {
+          return null;
+        }
+        const key = `${record.key}`;
+        return calculatedData[key] || null;
+      },
+    },
   ];
 
   return (
@@ -209,7 +228,6 @@ export default function Calc() {
             <Title level={2}>Калькулятор мощности ℹ️</Title>{" "}
           </span>
         </Tooltip>
-        {/* <Title level={2}>Калькулятор мощности</Title> */}
         <Paragraph style={{ textAlign: "justify", marginBottom: "20px" }}>
           Только для некоммерческого применения. Для заявителей - физических
           лиц. Результата расчёта является ориентировочным. Позволяет оценить
