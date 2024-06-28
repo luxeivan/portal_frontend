@@ -3,6 +3,8 @@ import AppHelmet from "../../components/Global/AppHelmet";
 import { Typography, InputNumber, Button, Form, Table, Tooltip } from "antd";
 import TweenOne from "rc-tween-one";
 import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import jsonData from "./powerData.json";
 import styles from "./Calc.module.css";
 import { formItemLayoutForCalc } from "../../components/configSizeForm";
@@ -20,6 +22,7 @@ export default function Calc() {
 
   const handleFinish = (values) => {
     let total = 0;
+    const tableData = [];
     jsonData.forEach((section, sectionIndex) => {
       section.items.forEach((item, itemIndex) => {
         const key = `${sectionIndex}-${itemIndex}`;
@@ -32,6 +35,12 @@ export default function Calc() {
             formula.replace("count", countValue).replace("value", inputValue)
           );
           total += result;
+          tableData.push({
+            name: item.name,
+            value: inputValue.toFixed(2),
+            count: countValue.toFixed(0),
+            result: result.toFixed(2)
+          });
         }
       });
     });
@@ -42,6 +51,21 @@ export default function Calc() {
     });
 
     setTotalPower(total.toFixed(2));
+    generatePDF(tableData, total);
+  };
+
+  const generatePDF = (tableData, total) => {
+    const doc = new jsPDF();
+
+    doc.text("Калькулятор мощности", 14, 20);
+    doc.autoTable({
+      head: [['Название', 'Мощность (кВт)', 'Количество', 'Результат (кВт)']],
+      body: tableData.map(item => [item.name, item.value, item.count, item.result]),
+      startY: 30
+    });
+    doc.text(`Итого требуемая электрическая мощность (оценочно): ${total} кВт`, 14, doc.autoTable.previous.finalY + 10);
+
+    doc.save("calculation.pdf");
   };
 
   const dataSource = jsonData.reduce((acc, section, sectionIndex) => {
