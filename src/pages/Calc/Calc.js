@@ -36,6 +36,8 @@ export default function Calc() {
         const inputValue = parseFloat(values[key].value);
         const countValue = parseFloat(values[key].count) || 1;
         const formula = item.formula;
+        const usageCoefficient =
+          section.section === "Электроприборы инженерного назначения" ? 0.6 : 0.3;
 
         // Проверяем, что значение введено корректно и есть формула
         if (!isNaN(inputValue) && formula) {
@@ -49,6 +51,7 @@ export default function Calc() {
             item.name,
             inputValue.toFixed(2),
             countValue.toFixed(0),
+            usageCoefficient.toFixed(2),
             result.toFixed(2),
           ]);
         }
@@ -75,9 +78,9 @@ export default function Calc() {
         {
           table: {
             headerRows: 1,
-            widths: ["*", "auto", "auto", "auto"],
+            widths: ["*", "auto", "auto", "auto", "auto"],
             body: [
-              ["Название", "Мощность (кВт)", "Количество", "Результат (кВт)"],
+              ["Название", "Мощность (кВт)", "Количество", "Коэффициент использования", "Результат (кВт)"],
               ...tableData,
             ],
           },
@@ -112,6 +115,7 @@ export default function Calc() {
         name: item.name,
         value: item.defaultValue,
         count: 1,
+        usageCoefficient: section.section === "Электроприборы инженерного назначения" ? 0.6 : 0.3,
         formula: item.formula,
         description: item.description,
       }));
@@ -172,6 +176,12 @@ export default function Calc() {
             <InputNumber min={0} step={1} stringMode />
           </Form.Item>
         ),
+    },
+    {
+      title: "Коэффициент использования",
+      dataIndex: "usageCoefficient",
+      key: "usageCoefficient",
+      render: (text, record) => !record.isSection && <span>{record.usageCoefficient.toFixed(1)}</span>,
     },
   ];
 
