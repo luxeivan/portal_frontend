@@ -37,7 +37,9 @@ export default function Calc() {
         const countValue = parseFloat(values[key].count) || 1;
         const formula = item.formula;
         const usageCoefficient =
-          section.section === "Электроприборы инженерного назначения" ? 0.6 : 0.3;
+          section.section === "Электроприборы инженерного назначения"
+            ? 0.6
+            : 0.3;
 
         // Проверяем, что значение введено корректно и есть формула
         if (!isNaN(inputValue) && formula) {
@@ -80,7 +82,13 @@ export default function Calc() {
             headerRows: 1,
             widths: ["*", "auto", "auto", "auto", "auto"],
             body: [
-              ["Название", "Мощность (кВт)", "Количество", "Коэффициент использования", "Результат (кВт)"],
+              [
+                "Название",
+                "Мощность (кВт)",
+                "Количество",
+                "Коэффициент использования",
+                "Результат (кВт)",
+              ],
               ...tableData,
             ],
           },
@@ -115,7 +123,10 @@ export default function Calc() {
         name: item.name,
         value: item.defaultValue,
         count: 1,
-        usageCoefficient: section.section === "Электроприборы инженерного назначения" ? 0.6 : 0.3,
+        usageCoefficient:
+          section.section === "Электроприборы инженерного назначения"
+            ? 0.6
+            : 0.3,
         formula: item.formula,
         description: item.description,
       }));
@@ -181,7 +192,8 @@ export default function Calc() {
       title: "Коэффициент использования",
       dataIndex: "usageCoefficient",
       key: "usageCoefficient",
-      render: (text, record) => !record.isSection && <span>{record.usageCoefficient.toFixed(1)}</span>,
+      render: (text, record) =>
+        !record.isSection && <span>{record.usageCoefficient.toFixed(1)}</span>,
     },
   ];
 
@@ -189,7 +201,15 @@ export default function Calc() {
     <>
       <AppHelmet title={"Калькулятор"} desc={"Калькулятор мощности"} />
       <div className={styles.container}>
-        <Title level={2}>Калькулятор мощности</Title>
+        <Tooltip
+          title="Предлагаемый    расчет выполнен для подключения к электрическим сетям по III категории надежности. Для электроприемников третьей категории электроснабжение может выполняться от одного источника питания при условии, что перерывы электроснабжения, необходимые для ремонта или замены поврежденного элемента системы электроснабжения, не превышают 1 суток.
+Электроприемники второй категории в нормальных режимах должны обеспечиваться электроэнергией от двух независимых взаимно резервирующих источников питания. Для электроприемников второй категории при нарушении электроснабжения от одного из источников питания допустимы перерывы электроснабжения на время, необходимое для включения резервного питания действиями дежурного персонала или выездной оперативной бригад"
+        >
+          <span>
+            <Title level={2}>Калькулятор мощности ℹ️</Title>{" "}
+          </span>
+        </Tooltip>
+        {/* <Title level={2}>Калькулятор мощности</Title> */}
         <Paragraph style={{ textAlign: "justify", marginBottom: "20px" }}>
           Только для некоммерческого применения. Для заявителей - физических
           лиц. Результата расчёта является ориентировочным. Позволяет оценить
