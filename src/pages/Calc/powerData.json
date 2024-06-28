@@ -3,52 +3,49 @@
     "section": "Электроприборы инженерного назначения",
     "items": [
       {
-        "name": "Теплые полы, кв.м.",
-        "formula": "value * 0.03",
-        "description": "Из расчета мощности 30 Вт/м²",
-        "defaultValue": 1.2
-      },
-      {
-        "name": "Обогрев труб, кв.м.",
-        "formula": "value * 0.02",
-        "description": "Из расчета мощности 20 Вт/метр трубы",
-        "defaultValue": 0.02
-      },
-      {
-        "name": "Обогрев дорожек, кв.м.",
+        "name": "Теплые полы (кв.метры)",
         "formula": "value * 0.03",
         "defaultValue": 0.03
       },
       {
-        "name": "Освещение (по площади), кв.м.",
-        "formula": "value * 0.2",
-        "description": "Исходя из использования светодиодных светильников потребляемой мощности 50Вт",
-        "defaultValue": 0.2
+        "name": "Обогрев труб (погонный метры)",
+        "formula": "value * 0.02",
+        "defaultValue": 0.02
       },
       {
-        "name": "Кондиционер, шт.",
+        "name": "Обогрев дорожек (квадратные метры)",
+        "formula": "value * 0.03",
+        "defaultValue": 0.03
+      },
+      {
+        "name": "Освещение (по площади)",
+        "formula": "value * 0.2",
+        "defaultValue": 0.005
+      },
+      {
+        "name": "Кондиционер",
         "formula": "count * 1.2",
         "defaultValue": 1.2
       },
       {
-        "name": "Тепловой насос, шт.",
+        "name": "Тепловой насос",
         "formula": "count * 3.0",
         "defaultValue": 3.0
       },
 
       {
-        "name": "Водяной насос, шт.",
+        "name": "Водяной насос",
         "formula": "count * 1.0",
         "defaultValue": 1.0
       },
-      { "name": "Бойлер, шт.", "formula": "count * 1.8", "defaultValue": 1.8 },
+      { "name": "Бойлер", "formula": "count * 1.8", "defaultValue": 1.8 },
       {
-        "name": "Проточный водонагреватель, шт.",
+        "name": "Проточный водонагреватель",
         "formula": "count * 2.5",
         "defaultValue": 2.5
       },
       {
-        "name": "ИБП различных мощностей, шт.",
+        "name": "ИБП различного назначения",
         "formula": "count * 0.4",
         "defaultValue": 0.4
       },
@@ -64,49 +61,69 @@
     "section": "Электроприборы бытового назначения",
     "items": [
       {
-        "name": "Варочная панель, шт.",
+        "name": "Варочная панель",
         "formula": "count * 8.0",
         "defaultValue": 8.0
       },
       {
-        "name": "Духовой шкаф, шт.",
+        "name": "Духовой шкаф",
         "formula": "count * 4.0",
-        "defaultValue": 4.0
-      },
-      {
-        "name": "Печь СВЧ, шт.",
-        "formula": "count * 1.5",
         "defaultValue": 1.5
       },
       {
-        "name": "Электрочайник, шт.",
+        "name": "Печь СВЧ",
+        "formula": "count * 1.5",
+        "defaultValue": 0.9
+      },
+      {
+        "name": "Электрочайник",
         "formula": "count * 1.7",
         "defaultValue": 1.7
       },
       {
-        "name": "Посудомоечная машина, шт.",
+        "name": "Посудомоечная машина",
         "formula": "count * 1.7",
-        "defaultValue": 1.7
+        "defaultValue": 1.0
       },
       {
-        "name": "Холодильник, шт.",
+        "name": "Холодильник",
         "formula": "count * 0.3",
         "defaultValue": 0.3
       },
       {
-        "name": "Электрическая сауна, шт.",
+        "name": "Электрическая сауна",
         "formula": "count * 8.0",
         "defaultValue": 8.0
       },
       {
-        "name": "Стиральная машина, шт.",
+        "name": "Стиральная машина",
         "formula": "count * 1.0",
         "defaultValue": 1.0
       },
       {
-        "name": "Телевизор с диагональю более 40 дюймов, шт.",
+        "name": "Телевизоры",
         "formula": "count * 0.3",
-        "defaultValue": 0.3
+        "defaultValue": 0.2
+      },
+      {
+        "name": "Сушильный шкаф",
+        "formula": "count * 0.3",
+        "defaultValue": 1.5
+      },
+      {
+        "name": "Пылесос",
+        "formula": "count * 0.3",
+        "defaultValue": 1.2
+      },
+      {
+        "name": "Утюг",
+        "formula": "count * 0.3",
+        "defaultValue": 1.5
+      },
+      {
+        "name": "Обогреватель",
+        "formula": "count * 0.3",
+        "defaultValue": 1.0
       },
       {
         "name": "Прочие электроприборы, шт.",
