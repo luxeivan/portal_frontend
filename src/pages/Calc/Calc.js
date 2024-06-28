@@ -103,16 +103,18 @@ export default function Calc() {
     pdfMake.createPdf(docDefinition).download("Калькулятор мощности.pdf");
   };
 
-  // Подготавливаем данные для таблицы
+  // Подготавливаем данные для таблицы и сортируем элементы в каждом разделе по алфавиту
   const dataSource = jsonData.reduce((acc, section, sectionIndex) => {
-    const sectionItems = section.items.map((item, itemIndex) => ({
-      key: `${sectionIndex}-${itemIndex}`,
-      name: item.name,
-      value: item.defaultValue,
-      count: 1,
-      formula: item.formula,
-      description: item.description,
-    }));
+    const sectionItems = section.items
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((item, itemIndex) => ({
+        key: `${sectionIndex}-${itemIndex}`,
+        name: item.name,
+        value: item.defaultValue,
+        count: 1,
+        formula: item.formula,
+        description: item.description,
+      }));
     return [
       ...acc,
       {
