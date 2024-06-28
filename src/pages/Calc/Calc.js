@@ -15,7 +15,7 @@ TweenOne.plugins.push(Children);
 // Инициализируем шрифты для pdfMake
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 const formItemLayout = formItemLayoutForCalc;
 
@@ -179,7 +179,20 @@ export default function Calc() {
     <>
       <AppHelmet title={"Калькулятор"} desc={"Калькулятор мощности"} />
       <div className={styles.container}>
-        <Title level={1}>Калькулятор мощности</Title>
+        <Title level={2}>Калькулятор мощности</Title>
+        <Paragraph style={{ textAlign: "justify", marginBottom: "20px" }}>
+          Только для некоммерческого применения. Для заявителей - физических
+          лиц. Результата расчёта является ориентировочным. Позволяет оценить
+          мощность электрооборудования индивидуального домохозяйства (объекта с
+          бытовым характером нагрузки), необходимую для технологического
+          присоединения к электросети АО "Мособлэнерго". Для получения
+          результата указать основные параметры домохозяйства и количество
+          имеющихся электроприборов. Предложенное значение паспортной мощности
+          электроприбора является средней величиной. Для уточнения можно
+          установить свою величину паспортной мощности электроприбора. Расчет
+          производится с применением коэффициентов использования
+          электроприборов.
+        </Paragraph>
         <Form form={form} onFinish={handleFinish} {...formItemLayout} labelWrap>
           <Table
             columns={renderColumns}
