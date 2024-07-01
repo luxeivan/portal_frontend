@@ -1,6 +1,14 @@
 import React from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Typography, InputNumber, Button, Form, Table, Tooltip } from "antd";
+import {
+  Typography,
+  InputNumber,
+  Button,
+  Form,
+  Table,
+  Tooltip,
+  Select,
+} from "antd";
 import TweenOne from "rc-tween-one";
 import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
 import jsonData from "./powerData.json";
@@ -12,11 +20,13 @@ import { formItemLayoutForCalc } from "../../components/configSizeForm";
 TweenOne.plugins.push(Children);
 
 const { Title, Paragraph } = Typography;
+const { Option } = Select;
 
 const formItemLayout = formItemLayoutForCalc;
 
 // Текст для верхней подсказки
-const topTooltipText = `Калькулятор мощности позволяет оценить совокупную мощность электрооборудования индивидуального домохозяйства (объекта с бытовым характером нагрузки), необходимую для технологического присоединения к электросети АО "Мособлэнерго". Для заявителей - физических лиц. Только для некоммерческого применения.`;
+const topTooltipText = `Калькулятор мощности позволяет оценить совокупную мощность электрооборудования индивидуального домохозяйства (объекта с бытовым характером нагрузки), необходимую для технологического присоединения к электросети АО "Мособлэнерго". Для заявителей - физических лиц. 
+Только для некоммерческого применения.`;
 
 // Текст для дополнительной информации, который будет отображаться после расчета
 const additionalInfoText = `Предлагаемый расчет выполнен для подключения к электрическим сетям
@@ -58,6 +68,7 @@ export default function Calc() {
         name: item.name,
         value: item.defaultValue,
         count: 1,
+        unit: "Штук",
         usageCoefficient:
           section.section === "Электроприборы инженерного назначения"
             ? 0.6
@@ -129,6 +140,28 @@ export default function Calc() {
     },
     {
       title: (
+        <Tooltip title="Единица измерения">
+          <span>Единица измерения ℹ️</span>
+        </Tooltip>
+      ),
+      dataIndex: "unit",
+      key: "unit",
+      render: (_, record) =>
+        !record.isSection && (
+          <Form.Item
+            name={[record.key, "unit"]}
+            initialValue={record.unit || "Штук"}
+            noStyle
+          >
+            <Select dropdownMatchSelectWidth={false}>
+              <Select.Option value="Штук">Штук</Select.Option>
+              <Select.Option value="Метров">Метров</Select.Option>
+            </Select>
+          </Form.Item>
+        ),
+    },
+    {
+      title: (
         <Tooltip title="Коэффициент одновременного использования электроприборов">
           <span>Коэффициент использования ℹ️</span>
         </Tooltip>
@@ -139,10 +172,10 @@ export default function Calc() {
         !record.isSection && (
           <Form.Item
             name={[record.key, "usageCoefficient"]}
-            initialValue={record.usageCoefficient || 0.6}
+            initialValue={record.usageCoefficient || 0.3}
             noStyle
           >
-            <InputNumber min={0} step={0.01} max={1} stringMode />
+            <InputNumber min={0} max={1} step={0.01} stringMode />
           </Form.Item>
         ),
     },
