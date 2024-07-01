@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
-import config from "../config";
 import useAuth from "./useAuth";
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 
 const useRegistration = create((set, get) => ({
   registrationStep: 0,
@@ -25,7 +25,7 @@ const useRegistration = create((set, get) => ({
   submitPhone: async (phone) => {
     try {
       const response = await axios.post(
-        `${config.backServer}/api/registration/phone`,
+        `${backServer}/api/registration/phone`,
         { phone },
         { withCredentials: true }
       );
@@ -46,7 +46,7 @@ const useRegistration = create((set, get) => ({
   submitPhoneCode: async (phoneCode) => {
     try {
       const response = await axios.post(
-        `${config.backServer}/api/registration/phonecode`,
+        `${backServer}/api/registration/phonecode`,
         { phoneCode },
         { withCredentials: true }
       );
@@ -67,7 +67,7 @@ const useRegistration = create((set, get) => ({
   submitEmail: async (email) => {
     try {
       const response = await axios.post(
-        `${config.backServer}/api/registration/email`,
+        `${backServer}/api/registration/email`,
         { email },
         { withCredentials: true }
       );
@@ -88,7 +88,7 @@ const useRegistration = create((set, get) => ({
   submitEmailCode: async (emailCode) => {
     try {
       const response = await axios.post(
-        `${config.backServer}/api/registration/emailcode`,
+        `${backServer}/api/registration/emailcode`,
         { emailCode },
         { withCredentials: true }
       );
@@ -114,7 +114,7 @@ const useRegistration = create((set, get) => ({
 
     try {
       const registrationResponse = await axios.post(
-        `${config.backServer}/api/registration/newuser`,
+        `${backServer}/api/registration/newuser`,
         { email: get().email, phone: get().phone, password },
         { withCredentials: true }
       );

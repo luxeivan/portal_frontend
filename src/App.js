@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { ConfigProvider, Flex, Layout, theme } from "antd";
 import "./App.css";
-import { Route, BrowserRouter, Routes, redirect, Navigate } from "react-router-dom";
+import { Route, BrowserRouter, Routes, redirect, Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./pages/Main";
 import AppHeader from "./components/Global/AppHeader";
 import AppFooter from "./components/Global/AppFooter";
@@ -41,7 +41,7 @@ const { Content } = Layout;
 
 export default function App() {
   const { darkMode, checkDarkMode } = useGlobal();
-  const { auth, checkJWT } = useAuth();
+  const { auth, checkJWT, redirection } = useAuth();
   const { toggleModal, logout } = useAuth();
 
   //Надо проверить как работает(должен срабатывать на просроченный JWT
@@ -70,7 +70,7 @@ export default function App() {
   useEffect(() => {
     useAuth.getState().checkJWT();
   }, []);
-  
+
 
   const { colorPrimary } = theme.useToken().token;
 
@@ -81,6 +81,24 @@ export default function App() {
     }
     return null;
   };
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Main />,
+      loader: ({ request }) => {
+        console.log(request)
+      },
+      children: [
+        {
+          path: "servicestest",
+          element: <ServicesTest />,
+          loader: ({ request }) => {
+            console.log(request)
+          },
+        },
+      ],
+    },
+  ]);
 
   return (
     <ConfigProvider
@@ -146,7 +164,7 @@ export default function App() {
                       <ServicesTest />
                       // </Container>
                     }
-                    />
+                  />
                   <Route
                     path="/servicestest/:level2"
                     element={
@@ -154,7 +172,7 @@ export default function App() {
                       <ServicesTest />
                       // </Container>
                     }
-                    />
+                  />
                   <Route
                     path="/servicestest/:level2/:key"
                     element={
@@ -162,26 +180,29 @@ export default function App() {
                         <ServiceItemTest />
                       </Container>
                     }
-                    />
-                    {/* ----------------------------------------------------------------------- */}
+                  />
+                  {/* ----------------------------------------------------------------------- */}
                   <Route path="/about" element={<About />} />
                   <Route path="/calc" element={<Calc />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/docs" element={<Documentation />} />
                   {/* ----------------------------------------- */}
 
-
-                  <Route path="/cabinet/new-claim/:id" element={auth ? <Container><NewService /></Container> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/new-claimtest/:id" element={auth ? <Container><NewServicetest /></Container> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/profile" element={auth ? <Profile /> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/subjects" element={auth ? <Subjects /> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/documents" element={auth ? <Documents /> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/objects" element={auth ? <Objects /> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/drafts" element={auth ? <Drafts /> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/checking" element={auth ? <Checking /> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/claimers/" element={auth ? <Claimers /> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/claimers/:id" element={auth ? <Claims /> : <Navigate to="/" replace />} />
-                  <Route path="/cabinet/archives/" element={auth ? <Archives /> : <Navigate to="/" replace />} />
+                  <Route path="cabinet"
+                    element={!auth && <Navigate to="/" replace />}
+                  >
+                    <Route path="new-claim/:id" element={<Container><NewService /></Container>} />
+                    <Route path="new-claimtest/:id" element={<Container><NewServicetest /></Container>} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="subjects" element={<Subjects />} />
+                    <Route path="documents" element={<Documents />} />
+                    <Route path="objects" element={<Objects />} />
+                    <Route path="drafts" element={<Drafts />} />
+                    <Route path="checking" element={<Checking />} />
+                    <Route path="claimers" element={<Claimers />} />
+                    <Route path="claimers/:id" element={<Claims />} />
+                    <Route path="archives" element={<Archives />} />
+                  </Route>
 
                   {/* ----------------------------------------- */}
                   <Route path="/puzzle-game" element={<PuzzleGame />} />
@@ -193,7 +214,7 @@ export default function App() {
           </Layout>
           <AppFooter />
         </BrowserRouter>
-      </Layout>
-    </ConfigProvider>
+      </Layout >
+    </ConfigProvider >
   );
 }

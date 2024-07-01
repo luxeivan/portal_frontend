@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import config from "../../config";
-
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 const useProfile = create((set, get) => ({
     profile: {},
     isLoadingProfile: false,
@@ -10,7 +9,7 @@ const useProfile = create((set, get) => ({
             set({ isLoadingProfile: true });
             const token = localStorage.getItem("jwt");
             const response = await axios.get(
-                `${config.backServer}/api/cabinet/profile`,
+                `${backServer}/api/cabinet/profile`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

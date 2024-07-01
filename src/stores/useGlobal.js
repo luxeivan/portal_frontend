@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
 import { message } from "antd";
-import config from "../config";
+
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 
 const useGlobal = create((set) => ({
   darkMode: false,
@@ -30,7 +31,7 @@ const useGlobal = create((set) => ({
 
     try {
       const response = await axios.post(
-        `${config.backServer}/api/cabinet/upload-file`,
+        `${backServer}/api/cabinet/upload-file`,
         formData,
         {
           headers: {

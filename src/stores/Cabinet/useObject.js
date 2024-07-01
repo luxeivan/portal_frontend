@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import config from "../../config";
-
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 const useObjects = create((set, get) => ({
   objects: [],
   object: null,
@@ -44,7 +43,7 @@ const useObjects = create((set, get) => ({
       set({ isLoadingObjects: true });
       const token = localStorage.getItem("jwt");
       const response = await axios.get(
-        `${config.backServer}/api/cabinet/objects`,
+        `${backServer}/api/cabinet/objects`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -67,7 +66,7 @@ const useObjects = create((set, get) => ({
         set({ isLoadingObjectItem: true });
         const token = localStorage.getItem("jwt");
         const response = await axios.get(
-          `${config.backServer}/api/cabinet/objects/${id}`,
+          `${backServer}/api/cabinet/objects/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -90,7 +89,7 @@ const useObjects = create((set, get) => ({
   submitNewObject: async (formData) => {
     try {
       const response = await axios.post(
-        `${config.backServer}/api/cabinet/objects`,
+        `${backServer}/api/cabinet/objects`,
         formData,
         {
           headers: {
@@ -118,7 +117,7 @@ const useObjects = create((set, get) => ({
       set({ isLoadingObjectItem: true });
       const token = localStorage.getItem("jwt");
       const response = await axios.delete(
-        `${config.backServer}/api/cabinet/objects/${id}`,
+        `${backServer}/api/cabinet/objects/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -142,7 +141,7 @@ const useObjects = create((set, get) => ({
   //     set({ isLoadingObjectItem: true });
   //     const token = localStorage.getItem("jwt");
   //     const response = await axios.put(
-  //       `${config.backServer}/api/cabinet/objects/${id}`,
+  //       `${backServer}/api/cabinet/objects/${id}`,
   //       data,
   //       {
   //         headers: {
@@ -170,7 +169,7 @@ const useObjects = create((set, get) => ({
       set({ isLoadingObjectItem: true });
       const token = localStorage.getItem("jwt");
       const response = await axios.put(
-        `${config.backServer}/api/cabinet/objects/${id}`,
+        `${backServer}/api/cabinet/objects/${id}`,
         data,
         {
           headers: {
@@ -243,7 +242,7 @@ export default useObjects;
 //       set({ isLoadingObjects: true });
 //       const token = localStorage.getItem("jwt");
 //       const response = await axios.get(
-//         `${config.backServer}/api/cabinet/objects`,
+//         `${backServer}/api/cabinet/objects`,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
@@ -266,7 +265,7 @@ export default useObjects;
 //         set({ isLoadingObjectItem: true });
 //         const token = localStorage.getItem("jwt");
 //         const response = await axios.get(
-//           `${config.backServer}/api/cabinet/objects/${id}`,
+//           `${backServer}/api/cabinet/objects/${id}`,
 //           {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
@@ -289,7 +288,7 @@ export default useObjects;
 //   submitNewObject: async (formData) => {
 //     try {
 //       const response = await axios.post(
-//         `${config.backServer}/api/cabinet/objects`,
+//         `${backServer}/api/cabinet/objects`,
 //         formData,
 //         {
 //           headers: {
@@ -317,7 +316,7 @@ export default useObjects;
 //       set({ isLoadingObjectItem: true });
 //       const token = localStorage.getItem("jwt");
 //       const response = await axios.delete(
-//         `${config.backServer}/api/cabinet/objects/${id}`,
+//         `${backServer}/api/cabinet/objects/${id}`,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
@@ -341,7 +340,7 @@ export default useObjects;
 //       set({ isLoadingObjectItem: true });
 //       const token = localStorage.getItem("jwt");
 //       const response = await axios.put(
-//         `${config.backServer}/api/cabinet/objects/${id}`,
+//         `${backServer}/api/cabinet/objects/${id}`,
 //         data,
 //         {
 //           headers: {

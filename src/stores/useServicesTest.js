@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import config from "../config";
 import axios from "axios";
 
 const backServerTest = process.env.REACT_APP_BACK_SERVER_TEST

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import config from "../../config";
 import { Link } from "react-router-dom";
 import pdf from "../../img/docs/pdf.svg";
 import doc from "../../img/docs/doc.svg";
@@ -17,11 +16,12 @@ const type = {
   xls,
   rtf,
 };
+const siteMosoblServer = process.env.REACT_APP_BACK_SITE_MOSOBLENERGO_SERVER
 
 export default function RegulatoryLegalActs() {
     const [docs, setDocs] = useState([])
     useEffect(() => {
-      axios.get(`${config.siteMosoblServer}/api/tp-normativno-pravovye-akty?populate=*`)
+      axios.get(`${siteMosoblServer}/api/tp-normativno-pravovye-akty?populate=*`)
         .then(response => {
           if (response.data) {
             // console.log(response.data.data.attributes.docs.data)
@@ -40,7 +40,7 @@ export default function RegulatoryLegalActs() {
             docs.map((item, index) =>
               <a
                 className={styles.docLine}
-                href={`${config.siteMosoblServer}${item.attributes.url}`}
+                href={`${siteMosoblServer}${item.attributes.url}`}
                 download=""
                 rel="noopener noreferrer"
                 target="_blank"

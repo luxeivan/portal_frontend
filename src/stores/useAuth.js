@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import config from "../config";
-
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 const useAuth = create((set) => {
   return {
     auth: false,
@@ -12,6 +11,7 @@ const useAuth = create((set) => {
     password: "",
     isCodeRequested: false,
     authTimer: 0,
+    redirection:"",
 
     toggleAuth: (value) => {
       set((state) => ({
@@ -49,7 +49,7 @@ const useAuth = create((set) => {
     login: async (email, password) => {
       try {
         const response = await axios.post(
-          `${config.backServer}/api/auth/login`,
+          `${backServer}/api/auth/login`,
           { email, password },
           { withCredentials: true }
         );
@@ -76,7 +76,7 @@ const useAuth = create((set) => {
     verifyPincode: async (pincode) => {
       try {
         const response = await axios.post(
-          `${config.backServer}/api/auth/logincode`,
+          `${backServer}/api/auth/logincode`,
           { pincode },
           { withCredentials: true }
         );
@@ -130,7 +130,7 @@ const useAuth = create((set) => {
       //console.log(validJwt)
       if (localStorage.getItem("jwt")) {
         try {
-          const res = await axios.post(`${config.backServer}/api/auth/checkjwt`, {
+          const res = await axios.post(`${backServer}/api/auth/checkjwt`, {
             jwt: localStorage.getItem("jwt"),
           });
           validJwt = res.data;
