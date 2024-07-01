@@ -71,7 +71,7 @@ export default function Calc() {
     },
     {
       title: (
-        <Tooltip title="Средняя/удельная мощность (кВт)">
+        <Tooltip title="Средняя удельная мощность электроприбора">
           <span>Мощность (кВт) ℹ️</span>
         </Tooltip>
       ),
@@ -89,7 +89,11 @@ export default function Calc() {
         ),
     },
     {
-      title: "Количество",
+      title: (
+        <Tooltip title="Суммарное колличество электроприборов по типу объектов">
+          <span>Количество (кВт) ℹ️</span>
+        </Tooltip>
+      ),
       dataIndex: "count",
       key: "count",
       render: (_, record) =>
@@ -100,7 +104,11 @@ export default function Calc() {
         ),
     },
     {
-      title: "Коэффициент использования",
+      title: (
+        <Tooltip title="Коэфициент одновременного использования электроприборов">
+          <span>Коэффициент использования ℹ️</span>
+        </Tooltip>
+      ),
       dataIndex: "usageCoefficient",
       key: "usageCoefficient",
       render: (text, record) =>
