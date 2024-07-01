@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, AutoComplete, Typography } from "antd";
 import axios from "axios";
-import config from "../../config";
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 
 export default function InnInput({ name, type, read, value }) {
   const form = Form.useFormInstance();
@@ -13,8 +13,8 @@ export default function InnInput({ name, type, read, value }) {
     }
     const url =
       type === "INDIVIDUAL"
-        ? `${config.backServer}/api/cabinet/get-inn/INDIVIDUAL?inn=${searchText}`
-        : `${config.backServer}/api/cabinet/get-inn/LEGAL?inn=${searchText}`;
+        ? `${backServer}/api/cabinet/get-inn/INDIVIDUAL?inn=${searchText}`
+        : `${backServer}/api/cabinet/get-inn/LEGAL?inn=${searchText}`;
     try {
       const response = await axios.get(url, {
         headers: {

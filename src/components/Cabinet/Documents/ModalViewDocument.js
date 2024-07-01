@@ -2,10 +2,9 @@ import { Flex, Modal, Spin, Descriptions, Image, Card, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
 import axios from "axios";
-import config from "../../../config";
 import pdf from "../../../img/docs/pdf.svg";
 import ModalUpdateDocument from "./ModalUpdateDocument";
-
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 export default function ModalViewDocument() {
   const openModalView = useDocuments((state) => state.openModalView);
   const setOpenModalView = useDocuments((state) => state.setOpenModalView);
@@ -21,7 +20,7 @@ export default function ModalViewDocument() {
   const getFile = async (relativePath) => {
     try {
       const response = await axios.get(
-        `${config.backServer}/api/cabinet/get-file/${relativePath}`,
+        `${backServer}/api/cabinet/get-file/${relativePath}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,

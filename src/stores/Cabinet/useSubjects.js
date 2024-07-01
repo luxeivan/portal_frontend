@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import config from "../../config";
-
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 const useSubjects = create((set, get) => ({
   subjects: [],
   subject: null,
@@ -57,7 +56,7 @@ const useSubjects = create((set, get) => ({
       set({ isLoadingSubjects: true });
       const token = localStorage.getItem("jwt");
       const response = await axios.get(
-        `${config.backServer}/api/cabinet/subjects`,
+        `${backServer}/api/cabinet/subjects`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -81,7 +80,7 @@ const useSubjects = create((set, get) => ({
         set({ isLoadingSubjectItem: true });
         const token = localStorage.getItem("jwt");
         const response = await axios.get(
-          `${config.backServer}/api/cabinet/subjects/${id}`,
+          `${backServer}/api/cabinet/subjects/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -105,7 +104,7 @@ const useSubjects = create((set, get) => ({
   submitNewSubject: async (formData) => {
     try {
       const response = await axios.post(
-        `${config.backServer}/api/cabinet/subjects`,
+        `${backServer}/api/cabinet/subjects`,
         formData,
         {
           headers: {
@@ -135,7 +134,7 @@ const useSubjects = create((set, get) => ({
       set({ isLoadingSubjectItem: true });
       const token = localStorage.getItem("jwt");
       const response = await axios.delete(
-        `${config.backServer}/api/cabinet/subjects/${id}`,
+        `${backServer}/api/cabinet/subjects/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

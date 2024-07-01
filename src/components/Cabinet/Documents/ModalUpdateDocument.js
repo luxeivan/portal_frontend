@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Select, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
-import config from "../../../config";
 import axios from "axios";
 
 const { Option } = Select;

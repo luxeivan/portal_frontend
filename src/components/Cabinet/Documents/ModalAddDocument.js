@@ -11,12 +11,12 @@ import {
   Spin,
   Progress,
 } from "antd";
-import config from "../../../config";
 import axios from "axios";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
 import { UploadOutlined } from "@ant-design/icons";
 import UploaderInput from "../../FormComponents/UploaderInput";
 const { Option } = Select;
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 
 export default function ModalAddDocument() {
   const openModalAdd = useDocuments((state) => state.openModalAdd);
@@ -61,7 +61,7 @@ export default function ModalAddDocument() {
       }, 200); 
 
       const response = await axios.post(
-        `${config.backServer}/api/cabinet/documents`,
+        `${backServer}/api/cabinet/documents`,
         formData,
         {
           headers: {

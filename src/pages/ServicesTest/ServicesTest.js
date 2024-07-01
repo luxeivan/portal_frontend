@@ -64,9 +64,9 @@ export default function ServicesTest() {
         {!isLoading &&
           <>
             <Title level={1} className={styles.title}>
-              {serviceItem ? serviceItem.Description : 'Каталог услуг'}
+              {serviceItem ? serviceItem?.Description : 'Каталог услуг'}
             </Title>
-            {services.length > 0 &&
+            {services?.length > 0 &&
               <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
                 {services.sort((a, b) => a.Order - b.Order).map((item, index) => (
                   <Link
@@ -93,7 +93,7 @@ export default function ServicesTest() {
                 ))}
               </Flex>
             }
-            {services.length < 1 &&
+            {services?.length < 1 &&
               <Title level={2} className={styles.title} style={{ color: "#999" }}>
                 Услуг в данной категории не найдено
               </Title>

@@ -4,9 +4,8 @@ import TextArea from "antd/es/input/TextArea";
 import TextInput from "../TextInput";
 import axios from "axios";
 import { debounce } from "lodash";
-import config from "../../../config";
 import manualInputFields from "./ManualInputFields.json";
-
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 export default function AddressInput({
   
   read,
@@ -49,7 +48,7 @@ export default function AddressInput({
     }
     try {
       const response = await axios.get(
-        `${config.backServer}/api/cabinet/get-fias`,
+        `${backServer}/api/cabinet/get-fias`,
         {
           params: { searchString: searchText },
           headers: {

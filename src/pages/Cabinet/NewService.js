@@ -2,9 +2,10 @@ import { Form, Typography, Button, Drawer, Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useNewClaim from '../../stores/Cabinet/useNewService'
-import TextInput from '../../components/test/formComponents/TextInput'
-import SliderInput from '../../components/test/formComponents/SliderInput'
-import DividerForm from '../../components/test/formComponents/DividerForm'
+import TextInput from '../../components/FormComponentsNew/TextInput'
+import SliderInput from '../../components/FormComponentsNew/SliderInput'
+import SelectInput from '../../components/FormComponentsNew/SelectInput'
+import DividerForm from '../../components/FormComponentsNew/DividerForm'
 import SubjectInput from '../../components/FormComponents/SubjectInput'
 import CheckboxInput from '../../components/FormComponents/CheckboxInput'
 
@@ -45,6 +46,7 @@ export default function NewService() {
                         form={form}
                         layout="vertical"
                         onFinish={onFinish}
+                        style={{maxWidth:800,margin:"0 auto"}}
                     >
                         {claim.Fields?.map((item, index) => {
                             console.log(item)
@@ -54,7 +56,8 @@ export default function NewService() {
                                 return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key}/>
                             if (item.component_Type.includes("ComponentsSliderInput"))
                                 return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key}/>
-                           
+                            if (item.component_Type.includes("ComponentsLinkInput"))
+                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key}/>                           
 
                         })}
                         <Form.Item>
