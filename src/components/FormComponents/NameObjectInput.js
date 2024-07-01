@@ -2,14 +2,14 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Form, AutoComplete, Typography } from "antd";
 import { debounce } from "lodash";
 import axios from "axios";
-import config from "../../config";
+const apiServer = process.env.REACT_APP_BACK_API_SERVER
 
 export default function NameObjectInput({ read, value, name, displayName }) {
   const [options, setOptions] = useState([]);
   const [listName, setListName] = useState([]);
   const [arrayName, setArrayName] = useState([]);
   useEffect(() => {
-    axios.get(`${config.apiServer}/api/naimenovanie-obektovs`).then((res) => {
+    axios.get(`${apiServer}/api/naimenovanie-obektovs`).then((res) => {
       if (res.data.data) {
         // console.log(res.data)
         setArrayName(

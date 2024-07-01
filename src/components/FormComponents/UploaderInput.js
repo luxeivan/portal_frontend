@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import { Form, Upload, message, theme, Image, Divider, Flex } from "antd";
 import axios from "axios";
-import config from "../../config";
 import iconPdf from '../../img/pdf.svg'
-
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 const { Dragger } = Upload;
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -33,7 +32,7 @@ export default function UploaderInput({ read, edit, value, depends, required = f
   // ----------------------------------------
   const getFile = async (relativePath) => {
     const fileblob = await axios.get(
-      `${config.backServer}/api/cabinet/get-file/${relativePath}`,
+      `${backServer}/api/cabinet/get-file/${relativePath}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
@@ -108,7 +107,7 @@ export default function UploaderInput({ read, edit, value, depends, required = f
       formData.append("file", file);
       const token = localStorage.getItem("jwt");
       axios
-        .post(`${config.backServer}/api/cabinet/upload-file`, formData, {
+        .post(`${backServer}/api/cabinet/upload-file`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,

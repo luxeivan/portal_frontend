@@ -6,12 +6,11 @@ import TextArea from "antd/es/input/TextArea";
 import SelectInput from "./SelectInput";
 import TextInput from "./TextInput";
 import axios from "axios";
-import config from "../../config";
 import moment from "moment";
 import useSubjects from "../../stores/Cabinet/useSubjects";
 import { formItemLayout } from "../../components/configSizeForm";
 import StrapiRichText from "../StrapiRichText";
-
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 const documentOptions = [
   { value: "Паспорт гражданина РФ", label: "Паспорт гражданина РФ" },
   { value: "Иной документ", label: "Иной документ" },
@@ -77,7 +76,7 @@ export default function ConfirmationDocument({ read, edit, value, name, }) {
     // }
     if (kodPodrazdelenia && kodPodrazdelenia.length === 7) {
       //console.log('Заполнено')
-      axios.get(`${config.backServer}/api/cabinet/get-fms`, {
+      axios.get(`${backServer}/api/cabinet/get-fms`, {
         params: { searchString: kodPodrazdelenia },
         headers: {
           "Content-Type": "application/json",
