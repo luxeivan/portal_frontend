@@ -155,7 +155,9 @@ export default function Calc() {
           >
             <Select dropdownMatchSelectWidth={false}>
               <Select.Option value="Штук">Штук</Select.Option>
-              <Select.Option value="Метров">Метров</Select.Option>
+              <Select.Option value="Квадратные метры">Квадратные метры</Select.Option>
+              <Select.Option value="Погонные метры">Погонные метры</Select.Option>
+              <Select.Option value="По площади">По площади</Select.Option>
             </Select>
           </Form.Item>
         ),
