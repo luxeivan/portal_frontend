@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
 import { Typography, InputNumber, Button, Form, Table, Tooltip } from "antd";
 import TweenOne from "rc-tween-one";
@@ -18,6 +18,12 @@ const formItemLayout = formItemLayoutForCalc;
 export default function Calc() {
   const [form] = Form.useForm();
   const { totalPower, animation, calculatedData, handleFinish } = useCalc();
+  const [showInfo, setShowInfo] = useState(true); // Состояние для управления видимостью информации
+
+  const onFinish = (values) => {
+    handleFinish(values);
+    setShowInfo(false); // Скрыть Tooltip и показать текст информации после нажатия кнопки "Рассчитать"
+  };
 
   // Подготавливаем данные для таблицы и сортируем элементы в каждом разделе по алфавиту
   const dataSource = jsonData.reduce((acc, section, sectionIndex) => {
@@ -118,14 +124,18 @@ export default function Calc() {
     <>
       <AppHelmet title={"Калькулятор"} desc={"Калькулятор мощности"} />
       <div className={styles.container}>
-        <Tooltip
-          title="Предлагаемый    расчет выполнен для подключения к электрическим сетям по III категории надежности. Для электроприемников третьей категории электроснабжение может выполняться от одного источника питания при условии, что перерывы электроснабжения, необходимые для ремонта или замены поврежденного элемента системы электроснабжения, не превышают 1 суток.
+        {showInfo ? (
+          <Tooltip
+            title="Предлагаемый расчет выполнен для подключения к электрическим сетям по III категории надежности. Для электроприемников третьей категории электроснабжение может выполняться от одного источника питания при условии, что перерывы электроснабжения, необходимые для ремонта или замены поврежденного элемента системы электроснабжения, не превышают 1 суток.
 Электроприемники второй категории в нормальных режимах должны обеспечиваться электроэнергией от двух независимых взаимно резервирующих источников питания. Для электроприемников второй категории при нарушении электроснабжения от одного из источников питания допустимы перерывы электроснабжения на время, необходимое для включения резервного питания действиями дежурного персонала или выездной оперативной бригад"
-        >
-          <span>
-            <Title level={2}>Калькулятор мощности ℹ️</Title>{" "}
-          </span>
-        </Tooltip>
+          >
+            <span>
+              <Title level={2}>Калькулятор мощности ℹ️</Title>
+            </span>
+          </Tooltip>
+        ) : (
+          <Title level={2}>Калькулятор мощности</Title>
+        )}
         <Paragraph style={{ textAlign: "justify", marginBottom: "20px" }}>
           Только для некоммерческого применения. Для заявителей - физических
           лиц. Результата расчёта является ориентировочным. Позволяет оценить
@@ -139,7 +149,7 @@ export default function Calc() {
           производится с применением коэффициентов использования
           электроприборов.
         </Paragraph>
-        <Form form={form} onFinish={handleFinish} {...formItemLayout} labelWrap>
+        <Form form={form} onFinish={onFinish} {...formItemLayout} labelWrap>
           <Table
             columns={renderColumns}
             dataSource={dataSource}
@@ -165,27 +175,39 @@ export default function Calc() {
             </TweenOne>
           </Title>
         </div>
+        {!showInfo && (
+          <Paragraph style={{ textAlign: "justify", marginTop: "20px" }}>
+            Предлагаемый расчет выполнен для подключения к электрическим сетям
+            по III категории надежности. Для электроприемников третьей категории
+            электроснабжение может выполняться от одного источника питания при
+            условии, что перерывы электроснабжения, необходимые для ремонта или
+            замены поврежденного элемента системы электроснабжения, не превышают
+            1 суток. Электроприемники второй категории в нормальных режимах
+            должны обеспечиваться электроэнергией от двух независимых взаимно
+            резервирующих источников питания. Для электроприемников второй
+            категории при нарушении электроснабжения от одного из источников
+            питания допустимы перерывы электроснабжения на время, необходимое
+            для включения резервного питания действиями дежурного персонала или
+            выездной оперативной бригад.
+          </Paragraph>
+        )}
       </div>
     </>
   );
 }
 
-// import React, { useState } from "react";
+// import React from "react";
 // import AppHelmet from "../../components/Global/AppHelmet";
 // import { Typography, InputNumber, Button, Form, Table, Tooltip } from "antd";
 // import TweenOne from "rc-tween-one";
 // import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
-// import pdfMake from "pdfmake/build/pdfmake";
-// import pdfFonts from "pdfmake/build/vfs_fonts";
 // import jsonData from "./powerData.json";
+// import useCalc from "../../stores/useCalc";
 // import styles from "./Calc.module.css";
 // import { formItemLayoutForCalc } from "../../components/configSizeForm";
 
 // // Добавляем плагин для анимации чисел
 // TweenOne.plugins.push(Children);
-
-// // Инициализируем шрифты для pdfMake
-// pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 // const { Title, Paragraph } = Typography;
 
@@ -193,105 +215,7 @@ export default function Calc() {
 
 // export default function Calc() {
 //   const [form] = Form.useForm();
-//   const [totalPower, setTotalPower] = useState(0);
-//   const [animation, setAnimation] = useState(null);
-//   const [calculatedData, setCalculatedData] = useState({});
-
-//   // Функция, которая вызывается при отправке формы
-//   const handleFinish = (values) => {
-//     let total = 0;
-//     const tableData = [];
-//     const newCalculatedData = {};
-
-//     // Перебираем каждый раздел и элемент в jsonData
-//     jsonData.forEach((section, sectionIndex) => {
-//       section.items.forEach((item, itemIndex) => {
-//         const key = `${sectionIndex}-${itemIndex}`;
-//         const inputValue = parseFloat(values[key].value);
-//         const countValue = parseFloat(values[key].count) || 1;
-//         const usageCoefficient =
-//           section.section === "Электроприборы инженерного назначения"
-//             ? 0.6
-//             : 0.3;
-//         const formula = item.formula;
-
-//         // Проверяем, что значение введено корректно и есть формула
-//         if (!isNaN(inputValue) && formula) {
-//           // Вычисляем результат по формуле
-//           const result = eval(
-//             formula.replace("count", countValue).replace("value", inputValue)
-//           );
-//           // Вычисляем потребляемую мощность
-//           const consumedPower = inputValue * countValue * usageCoefficient; // Исправленный расчет потребляемой мощности
-//           total += consumedPower;
-//           // Добавляем данные для таблицы
-//           tableData.push([
-//             item.name,
-//             inputValue.toFixed(2),
-//             countValue.toFixed(0),
-//             usageCoefficient.toFixed(2),
-//             consumedPower.toFixed(2),
-//           ]);
-
-//           newCalculatedData[key] = consumedPower.toFixed(2);
-//         }
-//       });
-//     });
-
-//     // Настраиваем анимацию для отображения итоговой мощности
-//     setAnimation({
-//       Children: { value: total, floatLength: 2, formatMoney: false },
-//       duration: 3000,
-//     });
-
-//     // Устанавливаем итоговую мощность
-//     setTotalPower(total.toFixed(2));
-//     setCalculatedData(newCalculatedData);
-//     // Генерируем PDF с результатами
-//     generatePDF(tableData, total);
-//   };
-
-//   // Функция для генерации PDF
-//   const generatePDF = (tableData, total) => {
-//     const docDefinition = {
-//       content: [
-//         { text: "Калькулятор мощности", style: "header" },
-//         {
-//           table: {
-//             headerRows: 1,
-//             widths: ["*", "auto", "auto", "auto", "auto"],
-//             body: [
-//               [
-//                 "Название",
-//                 "Мощность (кВт)",
-//                 "Количество",
-//                 "Коэффициент использования",
-//                 "Потребляемая мощность (кВт)",
-//               ],
-//               ...tableData,
-//             ],
-//           },
-//         },
-//         {
-//           text: `Итого требуемая электрическая мощность (оценочно): ${total} кВт`,
-//           style: "total",
-//         },
-//       ],
-//       styles: {
-//         header: {
-//           fontSize: 18,
-//           bold: true,
-//           margin: [0, 0, 0, 10],
-//         },
-//         total: {
-//           margin: [0, 10, 0, 0],
-//         },
-//       },
-//     };
-
-//     // Скачиваем PDF
-//     pdfMake.createPdf(docDefinition).download("Калькулятор мощности.pdf");
-//   };
+//   const { totalPower, animation, calculatedData, handleFinish } = useCalc();
 
 //   // Подготавливаем данные для таблицы и сортируем элементы в каждом разделе по алфавиту
 //   const dataSource = jsonData.reduce((acc, section, sectionIndex) => {
