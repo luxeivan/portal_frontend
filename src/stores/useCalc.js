@@ -30,7 +30,9 @@ export default function useCalc() {
         const key = `${sectionIndex}-${itemIndex}`;
         const inputValue = parseFloat(values[key].value);
         const countValue = parseFloat(values[key].count) || 1;
-        const usageCoefficient = usageCoefficients[section.section];
+        const usageCoefficient =
+          parseFloat(values[key].usageCoefficient) ||
+          usageCoefficients[section.section];
         const formula = item.formula;
 
         // Проверяем, что значение введено корректно и есть формула
@@ -50,7 +52,10 @@ export default function useCalc() {
             usageCoefficient.toFixed(2),
             consumedPower.toFixed(2),
           ]);
-          newCalculatedData[key] = consumedPower.toFixed(2);
+          newCalculatedData[key] = {
+            consumedPower: consumedPower.toFixed(2),
+            usageCoefficient: usageCoefficient.toFixed(2),
+          };
         }
       });
     });

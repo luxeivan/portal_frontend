@@ -135,8 +135,16 @@ export default function Calc() {
       ),
       dataIndex: "usageCoefficient",
       key: "usageCoefficient",
-      render: (text, record) =>
-        !record.isSection && <span>{record.usageCoefficient.toFixed(1)}</span>,
+      render: (_, record) =>
+        !record.isSection && (
+          <Form.Item
+            name={[record.key, "usageCoefficient"]}
+            initialValue={record.usageCoefficient || 0.6}
+            noStyle
+          >
+            <InputNumber min={0} step={0.01} max={1} stringMode />
+          </Form.Item>
+        ),
     },
     {
       title: "Потребляемая мощность (кВт)",
@@ -147,7 +155,7 @@ export default function Calc() {
           return null;
         }
         const key = `${record.key}`;
-        return calculatedData[key] || null;
+        return calculatedData[key]?.consumedPower || null;
       },
     },
   ];
