@@ -48,12 +48,6 @@
         "name": "ИБП различного назначения",
         "formula": "count * 0.4",
         "defaultValue": 0.4
-      },
-
-      {
-        "name": "Прочие электроприборы, шт.",
-        "formula": "count * 0.5",
-        "defaultValue": 0.0
       }
     ]
   },
@@ -124,11 +118,6 @@
         "name": "Обогреватель",
         "formula": "count * 0.3",
         "defaultValue": 1.0
-      },
-      {
-        "name": "Прочие электроприборы, шт.",
-        "formula": "count * 0.5",
-        "defaultValue": 0.0
       }
     ]
   }
