@@ -70,8 +70,8 @@ export default function useCalc() {
     setTotalPower(total.toFixed(2));
     setCalculatedData(newCalculatedData);
     setShowAdditionalInfo(true); // Показываем дополнительную информацию после расчета
-    // Генерируем PDF с результатами
-    generatePDF(tableData, total);
+    // Генерируем PDF с результатами (ПОКА ЗАБЛОКИРОВАЛ!!!!)
+    // generatePDF(tableData, total);
   };
 
   // Функция для генерации PDF
