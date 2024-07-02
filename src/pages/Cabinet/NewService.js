@@ -34,6 +34,7 @@ export default function NewService() {
         setFormValue(value)
         showDrawer()
     }
+    console.log(claim)
     return (
         <div>
             {claim &&
@@ -46,18 +47,18 @@ export default function NewService() {
                         form={form}
                         layout="vertical"
                         onFinish={onFinish}
-                        style={{maxWidth:800,margin:"0 auto"}}
+                        style={{ maxWidth: 800, margin: "0 auto" }}
                     >
-                        {claim.Fields?.map((item, index) => {
-                            console.log(item)
+                        {claim.Fields?.sort((a, b) => a.lineNum - b.lineNum).map((item, index) => {
+                            // console.log(item)
                             if (item.component_Type.includes("ComponentsDivider"))
-                                return <DividerForm key={index} {...item.component_Expanded} label={item.label}/>
+                                return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
                             if (item.component_Type.includes("ComponentsTextInput"))
-                                return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key}/>
+                                return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key} />
                             if (item.component_Type.includes("ComponentsSliderInput"))
-                                return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key}/>
+                                return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key} />
                             if (item.component_Type.includes("ComponentsLinkInput"))
-                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key}/>                           
+                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key} dependOf={item.dependName.Ref_Key} howDepend={item.dependСondition}/>
 
                         })}
                         <Form.Item>
