@@ -35,14 +35,18 @@ import Documentation from "./pages/Documentation/Documentation";
 import FormOneC from "./components/test/FormOneC";
 import ServiceItemTest from "./pages/ServicesItemTest/ServiceItemTest";
 import ServicesTest from "./pages/ServicesTest/ServicesTest";
+import PrivateRoute from "./pages/PrivateRouter";
+import Login from "./pages/Login";
 // import JumpGame from "./pages/Game/JumpGame";
 
 const { Content } = Layout;
 
 export default function App() {
   const { darkMode, checkDarkMode } = useGlobal();
-  const { auth, checkJWT, redirection } = useAuth();
-  const { toggleModal, logout } = useAuth();
+  const auth = useAuth(state => state.auth);
+  const checkJWT = useAuth(state => state.checkJWT);
+  const toggleModal = useAuth(state => state.toggleModal);
+  const logout = useAuth(state => state.logout);
 
   //Надо проверить как работает(должен срабатывать на просроченный JWT
   useEffect(() => {
@@ -124,9 +128,7 @@ export default function App() {
           <Layout>
             <Flex>
               {auth && <CabinetMenu />}
-              <Content
-                style={{ padding: "0 24px", minHeight: "calc(100vh - 120px)" }}
-              >
+              <Content style={{ padding: "0 24px", minHeight: "calc(100vh - 120px)" }}              >
                 <Routes>
                   <Route path="/" element={<Main />} />
                   <Route path="/formonec" element={<FormOneC />} />
@@ -186,11 +188,16 @@ export default function App() {
                   <Route path="/calc" element={<Calc />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/docs" element={<Documentation />} />
+                  <Route path="/login" element={<Login />} />
                   {/* ----------------------------------------- */}
 
                   <Route path="cabinet"
-                     element={!checkJWT() && <Navigate to="/" replace />}
+                    // action={() => {
+                    //   console.log(123123)
+                    // }}
+                    element={<PrivateRoute />}
                   >
+
                     <Route path="new-claim/:id" element={<Container><NewService /></Container>} />
                     <Route path="new-claimtest/:id" element={<Container><NewServicetest /></Container>} />
                     <Route path="profile" element={<Profile />} />
@@ -202,6 +209,7 @@ export default function App() {
                     <Route path="claimers" element={<Claimers />} />
                     <Route path="claimers/:id" element={<Claims />} />
                     <Route path="archives" element={<Archives />} />
+
                   </Route>
 
                   {/* ----------------------------------------- */}

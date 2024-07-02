@@ -4,7 +4,7 @@ import { Button, Form, Input, InputNumber, message, Space } from 'antd';
 export default function TextInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'Пример', required = false, dependOf = false, howDepend = false }) {
     const form = Form.useFormInstance()
     const fieldDepends = Form.useWatch(dependOf, form)
-    // console.log(howDepend)
+    // console.log(name)
     const formElement = (
         <Form.Item
             name={name}
