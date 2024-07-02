@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import {
-  Typography,
-  InputNumber,
-  Button,
-  Form,
-  Table,
-  Tooltip,
-  Select,
-} from "antd";
+import { Typography, Button, Form, Tooltip } from "antd";
 import TweenOne from "rc-tween-one";
 import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
 import jsonData from "./powerData.json";
 import useCalc from "../../stores/useCalc";
 import styles from "./Calc.module.css";
 import { formItemLayoutForCalc } from "../../components/configSizeForm";
+import CalcTable from "./CalcTable";
 
 // Добавляем плагин для анимации чисел
 TweenOne.plugins.push(Children);
 
 const { Title, Paragraph } = Typography;
-const { Option } = Select;
 
 const formItemLayout = formItemLayoutForCalc;
 
@@ -59,6 +51,7 @@ export default function Calc() {
     calculatedData,
     handleFinish,
     showAdditionalInfo,
+    generatePDF,
   } = useCalc();
 
   useEffect(() => {
@@ -98,136 +91,6 @@ export default function Calc() {
     ];
   }, []);
 
-  // Настраиваем столбцы для таблицы
-  const renderColumns = [
-    {
-      title: "Название электрооборудования",
-      dataIndex: "name",
-      key: "name",
-      render: (text, record) =>
-        record.isSection ? (
-          <strong className={styles.sectionHeader}>{record.section}</strong>
-        ) : (
-          <Tooltip title={record.description || ""}>
-            <span>
-              {text} {record.description && <span>ℹ️</span>}
-            </span>
-          </Tooltip>
-        ),
-    },
-    {
-      title: (
-        <Tooltip title="Усредненная паспортная мощность электроприбора или удельная мощность на единицу измерения">
-          <span>Мощность (кВт) ℹ️</span>
-        </Tooltip>
-      ),
-      dataIndex: "value",
-      key: "value",
-      render: (_, record) =>
-        !record.isSection && (
-          <Form.Item
-            name={[record.key, "value"]}
-            initialValue={record.value || record.defaultValue}
-            noStyle
-          >
-            <InputNumber
-              min={0}
-              step={0.01}
-              stringMode
-              onChange={onValuesChange}
-            />
-          </Form.Item>
-        ),
-    },
-    {
-      title: (
-        <Tooltip title="Суммарное количество электроприборов по типу объекта">
-          <span>Количествоℹ️</span>
-        </Tooltip>
-      ),
-      dataIndex: "count",
-      key: "count",
-      render: (_, record) =>
-        !record.isSection && (
-          <Form.Item name={[record.key, "count"]} initialValue={1} noStyle>
-            <InputNumber
-              min={0}
-              step={1}
-              stringMode
-              onChange={onValuesChange}
-            />
-          </Form.Item>
-        ),
-    },
-    {
-      title: (
-        <Tooltip title="Единица измерения">
-          <span>Единица измерения ℹ️</span>
-        </Tooltip>
-      ),
-      dataIndex: "unit",
-      key: "unit",
-      render: (_, record) =>
-        !record.isSection &&
-        (record.fixedUnit ? (
-          <span>{record.unit}</span>
-        ) : (
-          <Form.Item
-            name={[record.key, "unit"]}
-            initialValue={record.unit || "Штук"}
-            noStyle
-          >
-            <Select dropdownMatchSelectWidth={false} onChange={onValuesChange}>
-              <Select.Option value="Штук">Штук</Select.Option>
-              <Select.Option value="Квадратные метры">
-                Квадратные метры
-              </Select.Option>
-              <Select.Option value="Погонные метры">
-                Погонные метры
-              </Select.Option>
-            </Select>
-          </Form.Item>
-        )),
-    },
-    {
-      title: (
-        <Tooltip title="Коэффициент одновременного использования электроприборов">
-          <span>Коэффициент использования ℹ️</span>
-        </Tooltip>
-      ),
-      dataIndex: "usageCoefficient",
-      key: "usageCoefficient",
-      render: (_, record) =>
-        !record.isSection && (
-          <Form.Item
-            name={[record.key, "usageCoefficient"]}
-            initialValue={record.usageCoefficient || 0.3}
-            noStyle
-          >
-            <InputNumber
-              min={0}
-              max={1}
-              step={0.01}
-              stringMode
-              onChange={onValuesChange}
-            />
-          </Form.Item>
-        ),
-    },
-    {
-      title: "Требуемая мощность (кВт)",
-      dataIndex: "consumedPower",
-      key: "consumedPower",
-      render: (text, record) => {
-        if (record.isSection) {
-          return null;
-        }
-        const key = `${record.key}`;
-        return calculatedData[key]?.consumedPower || null;
-      },
-    },
-  ];
-
   const handleFinishWithLock = (values) => {
     setIsCalculateButtonDisabled(true);
     handleFinish(values);
@@ -252,14 +115,12 @@ export default function Calc() {
           {...formItemLayout}
           labelWrap
         >
-          <Table
-            columns={renderColumns}
+          <CalcTable
             dataSource={dataSource}
-            pagination={false}
-            locale={{ emptyText: "Нет данных" }}
-            className={styles.table}
+            calculatedData={calculatedData}
+            onValuesChange={onValuesChange}
           />
-          <Form.Item>
+          <Form.Item className={styles.buttonContainer}>
             <Button
               type="primary"
               htmlType="submit"
@@ -268,6 +129,16 @@ export default function Calc() {
             >
               Рассчитать
             </Button>
+
+            {showAdditionalInfo && (
+              <Button
+                type="default"
+                onClick={() => generatePDF(dataSource, totalPower)}
+                className={styles.downloadButton}
+              >
+                Выгрузить PDF
+              </Button>
+            )}
           </Form.Item>
         </Form>
         <div className={styles.totalPowerContainer}>
@@ -284,16 +155,6 @@ export default function Calc() {
           <Paragraph style={{ textAlign: "justify", marginTop: "20px" }}>
             {additionalInfoText}
           </Paragraph>
-
-          {/* {showAdditionalInfo && (
-            <Button
-              type="primary"
-              onClick={() => generatePDF()}
-              className={styles.downloadButton}
-            >
-              Выгрузить PDF!
-            </Button>
-          )} */}
         </div>
       </div>
       <div className={styles.mobileMessage}>

@@ -45,6 +45,15 @@
   white-space: nowrap;
 }
 
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.downloadButton{
+  margin-top: 5%;
+}
+
 @media (max-width: 768px) {
   .container {
     display: none;

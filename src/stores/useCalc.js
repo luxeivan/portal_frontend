@@ -74,28 +74,48 @@ export default function useCalc() {
   };
 
   // Функция для генерации PDF
-  const generatePDF = (tableData, total) => {
+  const generatePDF = (dataSource, totalPower) => {
+    const tableData = dataSource
+      .filter((item) => !item.isSection)
+      .map((item) => [
+        item.name,
+        item.value.toFixed(2),
+        item.count.toFixed(0),
+        item.unit,
+        item.usageCoefficient.toFixed(2),
+        calculatedData[item.key]?.consumedPower || "0.00",
+      ]);
+
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString();
+    const formattedTime = now.toLocaleTimeString();
+
     const docDefinition = {
       content: [
-        { text: "Калькулятор мощности", style: "header" },
+        { text: 'Калькулятор мощности АО "Мособлэнерго"', style: "header" },
+        {
+          text: `Дата и время расчета: ${formattedDate} ${formattedTime}`,
+          style: "subheader",
+        },
         {
           table: {
             headerRows: 1,
-            widths: ["*", "auto", "auto", "auto", "auto"],
+            widths: ["*", "auto", "auto", "auto", "auto", "auto"],
             body: [
               [
                 "Название",
                 "Мощность (кВт)",
                 "Количество",
+                "Единица измерения",
                 "Коэффициент использования",
-                "Потребляемая мощность (кВт)",
+                "Требуемая мощность (кВт)",
               ],
               ...tableData,
             ],
           },
         },
         {
-          text: `Итого требуемая электрическая мощность (оценочно): ${total} кВт`,
+          text: `Итого требуемая электрическая мощность (оценочно): ${totalPower}`,
           style: "total",
         },
       ],
@@ -103,6 +123,10 @@ export default function useCalc() {
         header: {
           fontSize: 18,
           bold: true,
+          margin: [0, 0, 0, 10],
+        },
+        subheader: {
+          fontSize: 14,
           margin: [0, 0, 0, 10],
         },
         total: {
@@ -115,11 +139,22 @@ export default function useCalc() {
     pdfMake.createPdf(docDefinition).download("Калькулятор мощности.pdf");
   };
 
+  // Включаем функцию generatePDF в возвращаемый объект
   return {
     totalPower,
     animation,
     calculatedData,
     handleFinish,
     showAdditionalInfo,
+    generatePDF, // Возвращаем функцию generatePDF
+  };
+
+  return {
+    totalPower,
+    animation,
+    calculatedData,
+    handleFinish,
+    showAdditionalInfo,
+    generatePDF, // Возвращаем функцию generatePDF
   };
 }
