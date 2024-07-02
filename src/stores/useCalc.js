@@ -29,14 +29,14 @@ export default function useCalc() {
       section.items.forEach((item, itemIndex) => {
         const key = `${sectionIndex}-${itemIndex}`;
         const inputValue = parseFloat(values[key].value);
-        const countValue = parseFloat(values[key].count) || 1;
+        const countValue = parseFloat(values[key].count) || 0; // Убедитесь, что значение 0 по умолчанию
         const usageCoefficient =
           parseFloat(values[key].usageCoefficient) ||
           usageCoefficients[section.section];
         const formula = item.formula;
 
-        // Проверяем, что значение введено корректно и есть формула
-        if (!isNaN(inputValue) && formula) {
+        // Проверяем, что значение введено корректно, есть формула и countValue больше 0
+        if (!isNaN(inputValue) && formula && countValue > 0) {
           // Вычисляем результат по формуле
           const result = eval(
             formula.replace("count", countValue).replace("value", inputValue)
@@ -67,13 +67,10 @@ export default function useCalc() {
     });
 
     // Устанавливаем итоговую мощность
-    // setTotalPower(total.toFixed(2));
     setTotalPower(`${total.toFixed(2)} кВт`);
 
     setCalculatedData(newCalculatedData);
     setShowAdditionalInfo(true); // Показываем дополнительную информацию после расчета
-    // Генерируем PDF с результатами (ПОКА ЗАБЛОКИРОВАЛ!!!!)
-    // generatePDF(tableData, total);
   };
 
   // Функция для генерации PDF
