@@ -25,11 +25,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .table {
   width: 100%;
-  max-width: 800px;
+  table-layout: auto;
 }
 
 .totalPowerContainer {

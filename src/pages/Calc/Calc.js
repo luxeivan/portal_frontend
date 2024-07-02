@@ -78,13 +78,14 @@ export default function Calc() {
         name: item.name,
         value: item.defaultValue,
         count: 1,
-        unit: "Штук",
+        unit: item.unit || "Штук", // Добавляем unit из JSON или дефолтное значение
         usageCoefficient:
           section.section === "Электроприборы инженерного назначения"
             ? 0.6
             : 0.3,
         formula: item.formula,
         description: item.description,
+        fixedUnit: !!item.unit, // Устанавливаем флаг, если unit задан в JSON
       }));
     return [
       ...acc,
@@ -167,7 +168,10 @@ export default function Calc() {
       dataIndex: "unit",
       key: "unit",
       render: (_, record) =>
-        !record.isSection && (
+        !record.isSection &&
+        (record.fixedUnit ? (
+          <span>{record.unit}</span>
+        ) : (
           <Form.Item
             name={[record.key, "unit"]}
             initialValue={record.unit || "Штук"}
@@ -184,7 +188,7 @@ export default function Calc() {
               <Select.Option value="По площади">По площади</Select.Option>
             </Select>
           </Form.Item>
-        ),
+        )),
     },
     {
       title: (
@@ -277,7 +281,6 @@ export default function Calc() {
               <span>{totalPower !== "0" ? totalPower : "0"}</span>
             </TweenOne>
           </Title>
-
           {showAdditionalInfo && (
             <Paragraph style={{ textAlign: "justify", marginTop: "20px" }}>
               {additionalInfoText}
