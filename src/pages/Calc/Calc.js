@@ -142,7 +142,7 @@ export default function Calc() {
     {
       title: (
         <Tooltip title="Суммарное количество электроприборов по типу объекта">
-          <span>Количество (кВт) ℹ️</span>
+          <span>Количествоℹ️</span>
         </Tooltip>
       ),
       dataIndex: "count",
@@ -185,7 +185,7 @@ export default function Calc() {
               <Select.Option value="Погонные метры">
                 Погонные метры
               </Select.Option>
-              <Select.Option value="По площади">По площади</Select.Option>
+              {/* <Select.Option value="По площади">По площади</Select.Option> */}
             </Select>
           </Form.Item>
         )),
@@ -281,11 +281,11 @@ export default function Calc() {
               <span>{totalPower !== "0" ? totalPower : "0"}</span>
             </TweenOne>
           </Title>
-          {showAdditionalInfo && (
+          
             <Paragraph style={{ textAlign: "justify", marginTop: "20px" }}>
               {additionalInfoText}
             </Paragraph>
-          )}
+          
           {/* {showAdditionalInfo && (
             <Button
               type="primary"
