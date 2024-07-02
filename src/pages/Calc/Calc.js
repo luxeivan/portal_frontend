@@ -289,7 +289,7 @@ export default function Calc() {
               onClick={() => generatePDF()}
               className={styles.downloadButton}
             >
-              Выгрузить PDF
+              Выгрузить PDF!
             </Button>
           )} */}
         </div>
