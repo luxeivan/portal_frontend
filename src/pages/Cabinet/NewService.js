@@ -58,7 +58,7 @@ export default function NewService() {
                             if (item.component_Type.includes("ComponentsSliderInput"))
                                 return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key} />
                             if (item.component_Type.includes("ComponentsLinkInput"))
-                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key} dependOf={item.dependName.Ref_Key} howDepend={item.dependСondition}/>
+                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition}/>
 
                         })}
                         <Form.Item>
