@@ -27,13 +27,21 @@
   align-items: center;
   max-width: 100%;
   overflow-x: auto;
+  padding: 16px;
+  background-color: #ffffff;
 }
 
 .table {
   width: 100%;
   table-layout: auto;
+  border-collapse: collapse;
 }
 
 .totalPowerContainer {
   text-align: center;
 }
+
+.sectionHeader {
+  white-space: nowrap;
+}
+
