@@ -81,24 +81,24 @@ export default function App() {
     }
     return null;
   };
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Main />,
-      loader: ({ request }) => {
-        console.log(request)
-      },
-      children: [
-        {
-          path: "servicestest",
-          element: <ServicesTest />,
-          loader: ({ request }) => {
-            console.log(request)
-          },
-        },
-      ],
-    },
-  ]);
+  // const router = createBrowserRouter([
+  //   {
+  //     path: "/",
+  //     element: <Main />,
+  //     loader: ({ request }) => {
+  //       console.log(request)
+  //     },
+  //     children: [
+  //       {
+  //         path: "servicestest",
+  //         element: <ServicesTest />,
+  //         loader: ({ request }) => {
+  //           console.log(request)
+  //         },
+  //       },
+  //     ],
+  //   },
+  // ]);
 
   return (
     <ConfigProvider
@@ -189,7 +189,7 @@ export default function App() {
                   {/* ----------------------------------------- */}
 
                   <Route path="cabinet"
-                    element={!auth && <Navigate to="/" replace />}
+                     element={!checkJWT() && <Navigate to="/" replace />}
                   >
                     <Route path="new-claim/:id" element={<Container><NewService /></Container>} />
                     <Route path="new-claimtest/:id" element={<Container><NewServicetest /></Container>} />

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER
-const useAuth = create((set) => {
+const useAuth = create((set,get) => {
   return {
     auth: false,
     isAuthModalOpen: false,
@@ -11,7 +11,7 @@ const useAuth = create((set) => {
     password: "",
     isCodeRequested: false,
     authTimer: 0,
-    redirection:"",
+    redirection: "",
 
     toggleAuth: (value) => {
       set((state) => ({
@@ -114,7 +114,7 @@ const useAuth = create((set) => {
         isCodeModalOpen: false // Закрываем модальное окно ввода кода, если оно открыто
       }));
     },
-    
+
 
     // logout: () => {
     //   localStorage.removeItem("jwt");
@@ -127,6 +127,7 @@ const useAuth = create((set) => {
 
     checkJWT: async () => {
       let validJwt = false;
+      get()
       //console.log(validJwt)
       if (localStorage.getItem("jwt")) {
         try {
@@ -138,9 +139,9 @@ const useAuth = create((set) => {
           console.log(error)
         }
       }
-      if (validJwt) {
+      if (!get().auth && validJwt) {
         set((state) => ({
-          ...state,
+          // ...state,
           auth: true,
         }));
       }

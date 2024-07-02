@@ -3,6 +3,7 @@ import { Button, Form, Input, InputNumber, message, Space, Select } from 'antd';
 
 export default function SelectInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, options = [], dependOf = false, howDepend = false }) {
     const form = Form.useFormInstance();
+    // console.log(dependOf)
     const fieldDepends = Form.useWatch(dependOf, form);
     const formElement = (
         <Form.Item
@@ -23,7 +24,7 @@ export default function SelectInput({ name = 'name', label = 'Label', disabled =
         </Form.Item>
     )
     if (!dependOf) return formElement
-    if (dependOf && howDepend && howDepend.values.length > 0) {
+    if (dependOf && howDepend && howDepend.values?.length > 0) {
         let show = false
         howDepend.values.forEach(item => {
             if (item.value === "true") item.value = true
@@ -32,7 +33,7 @@ export default function SelectInput({ name = 'name', label = 'Label', disabled =
         if (show) return formElement
     }
     if (dependOf && howDepend && howDepend.max) {
-        // form.setFieldValue(name, '')
+        form.setFieldValue(name, '')
         if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     }
 }
