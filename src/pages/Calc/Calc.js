@@ -189,7 +189,6 @@ export default function Calc() {
           </Form.Item>
         )),
     },
-
     {
       title: (
         <Tooltip title="Коэффициент одновременного использования электроприборов">
@@ -296,6 +295,9 @@ export default function Calc() {
             </Button>
           )} */}
         </div>
+      </div>
+      <div className={styles.mobileMessage}>
+        Произвести расчет калькулятора вы сможете на полной версии нашего сайта.
       </div>
     </>
   );
