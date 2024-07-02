@@ -67,7 +67,9 @@ export default function useCalc() {
     });
 
     // Устанавливаем итоговую мощность
-    setTotalPower(total.toFixed(2));
+    // setTotalPower(total.toFixed(2));
+    setTotalPower(`${total.toFixed(2)} кВт`);
+
     setCalculatedData(newCalculatedData);
     setShowAdditionalInfo(true); // Показываем дополнительную информацию после расчета
     // Генерируем PDF с результатами (ПОКА ЗАБЛОКИРОВАЛ!!!!)
