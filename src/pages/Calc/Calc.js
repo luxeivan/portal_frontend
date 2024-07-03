@@ -43,7 +43,8 @@ const mainParagraphText = `Для расчета можно скорректир
 
 export default function Calc() {
   const [form] = Form.useForm();
-  const [isCalculateButtonDisabled, setIsCalculateButtonDisabled] = useState(false);
+  const [isCalculateButtonDisabled, setIsCalculateButtonDisabled] =
+    useState(false);
   const [isPdfButtonDisabled, setIsPdfButtonDisabled] = useState(true); // новое состояние для управления активностью кнопки PDF
   const {
     totalPower,
@@ -130,16 +131,21 @@ export default function Calc() {
             >
               Рассчитать
             </Button>
-
             <Button
               type="default"
               onClick={() => generatePDF(dataSource, totalPower)}
               className={styles.downloadButton}
-              disabled={isPdfButtonDisabled} // добавляем условие для активации/деактивации кнопки PDF
+              disabled={!showAdditionalInfo}
+              style={{
+                position: "absolute", 
+                right: "-140px", 
+                top: "11px",
+              }}
             >
               Выгрузить PDF
             </Button>
           </Form.Item>
+
         </Form>
         <div className={styles.totalPowerContainer}>
           <Title level={4}>
@@ -164,7 +170,6 @@ export default function Calc() {
   );
 }
 
-
 // import React, { useState, useEffect } from "react";
 // import AppHelmet from "../../components/Global/AppHelmet";
 // import { Typography, Button, Form, Tooltip } from "antd";
@@ -184,7 +189,7 @@ export default function Calc() {
 // const formItemLayout = formItemLayoutForCalc;
 
 // // Текст для верхней подсказки
-// const topTooltipText = `Калькулятор мощности позволяет оценить совокупную мощность электрооборудования индивидуального домохозяйства (объекта с бытовым характером нагрузки), необходимую для технологического присоединения к электросети АО "Мособлэнерго". Для заявителей - физических лиц. 
+// const topTooltipText = `Калькулятор мощности позволяет оценить совокупную мощность электрооборудования индивидуального домохозяйства (объекта с бытовым характером нагрузки), необходимую для технологического присоединения к электросети АО "Мособлэнерго". Для заявителей - физических лиц.
 // Только для некоммерческого применения.`;
 
 // // Текст для дополнительной информации, который будет отображаться после расчета
