@@ -47,7 +47,7 @@ export default function Calc() {
 
   const handleFinishWithLock = (values) => {
     setIsCalculateButtonDisabled(true);
-    setIsPdfButtonDisabled(false); 
+    setIsPdfButtonDisabled(false);
     handleFinish(values);
   };
 
@@ -89,7 +89,7 @@ export default function Calc() {
               onClick={() => generatePDF(dataSource, totalPower)}
               className={styles.downloadButton}
               disabled={!showAdditionalInfo}
-              style={{ marginLeft: "10px" }}
+              style={{ position: "absolute", right: "-140px", top: "11px" }}
             >
               Выгрузить PDF
             </Button>
