@@ -6,6 +6,7 @@ const { Option } = Select;
 
 const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
   const renderColumns = [
+    //Столбец 1
     {
       title: "Название электрооборудования",
       dataIndex: "name",
@@ -21,6 +22,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
           </Tooltip>
         ),
     },
+    //Столбец 2
     {
       title: (
         <Tooltip title="Усредненная паспортная мощность электроприбора или удельная мощность на единицу измерения">
@@ -45,6 +47,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
           </Form.Item>
         ),
     },
+    //Столбец 3
     {
       title: (
         <Tooltip title="Суммарное количество электроприборов по типу электрооборудования">
@@ -65,6 +68,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
           </Form.Item>
         ),
     },
+    //Столбец 4
     {
       title: (
         <Tooltip title="Единица измерения">
@@ -91,6 +95,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
           </Form.Item>
         )),
     },
+    //Столбец 5
     {
       title: (
         <Tooltip title="Коэффициент одновременного использования электроприборов может иметь значения от 0 до 1, где 1 - постоянная работа электроприбора">
@@ -116,6 +121,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
           </Form.Item>
         ),
     },
+    //Столбец 6
     {
       title: (<Tooltip title="Оценочное значение на основе усредненных величин. Для точного расчета требуемой мощности обращаетесь в специализированные проектные организации.">
         <span>Требуемая мощность (кВт) ℹ️</span>
