@@ -47,7 +47,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
     },
     {
       title: (
-        <Tooltip title="Суммарное количество электроприборов по типу объекта">
+        <Tooltip title="Суммарное количество электроприборов по типу электрооборудования">
           <span>Количествоℹ️</span>
         </Tooltip>
       ),
@@ -93,7 +93,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
     },
     {
       title: (
-        <Tooltip title="Коэффициент одновременного использования электроприборов может иметь значения от 0 до 1, где 1 постоянная работа электрооборудования">
+        <Tooltip title="Коэффициент одновременного использования электроприборов может иметь значения от 0 до 1, где 1 - постоянная работа электроприбора">
           <span>Коэффициент использования ℹ️</span>
         </Tooltip>
       ),
@@ -117,7 +117,9 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
         ),
     },
     {
-      title: "Требуемая мощность (кВт)",
+      title: (<Tooltip title="Оценочное значение на основе усредненных величин. Для точного расчета требуемой мощности обращаетесь в специализированные проектные организации.">
+        <span>Требуемая мощность (кВт) ℹ️</span>
+      </Tooltip>),
       dataIndex: "consumedPower",
       key: "consumedPower",
       render: (text, record) => {
