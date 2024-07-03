@@ -146,15 +146,6 @@ export default function useCalc() {
     calculatedData,
     handleFinish,
     showAdditionalInfo,
-    generatePDF, // Возвращаем функцию generatePDF
-  };
-
-  return {
-    totalPower,
-    animation,
-    calculatedData,
-    handleFinish,
-    showAdditionalInfo,
-    generatePDF, // Возвращаем функцию generatePDF
+    generatePDF, 
   };
 }
