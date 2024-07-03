@@ -1,25 +1,37 @@
 import React from 'react'
 import { Button, Form, Input, InputNumber, message, Space, Select } from 'antd';
+import TextInput from '../../components/FormComponentsNew/TextInput'
+import NumberInput from '../../components/FormComponentsNew/NumberInput'
+import SliderInput from '../../components/FormComponentsNew/SliderInput'
+import SelectInput from '../../components/FormComponentsNew/SelectInput'
+import DividerForm from '../../components/FormComponentsNew/DividerForm'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-export default function SelectInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, options = [], dependOf = false, howDepend = false, fields = [] }) {
+export default function TableInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, options = [], dependOf = false, howDepend = false, Fields = [] }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
+    // const nameTable = name
     const fieldDepends = Form.useWatch(dependOf, form);
     const formElement = (
         <Form.List name={name}>
             {(fields, { add, remove }) => (
                 <>
-                    {fields.map(({ key, name, ...restField }) => (
-                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                            {claim.Fields?.sort((a, b) => a.lineNum - b.lineNum).map((item, index) => {
+                    {fields.map(({ key, name, }) => (
+                        <Space key={key} style={{ display: 'flex', marginBottom: 8, alignItems: "center", backgroundColor: "#fff", padding: 10 }} align="baseline">
+                            {Fields.map((item, index) => {
+                                // console.log('name: ', name)
+                                // console.log('item.name_Key: ', item.name_Key)
+                                // console.log('---------------')
                                 if (item.component_Type.includes("ComponentsDivider"))
                                     return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
                                 if (item.component_Type.includes("ComponentsTextInput"))
-                                    return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key} dependOf={item.dependName.Ref_Key} howDepend={item.dependСondition} />
+                                    return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={[name, item.name_Key]} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                if (item.component_Type.includes("ComponentsNumberInput"))
+                                    return <NumberInput key={index} label={item.label} {...item.component_Expanded} {...item} name={[name, item.name_Key]} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("ComponentsSliderInput"))
-                                    return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key} dependOf={item.dependName.Ref_Key} howDepend={item.dependСondition} />
+                                    return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={[name, item.name_Key]} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("ComponentsLinkInput"))
-                                    return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name.Ref_Key} dependOf={item.dependName.Ref_Key} howDepend={item.dependСondition} />
+                                    return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={[name, item.name_Key]} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                             })}
                             <MinusCircleOutlined onClick={() => remove(name)} />
                         </Space>
@@ -30,8 +42,9 @@ export default function SelectInput({ name = 'name', label = 'Label', disabled =
                         </Button>
                     </Form.Item>
                 </>
-            )}
-        </Form.List>
+            )
+            }
+        </Form.List >
     )
     if (!dependOf) return formElement
     if (dependOf && howDepend && howDepend.values?.length > 0) {

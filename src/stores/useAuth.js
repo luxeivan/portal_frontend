@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
+import { redirect } from "react-router-dom";
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER
-const useAuth = create((set,get) => {
+const useAuth = create((set, get) => {
   return {
     auth: false,
     isAuthModalOpen: false,
@@ -24,6 +25,13 @@ const useAuth = create((set,get) => {
         ...state,
         [modalName]: typeof value === "undefined" ? !state[modalName] : value,
       }));
+      return true
+    },
+    setRedirection: (redirection) => {
+      set((state) => ({
+        redirection
+      }));
+      return true
     },
 
     startAuthTimer: () => {
@@ -127,7 +135,6 @@ const useAuth = create((set,get) => {
 
     checkJWT: async () => {
       let validJwt = false;
-      get()
       //console.log(validJwt)
       if (localStorage.getItem("jwt")) {
         try {
@@ -137,6 +144,7 @@ const useAuth = create((set,get) => {
           validJwt = res.data;
         } catch (error) {
           console.log(error)
+          return false
         }
       }
       if (!get().auth && validJwt) {
@@ -144,7 +152,10 @@ const useAuth = create((set,get) => {
           // ...state,
           auth: true,
         }));
+        return true
       }
+      // get().toggleModal('isAuthModalOpen', true);  
+      return false
     },
 
     resetCodeRequest: () => {
