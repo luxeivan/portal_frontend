@@ -1,11 +1,6 @@
 {
   "columns": [
-    {
-      "title": "Название электрооборудования",
-      "dataIndex": "name",
-      "tooltip": "",
-      "type": "text"
-    },
+    
     {
       "title": "Мощность (кВт)",
       "dataIndex": "value",

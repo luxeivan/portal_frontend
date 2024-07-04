@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Typography, Button, Form, Tooltip } from "antd";
+import { Typography, Button, Form, Tooltip, Flex } from "antd";
 import TweenOne from "rc-tween-one";
 import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
 import {
@@ -13,6 +13,7 @@ import useCalc from "../../stores/useCalc";
 import styles from "./Calc.module.css";
 import { formItemLayoutForCalc } from "../../components/configSizeForm";
 import CalcTable from "./CalcTable";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 // Добавляем плагин для анимации чисел
 TweenOne.plugins.push(Children);
@@ -57,7 +58,7 @@ export default function Calc() {
       <div className={styles.container}>
         <Tooltip title={topTooltipText}>
           <span>
-            <Title level={2}>Калькулятор мощности ℹ️</Title>{" "}
+            <Title level={2}>Калькулятор мощности <InfoCircleOutlined/></Title>{" "}
           </span>
         </Tooltip>
         <Paragraph style={{ textAlign: "justify", marginBottom: "20px" }}>
@@ -76,23 +77,25 @@ export default function Calc() {
             onValuesChange={onValuesChange}
           />
           <Form.Item className={styles.buttonContainer}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className={styles.calculateButton}
-              disabled={isCalculateButtonDisabled}
-            >
-              Рассчитать
-            </Button>
-            <Button
-              type="default"
-              onClick={() => generatePDF(dataSource, totalPower)}
-              className={styles.downloadButton}
-              disabled={!showAdditionalInfo}
-              style={{ position: "absolute", right: "-140px", top: "11px" }}
-            >
-              Выгрузить PDF
-            </Button>
+            <Flex gap={10}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                // className={styles.calculateButton}
+                disabled={isCalculateButtonDisabled}
+              >
+                Рассчитать
+              </Button>
+              <Button
+                type="default"
+                onClick={() => generatePDF(dataSource, totalPower)}
+                // className={styles.calculateButton}
+                disabled={!showAdditionalInfo}
+              // style={{ position: "absolute", right: "-140px", top: "11px" }}
+              >
+                Выгрузить PDF
+              </Button>
+            </Flex>
           </Form.Item>
         </Form>
         <div className={styles.totalPowerContainer}>

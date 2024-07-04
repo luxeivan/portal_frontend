@@ -2,6 +2,7 @@ import React from "react";
 import { Form, InputNumber, Select, Table, Tooltip } from "antd";
 import styles from "./Calc.module.css";
 import tableData from "./tableData.json";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -18,7 +19,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
         ) : (
           <Tooltip title={record.description || ""}>
             <span>
-              {text} {record.description && <span>ℹ️</span>}
+              {text} {record.description && <span><InfoCircleOutlined/></span>}
             </span>
           </Tooltip>
         ),
@@ -27,7 +28,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
     ...tableData.columns.map((column) => ({
       title: (
         <Tooltip title={column.tooltip}>
-          <span>{column.title} ℹ️</span>
+          <span>{column.title}<InfoCircleOutlined/></span>
         </Tooltip>
       ),
       dataIndex: column.dataIndex,
