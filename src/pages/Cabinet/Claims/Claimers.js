@@ -34,7 +34,6 @@ export default function Claimers() {
                             <Title level={4}>{item.Description}</Title>
                             <Title level={5}>{item.Number}</Title>
                         </Card>)}
-
                 </Flex>
             }
         </>
