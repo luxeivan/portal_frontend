@@ -17,7 +17,7 @@ import CodeModal from "./components/Global/Auth/Login/CodeModal";
 import ServiceItem from "./pages/ServiceItem/ServiceItem";
 import Page404 from "./pages/Page404";
 import Container from "./components/Container";
-import NewService from "./pages/Cabinet/NewService";
+import NewClaim from "./pages/Cabinet/NewClaim";
 import NewServicetest from "./pages/Cabinet/NewServicetest";
 import Profile from "./pages/Cabinet/Profile/Profile";
 import Subjects from "./pages/Cabinet/Subjects/Subjects";
@@ -198,7 +198,7 @@ export default function App() {
                     element={<PrivateRoute />}
                   >
 
-                    <Route path="new-claim/:id" element={<Container><NewService /></Container>} />
+                    <Route path="new-claim/:id" element={<Container><NewClaim /></Container>} />
                     <Route path="new-claimtest/:id" element={<Container><NewServicetest /></Container>} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="subjects" element={<Subjects />} />
