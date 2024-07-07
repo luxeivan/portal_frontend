@@ -1,7 +1,7 @@
 import { Form, Typography, Button, Drawer, Descriptions } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import useNewClaim from '../../stores/Cabinet/useNewService'
+import useNewClaim from '../../stores/Cabinet/useNewClaim'
 import TextInput from '../../components/FormComponentsNew/TextInput'
 import NumberInput from '../../components/FormComponentsNew/NumberInput'
 import SliderInput from '../../components/FormComponentsNew/SliderInput'
@@ -13,11 +13,13 @@ import TableInput from '../../components/FormComponentsNew/TableInput'
 
 
 const { Title, Paragraph, Text } = Typography
-export default function NewService() {
+export default function NewClaim() {
     const [open, setOpen] = useState(false);
     const [formValue, setFormValue] = useState(false);
     const claim = useNewClaim(state => state.claim)
     const fetchClaim = useNewClaim(state => state.fetchClaim)
+    const createClaim = useNewClaim(state => state.createClaim)
+    const newClaim = useNewClaim(state => state.newClaim)
     const { id } = useParams()
     const [form] = Form.useForm()
 
@@ -31,9 +33,11 @@ export default function NewService() {
         setOpen(false);
     };
     //console.log(claim)
-    const onFinish = (value) => {
-        console.log(value)
-        setFormValue(value)
+    const onFinish = (values) => {
+        console.log(values)
+
+        setFormValue(values)
+        createClaim({ service: claim.Ref_Key, values })
         showDrawer()
     }
     console.log(claim)
@@ -56,15 +60,15 @@ export default function NewService() {
                             if (item.component_Type.includes("ComponentsDivider"))
                                 return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
                             if (item.component_Type.includes("ComponentsTextInput"))
-                                return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition}/>
+                                return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsNumberInput"))
-                                return <NumberInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition}/>
+                                return <NumberInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsSliderInput"))
-                                return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition}/>
+                                return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsLinkInput"))
-                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition}/>
+                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsTableInput"))
-                                return <TableInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item .component_Expanded.nameTable_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition}/>
+                                return <TableInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.component_Expanded.nameTable_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
 
                         })}
                         <Form.Item>
