@@ -10,6 +10,8 @@ import DividerForm from '../../components/FormComponentsNew/DividerForm'
 import SubjectInput from '../../components/FormComponents/SubjectInput'
 import CheckboxInput from '../../components/FormComponents/CheckboxInput'
 import TableInput from '../../components/FormComponentsNew/TableInput'
+import DateInput from '../../components/FormComponentsNew/DateInput'
+import AppHelmet from '../../components/Global/AppHelmet'
 
 
 const { Title, Paragraph, Text } = Typography
@@ -40,9 +42,24 @@ export default function NewClaim() {
         createClaim({ service: claim.Ref_Key, values })
         showDrawer()
     }
+    // const onValuesChange = (changedValues, allValues) => {
+    //     console.log("changedValues",changedValues)
+    //     console.log("allValues",allValues)
+    // }
+    // const onFieldsChange = (changedFields, allFields) => {
+    //     console.log("changedFields",changedFields)
+    //     console.log("allFields",allFields)
+    // }
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        }
+    }
     console.log(claim)
     return (
         <div>
+            
+            <AppHelmet title={'Новая заявка'} desc={'Новая заявка - Портал цифровых услуг АО Мособлэнерго'} />
             {claim &&
                 <>
                     <Title>
@@ -50,9 +67,13 @@ export default function NewClaim() {
                         {claim.Description}
                     </Title>
                     <Form
+                        // onValuesChange={onValuesChange}
+                        // onFieldsChange={onFieldsChange}
+                        scrollToFirstError
                         form={form}
                         layout="vertical"
                         onFinish={onFinish}
+                        onKeyDown={handleKeyDown}
                         style={{ maxWidth: 800, margin: "0 auto" }}
                     >
                         {claim.Fields?.sort((a, b) => a.lineNum - b.lineNum).map((item, index) => {
@@ -60,15 +81,17 @@ export default function NewClaim() {
                             if (item.component_Type.includes("ComponentsDivider"))
                                 return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
                             if (item.component_Type.includes("ComponentsTextInput"))
-                                return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsNumberInput"))
-                                return <NumberInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                return <NumberInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsSliderInput"))
-                                return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsLinkInput"))
-                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.name_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsTableInput"))
-                                return <TableInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.component_Expanded.nameTable_Key} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                return <TableInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                            if (item.component_Type.includes("ComponentsDateInput"))
+                                return <DateInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
 
                         })}
                         <Form.Item>

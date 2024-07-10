@@ -17,7 +17,7 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
             {(fields, { add, remove }) => (
                 <>
                     {fields.map(({ key, name, }) => (
-                        <Space key={key} style={{ display: 'flex', marginBottom: 8, alignItems: "center", backgroundColor: "#fff", padding: 10 }} align="baseline">
+                        <Space key={key} style={{ display: 'flex', marginBottom: 8, alignItems: "center", padding: 10 }} align="baseline">
                             {Fields.map((item, index) => {
                                 // console.log('name: ', name)
                                 // console.log('item.name_Key: ', item.name_Key)
