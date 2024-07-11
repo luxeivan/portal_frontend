@@ -42,7 +42,7 @@ export default function NewClaim() {
         for (const [key, value] of Object.entries(values)) {
             // console.log(`${key}: ${value}`);
             if (typeof value === 'object' && Object.hasOwn(value, '$d')) {
-                values[key]=moment(value).format()
+                values[key] = moment(value).format()
 
             }
         }
@@ -70,7 +70,7 @@ export default function NewClaim() {
             event.preventDefault();
         }
     }
-     console.log(claim)
+    console.log(claim)
     return (
         <div>
 
@@ -96,17 +96,17 @@ export default function NewClaim() {
                             if (item.component_Type.includes("ComponentsDivider"))
                                 return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
                             if (item.component_Type.includes("ComponentsTextInput"))
-                                return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                                return <TextInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsNumberInput"))
-                                return <NumberInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                                return <NumberInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsSliderInput"))
-                                return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                                return <SliderInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsLinkInput"))
-                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                                return <SelectInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsTableInput"))
-                                return <TableInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                                return <TableInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("ComponentsDateInput"))
-                                return <DateInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                                return <DateInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
 
                         })}
                         <Form.Item>
