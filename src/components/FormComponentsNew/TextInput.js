@@ -1,28 +1,18 @@
-import React, { useState } from "react";
-import { Button, Form, Input, InputNumber, message, Space, theme } from "antd";
-import ReactInputMask from "react-input-mask";
+import { Form, theme } from "antd";
 import { MaskedInput } from "antd-mask-input";
 
 export default function TextInput({
   name = "name",
   label = "Label",
-  disabled = false,
-  placeholder = "Пример",
   required = false,
   dependOf = false,
   howDepend = false,
   mask = false,
 }) {
   const { token } = theme.useToken();
-  const [value, setValue] = useState();
   const form = Form.useFormInstance();
   const fieldDepends = Form.useWatch(dependOf, form);
-  // console.log(name)
-  const handlerOnChange = (e) => {
-    console.log(e.target.value);
-    // setValue(e.target.value)
-    // form.setFieldValue(name, e.target.value)
-  };
+
   console.log(token);
   const formElement = (
     <Form.Item
@@ -34,24 +24,14 @@ export default function TextInput({
           message: "Это поле обязательное",
         },
       ]}
-      // valuePropName={name} colorPrimaryHover
     >
-      {/* <ReactInputMask className='ant-input css-dev-only-do-not-override-1sbryic ant-input-outlined ant-input-status-success' onChange={handlerOnChange} /> */}
-      {/* <Input disabled={disabled} placeholder={placeholder} /> */}
       <MaskedInput
         mask={mask}
         style={{
           backgroundColor: token.colorBgContainer,
-          //  borderColor: token.colorBorder
         }}
         className={"ant-picker-outlined"}
       />
-      {/* <ReactInputMask mask={mask} disabled={disabled} onChange={handlerOnChange} >
-                {(inputProps) => {
-                    console.log(inputProps)
-                    return <Input {...inputProps} disabled={disabled} placeholder={placeholder} />
-                }}
-            </ReactInputMask> */}
     </Form.Item>
   );
   if (!dependOf) return formElement;

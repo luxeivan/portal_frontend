@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Form, Typography, Button, Drawer, Descriptions } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -11,22 +10,8 @@ import DividerForm from "../../components/FormComponentsNew/DividerForm";
 import SubjectInput from "../../components/FormComponents/SubjectInput";
 import CheckboxInput from "../../components/FormComponents/CheckboxInput";
 import TableInput from "../../components/FormComponentsNew/TableInput";
-=======
-import { Form, Typography, Button, Drawer, Descriptions } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import useNewClaim from '../../stores/Cabinet/useNewClaim'
-import TextInput from '../../components/FormComponentsNew/TextInput'
-import NumberInput from '../../components/FormComponentsNew/NumberInput'
-import SliderInput from '../../components/FormComponentsNew/SliderInput'
-import SelectInput from '../../components/FormComponentsNew/SelectInput'
-import DividerForm from '../../components/FormComponentsNew/DividerForm'
-import SubjectInput from '../../components/FormComponents/SubjectInput'
-import CheckboxInput from '../../components/FormComponents/CheckboxInput'
-import TableInput from '../../components/FormComponentsNew/TableInput'
-import DateInput from '../../components/FormComponentsNew/DateInput'
-import AppHelmet from '../../components/Global/AppHelmet'
->>>>>>> origin/ivan
+import DateInput from "../../components/FormComponentsNew/DateInput";
+import AppHelmet from "../../components/Global/AppHelmet";
 
 const { Title, Paragraph, Text } = Typography;
 export default function NewClaim() {
@@ -52,14 +37,30 @@ export default function NewClaim() {
   const onFinish = (values) => {
     console.log(values);
 
-<<<<<<< HEAD
     setFormValue(values);
-    createClaim({ service: claim.Ref_Key, values });
+    // createClaim({ service: claim.Ref_Key, values })
     showDrawer();
   };
-  console.log(claim);
+  // const onValuesChange = (changedValues, allValues) => {
+  //     console.log("changedValues",changedValues)
+  //     console.log("allValues",allValues)
+  // }
+  // const onFieldsChange = (changedFields, allFields) => {
+  //     console.log("changedFields",changedFields)
+  //     console.log("allFields",allFields)
+  // }
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+    }
+  };
+  // console.log(claim)
   return (
     <div>
+      <AppHelmet
+        title={"Новая заявка"}
+        desc={"Новая заявка - Портал цифровых услуг АО Мособлэнерго"}
+      />
       {claim && (
         <>
           <Title>
@@ -67,9 +68,13 @@ export default function NewClaim() {
             {claim.Description}
           </Title>
           <Form
+            // onValuesChange={onValuesChange}
+            // onFieldsChange={onFieldsChange}
+            scrollToFirstError
             form={form}
             layout="vertical"
             onFinish={onFinish}
+            onKeyDown={handleKeyDown}
             style={{ maxWidth: 800, margin: "0 auto" }}
           >
             {claim.Fields?.sort((a, b) => a.lineNum - b.lineNum).map(
@@ -90,8 +95,8 @@ export default function NewClaim() {
                       label={item.label}
                       {...item.component_Expanded}
                       {...item}
-                      name={item.name_Key}
-                      dependOf={item.dependName?.Ref_Key}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
                       howDepend={item.dependСondition}
                     />
                   );
@@ -102,8 +107,8 @@ export default function NewClaim() {
                       label={item.label}
                       {...item.component_Expanded}
                       {...item}
-                      name={item.name_Key}
-                      dependOf={item.dependName?.Ref_Key}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
                       howDepend={item.dependСondition}
                     />
                   );
@@ -114,8 +119,8 @@ export default function NewClaim() {
                       label={item.label}
                       {...item.component_Expanded}
                       {...item}
-                      name={item.name_Key}
-                      dependOf={item.dependName?.Ref_Key}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
                       howDepend={item.dependСondition}
                     />
                   );
@@ -126,8 +131,8 @@ export default function NewClaim() {
                       label={item.label}
                       {...item.component_Expanded}
                       {...item}
-                      name={item.name_Key}
-                      dependOf={item.dependName?.Ref_Key}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
                       howDepend={item.dependСondition}
                     />
                   );
@@ -138,8 +143,20 @@ export default function NewClaim() {
                       label={item.label}
                       {...item.component_Expanded}
                       {...item}
-                      name={item.component_Expanded.nameTable_Key}
-                      dependOf={item.dependName?.Ref_Key}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+                if (item.component_Type.includes("ComponentsDateInput"))
+                  return (
+                    <DateInput
+                      key={index}
+                      label={item.label}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
                       howDepend={item.dependСondition}
                     />
                   );
@@ -151,62 +168,6 @@ export default function NewClaim() {
               </Button>
             </Form.Item>
           </Form>
-=======
-        setFormValue(values)
-        // createClaim({ service: claim.Ref_Key, values })
-        showDrawer()
-    }
-    // const onValuesChange = (changedValues, allValues) => {
-    //     console.log("changedValues",changedValues)
-    //     console.log("allValues",allValues)
-    // }
-    // const onFieldsChange = (changedFields, allFields) => {
-    //     console.log("changedFields",changedFields)
-    //     console.log("allFields",allFields)
-    // }
-    const handleKeyDown = (event) => {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-        }
-    }
-    // console.log(claim)
-    return (
-        <div>
-
-            <AppHelmet title={'Новая заявка'} desc={'Новая заявка - Портал цифровых услуг АО Мособлэнерго'} />
-            {claim &&
-                <>
-                    <Title>
-                        {/* <span style={{ color: "gray" }}>Услуга:</span><br />  */}
-                        {claim.Description}
-                    </Title>
-                    <Form
-                        // onValuesChange={onValuesChange}
-                        // onFieldsChange={onFieldsChange}
-                        scrollToFirstError
-                        form={form}
-                        layout="vertical"
-                        onFinish={onFinish}
-                        onKeyDown={handleKeyDown}
-                        style={{ maxWidth: 800, margin: "0 auto" }}
-                    >
-                        {claim.Fields?.sort((a, b) => a.lineNum - b.lineNum).map((item, index) => {
-                            // console.log(item)
-                            if (item.component_Type.includes("ComponentsDivider"))
-                                return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
-                            if (item.component_Type.includes("ComponentsTextInput"))
-                                return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsNumberInput"))
-                                return <NumberInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsSliderInput"))
-                                return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsLinkInput"))
-                                return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsTableInput"))
-                                return <TableInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsDateInput"))
-                                return <DateInput key={index} label={item.label} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
->>>>>>> origin/ivan
 
           <Drawer
             title="Поля формы"
