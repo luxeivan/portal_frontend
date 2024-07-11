@@ -12,6 +12,7 @@ import CheckboxInput from "../../components/FormComponents/CheckboxInput";
 import TableInput from "../../components/FormComponentsNew/TableInput";
 import DateInput from "../../components/FormComponentsNew/DateInput";
 import AppHelmet from "../../components/Global/AppHelmet";
+import moment from "moment";
 
 const { Title, Paragraph, Text } = Typography;
 export default function NewClaim() {
@@ -36,9 +37,21 @@ export default function NewClaim() {
   //console.log(claim)
   const onFinish = (values) => {
     console.log(values);
+    const arr = [];
+    for (const [key, value] of Object.entries(values)) {
+      // console.log(`${key}: ${value}`);
+      if (typeof value === "object" && Object.hasOwn(value, "$d")) {
+        values[key] = moment(value).format();
+      }
+    }
+    // values.map(item => {
+    //     if (typeof item === 'object' && Object.hasOwn(item, '$d')) {
 
+    //     }
+    //     return item
+    // })
     setFormValue(values);
-    // createClaim({ service: claim.Ref_Key, values })
+    createClaim({ service: claim.Ref_Key, values });
     showDrawer();
   };
   // const onValuesChange = (changedValues, allValues) => {
@@ -54,133 +67,22 @@ export default function NewClaim() {
       event.preventDefault();
     }
   };
-  // console.log(claim)
+  console.log(claim);
   return (
     <div>
-      <AppHelmet
-        title={"Новая заявка"}
-        desc={"Новая заявка - Портал цифровых услуг АО Мособлэнерго"}
-      />
-      {claim && (
-        <>
-          <Title>
-            {/* <span style={{ color: "gray" }}>Услуга:</span><br />  */}
-            {claim.Description}
-          </Title>
-          <Form
-            // onValuesChange={onValuesChange}
-            // onFieldsChange={onFieldsChange}
-            scrollToFirstError
-            form={form}
-            layout="vertical"
-            onFinish={onFinish}
-            onKeyDown={handleKeyDown}
-            style={{ maxWidth: 800, margin: "0 auto" }}
-          >
-            {claim.Fields?.sort((a, b) => a.lineNum - b.lineNum).map(
-              (item, index) => {
-                // console.log(item)
-                if (item.component_Type.includes("ComponentsDivider"))
-                  return (
-                    <DividerForm
-                      key={index}
-                      {...item.component_Expanded}
-                      label={item.label}
-                    />
-                  );
-                if (item.component_Type.includes("ComponentsTextInput"))
-                  return (
-                    <TextInput
-                      key={index}
-                      label={item.label}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("ComponentsNumberInput"))
-                  return (
-                    <NumberInput
-                      key={index}
-                      label={item.label}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("ComponentsSliderInput"))
-                  return (
-                    <SliderInput
-                      key={index}
-                      label={item.label}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("ComponentsLinkInput"))
-                  return (
-                    <SelectInput
-                      key={index}
-                      label={item.label}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("ComponentsTableInput"))
-                  return (
-                    <TableInput
-                      key={index}
-                      label={item.label}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("ComponentsDateInput"))
-                  return (
-                    <DateInput
-                      key={index}
-                      label={item.label}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-              }
-            )}
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Подать заявку на услугу
-              </Button>
-            </Form.Item>
-          </Form>
-
-          <Drawer
-            title="Поля формы"
-            placement="bottom"
-            closable={false}
-            onClose={onClose}
-            open={open}
-            key="bottom"
-          >
-            {Object.keys(formValue).map((item) => {
-              // console.log(item)
-            })}
-            {/* <Descriptions
+      <>
+        <Drawer
+          title="Поля формы"
+          placement="bottom"
+          closable={false}
+          onClose={onClose}
+          open={open}
+          key="bottom"
+        >
+          {Object.keys(formValue).map((item) => {
+            // console.log(item)
+          })}
+          {/* <Descriptions
                             bordered
                             title="Данные для отправки в 1С"
                             items={Object.keys(formValue)
@@ -190,11 +92,11 @@ export default function NewClaim() {
                                     label: item,
                                     children: formValue[item],
                                 }))} /> */}
-            {/* <Paragraph><pre>{JSON.stringify(formValue)}</pre></Paragraph> */}
-            <Paragraph>Данные вывелись в консоле</Paragraph>
-          </Drawer>
-        </>
-      )}
+          {/* <Paragraph><pre>{JSON.stringify(formValue)}</pre></Paragraph> */}
+          <Paragraph>Данные вывелись в консоле</Paragraph>
+        </Drawer>
+      </>
+      
     </div>
   );
 }
