@@ -1,6 +1,7 @@
-import React from "react";
-import { Form, Input } from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, InputNumber, message, Space, theme } from "antd";
 import ReactInputMask from "react-input-mask";
+import { MaskedInput } from "antd-mask-input";
 
 export default function TextInput({
   name = "name",
@@ -10,15 +11,19 @@ export default function TextInput({
   required = false,
   dependOf = false,
   howDepend = false,
-  mask = null, // Маска по умолчанию для проверки
+  mask = false,
 }) {
+  const { token } = theme.useToken();
+  const [value, setValue] = useState();
   const form = Form.useFormInstance();
   const fieldDepends = Form.useWatch(dependOf, form);
-
-  const handleChange = (e) => {
-    form.setFieldsValue({ [name]: e.target.value });
+  // console.log(name)
+  const handlerOnChange = (e) => {
+    console.log(e.target.value);
+    // setValue(e.target.value)
+    // form.setFieldValue(name, e.target.value)
   };
-
+  console.log(token);
   const formElement = (
     <Form.Item
       name={name}
@@ -29,27 +34,26 @@ export default function TextInput({
           message: "Это поле обязательное",
         },
       ]}
+      // valuePropName={name} colorPrimaryHover
     >
-      {mask ? (
-        <ReactInputMask mask={mask} onChange={handleChange}>
-          {(inputProps) => (
-            <Input
-              {...inputProps}
-              placeholder={placeholder}
-              disabled={disabled}
-            />
-          )}
-        </ReactInputMask>
-      ) : (
-        <Input
-          placeholder={placeholder}
-          disabled={disabled}
-          onChange={handleChange}
-        />
-      )}
+      {/* <ReactInputMask className='ant-input css-dev-only-do-not-override-1sbryic ant-input-outlined ant-input-status-success' onChange={handlerOnChange} /> */}
+      {/* <Input disabled={disabled} placeholder={placeholder} /> */}
+      <MaskedInput
+        mask={mask}
+        style={{
+          backgroundColor: token.colorBgContainer,
+          //  borderColor: token.colorBorder
+        }}
+        className={"ant-picker-outlined"}
+      />
+      {/* <ReactInputMask mask={mask} disabled={disabled} onChange={handlerOnChange} >
+                {(inputProps) => {
+                    console.log(inputProps)
+                    return <Input {...inputProps} disabled={disabled} placeholder={placeholder} />
+                }}
+            </ReactInputMask> */}
     </Form.Item>
   );
-
   if (!dependOf) return formElement;
   if (dependOf && howDepend && howDepend.values.length > 0) {
     let show = false;

@@ -13,8 +13,7 @@ export default function SliderInput({ name = 'name', label = 'Label', disabled =
         setInputValue(value);
     };
     return (
-        <Flex align='center' gap={10}>
-            
+        <Flex align='center' gap={10}>            
                     <Form.Item
                         name={name}
                         label={label}
