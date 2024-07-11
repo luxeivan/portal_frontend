@@ -12,6 +12,7 @@ import CheckboxInput from '../../components/FormComponents/CheckboxInput'
 import TableInput from '../../components/FormComponentsNew/TableInput'
 import DateInput from '../../components/FormComponentsNew/DateInput'
 import AppHelmet from '../../components/Global/AppHelmet'
+import moment from 'moment'
 
 
 const { Title, Paragraph, Text } = Typography
@@ -37,9 +38,23 @@ export default function NewClaim() {
     //console.log(claim)
     const onFinish = (values) => {
         console.log(values)
+        const arr = []
+        for (const [key, value] of Object.entries(values)) {
+            // console.log(`${key}: ${value}`);
+            if (typeof value === 'object' && Object.hasOwn(value, '$d')) {
+                values[key]=moment(value).format()
 
+            }
+        }
+        // values.map(item => {
+        //     if (typeof item === 'object' && Object.hasOwn(item, '$d')) {
+
+
+        //     }
+        //     return item
+        // })
         setFormValue(values)
-        // createClaim({ service: claim.Ref_Key, values })
+        createClaim({ service: claim.Ref_Key, values })
         showDrawer()
     }
     // const onValuesChange = (changedValues, allValues) => {
@@ -55,7 +70,7 @@ export default function NewClaim() {
             event.preventDefault();
         }
     }
-    // console.log(claim)
+     console.log(claim)
     return (
         <div>
 
