@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
-import { Button, Form, Input, InputNumber, message, Space, theme } from 'antd';
-import ReactInputMask from 'react-input-mask';
-import { MaskedInput } from 'antd-mask-input';
+import { Form, theme } from "antd";
+import { MaskedInput } from "antd-mask-input";
+import { useState } from "react";
 
 export default function TextInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'Пример', required = false, dependOf = false, howDepend = false, inputMask = false, lenght = false }) {
     const { token } = theme.useToken()

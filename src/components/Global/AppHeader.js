@@ -36,11 +36,11 @@ const items = [
     label: `Документация`,
     url: '/docs'
   },
-  {
-    key: 6,
-    label: `Каталог услуг(тест)`,
-    url: '/servicestest'
-  },
+  // {
+  //   key: 6,
+  //   label: `Каталог услуг(тест)`,
+  //   url: '/servicestest'
+  // },
 ];
 
 export default function AppHeader() {

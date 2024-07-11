@@ -1,30 +1,29 @@
-import { Form, Typography, Button, Drawer, Descriptions } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import useNewClaim from '../../stores/Cabinet/useNewClaim'
-import TextInput from '../../components/FormComponentsNew/TextInput'
-import NumberInput from '../../components/FormComponentsNew/NumberInput'
-import SliderInput from '../../components/FormComponentsNew/SliderInput'
-import SelectInput from '../../components/FormComponentsNew/SelectInput'
-import DividerForm from '../../components/FormComponentsNew/DividerForm'
-import SubjectInput from '../../components/FormComponents/SubjectInput'
-import CheckboxInput from '../../components/FormComponents/CheckboxInput'
-import TableInput from '../../components/FormComponentsNew/TableInput'
-import DateInput from '../../components/FormComponentsNew/DateInput'
-import AppHelmet from '../../components/Global/AppHelmet'
-import moment from 'moment'
+import { Form, Typography, Button, Drawer, Descriptions } from "antd";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import useNewClaim from "../../stores/Cabinet/useNewClaim";
+import TextInput from "../../components/FormComponentsNew/TextInput";
+import NumberInput from "../../components/FormComponentsNew/NumberInput";
+import SliderInput from "../../components/FormComponentsNew/SliderInput";
+import SelectInput from "../../components/FormComponentsNew/SelectInput";
+import DividerForm from "../../components/FormComponentsNew/DividerForm";
+import SubjectInput from "../../components/FormComponents/SubjectInput";
+import CheckboxInput from "../../components/FormComponents/CheckboxInput";
+import TableInput from "../../components/FormComponentsNew/TableInput";
+import DateInput from "../../components/FormComponentsNew/DateInput";
+import AppHelmet from "../../components/Global/AppHelmet";
+import moment from "moment";
 
-
-const { Title, Paragraph, Text } = Typography
+const { Title, Paragraph, Text } = Typography;
 export default function NewClaim() {
     const [open, setOpen] = useState(false);
     const [formValue, setFormValue] = useState(false);
-    const claim = useNewClaim(state => state.claim)
-    const fetchClaim = useNewClaim(state => state.fetchClaim)
-    const createClaim = useNewClaim(state => state.createClaim)
-    const newClaim = useNewClaim(state => state.newClaim)
-    const { id } = useParams()
-    const [form] = Form.useForm()
+    const claim = useNewClaim((state) => state.claim);
+    const fetchClaim = useNewClaim((state) => state.fetchClaim);
+    const createClaim = useNewClaim((state) => state.createClaim);
+    const newClaim = useNewClaim((state) => state.newClaim);
+    const { id } = useParams();
+    const [form] = Form.useForm();
 
     useEffect(() => {
         fetchClaim(id)
@@ -138,8 +137,8 @@ export default function NewClaim() {
                         {/* <Paragraph><pre>{JSON.stringify(formValue)}</pre></Paragraph> */}
                         <Paragraph>Данные вывелись в консоле</Paragraph>
                     </Drawer>
-                </>
-            }
+                </>}
+
         </div>
-    )
+    );
 }
