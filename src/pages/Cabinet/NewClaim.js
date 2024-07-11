@@ -16,73 +16,115 @@ import moment from "moment";
 
 const { Title, Paragraph, Text } = Typography;
 export default function NewClaim() {
-  const [open, setOpen] = useState(false);
-  const [formValue, setFormValue] = useState(false);
-  const claim = useNewClaim((state) => state.claim);
-  const fetchClaim = useNewClaim((state) => state.fetchClaim);
-  const createClaim = useNewClaim((state) => state.createClaim);
-  const newClaim = useNewClaim((state) => state.newClaim);
-  const { id } = useParams();
-  const [form] = Form.useForm();
+    const [open, setOpen] = useState(false);
+    const [formValue, setFormValue] = useState(false);
+    const claim = useNewClaim((state) => state.claim);
+    const fetchClaim = useNewClaim((state) => state.fetchClaim);
+    const createClaim = useNewClaim((state) => state.createClaim);
+    const newClaim = useNewClaim((state) => state.newClaim);
+    const { id } = useParams();
+    const [form] = Form.useForm();
 
-  useEffect(() => {
-    fetchClaim(id);
-  }, []);
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
-  //console.log(claim)
-  const onFinish = (values) => {
-    console.log(values);
-    const arr = [];
-    for (const [key, value] of Object.entries(values)) {
-      // console.log(`${key}: ${value}`);
-      if (typeof value === "object" && Object.hasOwn(value, "$d")) {
-        values[key] = moment(value).format();
-      }
-    }
-    // values.map(item => {
-    //     if (typeof item === 'object' && Object.hasOwn(item, '$d')) {
+    useEffect(() => {
+        fetchClaim(id)
+    }, [])
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+    //console.log(claim)
+    const onFinish = (values) => {
+        console.log(values)
+        const arr = []
+        for (const [key, value] of Object.entries(values)) {
+            // console.log(`${key}: ${value}`);
+            if (typeof value === 'object' && Object.hasOwn(value, '$d')) {
+                values[key] = moment(value).format()
 
-    //     }
-    //     return item
-    // })
-    setFormValue(values);
-    createClaim({ service: claim.Ref_Key, values });
-    showDrawer();
-  };
-  // const onValuesChange = (changedValues, allValues) => {
-  //     console.log("changedValues",changedValues)
-  //     console.log("allValues",allValues)
-  // }
-  // const onFieldsChange = (changedFields, allFields) => {
-  //     console.log("changedFields",changedFields)
-  //     console.log("allFields",allFields)
-  // }
-  const handleKeyDown = (event) => {
-    if (event.keyCode === 13) {
-      event.preventDefault();
+            }
+        }
+        // values.map(item => {
+        //     if (typeof item === 'object' && Object.hasOwn(item, '$d')) {
+
+
+        //     }
+        //     return item
+        // })
+        setFormValue(values)
+        createClaim({ service: claim.Ref_Key, values })
+        showDrawer()
     }
-  };
-  console.log(claim);
-  return (
-    <div>
-      <>
-        <Drawer
-          title="Поля формы"
-          placement="bottom"
-          closable={false}
-          onClose={onClose}
-          open={open}
-          key="bottom"
-        >
-          {Object.keys(formValue).map((item) => {
-            // console.log(item)
-          })}
-          {/* <Descriptions
+    // const onValuesChange = (changedValues, allValues) => {
+    //     console.log("changedValues",changedValues)
+    //     console.log("allValues",allValues)
+    // }
+    // const onFieldsChange = (changedFields, allFields) => {
+    //     console.log("changedFields",changedFields)
+    //     console.log("allFields",allFields)
+    // }
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        }
+    }
+    console.log(claim)
+    return (
+        <div>
+
+            <AppHelmet title={'Новая заявка'} desc={'Новая заявка - Портал цифровых услуг АО Мособлэнерго'} />
+            {claim &&
+                <>
+                    <Title>
+                        {/* <span style={{ color: "gray" }}>Услуга:</span><br />  */}
+                        {claim.Description}
+                    </Title>
+                    <Form
+                        // onValuesChange={onValuesChange}
+                        // onFieldsChange={onFieldsChange}
+                        scrollToFirstError
+                        form={form}
+                        layout="vertical"
+                        onFinish={onFinish}
+                        onKeyDown={handleKeyDown}
+                        style={{ maxWidth: 800, margin: "0 auto" }}
+                    >
+                        {claim.Fields?.sort((a, b) => a.lineNum - b.lineNum).map((item, index) => {
+                            // console.log(item)
+                            if (item.component_Type.includes("ComponentsDivider"))
+                                return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
+                            if (item.component_Type.includes("ComponentsTextInput"))
+                                return <TextInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                            if (item.component_Type.includes("ComponentsNumberInput"))
+                                return <NumberInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                            if (item.component_Type.includes("ComponentsSliderInput"))
+                                return <SliderInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                            if (item.component_Type.includes("ComponentsLinkInput"))
+                                return <SelectInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                            if (item.component_Type.includes("ComponentsTableInput"))
+                                return <TableInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                            if (item.component_Type.includes("ComponentsDateInput"))
+                                return <DateInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+
+                        })}
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">Подать заявку на услугу</Button>
+                        </Form.Item>
+                    </Form>
+
+                    <Drawer
+                        title="Поля формы"
+                        placement="bottom"
+                        closable={false}
+                        onClose={onClose}
+                        open={open}
+                        key="bottom"
+                    >
+                        {Object.keys(formValue).map(item => {
+                            // console.log(item)
+                        })}
+                        {/* <Descriptions
                             bordered
                             title="Данные для отправки в 1С"
                             items={Object.keys(formValue)
@@ -92,11 +134,11 @@ export default function NewClaim() {
                                     label: item,
                                     children: formValue[item],
                                 }))} /> */}
-          {/* <Paragraph><pre>{JSON.stringify(formValue)}</pre></Paragraph> */}
-          <Paragraph>Данные вывелись в консоле</Paragraph>
-        </Drawer>
-      </>
-      
-    </div>
-  );
+                        {/* <Paragraph><pre>{JSON.stringify(formValue)}</pre></Paragraph> */}
+                        <Paragraph>Данные вывелись в консоле</Paragraph>
+                    </Drawer>
+                </>}
+
+        </div>
+    );
 }
