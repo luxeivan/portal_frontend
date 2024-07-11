@@ -40,9 +40,22 @@ export default function NewClaim() {
         const arr = []
         for (const [key, value] of Object.entries(values)) {
             // console.log(`${key}: ${value}`);
+            // console.log(typeof value)
+            if (Array.isArray(value)) {
+                console.log(value)
+                values[key].forEach(element => {
+                    for (const [key, value] of Object.entries(element)) {
+                        if (typeof value === 'object' && Object.hasOwn(value, '$d')) {
+                            element[key] = moment(value).format()
+                        } 
+                    }
+                });
+            }
+        
+
+
             if (typeof value === 'object' && Object.hasOwn(value, '$d')) {
                 values[key] = moment(value).format()
-
             }
         }
         // values.map(item => {
