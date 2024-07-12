@@ -13,7 +13,7 @@ export default function TextInput({ name = 'name', label = 'Label', disabled = f
         // setValue(e.target.value)
         // form.setFieldValue(name, e.target.value)
     }
-    console.log(lenght)
+    // console.log(lenght)
     const formElement = (
         <Form.Item
             name={name}
