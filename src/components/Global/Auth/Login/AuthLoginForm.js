@@ -111,10 +111,9 @@ export default function AuthLoginForm() {
   );
 }
 
-
-
+//Старый 
 // import React, { useState } from "react";
-// import { Button, Form, Input, Alert, Space, Flex,Typography } from "antd";
+// import { Button, Form, Input, Alert, Space, Flex, Typography } from "antd";
 // import useAuth from "../../../../stores/useAuth";
 // import CodeForm from "./CodeForm";
 // import styles from "./AuthLoginForm.module.css";
@@ -194,11 +193,11 @@ export default function AuthLoginForm() {
 //         >
 //           <Input.Password />
 //         </Form.Item>
-//         <Typography.Text>Забыли пароль или поменялся номер телефона - пройдите регистрацию заново с тем же Email</Typography.Text>
+//         <Typography.Text>
+//           Забыли пароль или поменялся номер телефона - пройдите регистрацию заново с тем же Email
+//         </Typography.Text>
 
-//         <Form.Item
-//           {...tailFormItemLayout}
-//         >
+//         <Form.Item {...tailFormItemLayout}>
 //           {!isCodeRequested &&
 //             <Button
 //               type="primary"
