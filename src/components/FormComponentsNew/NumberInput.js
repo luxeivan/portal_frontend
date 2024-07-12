@@ -15,6 +15,7 @@ export default function NumberInput({ name = 'name', label = 'Label', disabled =
                 }
             ]}
             hidden={depend && !(depend.value == fieldDepends)}
+            initialValue={0}
         >
             <InputNumber
                 min={min}

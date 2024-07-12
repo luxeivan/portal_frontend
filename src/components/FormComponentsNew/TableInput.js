@@ -4,13 +4,14 @@ import TextInput from '../../components/FormComponentsNew/TextInput'
 import NumberInput from '../../components/FormComponentsNew/NumberInput'
 import SliderInput from '../../components/FormComponentsNew/SliderInput'
 import SelectInput from '../../components/FormComponentsNew/SelectInput'
+import DateInput from '../../components/FormComponentsNew/DateInput'
 import DividerForm from '../../components/FormComponentsNew/DividerForm'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 export default function TableInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, options = [], dependOf = false, howDepend = false, Fields = [] }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
-    // const nameTable = name
+    const nameTable = name
     const fieldDepends = Form.useWatch(dependOf, form);
     const formElement = (
         <Form.List name={name}>
@@ -25,13 +26,15 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
                                 if (item.component_Type.includes("ComponentsDivider"))
                                     return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
                                 if (item.component_Type.includes("ComponentsTextInput"))
-                                    return <TextInput key={index} label={item.label} {...item.component_Expanded} {...item} name={[name, item.name_Key]} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                    return <TextInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("ComponentsNumberInput"))
-                                    return <NumberInput key={index} label={item.label} {...item.component_Expanded} {...item} name={[name, item.name_Key]} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                    return <NumberInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("ComponentsSliderInput"))
-                                    return <SliderInput key={index} label={item.label} {...item.component_Expanded} {...item} name={[name, item.name_Key]} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                    return <SliderInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("ComponentsLinkInput"))
-                                    return <SelectInput key={index} label={item.label} {...item.component_Expanded} {...item} name={[name, item.name_Key]} dependOf={item.dependName?.Ref_Key} howDepend={item.dependСondition} />
+                                    return <SelectInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [nameTable,name, item.dependIdLine] : false} howDepend={item.dependСondition} />
+                                if (item.component_Type.includes("ComponentsDateInput"))
+                                    return <DateInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                             })}
                             <MinusCircleOutlined onClick={() => remove(name)} />
                         </Space>

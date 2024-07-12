@@ -3,7 +3,7 @@ import { Button, Form, Input, InputNumber, message, Space, Select } from 'antd';
 
 export default function SelectInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, options = [], dependOf = false, howDepend = false }) {
     const form = Form.useFormInstance();
-    // console.log(dependOf)
+    console.log(dependOf)
     const fieldDepends = Form.useWatch(dependOf, form);
     const formElement = (
         <Form.Item
