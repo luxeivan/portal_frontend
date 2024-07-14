@@ -172,6 +172,10 @@ export default function AppHeader() {
           alignItems: "center",
           justifyContent: "space-between",
           background: colorBgContainer,
+          position: "fixed",
+          left: 0,
+          right: 0,
+          zIndex:1000
         }}
       >
         <div className="demo-logo" style={{ padding: 10, marginRight: 20 }}>

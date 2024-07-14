@@ -24,13 +24,13 @@ export default function DateInput({ name = 'name', part = 'Дата', label = 'L
                 ]}
             >
                 {part === "Дата" &&
-                    <DatePicker format={"DD.MM.YYYY"} placeholder={placeholder} disabled={disabled} />
+                    <DatePicker format={"DD.MM.YYYY"} placeholder={placeholder}  />
                 }
                 {part === "ДатаВремя" &&
-                    <DatePicker format={"DD.MM.YYYY HH:mm"} showTime placeholder={placeholder} disabled={disabled} />
+                    <DatePicker format={"DD.MM.YYYY HH:mm"} showTime placeholder={placeholder}  />
                 }
                 {part === "Время" &&
-                    <TimePicker format={"HH:mm"} placeholder={placeholder} disabled={disabled} />
+                    <TimePicker format={"HH:mm"} placeholder={placeholder}  />
                 }
             </Form.Item>
         </ConfigProvider>

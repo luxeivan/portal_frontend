@@ -140,7 +140,7 @@ const menuItemsMobile = menuItems.map(item => {
               // inlineCollapsed={collapsed}
               mode={"horizontal"}
               items={menuItemsMobile}
-              overflowedIndicator={<Flex vertical align="center" justify="center" className={styles.menuItem}>
+              overflowedIndicator={<Flex vertical align="center" justify="center" className={styles.menuItemMobile}>
                 <div>
                   <Text><MenuOutlined style={iconStyle}/></Text>
                 </div>

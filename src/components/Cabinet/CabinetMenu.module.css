@@ -1,8 +1,18 @@
 .menuItem {
   line-height: 15px;
   /* gap: 10px; */
+  /* padding: 10px 0;
+  height: 100%; */
+  position: fixed;
+  left: 0;
+  top: 64px;
+  bottom: 0;
+}
+
+.menuItemMobile {
+  line-height: 15px;
+  
   padding: 10px 0;
-  height: 100%;
 }
 
 .icon {
@@ -21,7 +31,8 @@
 }
 
 .menuContainer {
-  height: 88vh;
+  /* height: 88vh; */
+  z-index: 1000;
 }
 
 
@@ -72,6 +83,10 @@
 
   .menuItem {
     height: inherit;
+    position: inherit;
+    padding: 10px 0;
   }
+
+  .menuItemMobile {}
 
 }

@@ -19,7 +19,7 @@ export default function SelectInput({ name = 'name', label = 'Label', disabled =
             <Select
                 style={{ width: 120 }}
                 options={options}
-                disabled={disabled}
+                // disabled={disabled}
             />
         </Form.Item>
     )
@@ -33,7 +33,7 @@ export default function SelectInput({ name = 'name', label = 'Label', disabled =
         if (show) return formElement
     }
     if (dependOf && howDepend && howDepend.max) {
-        form.setFieldValue(name, '')
+        // form.setFieldValue(name, '')
         if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     }
 }

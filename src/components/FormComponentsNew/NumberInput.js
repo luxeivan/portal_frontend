@@ -15,7 +15,7 @@ export default function NumberInput({ name = 'name', label = 'Label', disabled =
                 }
             ]}
             hidden={depend && !(depend.value == fieldDepends)}
-            initialValue={0}
+            initialValue={min}
         >
             <InputNumber
                 min={min}
@@ -23,7 +23,7 @@ export default function NumberInput({ name = 'name', label = 'Label', disabled =
                 step={step}
                 // value={inputValue}
                 // onChange={onChange}
-                disabled={disabled}
+                // disabled={disabled}
             />
         </Form.Item>
     )

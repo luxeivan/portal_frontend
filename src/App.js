@@ -128,7 +128,9 @@ export default function App() {
           <Layout>
             <Flex>
               {auth && <CabinetMenu />}
-              <Content style={{ padding: "0 24px", minHeight: "calc(100vh - 120px)" }}              >
+              <Content className={`${auth ? "mainContentAuth" : "mainContent"}`} 
+              // style={{ margin: `64px 0 0 ${auth && document.documentElement.clientWidth > 575 ? "186px" : "0px"}` }}
+              >
                 <Routes>
                   <Route path="/" element={<Main />} />
                   <Route path="/formonec" element={<FormOneC />} />

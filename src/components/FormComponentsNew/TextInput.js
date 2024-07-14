@@ -1,4 +1,4 @@
-import { Form, theme } from "antd";
+import { Form, theme,Input } from "antd";
 import { MaskedInput } from "antd-mask-input";
 import { useState } from "react";
 
@@ -37,8 +37,11 @@ export default function TextInput({
       // valuePropName={name} colorPrimaryHover
     >
       {/* <ReactInputMask className='ant-input css-dev-only-do-not-override-1sbryic ant-input-outlined ant-input-status-success' onChange={handlerOnChange} /> */}
-      {/* <Input disabled={disabled} placeholder={placeholder} /> */}
-      <MaskedInput
+      <Input 
+      // disabled={disabled} 
+      placeholder={placeholder} />
+      {/* <MaskedInput
+      
         maskOptions={{
           mask: inputMask == "" ? false : inputMask,
           overwrite: "shift",
@@ -49,7 +52,7 @@ export default function TextInput({
           //  borderColor: token.colorBorder
         }}
         className={"ant-picker-outlined"}
-      />
+      /> */}
       {/* <ReactInputMask mask={mask} disabled={disabled} onChange={handlerOnChange} >
                 {(inputProps) => {
                     console.log(inputProps)
