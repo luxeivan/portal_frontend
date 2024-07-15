@@ -12,20 +12,26 @@ export default function SliderInput({ name = 'name', label = 'Label', disabled =
         }
         setInputValue(value);
     };
+    const marks = {
+        0: '0',
+        7: '7',
+        15: '15',
+        
+      };
     return (
-        <Flex align='center' gap={10}>            
-                    <Form.Item
-                        name={name}
-                        label={label}
-                        rules={[
-                            {
-                                required: required,
-                                message: 'Это поле обязательное'
-                            }
-                        ]}
-                        initialValue={min}
-                    >
-                        <InputNumber
+        // <Flex align='center' gap={10}>
+            <Form.Item
+                name={name}
+                label={label}
+                rules={[
+                    {
+                        required: required,
+                        message: 'Это поле обязательное'
+                    }
+                ]}
+                initialValue={min}
+            >
+                {/* <InputNumber
                             controls={false}
                             precision={2}
                             min={min}
@@ -34,19 +40,21 @@ export default function SliderInput({ name = 'name', label = 'Label', disabled =
                             value={inputValue}
                             onChange={onChange}
                             disabled={disabled}
-                        />
-                    </Form.Item>
-                
-                    <Slider
-                    style={{flex:1}}
-                        min={min}
-                        max={max}
-                        onChange={onChange}
-                        value={typeof inputValue === 'number' ? inputValue : 0}
-                        step={step}
-                        disabled={disabled}
-                    />
-                
-        </Flex>
+                            /> */}
+                <Slider
+                    // style={{ flex: 1 }}
+                    marks={marks}
+                    min={min}
+                    max={max}
+                    onChange={onChange}
+                    value={typeof inputValue === 'number' ? inputValue : 0}
+                    step={step}
+                    // disabled={disabled}
+                    tooltip={{ open: true }}
+                />
+            </Form.Item>
+
+
+        // </Flex>
     )
 }

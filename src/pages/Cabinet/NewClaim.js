@@ -47,11 +47,11 @@ export default function NewClaim() {
                     for (const [key, value] of Object.entries(element)) {
                         if (typeof value === 'object' && Object.hasOwn(value, '$d')) {
                             element[key] = moment(value).format()
-                        } 
+                        }
                     }
                 });
             }
-        
+
 
 
             if (typeof value === 'object' && Object.hasOwn(value, '$d')) {
@@ -66,7 +66,7 @@ export default function NewClaim() {
         //     return item
         // })
         setFormValue(values)
-        createClaim({ service: claim.Ref_Key, values })
+        // createClaim({ service: claim.Ref_Key, values })
         showDrawer()
     }
     // const onValuesChange = (changedValues, allValues) => {
@@ -96,6 +96,35 @@ export default function NewClaim() {
                     <Form
                         // onValuesChange={onValuesChange}
                         // onFieldsChange={onFieldsChange}
+                        // disabled={true}
+                        initialValues={{
+                            "e6df7c2f-fbc7-4081-9739-22e5c8899b2a": "Шишкин",
+                            "bd747d89-07c2-4eee-807a-0d2b967e5919": "Иван",
+                            "32471271-451e-48a2-9b6d-7cc08623004a": "Васильевич",
+                            "0a3c3161-b8c0-4f78-b700-43e410add383": 10.81,
+                            "c6a0a250-7cd8-4901-b714-57c8bbd2a117": [
+                                {
+                                    "f5182723-819d-4764-8beb-f7005d689176": 2,
+                                    "e2433f38-3dd7-4b85-9b9b-cc83b663b761": moment("2024-07-12T21:00:00.000Z"),
+                                    "929673fd-aeb2-45bf-af41-35959544ff35": moment("2024-07-12T21:00:00.000Z"),
+                                    "a52e0c76-501e-430a-a402-685c25c991b4": "787b5e8c-16a3-11ef-8681-c8d9d20cde1f"
+                                },
+                                {
+                                    "f5182723-819d-4764-8beb-f7005d689176": 8,
+                                    "e2433f38-3dd7-4b85-9b9b-cc83b663b761": moment("2024-07-12T21:00:00.000Z"),
+                                    "929673fd-aeb2-45bf-af41-35959544ff35": moment("2024-07-12T21:00:00.000Z"),
+                                    "54a4140d-2691-4979-990e-bdb59ee2b05f": "787b5e8d-16a3-11ef-8681-c8d9d20cde1f"
+                                }
+                            ],
+                            "10f131c7-5298-4a77-a619-b2a88efd92be": [
+                                {
+                                    "f8837efe-63b3-46e0-a35e-bbff2f15b2f6": 10,
+                                    "218a7df4-b033-4c9d-82a7-1b9858595c3d": "787b5e8c-16a3-11ef-8681-c8d9d20cde1f"
+                                }
+                            ],
+                            "efae150a-fddd-46a3-87e5-acfbf7a65653": moment("2024-07-12T21:00:00.000Z"),
+                            "6cd65203-62ad-4cf4-b0b3-5ec2a493a3f0": "787b5e8d-16a3-11ef-8681-c8d9d20cde1f"
+                        }}
                         scrollToFirstError
                         form={form}
                         layout="vertical"

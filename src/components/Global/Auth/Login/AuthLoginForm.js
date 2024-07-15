@@ -3,7 +3,11 @@ import { Button, Form, Input, Alert, Space, Flex, Typography } from "antd";
 import useAuth from "../../../../stores/useAuth";
 import CodeForm from "./CodeForm";
 import styles from "./AuthLoginForm.module.css";
-import { formItemLayout, tailFormItemLayout } from '../../../../components/configSizeForm'
+import {
+  formItemLayout,
+  tailFormItemLayout,
+} from "../../../../components/configSizeForm";
+import ErrorModal from "../../../../components/FormComponentsNew/ErrorModal";
 
 export default function AuthLoginForm() {
   const {
@@ -15,9 +19,15 @@ export default function AuthLoginForm() {
     startAuthTimer,
   } = useAuth();
 
+  const [error, setError] = useState(null); // Состояние для хранения ошибок
+
   const onFinish = async (values) => {
-    login(values.email, values.password);
-    startAuthTimer();
+    try {
+      login(values.email, values.password);
+      startAuthTimer();
+    } catch (err) {
+      setError(err.message); // Устанавливаем ошибку в состояние
+    }
   };
 
   const onFinishFailed = ({ values, errorFields }) => {
@@ -80,41 +90,50 @@ export default function AuthLoginForm() {
           <Input.Password />
         </Form.Item>
         <Typography.Text>
-          Забыли пароль или поменялся номер телефона - пройдите регистрацию заново с тем же Email
+          Забыли пароль или поменялся номер телефона - пройдите регистрацию
+          заново с тем же Email
         </Typography.Text>
 
         <Form.Item {...tailFormItemLayout}>
-          {!isCodeRequested &&
+          {!isCodeRequested && (
             <Button
               type="primary"
               htmlType="submit"
               className={styles.submitButton}
               disabled={authTimer > 0}
             >
-              {'Вход'}
+              {"Вход"}
             </Button>
-          }
-          {isCodeRequested &&
+          )}
+          {isCodeRequested && (
             <Button
               type="primary"
               htmlType="submit"
               className={styles.submitButton}
               disabled={authTimer > 0}
             >
-              {authTimer > 0 ? `Повторить через ${authTimer} секунд(ы)` : 'Отправить СМС еще раз'}
+              {authTimer > 0
+                ? `Повторить через ${authTimer} секунд(ы)`
+                : "Отправить СМС еще раз"}
             </Button>
-          }
+          )}
         </Form.Item>
       </Form>
       {isCodeRequested && <CodeForm />}
+      {error && (
+        <ErrorModal
+          visible={true}
+          error={error}
+          onClose={() => setError(null)}
+        />
+      )}
     </>
   );
 }
 
-
-
+//Старый
 // import React, { useState } from "react";
-// import { Button, Form, Input, Alert, Space, Flex,Typography } from "antd";
+// import { Button, Form, Input, Alert, Space, Flex, Typography } from "antd";
 // import useAuth from "../../../../stores/useAuth";
 // import CodeForm from "./CodeForm";
 // import styles from "./AuthLoginForm.module.css";
@@ -194,11 +213,11 @@ export default function AuthLoginForm() {
 //         >
 //           <Input.Password />
 //         </Form.Item>
-//         <Typography.Text>Забыли пароль или поменялся номер телефона - пройдите регистрацию заново с тем же Email</Typography.Text>
+//         <Typography.Text>
+//           Забыли пароль или поменялся номер телефона - пройдите регистрацию заново с тем же Email
+//         </Typography.Text>
 
-//         <Form.Item
-//           {...tailFormItemLayout}
-//         >
+//         <Form.Item {...tailFormItemLayout}>
 //           {!isCodeRequested &&
 //             <Button
 //               type="primary"

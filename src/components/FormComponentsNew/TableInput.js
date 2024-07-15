@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Input, InputNumber, message, Space, Select } from 'antd';
+import { Button, Form, Input, InputNumber, message, Space, Select, Flex } from 'antd';
 import TextInput from '../../components/FormComponentsNew/TextInput'
 import NumberInput from '../../components/FormComponentsNew/NumberInput'
 import SliderInput from '../../components/FormComponentsNew/SliderInput'
@@ -18,7 +18,12 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
             {(fields, { add, remove }) => (
                 <>
                     {fields.map(({ key, name, }) => (
-                        <Space key={key} style={{ display: 'flex', marginBottom: 8, alignItems: "center", padding: 10 }} align="baseline">
+                        <Flex key={key} 
+                        gap={10}
+                        wrap={true}
+                        style={{border:"1px solid lightgray",borderRadius:"10px",padding:"10px",margin:"5px"}}
+                        // style={{ display: 'flex', marginBottom: 8, alignItems: "center", padding: 10 }} 
+                        align="baseline">
                             {Fields.map((item, index) => {
                                 // console.log('name: ', name)
                                 // console.log('item.name_Key: ', item.name_Key)
@@ -37,7 +42,7 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
                                     return <DateInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                             })}
                             <MinusCircleOutlined onClick={() => remove(name)} />
-                        </Space>
+                        </Flex>
                     ))}
                     <Form.Item>
                         <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>

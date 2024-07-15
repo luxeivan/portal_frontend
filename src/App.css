@@ -44,27 +44,48 @@ button,
   border-color: #444444;
 }
 
+.mainContent {
+  padding: 0 24px;
+  min-height: calc(100vh - 120px);
+  margin: 64px 0 0 0;
+}
+
+.mainContentAuth {
+  padding: 0 24px;
+  min-height: calc(100vh - 120px);
+  margin: 64px 0 0 186px;
+}
+
 @media (max-width: 1199px) {
   html {
     font-size: 14px;
   }
+
   .content {
     padding: 0 30px;
   }
 }
+
 @media (max-width: 991px) {
   html {
     font-size: 12px;
   }
+
   .content {
     padding: 0 20px;
   }
 }
+
 @media (max-width: 575px) {
   html {
     font-size: 10px;
   }
+
   .content {
     padding: 0 10px;
+  }
+
+  .mainContentAuth {
+    margin: 64px 0 0 0;
   }
 }
