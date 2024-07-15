@@ -66,7 +66,7 @@ export default function NewClaim() {
         //     return item
         // })
         setFormValue(values)
-        // createClaim({ service: claim.Ref_Key, values })
+        createClaim({ service: claim.Ref_Key, values })
         showDrawer()
     }
     // const onValuesChange = (changedValues, allValues) => {
