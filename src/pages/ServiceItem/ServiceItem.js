@@ -47,6 +47,7 @@ export default function ServiceItem() {
   const chain = useServices((state) => state.chain);
   const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   useEffect(() => {
+    // console.log(key)
     fetchServiceItem(key);
     //fetchServiceChain(key)
   }, [level2, key]);

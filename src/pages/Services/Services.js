@@ -38,7 +38,7 @@ export default function Services() {
   // }, [services, filterServices]);
 
   // console.log("Filtered Services in Component:", filteredServices);
-console.log(location.pathname)
+// console.log(location.pathname)
   return (
     <>
       <AppHelmet
