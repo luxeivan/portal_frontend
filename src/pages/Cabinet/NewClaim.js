@@ -32,7 +32,7 @@ export default function NewClaim() {
     }, [])
 
     useEffect(() => {
-        console.log(newClaim)
+        // console.log(newClaim)
         if (newClaim) {
             showDrawer()
         }
@@ -45,7 +45,7 @@ export default function NewClaim() {
         clearNewClaim()
         setOpen(false);
     };
-    //console.log(claim)
+    console.log(serviceItem)
     const onFinish = (values) => {
         console.log(values)
         const arr = []
@@ -143,21 +143,21 @@ export default function NewClaim() {
                         onKeyDown={handleKeyDown}
                         style={{ maxWidth: 800, margin: "0 auto" }}
                     >
-                        {serviceItem.Fields?.sort((a, b) => a.lineNum - b.lineNum).map((item, index) => {
+                        {serviceItem.fields?.sort((a, b) => a.lineNum - b.lineNum).map((item, index) => {
                             // console.log(item)
-                            if (item.component_Type.includes("ComponentsDivider"))
+                            if (item.component_Type.includes("Divider"))
                                 return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
-                            if (item.component_Type.includes("ComponentsTextInput"))
+                            if (item.component_Type.includes("TextInput"))
                                 return <TextInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsNumberInput"))
+                            if (item.component_Type.includes("NumberInput"))
                                 return <NumberInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsSliderInput"))
+                            if (item.component_Type.includes("SliderInput"))
                                 return <SliderInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsLinkInput"))
+                            if (item.component_Type.includes("LinkInput"))
                                 return <SelectInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsTableInput"))
+                            if (item.component_Type.includes("TableInput"))
                                 return <TableInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsDateInput"))
+                            if (item.component_Type.includes("DateInput"))
                                 return <DateInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
 
                         })}

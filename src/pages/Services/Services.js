@@ -38,7 +38,7 @@ export default function Services() {
   // }, [services, filterServices]);
 
   // console.log("Filtered Services in Component:", filteredServices);
-// console.log(location.pathname)
+console.log(services)
   return (
     <>
       <AppHelmet
@@ -72,7 +72,7 @@ export default function Services() {
             </Title>
             {services.length > 0 &&
               <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
-                {services.sort((a, b) => a.Order - b.Order).map((item, index) => (
+                {services.sort((a, b) => a.order - b.order).map((item, index) => (
                   <Link
                     key={index}
                     to={item.IsFolder ? `/services/${item.Ref_Key}` : `/services/item/${item.Ref_Key}`}
