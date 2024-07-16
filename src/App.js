@@ -25,7 +25,7 @@ import Objects from "./pages/Cabinet/Objects/Objects";
 import Documents from "./pages/Cabinet/Documents/Documents";
 import Drafts from "./pages/Cabinet/Drafts/Drafts";
 import Checking from "./pages/Cabinet/Checking/Checking";
-import Claims from "./pages/Cabinet/Claims/Claims";
+import ClaimItem from "./pages/Cabinet/Claims/ClaimItem";
 import PuzzleGame from "./pages/Games/PuzzleGame";
 import Contacts from "./pages/Contacts/Contacts";
 import Claimers from "./pages/Cabinet/Claims/Claimers";
@@ -209,7 +209,7 @@ export default function App() {
                     <Route path="drafts" element={<Drafts />} />
                     <Route path="checking" element={<Checking />} />
                     <Route path="claimers" element={<Claimers />} />
-                    <Route path="claimers/:id" element={<Claims />} />
+                    <Route path="claimers/:id" element={<ClaimItem />} />
                     <Route path="archives" element={<Archives />} />
 
                   </Route>
