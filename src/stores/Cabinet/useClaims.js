@@ -32,7 +32,7 @@ const useNewClaim = create((set) => ({
             withCredentials: true,
         })
         set((state) => {
-            // console.log(res.data)
+            console.log(res.data)
             return {
                 claim: res.data
             }
