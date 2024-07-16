@@ -15,7 +15,7 @@ const useServices = create((set, get) => ({
         try {
             const res = await Promise.all([axios.get(`${backServer}/api/services/${key}`), axios.get(`${backServer}/api/services/item/${key}`), get().fetchServiceChain(key)])
             // const res = await axios.get(`${backServer}/api/services/${key}`)
-            //console.log(res)
+            console.log(res)
             set((state) => {
                 return {
                     services: res[0].data.value,
@@ -29,7 +29,7 @@ const useServices = create((set, get) => ({
     },
 
     fetchServiceItem: async (key) => {
-        console.log(key)
+        // console.log(key)
         set((state) => ({ serviceItem: null, isLoading: true, chain:[] }))
         try {
             const res = await Promise.all([axios.get(`${backServer}/api/services/item/${key}`), get().fetchServiceChain(key)])

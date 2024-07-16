@@ -30,9 +30,9 @@ export default function Claimers() {
             {claims &&
                 <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
                     {claims.map((item, index) =>
-                        <Link to={`/cabinet/claimers/${item.Element2_Expanded.Ref_Key}`}>
-                            <Card key={index} className={styles.styleCard} hoverable 
-                            title={`Заявка №${item.Element2_Expanded.Number}`}
+                        <Link key={index} to={`/cabinet/claimers/${item.element2_Expanded.Ref_Key}`}>
+                            <Card className={styles.styleCard} hoverable 
+                            title={`Заявка №${item.element2_Expanded.Number}`}
                             >
                                 {/* <Title level={4}>Заявка №{item.Element2_Expanded.Number}</Title> */}
                                 <Descriptions 
@@ -41,12 +41,12 @@ export default function Claimers() {
                                     {
                                         key: '1',
                                         label: 'Создана',
-                                        children: item.Element2_Expanded.Date, 
+                                        children: item.element2_Expanded.Date, 
                                     },
                                     {
                                         key: '2',
                                         label: 'По услуге',
-                                        children: item.Element2_Expanded.Template.Description, 
+                                        children: item.element2_Expanded.template.Description, 
                                     }
                                 ]}/>
                                 {/* <Flex vertical>
