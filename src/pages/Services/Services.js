@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Spin, theme, Image } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { Card, Flex, Typography, Spin, theme, Image, Breadcrumb } from "antd";
+import { Link, useParams, useLocation } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
 import folder from '../../img/catalog/folder.png'
@@ -16,6 +16,7 @@ import { Preloader } from "../../components/Main/Preloader";
 const { Title, Text } = Typography;
 
 export default function Services() {
+  const location = useLocation();
   const { colorPrimaryText } = theme.useToken().token;
   const isLoading = useServices((state) => state.isLoading);
   const services = useServices((state) => state.services);
@@ -37,7 +38,7 @@ export default function Services() {
   // }, [services, filterServices]);
 
   // console.log("Filtered Services in Component:", filteredServices);
-
+// console.log(location.pathname)
   return (
     <>
       <AppHelmet
@@ -47,10 +48,14 @@ export default function Services() {
       <Container>
         {serviceItem &&
           <>
-            <Flex className={styles.chainFlex}>
+            <Breadcrumb items={!(location.pathname == '/services'||location.pathname == '/services/') && chain && chain.map(item => ({
+              href: `/services/${item.Ref_Key}`,
+              title: item.Description
+            }))} />
+            {/* <Flex className={styles.chainFlex}>
 
               {chain && chain.map((item, index) => <div key={index}><Link to={`/services/${item.Ref_Key}`}>{item.Description}</Link><RightOutlined style={{ color: colorPrimaryText }} /></div>)}
-            </Flex>
+            </Flex> */}
             {/* <Link to={`/services/${serviceItem&&serviceItem.Parent_Key}`}><Button style={{ margin: "20px 0" }}><LeftOutlined /></Button></Link> */}
           </>
         }

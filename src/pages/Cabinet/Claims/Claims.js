@@ -2,11 +2,11 @@ import { Skeleton } from 'antd'
 import Title from 'antd/es/typography/Title'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import useNewServicetest from '../../../stores/Cabinet/useNewServicetest'
+import useClaims from '../../../stores/Cabinet/useClaims'
 
 export default function Claims() {
-    const claims = useNewServicetest(state => state.claims)
-    const fetchClaims = useNewServicetest(state => state.fetchClaims)
+    const claims = useClaims(state => state.claims)
+    const fetchClaims = useClaims(state => state.fetchClaims)
     useEffect(() => {
         fetchClaims()
     }, [])

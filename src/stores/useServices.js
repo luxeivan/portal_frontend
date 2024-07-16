@@ -29,10 +29,11 @@ const useServices = create((set, get) => ({
     },
 
     fetchServiceItem: async (key) => {
+        console.log(key)
         set((state) => ({ serviceItem: null, isLoading: true, chain:[] }))
         try {
             const res = await Promise.all([axios.get(`${backServer}/api/services/item/${key}`), get().fetchServiceChain(key)])
-             console.log(res)
+            //  console.log(res)
             set((state) => {
                 return {
                     serviceItem: res[0].data,
