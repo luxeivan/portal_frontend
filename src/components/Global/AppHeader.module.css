@@ -16,6 +16,80 @@
   animation: pawClick 1s ease-in-out;
 }
 
+.speechBubble {
+  position: absolute;
+  top: -60px;
+  right: 100px;
+  background: white;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.speechBubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  right: 20px;
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+@keyframes pawClick {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 1199px) {
+  .rightMenu {
+    display: block;
+  }
+}
+
+@media (max-width: 991px) {
+  .rightMenu {
+    display: none;
+  }
+  .mainMenu {
+    display: none;
+  }
+  .mobileMenu {
+    display: block;
+  }
+  .header {
+    padding: 0 10px;
+  }
+}
+@media only screen and (max-width: 575px) {
+}
+
+/* .rightMenu {
+  display: block;
+}
+.mobileMenu {
+  display: none;
+}
+
+.catPaw {
+  position: absolute;
+  top: 15px;
+  right: 120px;
+  width: 60px;
+  height: 60px;
+  background: url("../../img/header/cat-paw.png") no-repeat center center;
+  background-size: contain;
+  animation: pawClick 1s ease-in-out;
+}
+
 @keyframes pawClick {
   0%,
   100% {
@@ -49,4 +123,4 @@
 @media only screen and (max-width: 575px) {
 
   
-}
+} */
