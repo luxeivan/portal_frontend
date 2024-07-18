@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Button, Dropdown, Layout, Menu, Space, Switch, theme } from "antd";
+import {
+  Button,
+  Dropdown,
+  Layout,
+  Menu,
+  Space,
+  Switch,
+  Popover,
+  theme,
+} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import logoWhite from "../../img/header/logoWhite.svg";
 import logoBlue from "../../img/header/logoBlue.svg";
@@ -46,7 +55,7 @@ export default function AppHeader() {
 
   const [clickCount, setClickCount] = useState(0);
   const [showPaw, setShowPaw] = useState(false);
-  const [showSpeechBubble, setShowSpeechBubble] = useState(false);
+  const [showPopover, setShowPopover] = useState(false);
   const [error, setError] = useState(null); // Состояние для хранения ошибок
   const [errorVisible, setErrorVisible] = useState(false); // Состояние для управления видимостью модального окна с ошибкой
 
@@ -54,13 +63,13 @@ export default function AppHeader() {
     try {
       if (clickCount >= 1) {
         setShowPaw(true);
-        setShowSpeechBubble(true);
+        setShowPopover(true);
         setTimeout(() => {
           toggleDarkMode();
           setShowPaw(false);
-          setShowSpeechBubble(false);
+          setShowPopover(false);
           setClickCount(0);
-        }, 2000); // Задержка для анимации лапки и диалогового окна
+        }, 3000); // Задержка для анимации лапки и диалогового окна
       }
     } catch (err) {
       setError(err.message); // Устанавливаем ошибку в состояние
@@ -205,14 +214,12 @@ export default function AppHeader() {
         <div className={styles.rightMenu}>
           {rightMenuArea}
           {showPaw && (
-            <>
+            <Popover
+              content="МосОблЭнерго никогда не отключают свет"
+              open={showPopover}
+            >
               <div className={styles.catPaw}></div>
-              {showSpeechBubble && (
-                <div className={styles.speechBubble}>
-                  МосОблЭнерго никогда не отключают свет
-                </div>
-              )}
-            </>
+            </Popover>
           )}
         </div>
         <div className={styles.mobileMenu}>
