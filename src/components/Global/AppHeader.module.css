@@ -47,6 +47,57 @@
   }
 }
 @media only screen and (max-width: 575px) {
+}
+
+/* .rightMenu {
+  display: block;
+}
+.mobileMenu {
+  display: none;
+}
+
+.catPaw {
+  position: absolute;
+  top: 15px;
+  right: 120px;
+  width: 60px;
+  height: 60px;
+  background: url("../../img/header/cat-paw.png") no-repeat center center;
+  background-size: contain;
+  animation: pawClick 1s ease-in-out;
+}
+
+@keyframes pawClick {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 1199px) {
+  .rightMenu {
+    display: block;
+  }
+}
+
+@media (max-width: 991px) {
+  .rightMenu {
+    display: none;
+  }
+  .mainMenu {
+    display: none;
+  }
+  .mobileMenu {
+    display: block;
+  }
+  .header {
+    padding: 0 10px;
+  }
+}
+@media only screen and (max-width: 575px) {
 
   
-}
+} */
