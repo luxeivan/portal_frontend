@@ -1,4 +1,4 @@
-import { Form, theme } from "antd";
+import { Form, theme, Input } from "antd";
 import { MaskedInput } from "antd-mask-input";
 import { useState } from "react";
 
@@ -27,12 +27,16 @@ export default function TextInput({
           message: "Это поле обязательное",
         },
       ]}
+    // valuePropName={name} colorPrimaryHover
     >
-      <MaskedInput
-        mask={inputMask}
-        maxLength={length}
-        disabled={disabled}
-        placeholder={placeholder}
+      {/* <ReactInputMask className='ant-input css-dev-only-do-not-override-1sbryic ant-input-outlined ant-input-status-success' onChange={handlerOnChange} /> */}
+      <Input placeholder={placeholder} />
+      {/* <MaskedInput 
+        maskOptions={{
+          mask: inputMask == "" ? false : inputMask,
+          overwrite: "shift",
+        }}
+        maxLength={lenght == 0 ? false : lenght}
         style={{
           backgroundColor: token.colorBgContainer,
           color: token.colorText,

@@ -2,11 +2,35 @@ import { create } from 'zustand'
 import axios from "axios";
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 const useNewClaim = create((set) => ({
-    claim: {},
-    newClaim: {},
-    fetchClaim: async (key) => {
+    claims: [],
+    claim: null,
+    newClaim: null,
+    clearNewClaim: () => {
+        set({ newClaim: null})
+    },
+    fetchClaims: async (key) => {
+        set((state) => ({ claims: null }))
+        const res = await axios.get(`${backServer}/api/cabinet/claims`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+            withCredentials: true,
+        })
+        set((state) => {
+            console.log(res.data)
+            return {
+                claims: res.data
+            }
+        })
+    },
+    fetchClaimItem: async (key) => {
         set((state) => ({ claim: null }))
-        const res = await axios.get(`${backServer}/api/services/item/${key}`)
+        const res = await axios.get(`${backServer}/api/cabinet/claims/${key}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+            withCredentials: true,
+        })
         set((state) => {
             console.log(res.data)
             return {

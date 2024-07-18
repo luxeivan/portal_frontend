@@ -1,7 +1,8 @@
 import { Form, Typography, Button, Drawer, Descriptions } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useNewClaim from "../../stores/Cabinet/useNewClaim";
+import useClaims from "../../stores/Cabinet/useClaims";
+import useServices from "../../stores/useServices";
 import TextInput from "../../components/FormComponentsNew/TextInput";
 import NumberInput from "../../components/FormComponentsNew/NumberInput";
 import SliderInput from "../../components/FormComponentsNew/SliderInput";
@@ -17,24 +18,34 @@ import moment from "moment";
 const { Title, Paragraph, Text } = Typography;
 export default function NewClaim() {
     const [open, setOpen] = useState(false);
-    const [formValue, setFormValue] = useState(false);
-    const claim = useNewClaim((state) => state.claim);
-    const fetchClaim = useNewClaim((state) => state.fetchClaim);
-    const createClaim = useNewClaim((state) => state.createClaim);
-    const newClaim = useNewClaim((state) => state.newClaim);
+    // const [formValue, setFormValue] = useState(false);
+    const serviceItem = useServices((state) => state.serviceItem);
+    const fetchServiceItem = useServices((state) => state.fetchServiceItem);
+    const createClaim = useClaims((state) => state.createClaim);
+    const newClaim = useClaims((state) => state.newClaim);
+    const clearNewClaim = useClaims((state) => state.clearNewClaim);
     const { id } = useParams();
     const [form] = Form.useForm();
 
     useEffect(() => {
-        fetchClaim(id)
+        fetchServiceItem(id)
     }, [])
+
+    useEffect(() => {
+        // console.log(newClaim)
+        if (newClaim) {
+            showDrawer()
+        }
+    }, [newClaim])
+
     const showDrawer = () => {
         setOpen(true);
     };
     const onClose = () => {
+        clearNewClaim()
         setOpen(false);
     };
-    //console.log(claim)
+    console.log(serviceItem)
     const onFinish = (values) => {
         console.log(values)
         const arr = []
@@ -65,9 +76,9 @@ export default function NewClaim() {
         //     }
         //     return item
         // })
-        setFormValue(values)
-        // createClaim({ service: claim.Ref_Key, values })
-        showDrawer()
+        // setFormValue(values)
+        createClaim({ service: serviceItem.Ref_Key, values })
+        // showDrawer()
     }
     // const onValuesChange = (changedValues, allValues) => {
     //     console.log("changedValues",changedValues)
@@ -82,16 +93,16 @@ export default function NewClaim() {
             event.preventDefault();
         }
     }
-    console.log(claim)
+    // console.log(serviceItem)
     return (
         <div>
 
             <AppHelmet title={'Новая заявка'} desc={'Новая заявка - Портал цифровых услуг АО Мособлэнерго'} />
-            {claim &&
+            {serviceItem &&
                 <>
                     <Title>
                         {/* <span style={{ color: "gray" }}>Услуга:</span><br />  */}
-                        {claim.Description}
+                        {serviceItem.Description}
                     </Title>
                     <Form
                         // onValuesChange={onValuesChange}
@@ -132,21 +143,21 @@ export default function NewClaim() {
                         onKeyDown={handleKeyDown}
                         style={{ maxWidth: 800, margin: "0 auto" }}
                     >
-                        {claim.Fields?.sort((a, b) => a.lineNum - b.lineNum).map((item, index) => {
+                        {serviceItem.fields?.sort((a, b) => a.lineNum - b.lineNum).map((item, index) => {
                             // console.log(item)
-                            if (item.component_Type.includes("ComponentsDivider"))
+                            if (item.component_Type.includes("Divider"))
                                 return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
-                            if (item.component_Type.includes("ComponentsTextInput"))
+                            if (item.component_Type.includes("TextInput"))
                                 return <TextInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsNumberInput"))
+                            if (item.component_Type.includes("NumberInput"))
                                 return <NumberInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsSliderInput"))
+                            if (item.component_Type.includes("SliderInput"))
                                 return <SliderInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsLinkInput"))
+                            if (item.component_Type.includes("LinkInput"))
                                 return <SelectInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsTableInput"))
+                            if (item.component_Type.includes("TableInput"))
                                 return <TableInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                            if (item.component_Type.includes("ComponentsDateInput"))
+                            if (item.component_Type.includes("DateInput"))
                                 return <DateInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
 
                         })}
@@ -163,21 +174,13 @@ export default function NewClaim() {
                         open={open}
                         key="bottom"
                     >
-                        {Object.keys(formValue).map(item => {
-                            // console.log(item)
-                        })}
-                        {/* <Descriptions
-                            bordered
-                            title="Данные для отправки в 1С"
-                            items={Object.keys(formValue)
-                                .filter((item, index) => formValue[item] && typeof formValue[item] != 'boolean')
-                                .map((item, index) => ({
-                                    key: index,
-                                    label: item,
-                                    children: formValue[item],
-                                }))} /> */}
-                        {/* <Paragraph><pre>{JSON.stringify(formValue)}</pre></Paragraph> */}
-                        <Paragraph>Данные вывелись в консоле</Paragraph>
+                       
+                        {newClaim &&
+                            <>
+                                <Typography.Title level={3}>Создана заявка с Ref_Key: <b>{newClaim.Ref_Key}</b></Typography.Title>
+                                <Paragraph>Данные по заявке в консоле</Paragraph>
+                            </>
+                        }
                     </Drawer>
                 </>}
 

@@ -47,6 +47,7 @@ export default function ServiceItem() {
   const chain = useServices((state) => state.chain);
   const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   useEffect(() => {
+    // console.log(key)
     fetchServiceItem(key);
     //fetchServiceChain(key)
   }, [level2, key]);
@@ -56,7 +57,7 @@ export default function ServiceItem() {
   const onClose = () => {
     setOpen(false);
   };
-  // console.log(serviceItem)
+  console.log(serviceItem)
 
   return (
     <div>
@@ -92,24 +93,24 @@ export default function ServiceItem() {
                 label: "Описание",
                 children: (
                   <div>
-                    <Paragraph>{serviceItem.ShortDescription}</Paragraph>
+                    <Paragraph>{serviceItem.shortDescription}</Paragraph>
                     {/* <StrapiRichText content={serviceItem.attributes.description} /> */}
-                    <MarkDownText>{serviceItem.FullDescription}</MarkDownText>
-                    {serviceItem.DescriptionOfDocumentPreparationPeriod &&
+                    <MarkDownText>{serviceItem.fullDescription}</MarkDownText>
+                    {serviceItem.descriptionOfDocumentPreparationPeriod &&
                       <Paragraph>
                         <b>Срок подготовки документов:</b>{" "}
-                        {serviceItem.DescriptionOfDocumentPreparationPeriod}
+                        {serviceItem.descriptionOfDocumentPreparationPeriod}
                       </Paragraph>
                     }
-                    {serviceItem.DescriptionOfPeriodService &&
+                    {serviceItem.descriptionOfPeriodService &&
                       <Paragraph>
                         <b>Срок оказания услуги:</b>{" "}
-                        {serviceItem.DescriptionOfPeriodService}
+                        {serviceItem.descriptionOfPeriodService}
                       </Paragraph>
                     }
-                    {serviceItem.DescriptionOfCost &&
+                    {serviceItem.descriptionOfCost &&
                       <Paragraph>
-                        <b>Стоимость:</b> {serviceItem.DescriptionOfCost}
+                        <b>Стоимость:</b> {serviceItem.descriptionOfCost}
                       </Paragraph>
                     }
                   </div>
@@ -120,14 +121,14 @@ export default function ServiceItem() {
                 label: "Необходимая информация для подачи заявки",
                 children: (
                   <>
-                    {serviceItem.Fields && (
-                      serviceItem.Fields.map((item, index) =>
+                    {serviceItem.fields && (
+                      serviceItem.fields.map((item, index) =>
                         <Flex vertical key={index}>
                           <Paragraph>
                             {item.Value}
                           </Paragraph>
                           <Paragraph>
-                            {item.ShortDescription}
+                            {item.shortDescription}
                           </Paragraph>
                         </Flex>
                       )
@@ -143,7 +144,7 @@ export default function ServiceItem() {
                     // size="small"
                     direction="vertical"
                     current={100}
-                    items={serviceItem?.Steps?.map((item, index) => ({
+                    items={serviceItem?.steps?.map((item, index) => ({
                       icon: (
                         <div
                           className={styles.icon}
@@ -152,19 +153,19 @@ export default function ServiceItem() {
                           <Text className={styles.iconText}>{index + 1}</Text>
                         </div>
                       ),
-                      title: <><span>{item.Name}</span><InfoCircleOutlined onClick={() => { setOpenDrawerSteps(index + 1) }} style={{ marginLeft: 2, color: "rgba(0, 0, 0, 0.45)" }} /></>,
+                      title: <><span>{item.name}</span><InfoCircleOutlined onClick={() => { setOpenDrawerSteps(index + 1) }} style={{ marginLeft: 2, color: "rgba(0, 0, 0, 0.45)" }} /></>,
                       description: <>
-                        <span>{item.ShortDescription}</span>
+                        <span>{item.shortDescription}</span>
                         <Drawer
-                          title={item.Name}
+                          title={item.name}
                           placement="right"
                           onClose={() => { setOpenDrawerSteps(false) }}
                           open={openDrawerSteps === (index + 1)}
                         >
-                          <MarkDownText>{item.FullDescription || "Нет описания"}</MarkDownText>
+                          <MarkDownText>{item.fullDescription || "Нет описания"}</MarkDownText>
                         </Drawer>
                       </>,
-                      subTitle: item.PeriodDescription,
+                      subTitle: item.periodDescription,
                     }))}
                   />
                 ),
