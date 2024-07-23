@@ -76,7 +76,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
               <Slider
                 min={0}
                 max={1}
-                step={0.01}
+                step={0.1}
                 onChange={onValuesChange}
                 marks={{0:"0", 1:"1"}}
                 // tooltip={{
