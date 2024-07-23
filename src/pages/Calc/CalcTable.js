@@ -35,7 +35,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
       title: (
         <Tooltip title={column.tooltip}>
           <span>
-            {column.title}
+            {column.title}{' '}
             <InfoCircleOutlined />
           </span>
         </Tooltip>

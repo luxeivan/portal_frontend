@@ -17,7 +17,7 @@ import styles from "./ServicesItem.module.css";
 import { motion } from "framer-motion";
 import { LeftOutlined, RightOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
-import { Preloader } from "../../components/Main/Preloader";
+import Preloader from "../../components/Main/Preloader";
 
 
 const { Title, Text, Paragraph } = Typography;

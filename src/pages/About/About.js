@@ -6,7 +6,7 @@ import styles from "./About.module.css";
 import mosoblik from "../../img/about/mosoblik.png";
 import mosoblikShadow from "../../img/about/mosoblik_shadow.png";
 import useGlobal from "../../stores/useGlobal";
-import { Preloader } from "../../components/Main/Preloader";
+import Preloader from "../../components/Main/Preloader";
 
 const { Title, Paragraph } = Typography;
 

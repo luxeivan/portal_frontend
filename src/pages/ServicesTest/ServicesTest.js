@@ -12,7 +12,7 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import Container from "../../components/Container";
-import { Preloader } from "../../components/Main/Preloader";
+import Preloader from "../../components/Main/Preloader";
 import useServicesTest from "../../stores/useServicesTest";
 const { Title, Text } = Typography;
 
