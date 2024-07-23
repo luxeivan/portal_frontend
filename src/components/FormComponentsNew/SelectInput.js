@@ -17,7 +17,7 @@ export default function SelectInput({ name = 'name', label = 'Label', disabled =
             ]}
         >
             <Select
-                style={{ width: 120 }}
+                // style={{ width: 120 }}
                 options={options}
                 // disabled={disabled}
             />
