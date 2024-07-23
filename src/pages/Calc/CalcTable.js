@@ -75,10 +75,12 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
               <Slider
                 min={0}
                 max={1}
-                step={0.01}
-               
+                step={0.1}               
                 onChange={onValuesChange}
-                tooltipVisible
+                marks={{0:"0", 1:"1"}}
+                // tooltip={{
+                //   open: true,
+                // }}
               />
             </Form.Item>
           );
