@@ -19,7 +19,7 @@ const arr = [
 ];
 
 
-export const Preloader = () => {    
+export default function Preloader()  {    
     return (        
         // <div className={styles.container}>
             <motion.svg

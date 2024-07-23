@@ -36,7 +36,7 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
                                     return <NumberInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("SliderInput"))
                                     return <SliderInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
-                                if (item.component_Type.includes("LinkInput"))
+                                if (item.component_Type.includes("LinkInput")||item.component_Type.includes("EnumInput"))
                                     return <SelectInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [nameTable, name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("DateInput"))
                                     return <DateInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
