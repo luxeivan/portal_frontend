@@ -59,23 +59,23 @@ export default function AppHeader() {
   const [error, setError] = useState(null); // Состояние для хранения ошибок
   const [errorVisible, setErrorVisible] = useState(false); // Состояние для управления видимостью модального окна с ошибкой
 
-  useEffect(() => {
-    try {
-      if (clickCount >= 1) {
-        setShowPaw(true);
-        setShowPopover(true);
-        setTimeout(() => {
-          toggleDarkMode();
-          setShowPaw(false);
-          setShowPopover(false);
-          setClickCount(0);
-        }, 3000); // Задержка для анимации лапки и диалогового окна
-      }
-    } catch (err) {
-      setError(err.message); // Устанавливаем ошибку в состояние
-      setErrorVisible(true); // Показываем модальное окно с ошибкой
-    }
-  }, [clickCount, toggleDarkMode]);
+  // useEffect(() => {
+  //   try {
+  //     if (clickCount >= 1) {
+  //       setShowPaw(true);
+  //       setShowPopover(true);
+  //       setTimeout(() => {
+  //         toggleDarkMode();
+  //         setShowPaw(false);
+  //         setShowPopover(false);
+  //         setClickCount(0);
+  //       }, 3000); // Задержка для анимации лапки и диалогового окна
+  //     }
+  //   } catch (err) {
+  //     setError(err.message); // Устанавливаем ошибку в состояние
+  //     setErrorVisible(true); // Показываем модальное окно с ошибкой
+  //   }
+  // }, [clickCount, toggleDarkMode]);
 
   const handleLogout = () => {
     try {
@@ -97,10 +97,7 @@ export default function AppHeader() {
 
   const handlerDarkMode = () => {
     try {
-      setClickCount(clickCount + 1);
-      if (clickCount < 10) {
-        toggleDarkMode();
-      }
+        toggleDarkMode();      
     } catch (err) {
       setError(err.message); // Устанавливаем ошибку в состояние
       setErrorVisible(true); // Показываем модальное окно с ошибкой
@@ -213,14 +210,14 @@ export default function AppHeader() {
 
         <div className={styles.rightMenu}>
           {rightMenuArea}
-          {showPaw && (
+          {/* {showPaw && (
             <Popover
               content="МосОблЭнерго никогда не отключают свет"
               open={showPopover}
             >
               <div className={styles.catPaw}></div>
             </Popover>
-          )}
+          )} */}
         </div>
         <div className={styles.mobileMenu}>
           <Dropdown menu={{ items: itemsMobile }} trigger={["click"]}>
