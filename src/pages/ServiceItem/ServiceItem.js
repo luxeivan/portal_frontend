@@ -4,14 +4,12 @@ import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Collapse,
-  Divider,
   Drawer,
   Flex,
-  Space,
   Steps,
-  Table,
   Typography,
   theme,
+  Breadcrumb
 } from "antd";
 import ListDocs from "../../components/ServiceItem/ListDocs";
 import StrapiRichText from "../../components/StrapiRichText";
@@ -63,11 +61,14 @@ export default function ServiceItem() {
     <div>
       {serviceItem &&
         <>
-
-          <Flex className={styles.chainFlex}>
+          <Breadcrumb items={chain && chain.map(item => ({
+            href: `/services/${item.Ref_Key}`,
+            title: item.Description
+          }))} />
+          {/* <Flex className={styles.chainFlex}>
 
             {chain && chain.map((item, index) => <div key={index}><Link to={`/services/${item.Ref_Key}`}>{item.Description}</Link><RightOutlined style={{ color: colorPrimaryText }} /></div>)}
-          </Flex>
+          </Flex> */}
           {/* <Link to={`/services/${serviceItem.Parent_Key}`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link> */}
           <Title level={1} style={{ marginTop: "10px" }}>
             {/* <span style={{ color: "gray" }}>Услуга:</span><br /> */}
@@ -77,10 +78,10 @@ export default function ServiceItem() {
         </>
       }
       {isLoading &&
-          <Flex style={{ height: "300px" }} align="center" justify="center">
-            <Preloader />
-          </Flex>
-        }
+        <Flex style={{ height: "300px" }} align="center" justify="center">
+          <Preloader />
+        </Flex>
+      }
       {serviceItem &&
         <>
 
