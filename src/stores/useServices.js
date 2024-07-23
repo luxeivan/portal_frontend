@@ -56,7 +56,12 @@ const useServices = create((set, get) => ({
                     await getService(res.data.Parent_Key)
                 }
             }
-            await getService(key)
+            try {                
+                await getService(key)
+            } catch (error) {
+                console.log(error)
+                reject(error)
+            }
             chain.push({ Description: "Каталог услуг", Ref_Key: "" })
             chain.reverse().pop()
             resolve({ chain })
