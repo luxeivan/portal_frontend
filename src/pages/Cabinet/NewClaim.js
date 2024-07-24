@@ -80,8 +80,9 @@ export default function NewClaim() {
         //     return item
         // })
         // setFormValue(values)
-        createClaim({ service: serviceItem.Ref_Key, values })
+        // createClaim({ service: serviceItem.Ref_Key, values })
         // showDrawer()
+        console.log(values)
     }
     // const onValuesChange = (changedValues, allValues) => {
     //     console.log("changedValues",changedValues)
@@ -171,9 +172,11 @@ export default function NewClaim() {
                                 return <GroupInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
 
                         })}
+                        <Flex style={{marginTop:10}}>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">Подать заявку на услугу</Button>
                         </Form.Item>
+                        </Flex>
                     </Form>
 
                     <Drawer
