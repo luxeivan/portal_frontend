@@ -33,8 +33,8 @@ import Archives from "./pages/Cabinet/Claims/Archives";
 import Law from "./pages/Documentation/Law";
 import Documentation from "./pages/Documentation/Documentation";
 import FormOneC from "./components/test/FormOneC";
-import ServiceItemTest from "./pages/ServicesItemTest/ServiceItemTest";
-import ServicesTest from "./pages/ServicesTest/ServicesTest";
+// import ServiceItemTest from "./pages/ServicesItemTest/ServiceItemTest";
+// import ServicesTest from "./pages/ServicesTest/ServicesTest";
 import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 // import JumpGame from "./pages/Game/JumpGame";
@@ -161,7 +161,7 @@ export default function App() {
 
 
                   {/* ---Тестовая база-------------------------------------------------------------------- */}
-                  <Route
+                  {/* <Route
                     path="/servicestest"
                     element={
                       // <Container>
@@ -184,7 +184,7 @@ export default function App() {
                         <ServiceItemTest />
                       </Container>
                     }
-                  />
+                  /> */}
                   {/* ----------------------------------------------------------------------- */}
                   <Route path="/about" element={<About />} />
                   <Route path="/calc" element={<Calc />} />
@@ -201,7 +201,7 @@ export default function App() {
                   >
 
                     <Route path="new-claim/:id" element={<Container><NewClaim /></Container>} />
-                    <Route path="new-claimtest/:id" element={<Container><NewServicetest /></Container>} />
+                    {/* <Route path="new-claimtest/:id" element={<Container><NewServicetest /></Container>} /> */}
                     <Route path="profile" element={<Profile />} />
                     <Route path="subjects" element={<Subjects />} />
                     <Route path="documents" element={<Documents />} />

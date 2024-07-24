@@ -142,6 +142,7 @@ const useAuth = create((set, get) => {
             jwt: localStorage.getItem("jwt"),
           });
           validJwt = res.data;
+          
         } catch (error) {
           console.log(error)
           return false
