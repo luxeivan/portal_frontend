@@ -4,7 +4,7 @@ import { redirect } from "react-router-dom";
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER
 const useAuth = create((set, get) => {
   return {
-    auth: false,
+    auth: true,
     isAuthModalOpen: false,
     isCodeModalOpen: false,
     loginError: "",
