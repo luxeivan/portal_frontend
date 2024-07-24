@@ -4,7 +4,10 @@ import useDocuments from "../../../stores/Cabinet/useDocuments";
 import axios from "axios";
 import pdf from "../../../img/docs/pdf.svg";
 import ModalUpdateDocument from "./ModalUpdateDocument";
-const backServer = process.env.REACT_APP_BACK_BACK_SERVER
+import ErrorModal from "../../FormComponentsNew/ErrorModal"; // Импортируем ErrorModal
+
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
+
 export default function ModalViewDocument() {
   const openModalView = useDocuments((state) => state.openModalView);
   const setOpenModalView = useDocuments((state) => state.setOpenModalView);
@@ -16,6 +19,8 @@ export default function ModalViewDocument() {
 
   const [fileUrls, setFileUrls] = useState([]);
   const [loadingFiles, setLoadingFiles] = useState(false);
+  const [error, setError] = useState(null); // Состояние для хранения ошибки
+  const [errorVisible, setErrorVisible] = useState(false); // Состояние для управления видимостью модального окна с ошибкой
 
   const getFile = async (relativePath) => {
     try {
@@ -35,6 +40,8 @@ export default function ModalViewDocument() {
       return url;
     } catch (error) {
       console.error("Ошибка загрузки файла:", error);
+      setError(error.message); // Устанавливаем ошибку в состояние
+      setErrorVisible(true); // Показываем модальное окно с ошибкой
       throw error;
     }
   };
@@ -59,6 +66,8 @@ export default function ModalViewDocument() {
           setFileUrls(urls);
         } catch (error) {
           console.error("Ошибка загрузки файлов:", error);
+          setError(error.message); // Устанавливаем ошибку в состояние
+          setErrorVisible(true); // Показываем модальное окно с ошибкой
         } finally {
           setLoadingFiles(false);
         }
@@ -67,52 +76,67 @@ export default function ModalViewDocument() {
     }
   }, [document]);
 
+  const closeModal = () => {
+    setErrorVisible(false);
+  };
+
   return (
-    <Modal
-      open={openModalView}
-      title="Документ"
-      onCancel={() => setOpenModalView()}
-      footer={null}
-      bodyStyle={{ padding: 0 }}
-    >
-      {loadingDocument || loadingFiles ? (
-        <Flex
-          style={{ width: "100%", height: "100px" }}
-          align="center"
-          justify="center"
-        >
-          <Spin size="large" />
-        </Flex>
-      ) : (
-        document &&
-        document.files && (
-          <Descriptions
-            column={{
-              xs: 1,
-              sm: 1,
-              md: 1,
-              lg: 1,
-              xl: 1,
-              xxl: 1,
-            }}
-            title={
-              nameDocs.find((item) => item.Ref_Key === document.nameDoc_Key)
-                ?.Description
-            }
+    <>
+      <Modal
+        open={openModalView}
+        title="Документ"
+        onCancel={() => setOpenModalView()}
+        footer={null}
+        bodyStyle={{ padding: 0 }}
+      >
+        {loadingDocument || loadingFiles ? (
+          <Flex
+            style={{ width: "100%", height: "100px" }}
+            align="center"
+            justify="center"
           >
-            {document.files.map((item, index) => (
-              <Descriptions.Item key={index} style={{ textAlign: "center" }}>
-                {item.fileName.endsWith(".pdf") ? (
-                  <a
-                    href={fileUrls[index]}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "#e37020", fontSize: "16px", width: "100%" }}
-                  >
-                    <Card
-                      hoverable
-                      style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginBottom: 16 }}
+            <Spin size="large" />
+          </Flex>
+        ) : (
+          document &&
+          document.files && (
+            <Descriptions
+              column={{
+                xs: 1,
+                sm: 1,
+                md: 1,
+                lg: 1,
+                xl: 1,
+                xxl: 1,
+              }}
+              title={
+                nameDocs.find((item) => item.Ref_Key === document.nameDoc_Key)
+                  ?.Description
+              }
+            >
+              {document.files.map((item, index) => (
+                <Descriptions.Item key={index} style={{ textAlign: "center" }}>
+                  {item.fileName.endsWith(".pdf") ? (
+                    <a
+                      href={fileUrls[index]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: "#e37020",
+                        fontSize: "16px",
+                        width: "100%",
+                      }}
                     >
+                      <Card
+                        hoverable
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "100%",
+                          marginBottom: 16,
+                        }}
+                      >
                         <div
                           style={{
                             display: "flex",
@@ -128,26 +152,28 @@ export default function ModalViewDocument() {
                             style={{ width: "64px", color: "#ff4d4f" }}
                           />
                         </div>
-                    </Card>
-                  </a>
-                ) : (
-                  <Image
-                    src={fileUrls[index]}
-                    alt={item.fileName}
-                    style={{
-                      maxWidth: "50%",
-                      display: "block",
-                      margin: "0 auto",
-                    }}
-                  />
-                )}
-              </Descriptions.Item>
-            ))}
-          </Descriptions>
-        )
-      )}
-      <ModalUpdateDocument />
-    </Modal>
+                      </Card>
+                    </a>
+                  ) : (
+                    <Image
+                      src={fileUrls[index]}
+                      alt={item.fileName}
+                      style={{
+                        maxWidth: "50%",
+                        display: "block",
+                        margin: "0 auto",
+                      }}
+                    />
+                  )}
+                </Descriptions.Item>
+              ))}
+            </Descriptions>
+          )
+        )}
+        <ModalUpdateDocument />
+      </Modal>
+      <ErrorModal visible={errorVisible} error={error} onClose={closeModal} />
+    </>
   );
 }
 
