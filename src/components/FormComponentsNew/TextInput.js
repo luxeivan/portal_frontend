@@ -12,6 +12,7 @@ export default function TextInput({
   howDepend = false,
   inputMask = false,
   lenght = false,
+  type=false
 }) {
   const { token } = theme.useToken();
   const [value, setValue] = useState();
@@ -37,7 +38,7 @@ export default function TextInput({
     // valuePropName={name} colorPrimaryHover
     >
       {/* <ReactInputMask className='ant-input css-dev-only-do-not-override-1sbryic ant-input-outlined ant-input-status-success' onChange={handlerOnChange} /> */}
-      <Input placeholder={placeholder} />
+      <Input placeholder={placeholder} maxLength={lenght} />
       {/* <MaskedInput 
         maskOptions={{
           mask: inputMask == "" ? false : inputMask,
