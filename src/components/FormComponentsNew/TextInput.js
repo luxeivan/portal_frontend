@@ -1,6 +1,7 @@
 import { Form, theme, Input, AutoComplete } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
 export default function TextInput({
   name = "name",
@@ -12,7 +13,7 @@ export default function TextInput({
   howDepend = false,
   inputMask = false,
   lenght = false,
-  type = false, 
+  specialField: type = false,
 }) {
   const { token } = theme.useToken();
   const [value, setValue] = useState("");
@@ -21,12 +22,12 @@ export default function TextInput({
   const fieldDepends = Form.useWatch(dependOf, form);
 
   useEffect(() => {
-    if (type === "Фамилия" && value) {
+    if (["Фамилия", "Имя", "Отчество", "ИНН"].includes(type) && value) {
       const fetchSuggestions = async () => {
         try {
-          const response = await axios.get("/getDaData", {
+          const response = await axios.get(`${backServer}/getDaData`, {
             params: {
-              type: "Фамилия",
+              type,
               query: value,
             },
           });
@@ -60,8 +61,7 @@ export default function TextInput({
         },
       ]}
     >
-      {/* Проверка типа и использование AutoComplete для отображения подсказок */}
-      {type === "Фамилия" ? (
+      {["Фамилия", "Имя", "Отчество", "ИНН"].includes(type) ? (
         <AutoComplete
           options={suggestions.map((suggestion) => ({ value: suggestion }))}
           onChange={handlerOnChange}
@@ -89,10 +89,106 @@ export default function TextInput({
     if (show) return formElement;
   }
   if (dependOf && howDepend && howDepend.min && howDepend.max) {
-    if (fieldDepends >= howDepend.min && howDepend <= howDepend.max)
-      return formElement;
+    if (fieldDepends >= howDepend.min && howDepend.max) return formElement;
   }
 }
+
+// import { Form, theme, Input, AutoComplete } from "antd";
+// import { useState, useEffect } from "react";
+// import axios from "axios";
+// const backServer = process.env.REACT_APP_BACK_BACK_SERVER
+
+// export default function TextInput({
+//   name = "name",
+//   label = "Label",
+//   disabled = false,
+//   placeholder = "Пример",
+//   required = false,
+//   dependOf = false,
+//   howDepend = false,
+//   inputMask = false,
+//   lenght = false,
+//   specialField: type = false,
+// }) {
+//   const { token } = theme.useToken();
+//   const [value, setValue] = useState("");
+//   const [suggestions, setSuggestions] = useState([]); // Состояние для подсказок
+//   const form = Form.useFormInstance();
+//   const fieldDepends = Form.useWatch(dependOf, form);
+
+//   useEffect(() => {
+//     if (type === "Фамилия" && value) {
+//       const fetchSuggestions = async () => {
+//         try {
+//           const response = await axios.get(`${backServer}${'/getDaData'}`, {
+//             params: {
+//               type: "Фамилия",
+//               query: value,
+//             },
+//           });
+//           setSuggestions(
+//             response.data.data.map((suggestion) => suggestion.value)
+//           );
+//         } catch (error) {
+//           console.error("Error fetching suggestions:", error);
+//         }
+//       };
+
+//       const debounceFetch = setTimeout(fetchSuggestions, 300);
+//       return () => clearTimeout(debounceFetch);
+//     } else {
+//       setSuggestions([]);
+//     }
+//   }, [value, type]);
+
+//   const handlerOnChange = (value) => {
+//     setValue(value);
+//   };
+
+//   const formElement = (
+//     <Form.Item
+//       name={name}
+//       label={label}
+//       rules={[
+//         {
+//           required: required,
+//           message: "Это поле обязательное",
+//         },
+//       ]}
+//     >
+//       {/* Проверка типа и использование AutoComplete для отображения подсказок */}
+//       {type === "Фамилия" ? (
+//         <AutoComplete
+//           options={suggestions.map((suggestion) => ({ value: suggestion }))}
+//           onChange={handlerOnChange}
+//           value={value}
+//           placeholder={placeholder}
+//           disabled={disabled}
+//         />
+//       ) : (
+//         <Input
+//           placeholder={placeholder}
+//           maxLength={lenght}
+//           disabled={disabled}
+//         />
+//       )}
+//     </Form.Item>
+//   );
+
+//   if (!dependOf) return formElement;
+//   if (dependOf && howDepend && howDepend.values.length > 0) {
+//     let show = false;
+//     howDepend.values.forEach((item) => {
+//       if (item.value === "true") item.value = true;
+//       if (item.value == fieldDepends) show = true;
+//     });
+//     if (show) return formElement;
+//   }
+//   if (dependOf && howDepend && howDepend.min && howDepend.max) {
+//     if (fieldDepends >= howDepend.min && howDepend <= howDepend.max)
+//       return formElement;
+//   }
+// }
 
 // import { Form, theme, Input } from "antd";
 // import { MaskedInput } from "antd-mask-input";
