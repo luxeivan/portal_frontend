@@ -50,7 +50,16 @@ export default function TextInput({
 
   useEffect(() => {
     if (
-      ["Фамилия", "Имя", "Отчество", "ИНН", "Регион", "Город"].includes(type)
+      [
+        "Фамилия",
+        "Имя",
+        "Отчество",
+        "ИНН",
+        "Страна",
+        "Регион",
+        "Город",
+        "Улица",
+      ].includes(type)
     ) {
       debouncedFetchSuggestions(value);
     } else {
@@ -110,7 +119,6 @@ export default function TextInput({
         "Удостоверяющий документ",
         "Улица",
         "Электронный адрес",
-        "Город",
       ].includes(type) ? (
         <AutoComplete
           options={suggestions.map((suggestion) => ({ value: suggestion }))}
