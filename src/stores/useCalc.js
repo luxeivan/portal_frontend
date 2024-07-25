@@ -30,7 +30,7 @@ export default function useCalc() {
       section.items.forEach((item, itemIndex) => {
         const key = `${sectionIndex}-${itemIndex}`;
         const inputValue = parseFloat(values[key].value);
-        const countValue = parseFloat(values[key].count) || 0; // Убедитесь, что значение 0 по умолчанию
+        const countValue = parseInt(values[key].count, 10) || 0;
         const usageCoefficient =
           parseFloat(values[key].usageCoefficient) ||
           usageCoefficients[section.section];
@@ -38,14 +38,11 @@ export default function useCalc() {
 
         // Проверяем, что значение введено корректно, есть формула и countValue больше 0
         if (!isNaN(inputValue) && formula && countValue > 0) {
-          // Вычисляем результат по формуле
           const result = eval(
             formula.replace("count", countValue).replace("value", inputValue)
           );
-          // Вычисляем потребляемую мощность
           const consumedPower = result * usageCoefficient;
           total += consumedPower;
-          // Добавляем данные для таблицы
           tableData.push([
             item.name,
             inputValue.toFixed(2),
