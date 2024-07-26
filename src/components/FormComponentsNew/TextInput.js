@@ -89,6 +89,7 @@ export default function TextInput({
         "Отчество",
         "ИНН",
         "Адрес",
+        "Город",
         "Банк - наименование",
         "БИК",
         "Дата выдачи документа",
@@ -120,6 +121,7 @@ export default function TextInput({
         "Удостоверяющий документ",
         "Улица",
         "Электронный адрес",
+        "НомерДома"
       ].includes(type) ? (
         <AutoComplete
           options={suggestions.map((suggestion) => ({ value: suggestion }))}
