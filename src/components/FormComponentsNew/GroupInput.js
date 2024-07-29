@@ -37,7 +37,8 @@ export default function GroupInput({ name = 'name', label = 'Label', disabled = 
                     </>
             }
         ]}
-            defaultActiveKey={['1']} />
+            defaultActiveKey={['1']} 
+            style={{marginBottom:24}}/>
 
     )
     if (!dependOf) return formElement

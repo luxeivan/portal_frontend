@@ -80,7 +80,7 @@ export default function NewClaim() {
         //     return item
         // })
         // setFormValue(values)
-        // createClaim({ service: serviceItem.Ref_Key, values })
+        createClaim({ service: serviceItem.Ref_Key, values })
         // showDrawer()
         console.log(values)
     }
