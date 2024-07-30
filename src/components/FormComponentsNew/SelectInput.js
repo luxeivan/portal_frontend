@@ -15,6 +15,7 @@ export default function SelectInput({ name = 'name', label = 'Label', disabled =
                     message: 'Это поле обязательное'
                 }
             ]}
+            style={{flex:1}}
         >
             <Select
                 // style={{ width: 120 }}

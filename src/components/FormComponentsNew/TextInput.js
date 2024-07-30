@@ -44,7 +44,7 @@ export default function TextInput({
   };
 
   const debouncedFetchSuggestions = useCallback(
-    debounce(fetchSuggestions, 800),
+    debounce(fetchSuggestions, 500),
     []
   );
 
@@ -55,6 +55,7 @@ export default function TextInput({
         "Имя",
         "Отчество",
         "ИНН",
+        "АдресПолный",
         "Страна",
         "Регион",
         "Город",
@@ -89,6 +90,7 @@ export default function TextInput({
         "Отчество",
         "ИНН",
         "Адрес",
+        "АдресПолный",
         "Город",
         "Банк - наименование",
         "БИК",
