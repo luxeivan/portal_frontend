@@ -27,19 +27,21 @@ const AddressInput = ({
         params: {
           type: "АдресПолный",
           query: text,
-          from_bound: bound,
-          to_bound: bound,
-          locations: locations,
         },
       })
       .then((response) => {
         console.log("Ответ с бэкенда:", response.data);
-        setOptions(
-          response.data.map((item) => ({
-            value: item.value,
-            label: item.value,
-          }))
-        );
+        // Убедитесь, что response.data содержит массив suggestions
+        if (response.data && response.data.data) {
+          setOptions(
+            response.data.data.map((item) => ({
+              value: item.value,
+              label: item.value,
+            }))
+          );
+        } else {
+          setOptions([]);
+        }
       })
       .catch((error) => {
         console.error("Ошибка запроса к бэкенду:", error);
