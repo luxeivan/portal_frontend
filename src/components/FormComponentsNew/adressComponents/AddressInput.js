@@ -8,7 +8,7 @@ const AddressInput = ({
   name = "name",
   label = "Label",
   disabled = false,
-  placeholder = "placeholder",
+  placeholder = "Введите полный адрес или его части",
   required = false,
   depend = false,
   bound = false,
@@ -19,16 +19,18 @@ const AddressInput = ({
   const [options, setOptions] = useState([]);
   const [address, setAddress] = useState({});
 
-  const fetchSuggestions = debounce((text) => {
+  const fetchSuggestions = debounce((text, type) => {
     const params = {
-      type: "АдресПолный",
+      type,
       query: text,
     };
 
-    if (address.country)
+    if (type !== "country" && address.country)
       params.locations = [{ country_iso_code: address.country }];
-    if (address.region) params.locations = [{ region_fias_id: address.region }];
-    if (address.city) params.locations = [{ city_fias_id: address.city }];
+    if (type !== "region" && address.region)
+      params.locations = [{ region_fias_id: address.region }];
+    if (type !== "city" && address.city)
+      params.locations = [{ city_fias_id: address.city }];
 
     axios
       .get(`${backServer}/getDaData`, { params })
@@ -67,8 +69,14 @@ const AddressInput = ({
       city: selectedData.city_with_type,
       area: selectedData.area_with_type,
       street: selectedData.street_with_type,
+      [name]: data,
     });
     setOptions([]);
+  };
+
+  const handleFieldChange = (value, field) => {
+    setAddress((prevAddress) => ({ ...prevAddress, [field]: value }));
+    if (value) fetchSuggestions(value, field);
   };
 
   return (
@@ -86,26 +94,46 @@ const AddressInput = ({
       >
         <AutoComplete
           options={options}
-          onSelect={onSelect}
-          onSearch={(text) => fetchSuggestions(text)}
+          onSelect={(value, option) => onSelect(value, option)}
+          onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
           placeholder={placeholder}
           disabled={disabled}
         />
       </Form.Item>
       <Form.Item name="country" label="Страна">
-        <AutoComplete />
+        <AutoComplete
+          onSelect={(value) => handleFieldChange(value, "country")}
+          onSearch={(text) => fetchSuggestions(text, "Регоин")}
+          options={options}
+        />
       </Form.Item>
       <Form.Item name="region" label="Регион">
-        <AutoComplete />
+        <AutoComplete
+          onSelect={(value) => handleFieldChange(value, "region")}
+          onSearch={(text) => fetchSuggestions(text, "Регион")}
+          options={options}
+        />
       </Form.Item>
       <Form.Item name="city" label="Город">
-        <AutoComplete />
+        <AutoComplete
+          onSelect={(value) => handleFieldChange(value, "city")}
+          onSearch={(text) => fetchSuggestions(text, "Город")}
+          options={options}
+        />
       </Form.Item>
       <Form.Item name="area" label="Район">
-        <AutoComplete />
+        <AutoComplete
+          onSelect={(value) => handleFieldChange(value, "area")}
+          onSearch={(text) => fetchSuggestions(text, "Район")}
+          options={options}
+        />
       </Form.Item>
       <Form.Item name="street" label="Улица">
-        <AutoComplete />
+        <AutoComplete
+          onSelect={(value) => handleFieldChange(value, "street")}
+          onSearch={(text) => fetchSuggestions(text, "Улица")}
+          options={options}
+        />
       </Form.Item>
     </>
   );
