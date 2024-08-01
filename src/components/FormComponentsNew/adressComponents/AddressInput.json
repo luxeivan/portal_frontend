@@ -1,0 +1,7 @@
+[
+  { "name": "country", "label": "Страна", "type": "Страна" },
+  { "name": "region", "label": "Регион", "type": "Регион" },
+  { "name": "city", "label": "Город", "type": "Город" },
+  { "name": "area", "label": "Район", "type": "Район" },
+  { "name": "street", "label": "Улица", "type": "Улица" }
+]
