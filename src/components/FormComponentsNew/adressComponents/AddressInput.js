@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AutoComplete, Form, Button } from "antd";
+import { AutoComplete, Form, Button, Flex } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
 import AddressModal from "./AddressModal";
@@ -10,7 +10,14 @@ const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 const AddressInput = ({
   name = "name",
   label = "Label",
-  placeholder = "Введите полный адрес или его части",
+  disabled = false,
+  placeholder = "Пример",
+  required = false,
+  dependOf = false,
+  howDepend = false,
+  inputMask = false,
+  lenght = false,
+  specialField: type = false,
 }) => {
   const form = Form.useFormInstance();
   const [options, setOptions] = useState([]);
@@ -90,28 +97,35 @@ const AddressInput = ({
   };
 
   return (
-    <>
-      <Form.Item
-        name={name}
-        label={label}
-        rules={[{ required: true, message: "Это поле обязательное" }]}
-      >
-        <AutoComplete
-          options={options}
-          onSelect={(value, option) => onSelect(value, option)}
-          onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
-          placeholder={placeholder}
-        />
-      </Form.Item>
-      <Button type="primary" onClick={openModal}>
-        Моего адреса нет в списке
-      </Button>
-      <AddressModal
-        visible={modalVisible}
-        onSave={handleModalSave}
-        onCancel={() => setModalVisible(false)}
-      />
-    </>
+    <Form.List name={name}>
+      {(fields, { add, remove }) => (
+        <>
+          <Flex align="center" gap={20}>
+            <Form.Item
+              name={'fullAddress'}
+              label={label}
+              rules={[{ required: required, message: "Это поле обязательное" }]}
+              style={{ flex: 1 }}
+            >
+              <AutoComplete
+                options={options}
+                onSelect={(value, option) => onSelect(value, option)}
+                onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
+                placeholder={placeholder}
+              />
+            </Form.Item>
+            <Button type="primary" onClick={openModal}>
+              Моего адреса нет в списке
+            </Button>
+          </Flex>
+          <AddressModal
+            visible={modalVisible}
+            onSave={handleModalSave}
+            onCancel={() => setModalVisible(false)}
+          />
+        </>
+      )}
+    </Form.List>
   );
 };
 
