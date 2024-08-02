@@ -2,7 +2,15 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { ConfigProvider, Flex, Layout, theme } from "antd";
 import "./App.css";
-import { Route, BrowserRouter, Routes, redirect, Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter,
+  Routes,
+  redirect,
+  Navigate,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import Main from "./pages/Main";
 import AppHeader from "./components/Global/AppHeader";
 import AppFooter from "./components/Global/AppFooter";
@@ -37,16 +45,17 @@ import FormOneC from "./components/test/FormOneC";
 // import ServicesTest from "./pages/ServicesTest/ServicesTest";
 import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
+import AddressInputTest from "./components/FormComponentsNew/adressComponents/AddressInputTest";
 // import JumpGame from "./pages/Game/JumpGame";
 
 const { Content } = Layout;
 
 export default function App() {
   const { darkMode, checkDarkMode } = useGlobal();
-  const auth = useAuth(state => state.auth);
-  const checkJWT = useAuth(state => state.checkJWT);
-  const toggleModal = useAuth(state => state.toggleModal);
-  const logout = useAuth(state => state.logout);
+  const auth = useAuth((state) => state.auth);
+  const checkJWT = useAuth((state) => state.checkJWT);
+  const toggleModal = useAuth((state) => state.toggleModal);
+  const logout = useAuth((state) => state.logout);
 
   //Надо проверить как работает(должен срабатывать на просроченный JWT
   useEffect(() => {
@@ -75,11 +84,10 @@ export default function App() {
     useAuth.getState().checkJWT();
   }, []);
 
-
   const { colorPrimary } = theme.useToken().token;
 
   const loader = () => {
-    console.log(1)
+    console.log(1);
     if (!auth) {
       return redirect("/");
     }
@@ -128,8 +136,9 @@ export default function App() {
           <Layout>
             <Flex>
               {auth && <CabinetMenu />}
-              <Content className={`${auth ? "mainContentAuth" : "mainContent"}`} 
-              // style={{ margin: `64px 0 0 ${auth && document.documentElement.clientWidth > 575 ? "186px" : "0px"}` }}
+              <Content
+                className={`${auth ? "mainContentAuth" : "mainContent"}`}
+                // style={{ margin: `64px 0 0 ${auth && document.documentElement.clientWidth > 575 ? "186px" : "0px"}` }}
               >
                 <Routes>
                   <Route path="/" element={<Main />} />
@@ -158,7 +167,6 @@ export default function App() {
                       </Container>
                     }
                   />
-
 
                   {/* ---Тестовая база-------------------------------------------------------------------- */}
                   {/* <Route
@@ -190,17 +198,25 @@ export default function App() {
                   <Route path="/calc" element={<Calc />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/docs" element={<Documentation />} />
+                  <Route path="/test" element={<AddressInputTest />} />
                   <Route path="/login" element={<Login />} />
                   {/* ----------------------------------------- */}
 
-                  <Route path="cabinet"
+                  <Route
+                    path="cabinet"
                     // action={() => {
                     //   console.log(123123)
                     // }}
                     element={<PrivateRoute />}
                   >
-
-                    <Route path="new-claim/:id" element={<Container><NewClaim /></Container>} />
+                    <Route
+                      path="new-claim/:id"
+                      element={
+                        <Container>
+                          <NewClaim />
+                        </Container>
+                      }
+                    />
                     {/* <Route path="new-claimtest/:id" element={<Container><NewServicetest /></Container>} /> */}
                     <Route path="profile" element={<Profile />} />
                     <Route path="subjects" element={<Subjects />} />
@@ -211,7 +227,7 @@ export default function App() {
                     <Route path="claimers" element={<Claimers />} />
                     <Route path="claimers/:id" element={<ClaimItem />} />
                     <Route path="archives" element={<Archives />} />
-
+                    
                   </Route>
 
                   {/* ----------------------------------------- */}
@@ -224,7 +240,7 @@ export default function App() {
           </Layout>
           <AppFooter />
         </BrowserRouter>
-      </Layout >
-    </ConfigProvider >
+      </Layout>
+    </ConfigProvider>
   );
 }
