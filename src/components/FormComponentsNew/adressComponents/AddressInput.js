@@ -51,8 +51,26 @@ const AddressInput = ({
   // Обработка выбора из списка предложений
   const onSelect = (data, option) => {
     setAddress(option.data);
-    form.setFieldsValue({ [name]: data });
+    const updatedAddress = { ...option.data };
+    const formattedAddress = Object.entries(updatedAddress)
+      .filter(([key, value]) => value)
+      .map(([key, value]) => {
+        const field = fieldConfig.find((f) => f.name === key);
+        return field ? `${field.label}: ${value}` : `${key}: ${value}`;
+      })
+      .join(", ");
+
+    form.setFieldsValue({ [name]: formattedAddress, ...updatedAddress });
     setOptions([]);
+  };
+
+  // Открытие модального окна
+  const openModal = () => setModalVisible(true);
+
+  // Сохранение данных из модального окна
+  const handleModalSave = (values) => {
+    updateAddress(values);
+    setModalVisible(false);
   };
 
   // Обновление адреса и формирование строки полного адреса
@@ -68,16 +86,7 @@ const AddressInput = ({
       })
       .join(", ");
 
-    form.setFieldsValue({ [name]: formattedAddress });
-  };
-
-  // Открытие модального окна
-  const openModal = () => setModalVisible(true);
-
-  // Сохранение данных из модального окна
-  const handleModalSave = (values) => {
-    updateAddress(values);
-    setModalVisible(false);
+    form.setFieldsValue({ [name]: formattedAddress, ...updatedAddress });
   };
 
   return (
@@ -108,11 +117,13 @@ const AddressInput = ({
 
 export default AddressInput;
 
+
 // import React, { useState } from "react";
 // import { AutoComplete, Form, Button } from "antd";
 // import debounce from "lodash/debounce";
 // import axios from "axios";
-// import AddressModal from "./AddressModal"; // Не забудь добавить импорт AddressModal
+// import AddressModal from "./AddressModal";
+// import fieldConfig from "./AddressInput.json";
 
 // const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
@@ -171,7 +182,10 @@ export default AddressInput;
 
 //     const formattedAddress = Object.entries(updatedAddress)
 //       .filter(([key, value]) => value)
-//       .map(([key, value]) => `${key}: ${value}`)
+//       .map(([key, value]) => {
+//         const field = fieldConfig.find((f) => f.name === key);
+//         return field ? `${field.label}: ${value}` : `${key}: ${value}`;
+//       })
 //       .join(", ");
 
 //     form.setFieldsValue({ [name]: formattedAddress });
