@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import useClaims from "../../stores/Cabinet/useClaims";
 import useServices from "../../stores/useServices";
 import TextInput from "../../components/FormComponentsNew/TextInput";
+import SwitchInput from "../../components/FormComponentsNew/SwitchInput";
 import NumberInput from "../../components/FormComponentsNew/NumberInput";
 import SliderInput from "../../components/FormComponentsNew/SliderInput";
 import SelectInput from "../../components/FormComponentsNew/SelectInput";
@@ -106,101 +107,47 @@ export default function NewClaim() {
             {serviceItem.fields
               ?.sort((a, b) => a.lineNum - b.lineNum)
               .map((item, index) => {
-                if (item.component_Type.includes("Divider"))
-                  return (
-                    <DividerForm
-                      key={index}
-                      {...item.component_Expanded}
-                      label={item.label}
-                    />
-                  );
-                if (item.component_Type.includes("TextInput"))
-                  return (
-                    <TextInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("NumberInput"))
-                  return (
-                    <NumberInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("SliderInput"))
-                  return (
-                    <SliderInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (
-                  item.component_Type.includes("LinkInput") ||
-                  item.component_Type.includes("EnumInput")
+                if (item.component_Type.includes("Divider")) return (
+                  <DividerForm key={index} {...item.component_Expanded} label={item.label} />
                 )
-                  return (
-                    <SelectInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("TableInput"))
-                  return (
-                    <TableInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("DateInput"))
-                  return (
-                    <DateInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
-                if (item.component_Type.includes("GroupFieldsInput"))
-                  return (
-                    <GroupInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={item.idLine}
-                      dependOf={item.dependIdLine}
-                      howDepend={item.dependСondition}
-                    />
-                  );
+                
+                if (item.component_Type.includes("TextInput")) return (
+                  <TextInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                )
+                
+                if (item.component_Type.includes("NumberInput")) return (
+                  <NumberInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                )
+                
+                if (item.component_Type.includes("SliderInput")) return (
+                  <SliderInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                )
+                
+                if (item.component_Type.includes("LinkInput") || item.component_Type.includes("EnumInput")) return (
+                  <SelectInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                )
+                
+                if (item.component_Type.includes("TableInput")) return (
+                  <TableInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                )
+                
+                if (item.component_Type.includes("DateInput")) return (
+                  <DateInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                )
+                
+                if (item.component_Type.includes("SwitchInput")) return (
+                  <SwitchInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                )
+                if (item.component_Type.includes("AddressInput")) return (
+                  <AddressInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                )
+                
+                if (item.component_Type.includes("GroupFieldsInput")) return (
+                  <GroupInput key={index}{...item.component_Expanded}{...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                )
+
               })}
-            <AddressInput
-              name="fullAddress"
-              label="Адрес полный"
-              placeholder="Введите полный адрес или его части"
-              required
-            />
+            
             <Flex style={{ marginTop: 10 }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
