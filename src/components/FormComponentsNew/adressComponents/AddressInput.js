@@ -56,18 +56,34 @@ const AddressInput = ({
   }, 500);
 
   // Обработка выбора из списка предложений
-  const onSelect = (data, option) => {
-    setAddress(option.data);
+  const onSelect = (value, option) => {
     const updatedAddress = { ...option.data };
-    const formattedAddress = Object.entries(updatedAddress)
+
+    // Фильтруем и переводим на русский нужные поля
+    const filteredAddress = {
+      Индекс: updatedAddress.postal_code,
+      Страна: updatedAddress.country,
+      Регион: updatedAddress.region_with_type,
+      Район: updatedAddress.area_with_type,
+      Город: updatedAddress.city_with_type,
+      Улица: updatedAddress.street_with_type,
+      "Номер дома": updatedAddress.house,
+    };
+
+    console.log("Хочу увидеть updatedAddress", updatedAddress);
+    setAddress(filteredAddress);
+
+    const formattedAddress = Object.entries(filteredAddress)
       .filter(([key, value]) => value)
-      .map(([key, value]) => {
-        const field = fieldConfig.find((f) => f.name === key);
-        return field ? `${field.label}: ${value}` : `${key}: ${value}`;
-      })
+      .map(([key, value]) => `${key}: ${value}`)
       .join(", ");
 
-    form.setFieldsValue({ [name]: formattedAddress, ...updatedAddress });
+    console.log("Хочу увидеть formattedAddress", formattedAddress);
+    form.setFieldsValue({
+      [name]: formattedAddress,
+      fullAddress: formattedAddress,
+      ...filteredAddress,
+    });
     setOptions([]);
   };
 
@@ -83,57 +99,62 @@ const AddressInput = ({
   // Обновление адреса и формирование строки полного адреса
   const updateAddress = (newData) => {
     const updatedAddress = { ...address, ...newData };
-    setAddress(updatedAddress);
 
-    const formattedAddress = Object.entries(updatedAddress)
+    // Фильтруем и переводим на русский нужные поля
+    const filteredAddress = {
+      Индекс: updatedAddress.postal_code,
+      Страна: updatedAddress.country,
+      Регион: updatedAddress.region_with_type,
+      Район: updatedAddress.area_with_type,
+      Город: updatedAddress.city_with_type,
+      Улица: updatedAddress.street_with_type,
+      "Номер дома": updatedAddress.house,
+    };
+
+    setAddress(filteredAddress);
+
+    const formattedAddress = Object.entries(filteredAddress)
       .filter(([key, value]) => value)
-      .map(([key, value]) => {
-        const field = fieldConfig.find((f) => f.name === key);
-        return field ? `${field.label}: ${value}` : `${key}: ${value}`;
-      })
+      .map(([key, value]) => `${key}: ${value}`)
       .join(", ");
 
-    form.setFieldsValue({ [name]: formattedAddress, ...updatedAddress });
+    form.setFieldsValue({ [name]: formattedAddress, ...filteredAddress });
   };
 
   return (
-    <Form.List name={name}>
-      {(fields, { add, remove }) => (
-        <>
-          <Flex align="center" gap={20}>
-            <Form.Item
-              name={'fullAddress'}
-              label={label}
-              rules={[{ required: required, message: "Это поле обязательное" }]}
-              style={{ flex: 1 }}
-            >
-              <AutoComplete
-                options={options}
-                onSelect={(value, option) => onSelect(value, option)}
-                onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
-                placeholder={placeholder}
-              />
-            </Form.Item>
-            <Button type="primary" onClick={openModal}>
-              Моего адреса нет в списке
-            </Button>
-          </Flex>
-          <AddressModal
-            visible={modalVisible}
-            onSave={handleModalSave}
-            onCancel={() => setModalVisible(false)}
+    <>
+      <Flex align="center" gap={20}>
+        <Form.Item
+          name={name}
+          label={label}
+          rules={[{ required: required, message: "Это поле обязательное" }]}
+          style={{ flex: 1 }}
+        >
+          <AutoComplete
+            options={options}
+            onSelect={(value, option) => onSelect(value, option)}
+            onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
+            placeholder={placeholder}
           />
-        </>
-      )}
-    </Form.List>
+        </Form.Item>
+        <Button type="primary" onClick={openModal}>
+          Моего адреса нет в списке
+        </Button>
+      </Flex>
+      <AddressModal
+        visible={modalVisible}
+        onSave={handleModalSave}
+        onCancel={() => setModalVisible(false)}
+      />
+    </>
   );
 };
 
 export default AddressInput;
 
-
+//Старое
 // import React, { useState } from "react";
-// import { AutoComplete, Form, Button } from "antd";
+// import { AutoComplete, Form, Button, Flex } from "antd";
 // import debounce from "lodash/debounce";
 // import axios from "axios";
 // import AddressModal from "./AddressModal";
@@ -144,7 +165,14 @@ export default AddressInput;
 // const AddressInput = ({
 //   name = "name",
 //   label = "Label",
-//   placeholder = "Введите полный адрес или его части",
+//   disabled = false,
+//   placeholder = "Пример",
+//   required = false,
+//   dependOf = false,
+//   howDepend = false,
+//   inputMask = false,
+//   lenght = false,
+//   specialField: type = false,
 // }) => {
 //   const form = Form.useFormInstance();
 //   const [options, setOptions] = useState([]);
@@ -185,8 +213,26 @@ export default AddressInput;
 //   // Обработка выбора из списка предложений
 //   const onSelect = (data, option) => {
 //     setAddress(option.data);
-//     form.setFieldsValue({ [name]: data });
+//     const updatedAddress = { ...option.data };
+//     const formattedAddress = Object.entries(updatedAddress)
+//       .filter(([key, value]) => value)
+//       .map(([key, value]) => {
+//         const field = fieldConfig.find((f) => f.name === key);
+//         return field ? `${field.label}: ${value}` : `${key}: ${value}`;
+//       })
+//       .join(", ");
+
+//     form.setFieldsValue({ [name]: formattedAddress, ...updatedAddress });
 //     setOptions([]);
+//   };
+
+//   // Открытие модального окна
+//   const openModal = () => setModalVisible(true);
+
+//   // Сохранение данных из модального окна
+//   const handleModalSave = (values) => {
+//     updateAddress(values);
+//     setModalVisible(false);
 //   };
 
 //   // Обновление адреса и формирование строки полного адреса
@@ -202,41 +248,39 @@ export default AddressInput;
 //       })
 //       .join(", ");
 
-//     form.setFieldsValue({ [name]: formattedAddress });
-//   };
-
-//   // Открытие модального окна
-//   const openModal = () => setModalVisible(true);
-
-//   // Сохранение данных из модального окна
-//   const handleModalSave = (values) => {
-//     updateAddress(values);
-//     setModalVisible(false);
+//     form.setFieldsValue({ [name]: formattedAddress, ...updatedAddress });
 //   };
 
 //   return (
-//     <>
-//       <Form.Item
-//         name={name}
-//         label={label}
-//         rules={[{ required: true, message: "Это поле обязательное" }]}
-//       >
-//         <AutoComplete
-//           options={options}
-//           onSelect={(value, option) => onSelect(value, option)}
-//           onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
-//           placeholder={placeholder}
-//         />
-//       </Form.Item>
-//       <Button type="primary" onClick={openModal}>
-//         Моего адреса нет в списке
-//       </Button>
-//       <AddressModal
-//         visible={modalVisible}
-//         onSave={handleModalSave}
-//         onCancel={() => setModalVisible(false)}
-//       />
-//     </>
+//     <Form.List name={name}>
+//       {(fields, { add, remove }) => (
+//         <>
+//           <Flex align="center" gap={20}>
+//             <Form.Item
+//               name={'fullAddress'}
+//               label={label}
+//               rules={[{ required: required, message: "Это поле обязательное" }]}
+//               style={{ flex: 1 }}
+//             >
+//               <AutoComplete
+//                 options={options}
+//                 onSelect={(value, option) => onSelect(value, option)}
+//                 onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
+//                 placeholder={placeholder}
+//               />
+//             </Form.Item>
+//             <Button type="primary" onClick={openModal}>
+//               Моего адреса нет в списке
+//             </Button>
+//           </Flex>
+//           <AddressModal
+//             visible={modalVisible}
+//             onSave={handleModalSave}
+//             onCancel={() => setModalVisible(false)}
+//           />
+//         </>
+//       )}
+//     </Form.List>
 //   );
 // };
 
