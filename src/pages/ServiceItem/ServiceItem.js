@@ -122,18 +122,20 @@ export default function ServiceItem() {
                 label: "Необходимая информация для подачи заявки",
                 children: (
                   <>
-                    {serviceItem.fields && (
-                      serviceItem.fields.map((item, index) =>
-                        <Flex vertical key={index}>
-                          <Paragraph>
-                            {item.Value}
-                          </Paragraph>
-                          <Paragraph>
-                            {item.shortDescription}
-                          </Paragraph>
-                        </Flex>
-                      )
-                    )}
+                  <MarkDownText>{serviceItem.requiredInformation}</MarkDownText>
+                    {
+                      // serviceItem.fields && (
+                      //   serviceItem.fields.map((item, index) =>
+                      //     <Flex vertical key={index}>
+                      //       <Paragraph>
+                      //         {item.Value}
+                      //       </Paragraph>
+                      //       <Paragraph>
+                      //         {item.shortDescription}
+                      //       </Paragraph>
+                      //     </Flex>
+                      //   ))
+                    }
                   </>
                 ),
               },
