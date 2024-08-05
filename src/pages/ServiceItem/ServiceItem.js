@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import { LeftOutlined, RightOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
 import Preloader from "../../components/Main/Preloader";
+import Law from '../../components/Documentation/Law'
 
 
 const { Title, Text, Paragraph } = Typography;
@@ -177,9 +178,10 @@ export default function ServiceItem() {
                 key: "4",
                 label: "Нормативные акты и законодательство",
                 children: (
-                  <Paragraph>
-                    Здесь будут файлы и ссылки на официальные документы
-                  </Paragraph>
+                  <Law/>
+                  // <Paragraph>
+                  //   Здесь будут файлы и ссылки на официальные документы
+                  // </Paragraph>
                 ),
               },
             ]}
