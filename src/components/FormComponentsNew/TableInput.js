@@ -7,6 +7,7 @@ import SelectInput from '../../components/FormComponentsNew/SelectInput'
 import DateInput from '../../components/FormComponentsNew/DateInput'
 import DividerForm from '../../components/FormComponentsNew/DividerForm'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import SwitchInput from './SwitchInput';
 
 export default function TableInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, options = [], dependOf = false, howDepend = false, fields: Fields = [] }) {
     const form = Form.useFormInstance();
@@ -40,6 +41,8 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
                                     return <SelectInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [nameTable, name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("DateInput"))
                                     return <DateInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
+                                if (item.component_Type.includes("SwitchInput"))
+                                    return <SwitchInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                             })}
                             <MinusCircleOutlined onClick={() => remove(name)} />
                         </Flex>
@@ -55,10 +58,11 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
         </Form.List >
     )
     if (!dependOf) return formElement
-    if (dependOf && howDepend && howDepend.values?.length > 0) {
+    if (dependOf && howDepend && howDepend.options?.length > 0) {
         let show = false
-        howDepend.values.forEach(item => {
+        howDepend.options.forEach(item => {
             if (item.value === "true") item.value = true
+            if (item.value === "false") item.value = false;
             if (item.value == fieldDepends) show = true
         })
         if (show) return formElement

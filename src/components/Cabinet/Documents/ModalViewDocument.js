@@ -4,7 +4,7 @@ import useDocuments from "../../../stores/Cabinet/useDocuments";
 import axios from "axios";
 import pdf from "../../../img/docs/pdf.svg";
 import ModalUpdateDocument from "./ModalUpdateDocument";
-import ErrorModal from "../../FormComponentsNew/ErrorModal"; // Импортируем ErrorModal
+import ErrorModal from "../../ErrorModal"; // Импортируем ErrorModal
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 

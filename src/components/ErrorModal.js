@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Typography } from "antd";
-import cat from "../../img/Cat.png";
+import cat from "../img/Cat.png";
 
 const { Text, Title } = Typography;
 

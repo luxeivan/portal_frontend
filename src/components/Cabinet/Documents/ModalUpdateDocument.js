@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Select, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
-import ErrorModal from "../../FormComponentsNew/ErrorModal"; // Импортируем ErrorModal
+import ErrorModal from "../../ErrorModal"; // Импортируем ErrorModal
 
 const { Option } = Select;
 
