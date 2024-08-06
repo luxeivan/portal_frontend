@@ -16,6 +16,7 @@ import AppHelmet from "../../components/Global/AppHelmet";
 import moment from "moment";
 import Preloader from '../../components/Main/Preloader'
 import GroupInput from "../../components/FormComponentsNew/GroupInput";
+import SwitchInput from "../../components/FormComponentsNew/SwitchInput";
 
 const { Title, Paragraph, Text } = Typography;
 export default function NewClaim() {
@@ -168,6 +169,8 @@ export default function NewClaim() {
                                 return <TableInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("DateInput"))
                                 return <DateInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
+                            if (item.component_Type.includes("SwitchInput"))
+                                return <SwitchInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
                             if (item.component_Type.includes("GroupFieldsInput"))
                                 return <GroupInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
 
