@@ -3,7 +3,7 @@ import { Modal, Button, message, Form, Select } from "antd";
 import axios from "axios";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
 import UploaderInput from "../../FormComponents/UploaderInput";
-import ErrorModal from "../../FormComponentsNew/ErrorModal";
+import ErrorModal from "../../ErrorModal";
 
 const { Option } = Select;
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;

@@ -58,10 +58,11 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
         </Form.List >
     )
     if (!dependOf) return formElement
-    if (dependOf && howDepend && howDepend.values?.length > 0) {
+    if (dependOf && howDepend && howDepend.options?.length > 0) {
         let show = false
-        howDepend.values.forEach(item => {
+        howDepend.options.forEach(item => {
             if (item.value === "true") item.value = true
+            if (item.value === "false") item.value = false;
             if (item.value == fieldDepends) show = true
         })
         if (show) return formElement

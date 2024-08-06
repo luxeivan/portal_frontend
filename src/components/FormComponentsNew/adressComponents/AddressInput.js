@@ -22,6 +22,7 @@ const AddressInput = ({
   const [options, setOptions] = useState([]);
   const [address, setAddress] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
+  const fieldDepends = Form.useWatch(dependOf, form);
 
   // Функция для получения предложений
   const fetchSuggestions = debounce((text, type) => {
@@ -102,8 +103,8 @@ const AddressInput = ({
 
     form.setFieldsValue({ [name]: formattedAddress, ...filteredAddress });
   };
-
-  return (
+// console.log(howDepend)
+  const formElement = (
     <>
       <Flex align="center" gap={20}>
         <Form.Item
@@ -131,6 +132,19 @@ const AddressInput = ({
       />
     </>
   );
+  if (!dependOf) return formElement;
+  if (dependOf && howDepend && howDepend.options?.length > 0) {
+    let show = false;
+    howDepend.options.forEach((item) => {
+      if (item.value === "true") item.value = true;
+      if (item.value === "false") item.value = false;
+      if (item.value == fieldDepends) show = true;
+    });
+    if (show) return formElement;
+  }
+  if (dependOf && howDepend && howDepend.min && howDepend.max) {
+    if (fieldDepends >= howDepend.min && howDepend.max) return formElement;
+  }
 };
 
 export default AddressInput;

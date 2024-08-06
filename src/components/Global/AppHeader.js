@@ -16,7 +16,7 @@ import useGlobal from "../../stores/useGlobal";
 import useAuth from "../../stores/useAuth";
 import { MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
 import styles from "./AppHeader.module.css";
-import ErrorModal from "../FormComponentsNew/ErrorModal";
+import ErrorModal from "../ErrorModal";
 
 const { Header } = Layout;
 
