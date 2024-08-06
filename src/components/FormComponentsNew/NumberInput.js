@@ -17,26 +17,25 @@ export default function NumberInput({
   disabled = false,
   placeholder = "placeholder",
   required = false,
-  depend = false,
+  dependOf = false,
+  howDepend = false,
   min = 0,
   max = 100,
   step = 1,
 }) {
   const form = Form.useFormInstance();
-  const fieldDepends = Form.useWatch(depend && depend.field, form);
-  return (
+  const fieldDepends = Form.useWatch(dependOf, form);
+  const formElement =  (
     <Form.Item
       name={name}
       label={label}
-      rules={
-        !(depend && !(depend.value == fieldDepends)) && [
+      rules={[
           {
             required: required,
             message: "Это поле обязательное",
           },
         ]
       }
-      hidden={depend && !(depend.value == fieldDepends)}
       initialValue={min}
     >
       <InputNumber
@@ -48,5 +47,19 @@ export default function NumberInput({
         // disabled={disabled}
       />
     </Form.Item>
+    
   );
+  if (!dependOf) return formElement
+  if (dependOf && howDepend && howDepend.options?.length > 0) {
+      let show = false
+      howDepend.options.forEach(item => {
+          if (item.value === "true") item.value = true
+          if (item.value === "false") item.value = false;
+          if (item.value == fieldDepends) show = true
+      })
+      if (show) return formElement
+  }
+  if (dependOf && howDepend && howDepend.min && howDepend.max) {
+      if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
+  }
 }

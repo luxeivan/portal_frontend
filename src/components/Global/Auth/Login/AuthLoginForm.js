@@ -7,7 +7,7 @@ import {
   formItemLayout,
   tailFormItemLayout,
 } from "../../../../components/configSizeForm";
-import ErrorModal from "../../../../components/FormComponentsNew/ErrorModal";
+import ErrorModal from "../../../../components/ErrorModal";
 
 export default function AuthLoginForm() {
   const {

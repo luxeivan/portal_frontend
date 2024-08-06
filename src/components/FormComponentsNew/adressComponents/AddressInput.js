@@ -148,7 +148,6 @@ const AddressInput = ({
 
 export default AddressInput;
 
-
 //Старое
 // import React, { useState } from "react";
 // import { AutoComplete, Form, Button, Flex } from "antd";
