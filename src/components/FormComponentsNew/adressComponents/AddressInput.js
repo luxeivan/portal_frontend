@@ -3,7 +3,6 @@ import { AutoComplete, Form, Button, Flex } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
 import AddressModal from "./AddressModal";
-import fieldConfig from "./AddressInput.json";
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
@@ -59,30 +58,13 @@ const AddressInput = ({
   const onSelect = (value, option) => {
     const updatedAddress = { ...option.data };
 
-    // Фильтруем и переводим на русский нужные поля
-    const filteredAddress = {
-      Индекс: updatedAddress.postal_code,
-      Страна: updatedAddress.country,
-      Регион: updatedAddress.region_with_type,
-      Район: updatedAddress.area_with_type,
-      Город: updatedAddress.city_with_type,
-      Улица: updatedAddress.street_with_type,
-      "Номер дома": updatedAddress.house,
-    };
+    // Сохраняем полный адрес под капотом
+    setAddress(updatedAddress);
 
-    console.log("Хочу увидеть updatedAddress", updatedAddress);
-    setAddress(filteredAddress);
-
-    const formattedAddress = Object.entries(filteredAddress)
-      .filter(([key, value]) => value)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join(", ");
-
-    console.log("Хочу увидеть formattedAddress", formattedAddress);
+    // Вставляем только текст подсказки в инпут
     form.setFieldsValue({
-      [name]: formattedAddress,
-      fullAddress: formattedAddress,
-      ...filteredAddress,
+      [name]: value,
+      fullAddress: value,
     });
     setOptions([]);
   };
@@ -145,6 +127,7 @@ const AddressInput = ({
         visible={modalVisible}
         onSave={handleModalSave}
         onCancel={() => setModalVisible(false)}
+        initialValues={address} // Передаем полный адрес в модалку
       />
     </>
   );
