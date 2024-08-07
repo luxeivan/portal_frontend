@@ -23,7 +23,7 @@ const AddressInput = ({
   const [options, setOptions] = useState([]);
   const [address, setAddress] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
-  const modalFormRef = useRef(null); // Добавьте реф для формы модалки
+  const modalFormRef = useRef(null); 
 
   // Функция для получения предложений
   const fetchSuggestions = debounce((text, type) => {
