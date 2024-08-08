@@ -242,7 +242,7 @@ export default function NewClaim() {
                   );
               })}
 
-            <ConfirmationDocumentNewInput />
+            <ConfirmationDocumentNewInput name={"confdoc"}/>
 
             <Flex style={{ marginTop: 10 }}>
               <Form.Item>
