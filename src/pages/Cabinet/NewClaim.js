@@ -16,6 +16,7 @@ import moment from "moment";
 import Preloader from "../../components/Main/Preloader";
 import GroupInput from "../../components/FormComponentsNew/GroupInput";
 import AddressInput from "../../components/FormComponentsNew/adressComponents/AddressInput";
+import ConfirmationDocumentNewInput from "../../components/FormComponentsNew/confirmationDocumentComponents/ConfirmationDocumentNewInput";
 
 const { Title, Paragraph } = Typography;
 
@@ -107,47 +108,142 @@ export default function NewClaim() {
             {serviceItem.fields
               ?.sort((a, b) => a.lineNum - b.lineNum)
               .map((item, index) => {
-                if (item.component_Type.includes("Divider")) return (
-                  <DividerForm key={index} {...item.component_Expanded} label={item.label} />
-                )
-                
-                if (item.component_Type.includes("TextInput")) return (
-                  <TextInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                )
-                
-                if (item.component_Type.includes("NumberInput")) return (
-                  <NumberInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                )
-                
-                if (item.component_Type.includes("SliderInput")) return (
-                  <SliderInput key={index} {...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                )
-                
-                if (item.component_Type.includes("LinkInput") || item.component_Type.includes("EnumInput")) return (
-                  <SelectInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                )
-                
-                if (item.component_Type.includes("TableInput")) return (
-                  <TableInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                )
-                
-                if (item.component_Type.includes("DateInput")) return (
-                  <DateInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                )
-                
-                if (item.component_Type.includes("SwitchInput")) return (
-                  <SwitchInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                )
-                if (item.component_Type.includes("AddressInput")) return (
-                  <AddressInput key={index}{...item.component_Expanded} {...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                )
-                
-                if (item.component_Type.includes("GroupFieldsInput")) return (
-                  <GroupInput key={index}{...item.component_Expanded}{...item} name={item.idLine} dependOf={item.dependIdLine} howDepend={item.dependСondition} />
-                )
+                if (item.component_Type.includes("Divider"))
+                  return (
+                    <DividerForm
+                      key={index}
+                      {...item.component_Expanded}
+                      label={item.label}
+                    />
+                  );
 
+                if (item.component_Type.includes("TextInput"))
+                  return (
+                    <TextInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+
+                if (item.component_Type.includes("NumberInput"))
+                  return (
+                    <NumberInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+
+                if (item.component_Type.includes("SliderInput"))
+                  return (
+                    <SliderInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+
+                if (
+                  item.component_Type.includes("LinkInput") ||
+                  item.component_Type.includes("EnumInput")
+                )
+                  return (
+                    <SelectInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+
+                if (item.component_Type.includes("TableInput"))
+                  return (
+                    <TableInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+
+                if (item.component_Type.includes("DateInput"))
+                  return (
+                    <DateInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+
+                if (item.component_Type.includes("SwitchInput"))
+                  return (
+                    <SwitchInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+                if (item.component_Type.includes("AddressInput"))
+                  return (
+                    <AddressInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+
+                if (
+                  item.component_Type.includes("ConfirmationDocumentNewInput")
+                )
+                  return (
+                    <ConfirmationDocumentNewInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+
+                if (item.component_Type.includes("GroupFieldsInput"))
+                  return (
+                    <GroupInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
               })}
-            
+
+            <ConfirmationDocumentNewInput />
+
             <Flex style={{ marginTop: 10 }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
