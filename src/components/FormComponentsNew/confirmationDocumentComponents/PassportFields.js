@@ -10,7 +10,7 @@ const PassportFields = ({ name }) => {
   const showModalAdd = useSubjects((state) => state.showModalAdd);
   const showModalView = useSubjects((state) => state.showModalView);
   const form = Form.useFormInstance();
-  const typeDoc = Form.useWatch([name, "Тип документа"], form);
+  const typeDoc = Form.useWatch([name, "Вид документа"], form);
 
   useEffect(() => {
     setKemVidanOptions([]);
@@ -18,11 +18,11 @@ const PassportFields = ({ name }) => {
 
   const handleSerialPassportChange = (e) => {
     const onlyNums = e.target.value.replace(/[^\d]/g, "")
-    form.setFieldValue([name, "serialPassport"], onlyNums);
+    form.setFieldValue([name, "Серия паспорта"], onlyNums);
   };
   const handleNumberPassportChange = (e) => {
     const onlyNums = e.target.value.replace(/[^\d]/g, "")
-    form.setFieldValue([name, "numberPassport"], onlyNums);
+    form.setFieldValue([name, "Номер паспорта"], onlyNums);
   };
 
   const handleKodPodrazdeleniaChange = (e) => {
@@ -34,14 +34,14 @@ const PassportFields = ({ name }) => {
     } else if (onlyNums.length > 3 && onlyNums.length <= 6) {
       formattedKod = `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
     }
-    form.setFieldValue([name, "kodPodrazdelenia"], formattedKod);
+    form.setFieldValue([name, "Код подразделения"], formattedKod);
   };
   if (typeDoc === "Паспорт гражданина РФ") return (
     <div style={{ marginLeft: 20 }}>
       <Form.Item
         label="Серия паспорта"
         name={"Серия паспорта"}
-        required={true}
+        rules={[{ required: true, message: 'Это поле обязательное' }]}
       >
         <Input
           placeholder={"XXXX"}
@@ -52,7 +52,7 @@ const PassportFields = ({ name }) => {
       <Form.Item
         label="Номер паспорта"
         name={"Номер паспорта"}
-        required={true}
+        rules={[{ required: true, message: 'Это поле обязательное' }]}
       >
         <Input
           placeholder={"XXXXXX"}
@@ -63,7 +63,7 @@ const PassportFields = ({ name }) => {
       <Form.Item
         label="Код подразделения"
         name={"Код подразделения"}
-        required={true}
+        rules={[{ required: true, message: 'Это поле обязательное' }]}
       >
         <Input
           placeholder={"XXX-XXX"}
@@ -74,7 +74,7 @@ const PassportFields = ({ name }) => {
       <Form.Item
         label="Кем выдан"
         name={"Кем выдан"}
-        required={true}
+        rules={[{ required: true, message: 'Это поле обязательное' }]}
       >
         <AutoComplete
           options={kemVidanOptions}
@@ -90,7 +90,7 @@ const PassportFields = ({ name }) => {
       <Form.Item
         label="Когда выдан"
         name={ "Когда выдан"}
-        required={true}
+        rules={[{ required: true, message: 'Это поле обязательное' }]}
       >
         <DatePicker
           format="DD.MM.YYYY"

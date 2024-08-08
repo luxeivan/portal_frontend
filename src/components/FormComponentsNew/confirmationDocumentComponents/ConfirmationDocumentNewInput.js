@@ -84,7 +84,7 @@ export default function ConfirmationDocumentNewInput({ name }) {
             <>
               <Form.List
                 name={name}
-                initialValue={{ "Тип документа": "Паспорт гражданина РФ" }}
+                initialValue={{ "Вид документа": "Паспорт гражданина РФ" }}
               >
                 {() => (
                   <>

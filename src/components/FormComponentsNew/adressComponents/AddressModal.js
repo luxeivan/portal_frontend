@@ -4,7 +4,7 @@ import fieldConfig from "./AddressInput.json";
 
 const AddressModal = forwardRef(
   ({ visible, onSave, onCancel, initialValues }, ref) => {
-    const [form] = Form.useForm();
+    const form = Form.useFormInstance();
 
     // Используем useImperativeHandle для управления формой из родительского компонента
     useImperativeHandle(ref, () => ({

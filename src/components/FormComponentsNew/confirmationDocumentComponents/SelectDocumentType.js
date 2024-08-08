@@ -10,8 +10,8 @@ const documentOptions = [
 const SelectDocumentType = () => {
   return (
     <Form.Item
-      name={"Тип документа"}
-      label={'Тип документа'}
+      name={"Вид документа"}
+      label={'Вид документа'}
       style={{ flex: 1 }}
       required={true}
     >

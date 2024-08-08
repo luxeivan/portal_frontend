@@ -7,13 +7,13 @@ import TextInput from "../TextInput";
 
 const OtherDocumentFields = ({ name }) => {
   const form = Form.useFormInstance();
-  const typeDoc = Form.useWatch([name, "Тип документа"], form);
+  const typeDoc = Form.useWatch([name, "Вид документа"], form);
   if (typeDoc === "Иной документ") return (
     <div style={{ marginLeft: 20 }}>
       <Form.Item
         label="Тип иного документа"
         name={"Тип иного документа"}
-        required
+        rules={[{ required: true, message: 'Это поле обязательное' }]}
       >
         <Input
         placeholder="Заграничный паспорт"
@@ -22,7 +22,7 @@ const OtherDocumentFields = ({ name }) => {
       <Form.Item
         label="Реквизиты документа"
         name={"Реквизиты документа"}
-        required
+        rules={[{ required: true, message: 'Это поле обязательное' }]}
       >
         <TextArea
           placeholder="..."
@@ -32,7 +32,7 @@ const OtherDocumentFields = ({ name }) => {
       <Form.Item
         label="Кем выдан"
         name={"Кем выдан"}
-        required
+        rules={[{ required: true, message: 'Это поле обязательное' }]}
       >
 
         <TextArea
@@ -46,7 +46,7 @@ const OtherDocumentFields = ({ name }) => {
       <Form.Item
         label="Когда выдан"
         name={"Когда выдан"}
-        required
+        rules={[{ required: true, message: 'Это поле обязательное' }]}
       >
         <DatePicker
           locale={locale.DatePicker}
