@@ -37,7 +37,7 @@ const AddressInput = ({
       params.locations = [{ city_fias_id: address.city }];
 
     axios
-      .get(`${backServer}/getDaData`, { params })
+      .get(`${backServer}/api/getDaData`, { params })
       .then((response) => {
         if (response.data && response.data.data) {
           setOptions(
