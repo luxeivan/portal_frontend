@@ -12,7 +12,7 @@ const SelectDocumentType = ({ read, edit, value, name }) => {
       read={read}
       edit={edit}
       value={value?.[name]?.typeDoc}
-      displayName="Тип документа"
+      label="Подтверждающие документы" 
       name={[name, "typeDoc"]}
       description={["Выберите тип документа из списка"]}
       options={documentOptions}

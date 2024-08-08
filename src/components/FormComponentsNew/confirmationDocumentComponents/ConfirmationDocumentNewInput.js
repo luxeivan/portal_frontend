@@ -25,12 +25,13 @@ export default function ConfirmationDocumentNewInput({
   useEffect(() => {
     setKemVidanOptions([]);
   }, [showModalAdd, showModalView]);
-  Form.useWatch([name, "typeDoc"], form);
+  const typeDoc = Form.useWatch([name, "typeDoc"], form);
+
   const kodPodrazdelenia = Form.useWatch([name, "kodPodrazdelenia"], form);
   if (
     form &&
     typeof form.getFieldValue === "function" &&
-    form.getFieldValue([name, "typeDoc"]) === "Иной документ"
+    form.getFieldValue([name, "typeDoc"]) === "Иной документ "
   ) {
     form.setFieldsValue({
       [name]: {
@@ -114,7 +115,6 @@ export default function ConfirmationDocumentNewInput({
   };
 
   return (
-    // <h1>ПРОВЕРКА</h1>
     <>
       <Form.List
         name={name}
@@ -158,6 +158,7 @@ export default function ConfirmationDocumentNewInput({
           </>
         )}
       </Form.List>
+
       <Drawer
         title={"Удостоверяющий документ"}
         placement="right"
