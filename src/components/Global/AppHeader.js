@@ -116,7 +116,7 @@ export default function AppHeader() {
         unCheckedChildren={<MoonOutlined />}
         checked={darkMode}
       />
-      <Button onClick={handleLogout}>Выйти</Button>
+      <Button type="primary" onClick={handleLogout}>Выйти</Button>
     </Space>
   ) : (
     <Space size={"small"}>
@@ -126,7 +126,7 @@ export default function AppHeader() {
         unCheckedChildren={<MoonOutlined />}
         checked={darkMode}
       />
-      <Button onClick={handlerChangeAuth}>Войти</Button>
+      <Button type="primary" onClick={handlerChangeAuth}>Войти</Button>
     </Space>
   );
 
