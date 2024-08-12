@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
+import { Collapse } from "antd";
 import GroupInput from "../../components/FormComponentsNew/GroupInput";
-
-const contactCenters = [
-  {
-    name: "ЦОК Воскресенск",
-    address: "МО, г. Воскресенск, ул. Куйбышева, д. 87, 6 этаж, каб. 222",
-    coordinates: [55.3239, 38.6846],
-    mapLink: "https://yandex.ru/maps/?um=constructor%3A...&source=constructor",
-    phone: "+7 (496) 442-58-37",
-    workHours: "Пн-Пт: 8:00 до 17:00, Сб: 8:00 до 15:45",
-  },
-  // Добавьте остальные центры
-];
+import contactCentersData from "./contactCenters.json"; 
 
 const Contacts = () => {
+  const [contactCenters, setContactCenters] = useState([]);
+
+  useEffect(() => {
+    // Загрузка данных из JSON
+    setContactCenters(contactCentersData);
+  }, []);
+
+  const [activeKeys, setActiveKeys] = useState([]);
+
+  const handleCollapseChange = (key) => {
+    setActiveKeys(key);
+  };
+
   return (
     <div>
       <h1>Контакты Центров обслуживания клиентов</h1>
@@ -55,7 +58,7 @@ const Contacts = () => {
               label: "Построить маршрут",
               component_Expanded: { initialValue: center.mapLink },
             },
-            // Добавьте другие поля, если необходимо
+            // Другие поля могут быть добавлены здесь
           ]}
         />
       ))}
@@ -69,9 +72,11 @@ const Contacts = () => {
           {contactCenters.map((center, index) => (
             <Placemark
               key={index}
-              geometry={center.coordinates}
+              geometry={center.coordinates || [55.751574, 37.573856]} // Если нет координат, центр карты
               properties={{
-                balloonContent: `<strong>${center.name}</strong><br>${center.address}`,
+                balloonContent: `<strong>${center.name}</strong><br>${
+                  center.address || "Адрес не указан"
+                }`,
               }}
             />
           ))}
