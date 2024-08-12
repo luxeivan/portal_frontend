@@ -1,22 +1,50 @@
 import React, { useEffect, useState } from "react";
+import { Collapse, Spin } from "antd";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
-import { Collapse } from "antd";
-import GroupInput from "../../components/FormComponentsNew/GroupInput";
-import contactCentersData from "./contactCenters.json"; 
+import contactCentersData from "./contactCenters.json";
+import axios from "axios";
 
 const Contacts = () => {
   const [contactCenters, setContactCenters] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Загрузка данных из JSON
     setContactCenters(contactCentersData);
   }, []);
 
-  const [activeKeys, setActiveKeys] = useState([]);
+  const [coordinates, setCoordinates] = useState({});
 
-  const handleCollapseChange = (key) => {
-    setActiveKeys(key);
+  const getCoordinates = async (address, index) => {
+    try {
+      const response = await axios.get(
+        `https://geocode-maps.yandex.ru/1.x/?apikey=fd781d3b-b40d-4f6a-a236-865c242547cb&format=json&geocode=${encodeURIComponent(
+          address
+        )}`
+      );
+      const point =
+        response.data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(
+          " "
+        );
+      const coords = [parseFloat(point[1]), parseFloat(point[0])];
+      setCoordinates((prevState) => ({ ...prevState, [index]: coords }));
+    } catch (error) {
+      console.error("Ошибка при получении координат:", error);
+    }
   };
+
+  useEffect(() => {
+    contactCenters.forEach((center, index) => {
+      if (center.address) {
+        getCoordinates(center.address, index);
+      }
+    });
+    setLoading(false);
+  }, [contactCenters]);
+
+  if (loading) {
+    return <Spin size="large" />;
+  }
 
   return (
     <div>
@@ -28,60 +56,43 @@ const Contacts = () => {
         <a href="/services">Каталоге услуг</a>.
       </p>
 
-      {contactCenters.map((center, index) => (
-        <GroupInput
-          key={index}
-          name={`center_${index}`}
-          label={center.name}
-          fields={[
-            {
-              component_Type: "TextInput",
-              idLine: "address",
-              label: "Адрес",
-              component_Expanded: { initialValue: center.address },
-            },
-            {
-              component_Type: "TextInput",
-              idLine: "phone",
-              label: "Телефон",
-              component_Expanded: { initialValue: center.phone },
-            },
-            {
-              component_Type: "TextInput",
-              idLine: "workHours",
-              label: "Время работы",
-              component_Expanded: { initialValue: center.workHours },
-            },
-            {
-              component_Type: "LinkInput",
-              idLine: "mapLink",
-              label: "Построить маршрут",
-              component_Expanded: { initialValue: center.mapLink },
-            },
-            // Другие поля могут быть добавлены здесь
-          ]}
-        />
-      ))}
-
-      <YMaps>
-        <Map
-          defaultState={{ center: [55.751574, 37.573856], zoom: 9 }}
-          width="100%"
-          height="400px"
-        >
-          {contactCenters.map((center, index) => (
-            <Placemark
-              key={index}
-              geometry={center.coordinates || [55.751574, 37.573856]} // Если нет координат, центр карты
-              properties={{
-                balloonContent: `<strong>${center.name}</strong><br>${
-                  center.address || "Адрес не указан"
-                }`,
-              }}
-            />
-          ))}
-        </Map>
-      </YMaps>
+      <Collapse defaultActiveKey={[]} style={{ marginBottom: 24 }}>
+        {contactCenters.map((center, index) => (
+          <Collapse.Panel header={center.name} key={index}>
+            <div style={{ marginBottom: "10px" }}>
+              <strong>Адрес:</strong>{" "}
+              {center.address || "Информация отсутствует"}
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <strong>Телефон:</strong>{" "}
+              {center.phone || "Информация отсутствует"}
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <strong>Время работы:</strong>{" "}
+              {center.workHours || "Информация отсутствует"}
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <strong>Построить маршрут:</strong>{" "}
+              {center.mapLink ? (
+                <a href={center.mapLink}>Ссылка</a>
+              ) : (
+                "Информация отсутствует"
+              )}
+            </div>
+            {coordinates[index] && (
+              <YMaps>
+                <Map
+                  defaultState={{ center: coordinates[index], zoom: 15 }}
+                  width="100%"
+                  height="200px"
+                >
+                  <Placemark geometry={coordinates[index]} />
+                </Map>
+              </YMaps>
+            )}
+          </Collapse.Panel>
+        ))}
+      </Collapse>
     </div>
   );
 };
