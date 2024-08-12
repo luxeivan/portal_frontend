@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Collapse, Spin } from "antd";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
-import contactCentersData from "./contactCenters.json";
+import contactCentersData from "./contactCenters.json"; // Эта часть будет отключена, когда у вас появится API
 import axios from "axios";
 
 const Contacts = () => {
@@ -10,7 +10,24 @@ const Contacts = () => {
 
   useEffect(() => {
     // Загрузка данных из JSON
+    // Эта часть кода будет закомментирована, когда будет API
     setContactCenters(contactCentersData);
+
+    // Когда появится API, раскомментить этот код и удалить JSON-часть
+    /*
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('URL_API'); 
+        setContactCenters(response.data);
+      } catch (error) {
+        console.error("Ошибка при получении данных из API:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+    */
   }, []);
 
   const [coordinates, setCoordinates] = useState({});

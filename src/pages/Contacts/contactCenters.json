@@ -2,272 +2,204 @@
   {
     "name": "ЦОК Центральный",
     "address": "МО, Красногорский р-н, 26 км автодороги Балтия, Бизнес-Центр RigaLand, строение 6, подъезд 4, 6 этаж, каб. 222",
-    "coordinates": null,
-    "mapLink": null,
     "phone": " +7 (495) 780-39-62",
     "workHours": "Пн-Чт 8:00 до 17:00 Пт 8:00 до 15:45"
   },
   {
     "name": "ЦОК Балашиха",
-    "address": null,
-    "coordinates": null,
-    "mapLink": null,
-    "phone": null,
-    "workHours": null
+    "address": "МО, г. Балашиха, ул. Советская, д.50",
+    "phone": "8 (495) 308-82-11, доб. 2",
+    "workHours": "Пн-Чт 8:00 до 17:00 Пт 8:00 до 15:45"
   },
   {
     "name": "ЦОК Видное",
-    "address": null,
-    "coordinates": null,
-    "mapLink": null,
-    "phone": null,
-    "workHours": null
+    "address": "МО, г. Видное, проспект Ленинского комсомола, д. 1 А, корп.2",
+    "phone": "8 (495) 541-46-00",
+    "workHours": "Пн-Чт 8:00 до 17:00 Пт 8:00 до 15:45"
   },
   {
     "name": "ЦОК Волоколамск",
-    "address": null,
-    "coordinates": null,
-    "mapLink": null,
-    "phone": null,
-    "workHours": null
+    "address": "МО, г. Волоколамск, ул. Колхозная, д.43",
+    "phone": "8 (496) 363-20-63",
+    "workHours": "Пн-Чт 8:00 до 17:00 Пт 8:00 до 15:45"
   },
   {
     "name": "ЦОК Воскресенск",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Дзержинский",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Домодедово",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Дубна",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Егорьевск",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Истра",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Клин",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Коломна",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Красногорск",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Краснознаменск",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Люберцы",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Мытищи",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Наро-Фоминск",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Ногинск",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Одинцово",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Озёры",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Павловский Посад",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Подольск",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Пушкино",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Раменское",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Руза",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Сергиев Посад",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Серпухов",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Солнечногорск",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Талдом",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Химки",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Чехов",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Шатура",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Щёлково",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   },
   {
     "name": "ЦОК Электрогорск",
     "address": null,
-    "coordinates": null,
-    "mapLink": null,
     "phone": null,
     "workHours": null
   }
