@@ -23,7 +23,7 @@ const AddressInput = ({
   const [options, setOptions] = useState([]);
   const [address, setAddress] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
-  const modalFormRef = useRef(null); // Добавьте реф для формы модалки
+  const modalFormRef = useRef(null); 
 
   // Функция для получения предложений
   const fetchSuggestions = debounce((text, type) => {
@@ -37,7 +37,7 @@ const AddressInput = ({
       params.locations = [{ city_fias_id: address.city }];
 
     axios
-      .get(`${backServer}/getDaData`, { params })
+      .get(`${backServer}/api/getDaData`, { params })
       .then((response) => {
         if (response.data && response.data.data) {
           setOptions(
