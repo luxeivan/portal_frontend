@@ -14,6 +14,7 @@ import styles from "./Calc.module.css";
 import { formItemLayoutForCalc } from "../../components/configSizeForm";
 import CalcTable from "./CalcTable";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import pdf from "../../../src/img/pdf.svg";
 
 // Добавляем плагин для анимации чисел
 TweenOne.plugins.push(Children);
@@ -132,6 +133,38 @@ export default function Calc() {
           {/* Добавляем текст под звездочкой */}
         </div>
       </div>
+      <div className={styles.documentsSection}>
+        <Title level={4}>Нормативные документы:</Title>
+        <ul className={styles.noBulletList}>
+          <li>
+            <a href={require("./LegalActs/1.pdf")} download>
+              <img src={pdf} alt="PDF" className={styles.pdfIcon} /> Инструкция
+              по проектированию городских электрических сетей. РД 34.20.185-94
+              (утв. Минтопэнерго России 07.07.1994, РАО "ЕЭС России" 31.05.1994)
+              (с изм. от 29.06.1999)
+            </a>
+          </li>
+          <li>
+            <a href={require("./LegalActs/2.pdf")} download>
+              <img src={pdf} alt="PDF" className={styles.pdfIcon} /> СП
+              256.1325800.2016. Свод правил. Электроустановки жилых и
+              общественных зданий. Правила проектирования и монтажа (утв.
+              Приказом Минстроя России от 29.08.2016 N 602/пр) (ред. от
+              28.12.2023)
+            </a>
+          </li>
+          <li>
+            <a href={require("./LegalActs/3.pdf")} download>
+              <img src={pdf} alt="PDF" className={styles.pdfIcon} /> СП
+              31-110-2003. Свод правил по проектированию и строительству.
+              Проектирование и монтаж электроустановок жилых и общественных
+              зданий (одобрен и рекомендован к применению Постановлением
+              Госстроя РФ от 26.10.2003 N 194)
+            </a>
+          </li>
+        </ul>
+      </div>
+
       <div className={styles.mobileMessage}>
         Произвести расчет калькулятора вы сможете на полной версии нашего сайта.
       </div>
