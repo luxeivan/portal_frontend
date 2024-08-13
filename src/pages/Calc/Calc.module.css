@@ -50,11 +50,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px; /* Добавляет промежуток между кнопками */
+  gap: 10px; 
 }
 
 .downloadButton {
   margin-top: 5%;
+}
+
+.documentsSection ul {
+  list-style-type: none;
+  padding-left: 0; 
 }
 
 @media (max-width: 768px) {
