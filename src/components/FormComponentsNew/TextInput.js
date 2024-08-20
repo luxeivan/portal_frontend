@@ -25,7 +25,12 @@ export default function TextInput({
   const fetchSuggestions = async (searchText) => {
     if (searchText) {
       try {
-        const response = await axios.get(`${backServer}/getDaData`, {
+        const response = await axios.get(`${backServer}/api/cabinet/getDaData`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+          withCredentials: true,
           params: {
             type,
             query: searchText,

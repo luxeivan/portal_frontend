@@ -38,7 +38,14 @@ const AddressInput = ({
       params.locations = [{ city_fias_id: address.city }];
 
     axios
-      .get(`${backServer}/api/getDaData`, { params })
+      .get(`${backServer}/api/cabinet/getDaData`, { 
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+        withCredentials: true,
+        params 
+      })
       .then((response) => {
         if (response.data && response.data.data) {
           setOptions(
