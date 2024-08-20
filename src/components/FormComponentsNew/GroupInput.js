@@ -7,6 +7,8 @@ import SelectInput from "../../components/FormComponentsNew/SelectInput";
 import DateInput from "../../components/FormComponentsNew/DateInput";
 import DividerForm from "../../components/FormComponentsNew/DividerForm";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import SnilsInput from "./SnilsInput";
+import PhoneInput from "./phoneComponent/PhoneInput";
 
 export default function GroupInput({
   name = "name",
@@ -40,21 +42,49 @@ export default function GroupInput({
                       label={item.label}
                     />
                   );
-                if (item.component_Type.includes("TextInput"))
-                
+                if (item.component_Type.includes("TextInput") && item.component_Expanded.specialField === 'Телефон')
+
                   return (
-                    <TextInput
-                    key={index}
-                    {...item.component_Expanded}
-                    {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
-                    howDepend={item.dependСondition}
+                    <PhoneInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={[name, item.idLine]}
+                      dependOf={
+                        item.dependIdLine ? [name, item.dependIdLine] : false
+                      }
+                      howDepend={item.dependСondition}
                     />
                   );
-                
+                if (item.component_Type.includes("TextInput") && item.component_Expanded.specialField === 'СНИЛС')
+
+                  return (
+                    <SnilsInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={[name, item.idLine]}
+                      dependOf={
+                        item.dependIdLine ? [name, item.dependIdLine] : false
+                      }
+                      howDepend={item.dependСondition}
+                    />
+                  );
+                if (item.component_Type.includes("TextInput"))
+
+                  return (
+                    <TextInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={[name, item.idLine]}
+                      dependOf={
+                        item.dependIdLine ? [name, item.dependIdLine] : false
+                      }
+                      howDepend={item.dependСondition}
+                    />
+                  );
+
                 if (item.component_Type.includes("NumberInput"))
                   return (
                     <NumberInput
@@ -124,7 +154,7 @@ export default function GroupInput({
   if (!dependOf) return formElement;
   if (dependOf && howDepend && howDepend.options?.length > 0) {
     let show = false;
-    if(typeof fieldDepends === "undefined")  fieldDepends = false 
+    if (typeof fieldDepends === "undefined") fieldDepends = false
     howDepend.options.forEach((item) => {
       if (item.value === "true") item.value = true;
       if (item.value === "false") item.value = false;
