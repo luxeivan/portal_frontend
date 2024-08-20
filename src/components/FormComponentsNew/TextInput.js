@@ -42,7 +42,7 @@ export default function TextInput({
       setSuggestions([]);
     }
   };
-
+console.log('type',type)
   const debouncedFetchSuggestions = useCallback(
     debounce(fetchSuggestions, 500),
     []

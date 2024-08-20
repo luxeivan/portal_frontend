@@ -104,6 +104,13 @@ export default function NewClaim() {
             onFinish={onFinish}
             onKeyDown={handleKeyDown}
             style={{ maxWidth: 800, margin: "0 auto" }}
+            // labelCol={{
+            //   span: 6,
+            // }}
+            // wrapperCol={{
+            //   span: 18,
+            // }}
+            labelWrap
           >
             {serviceItem.fields
               ?.sort((a, b) => a.lineNum - b.lineNum)
@@ -242,7 +249,7 @@ export default function NewClaim() {
                   );
               })}
 
-            <ConfirmationDocumentNewInput name={"confdoc"}/>
+            {/* <ConfirmationDocumentNewInput name={"confdoc"}/> */}
 
             <Flex style={{ marginTop: 10 }}>
               <Form.Item>
