@@ -17,6 +17,7 @@ import Preloader from "../../components/Main/Preloader";
 import GroupInput from "../../components/FormComponentsNew/GroupInput";
 import AddressInput from "../../components/FormComponentsNew/adressComponents/AddressInput";
 import ConfirmationDocumentNewInput from "../../components/FormComponentsNew/confirmationDocumentComponents/ConfirmationDocumentNewInput";
+import SnilsInput from "../../components/FormComponentsNew/SnilsInput";
 
 const { Title, Paragraph } = Typography;
 
@@ -127,6 +128,17 @@ export default function NewClaim() {
                 if (item.component_Type.includes("TextInput"))
                   return (
                     <TextInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+                if (item.component_Type.includes("TextInput") && item.component_Expanded.specialField === 'СНИЛС')
+                  return (
+                    <SnilsInput
                       key={index}
                       {...item.component_Expanded}
                       {...item}
