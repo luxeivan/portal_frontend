@@ -19,7 +19,7 @@ const AddressInput = ({
   specialField: type = false,
 }) => {
   const form = Form.useFormInstance();
-  const fieldDepends = Form.useWatch(dependOf, form)
+  let fieldDepends = Form.useWatch(dependOf, form)
   const [options, setOptions] = useState([]);
   const [address, setAddress] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -115,7 +115,7 @@ const AddressInput = ({
 
     form.setFieldsValue({ [name]: formattedAddress, ...filteredAddress });
   };
-
+  // console.log(fieldDepends)
   const formElement = (
     <>
       <Flex align="center" gap={20}>
@@ -148,6 +148,7 @@ const AddressInput = ({
   if (!dependOf) return formElement;
   if (dependOf && howDepend && howDepend.options?.length > 0) {
     let show = false;
+    if(typeof fieldDepends === "undefined")  fieldDepends = false 
     howDepend.options.forEach((item) => {
       if (item.value === "true") item.value = true;
       if (item.value === "false") item.value = false;
