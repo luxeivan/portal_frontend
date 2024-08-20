@@ -4,7 +4,7 @@ import { Button, Form, Input, InputNumber, message, Space, Switch } from 'antd';
 export default function SwitchInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, dependOf = false, howDepend = false }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
-    const fieldDepends = Form.useWatch(dependOf, form);
+    let fieldDepends = Form.useWatch(dependOf, form);
     const formElement = (
         <Form.Item
             name={name}
@@ -16,13 +16,14 @@ export default function SwitchInput({ name = 'name', label = 'Label', disabled =
                 }
             ]}
         >
-            <Switch />
+            <Switch defaultValue={false}/>
         </Form.Item>
     )
 
     if (!dependOf) return formElement
     if (dependOf && howDepend && howDepend.options?.length > 0) {
         let show = false
+        if(typeof fieldDepends === "undefined")  fieldDepends = false 
         howDepend.options.forEach(item => {
             if (item.value === "true") item.value = true
             if (item.value === "false") item.value = false;
