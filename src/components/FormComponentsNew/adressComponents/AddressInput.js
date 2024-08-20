@@ -3,6 +3,7 @@ import { AutoComplete, Form, Button, Flex } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
 import AddressModal from "./AddressModal";
+import fieldConfig from "./AddressInput.json";
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
@@ -23,7 +24,7 @@ const AddressInput = ({
   const [options, setOptions] = useState([]);
   const [address, setAddress] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
-  const modalFormRef = useRef(null); 
+  const modalFormRef = useRef(null);
 
   // Функция для получения предложений
   const fetchSuggestions = debounce((text, type) => {
@@ -59,14 +60,17 @@ const AddressInput = ({
   // Обработка выбора из списка предложений
   const onSelect = (value, option) => {
     const updatedAddress = { ...option.data };
-
+    let updateObject = {}
+    console.log(updatedAddress)
     // Сохраняем полный адрес под капотом
     setAddress(updatedAddress);
-
+    updateObject.fullAddress = value
+    fieldConfig.forEach(field => {
+      updateObject[field.name] = updatedAddress[field.name]
+    })
     // Вставляем только текст подсказки в инпут
     form.setFieldsValue({
-      [name]: value,
-      fullAddress: value,
+      [name]: updateObject
     });
 
     // Обновляем значения формы модалки
@@ -117,38 +121,41 @@ const AddressInput = ({
   };
   // console.log(fieldDepends)
   const formElement = (
-    <>
-      <Flex align="center" gap={20}>
-        <Form.Item
-          name={name}
-          label={label}
-          rules={[{ required: required, message: "Это поле обязательное" }]}
-          style={{ flex: 1 }}
-        >
-          <AutoComplete
-            options={options}
-            onSelect={(value, option) => onSelect(value, option)}
-            onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
-            placeholder={placeholder}
+    <Form.List name={name}>
+      {(fields, { add, remove }) => (
+        <>
+          <Flex align="center" gap={20}>
+            <Form.Item
+              name={'fullAddress'}
+              label={label}
+              rules={[{ required: required, message: "Это поле обязательное" }]}
+              style={{ flex: 1 }}
+            >
+              <AutoComplete
+                options={options}
+                onSelect={(value, option) => onSelect(value, option)}
+                onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
+                placeholder={placeholder}
+              />
+            </Form.Item>
+            <Button type="primary" onClick={openModal}>
+              Моего адреса нет в списке
+            </Button>
+          </Flex>
+          <AddressModal
+            visible={modalVisible}
+            onSave={handleModalSave}
+            onCancel={() => setModalVisible(false)}
+            name={name}
           />
-        </Form.Item>
-        <Button type="primary" onClick={openModal}>
-          Моего адреса нет в списке
-        </Button>
-      </Flex>
-      <AddressModal
-        visible={modalVisible}
-        onSave={handleModalSave}
-        onCancel={() => setModalVisible(false)}
-        initialValues={address} // Передаем полный адрес в модалку
-        formRef={modalFormRef} // Передаем реф формы в модалку
-      />
-    </>
+        </>
+      )}
+    </Form.List>
   );
   if (!dependOf) return formElement;
   if (dependOf && howDepend && howDepend.options?.length > 0) {
     let show = false;
-    if(typeof fieldDepends === "undefined")  fieldDepends = false 
+    if (typeof fieldDepends === "undefined") fieldDepends = false
     howDepend.options.forEach((item) => {
       if (item.value === "true") item.value = true;
       if (item.value === "false") item.value = false;
