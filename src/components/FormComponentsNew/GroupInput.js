@@ -22,7 +22,7 @@ export default function GroupInput({
   const form = Form.useFormInstance();
   // console.log(dependOf)
   const nameTable = name;
-  const fieldDepends = Form.useWatch(dependOf, form);
+  let fieldDepends = Form.useWatch(dependOf, form);
   const formElement = (
     <Collapse
       items={[
@@ -41,18 +41,20 @@ export default function GroupInput({
                     />
                   );
                 if (item.component_Type.includes("TextInput"))
+                
                   return (
                     <TextInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={[name, item.idLine]}
-                      dependOf={
-                        item.dependIdLine ? [name, item.dependIdLine] : false
-                      }
-                      howDepend={item.dependСondition}
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={[name, item.idLine]}
+                    dependOf={
+                      item.dependIdLine ? [name, item.dependIdLine] : false
+                    }
+                    howDepend={item.dependСondition}
                     />
                   );
+                
                 if (item.component_Type.includes("NumberInput"))
                   return (
                     <NumberInput
@@ -122,6 +124,7 @@ export default function GroupInput({
   if (!dependOf) return formElement;
   if (dependOf && howDepend && howDepend.options?.length > 0) {
     let show = false;
+    if(typeof fieldDepends === "undefined")  fieldDepends = false 
     howDepend.options.forEach((item) => {
       if (item.value === "true") item.value = true;
       if (item.value === "false") item.value = false;

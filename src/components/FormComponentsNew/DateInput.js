@@ -38,6 +38,7 @@ export default function DateInput({ name = 'name', part = 'Дата', label = 'L
     if (!dependOf) return formElement
     if (dependOf && howDepend && howDepend.options?.length > 0) {
         let show = false
+        if(typeof fieldDepends === "undefined")  fieldDepends = false 
         howDepend.options.forEach(item => {
             if (item.value === "true") item.value = true
             if (item.value === "false") item.value = false;

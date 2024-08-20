@@ -20,7 +20,7 @@ export default function TextInput({
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]); // Состояние для подсказок
   const form = Form.useFormInstance();
-  const fieldDepends = Form.useWatch(dependOf, form);
+  let fieldDepends = Form.useWatch(dependOf, form);
 
   const fetchSuggestions = async (searchText) => {
     if (searchText) {
@@ -42,7 +42,7 @@ export default function TextInput({
       setSuggestions([]);
     }
   };
-
+console.log('type',type)
   const debouncedFetchSuggestions = useCallback(
     debounce(fetchSuggestions, 500),
     []
@@ -147,6 +147,7 @@ export default function TextInput({
   if (!dependOf) return formElement;
   if (dependOf && howDepend && howDepend.options?.length > 0) {
     let show = false;
+    if(typeof fieldDepends === "undefined")  fieldDepends = false 
     howDepend.options.forEach((item) => {
       if (item.value === "true") item.value = true;
       if (item.value === "false") item.value = false;

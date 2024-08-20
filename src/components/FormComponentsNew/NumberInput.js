@@ -24,7 +24,7 @@ export default function NumberInput({
   step = 1,
 }) {
   const form = Form.useFormInstance();
-  const fieldDepends = Form.useWatch(dependOf, form);
+  let fieldDepends = Form.useWatch(dependOf, form);
   const formElement =  (
     <Form.Item
       name={name}
@@ -52,6 +52,7 @@ export default function NumberInput({
   if (!dependOf) return formElement
   if (dependOf && howDepend && howDepend.options?.length > 0) {
       let show = false
+      if(typeof fieldDepends === "undefined")  fieldDepends = false 
       howDepend.options.forEach(item => {
           if (item.value === "true") item.value = true
           if (item.value === "false") item.value = false;
