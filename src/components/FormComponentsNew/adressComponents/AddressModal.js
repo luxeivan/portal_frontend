@@ -15,16 +15,8 @@ const AddressModal = forwardRef(
       form.setFieldsValue(initialValues);
     }, [initialValues]);
 
-    const handleOk = () => {
-      form
-        .validateFields()
-        .then((values) => {
-          onSave(values);
-          form.resetFields();
-        })
-        .catch((info) => {
-          console.log("Validation failed:", info);
-        });
+    const handleOk = (values) => {
+      onSave(values);
     };
 
     return (

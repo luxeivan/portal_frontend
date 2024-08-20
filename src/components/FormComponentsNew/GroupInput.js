@@ -41,18 +41,20 @@ export default function GroupInput({
                     />
                   );
                 if (item.component_Type.includes("TextInput"))
+                
                   return (
                     <TextInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={[name, item.idLine]}
-                      dependOf={
-                        item.dependIdLine ? [name, item.dependIdLine] : false
-                      }
-                      howDepend={item.dependСondition}
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={[name, item.idLine]}
+                    dependOf={
+                      item.dependIdLine ? [name, item.dependIdLine] : false
+                    }
+                    howDepend={item.dependСondition}
                     />
                   );
+                
                 if (item.component_Type.includes("NumberInput"))
                   return (
                     <NumberInput
