@@ -3,7 +3,7 @@ import { Modal, Form, Input } from "antd";
 import fieldConfig from "./AddressInput.json";
 
 const AddressModal = forwardRef(
-  ({ visible, onSave, onCancel, initialValues }, ref) => {
+  ({ visible, onSave, onCancel, initialValues, name }, ref) => {
     const form = Form.useFormInstance();
 
     // Используем useImperativeHandle для управления формой из родительского компонента
@@ -15,8 +15,18 @@ const AddressModal = forwardRef(
       form.setFieldsValue(initialValues);
     }, [initialValues]);
 
-    const handleOk = (values) => {
-      onSave(values);
+    const handleOk = () => {
+      let fullString = ''
+      fieldConfig.forEach(field=>{
+        let currString = form.getFieldValue([name, field.name])
+        if(currString) fullString = fullString + currString + ', '
+      })
+      form.setFieldsValue({
+        [name]: {
+          fullAddress: fullString
+        }
+      })
+      onCancel()
     };
 
     return (
@@ -28,13 +38,11 @@ const AddressModal = forwardRef(
         okText="Сохранить"
         cancelText="Отмена"
       >
-        <Form form={form} layout="vertical" initialValues={initialValues}>
-          {fieldConfig.map((field) => (
-            <Form.Item name={field.name} label={field.label} key={field.name}>
-              <Input placeholder={`Введите ${field.label.toLowerCase()}`} />
-            </Form.Item>
-          ))}
-        </Form>
+        {fieldConfig.map((field) => (
+          <Form.Item name={field.name} label={field.label} key={field.name}>
+            <Input placeholder={`Введите ${field.label.toLowerCase()}`} />
+          </Form.Item>
+        ))}
       </Modal>
     );
   }
