@@ -147,7 +147,7 @@ export default function GroupInput({
           ),
         },
       ]}
-      defaultActiveKey={["1"]}
+      defaultActiveKey={[]} //или 1
       style={{ marginBottom: 24 }}
     />
   );
