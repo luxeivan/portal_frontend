@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { YMaps, Map, Placemark, ZoomControl } from "react-yandex-maps";
+import { YMaps, Map, Placemark, ZoomControl } from "@pbe/react-yandex-maps";
 import { Typography, Card } from "antd";
 
 const { Title, Paragraph } = Typography;
