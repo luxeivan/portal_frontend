@@ -1,5 +1,5 @@
 import React from 'react';
-import { YMaps, Map, Placemark, ZoomControl } from 'react-yandex-maps';
+import { YMaps, Map, Placemark, ZoomControl } from '@pbe/react-yandex-maps';
 
 const mapState = { center: [55.76, 37.64], zoom: 8, behaviors: ['disable("scrollZoom")', 'drag'] };
 

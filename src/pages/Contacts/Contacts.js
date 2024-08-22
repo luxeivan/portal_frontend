@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Collapse, Spin } from "antd";
-import { YMaps, Map, Placemark } from "react-yandex-maps";
-import contactCentersData from "./contactCenters.json"; // Эта часть будет отключена, когда у вас появится API
+import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
+import contactCentersData from "./contactCenters.json";
 import axios from "axios";
 
 const Contacts = () => {
   const [contactCenters, setContactCenters] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [coordinates, setCoordinates] = useState({});
 
   useEffect(() => {
-    // Загрузка данных из JSON
-    // Эта часть кода будет закомментирована, когда будет API
     setContactCenters(contactCentersData);
 
-    // Когда появится API, раскомментить этот код и удалить JSON-часть
+    // При наличии API заменить этот код на загрузку данных с сервера
     /*
     const fetchData = async () => {
       try {
@@ -29,8 +28,6 @@ const Contacts = () => {
     fetchData();
     */
   }, []);
-
-  const [coordinates, setCoordinates] = useState({});
 
   const getCoordinates = async (address, index) => {
     try {
@@ -58,6 +55,11 @@ const Contacts = () => {
     });
     setLoading(false);
   }, [contactCenters]);
+
+  const createRouteLink = (coords) => {
+    const [lat, lon] = coords;
+    return `https://yandex.ru/maps/?rtext=~${lat},${lon}&rtt=auto`;
+  };
 
   if (loading) {
     return <Spin size="large" />;
@@ -90,13 +92,19 @@ const Contacts = () => {
             </div>
             <div style={{ marginBottom: "10px" }}>
               <strong>Построить маршрут:</strong>{" "}
-              {center.mapLink ? (
-                <a href={center.mapLink}>Ссылка</a>
+              {coordinates[index] ? (
+                <a
+                  href={createRouteLink(coordinates[index])}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ссылка
+                </a>
               ) : (
                 "Информация отсутствует"
               )}
             </div>
-            {coordinates[index] && (
+            {coordinates[index] ? (
               <YMaps>
                 <Map
                   defaultState={{ center: coordinates[index], zoom: 15 }}
@@ -106,6 +114,11 @@ const Contacts = () => {
                   <Placemark geometry={coordinates[index]} />
                 </Map>
               </YMaps>
+            ) : (
+              <Spin
+                size="small"
+                style={{ display: "block", margin: "0 auto" }}
+              />
             )}
           </Collapse.Panel>
         ))}

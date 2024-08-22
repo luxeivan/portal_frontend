@@ -4,7 +4,8 @@ import ReactInputMask from 'react-input-mask';
 import styles from './Phone.module.css'
 
 export default function PhoneInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, dependOf = false, howDepend = false }) {
-    const { colorBorderBg, colorText } = theme.useToken().token;
+    const { colorBorderBg, colorText,colorBorder } = theme.useToken().token;
+    console.log(theme.useToken().token)
     const form = Form.useFormInstance();
     // console.log(dependOf)
     let fieldDepends = Form.useWatch(dependOf, form);
@@ -22,8 +23,8 @@ export default function PhoneInput({ name = 'name', label = 'Label', disabled = 
             <ReactInputMask
                 mask="+7 (999) 999-99-99"
                 placeholder="+7 (XXX) XXX-XX-XX"
-                className={styles.inputMask}
-                style={{ backgroundColor: colorBorderBg, color: colorText }}
+                className={`ant-input ant-input-outlined ant-input-status-success ${styles.inputMask}`}
+                style={{ backgroundColor: colorBorderBg, color: colorText, border:`1px solid ${colorBorder}` }}
             />
         </Form.Item>
     )
