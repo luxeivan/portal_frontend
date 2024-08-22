@@ -73,7 +73,7 @@ export default function NewClaim() {
       }
     }
 
-    // createClaim({ service: serviceItem.Ref_Key, values });
+    createClaim({ service: serviceItem.Ref_Key, values });
 
     console.log(values);
   };
