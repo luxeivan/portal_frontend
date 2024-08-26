@@ -15,31 +15,28 @@ const { Title } = Typography;
 export default function Services() {
   const location = useLocation();
   const { colorPrimaryText } = theme.useToken().token;
+  const isLoading = useServices((state) => state.isLoading);
   const services = useServices((state) => state.services);
   const chain = useServices((state) => state.chain);
+  const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServices = useServices((state) => state.fetchServices);
-
   const { level2 } = useParams();
 
-  const [isLoading, setIsLoading] = useState(true); // Состояние для загрузки
   const [error, setError] = useState(null); // Состояние для хранения ошибок
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true); // Устанавливаем загрузку в true перед началом
-      setError(null); // Сбрасываем ошибки перед новой загрузкой
       try {
         await fetchServices(level2);
-        setIsLoading(false); // Останавливаем загрузку после успешной загрузки
       } catch (err) {
+        console.error("Ошибка при загрузке услуг:", err); // Логирование ошибки
         setError(err.message || "Произошла ошибка при загрузке услуг");
-        setIsLoading(false); // Останавливаем загрузку даже при ошибке
       }
     };
 
     fetchData();
-  }, [level2, fetchServices]);
+  }, [level2, fetchServices, fetchServiceChain]);
 
   return (
     <>
@@ -49,81 +46,79 @@ export default function Services() {
       />
       <Container>
         {serviceItem && (
-          <Breadcrumb
-            items={
-              !(
-                location.pathname === "/services" ||
-                location.pathname === "/services/"
-              ) &&
-              chain &&
-              chain.map((item) => ({
-                href: `/services/${item.Ref_Key}`,
-                title: item.Description,
-              }))
-            }
-          />
+          <>
+            <Breadcrumb
+              items={
+                !(
+                  location.pathname === "/services" ||
+                  location.pathname === "/services/"
+                ) &&
+                chain &&
+                chain.map((item) => ({
+                  href: `/services/${item.Ref_Key}`,
+                  title: item.Description,
+                }))
+              }
+            />
+          </>
         )}
-        {isLoading && (
+        {isLoading ? (
           <Flex style={{ height: "300px" }} align="center" justify="center">
             <Preloader />
           </Flex>
-        )}
-        {!isLoading &&
-          !error && ( // Проверяем, что нет ошибки
-            <>
-              <Title level={1} className={styles.title}>
-                {serviceItem ? serviceItem.Description : "Каталог услуг"}
-              </Title>
-              {services.length > 0 && (
-                <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
-                  {services
-                    .sort((a, b) => a.order - b.order)
-                    .map((item, index) => (
-                      <Link
-                        key={index}
-                        to={
-                          item.IsFolder
-                            ? `/services/${item.Ref_Key}`
-                            : `/services/item/${item.Ref_Key}`
-                        }
-                        className={styles.styleLink}
-                      >
-                        <Card className={styles.styleCard} hoverable>
-                          <Title level={4}>{item.Description}</Title>
-                          <Flex
-                            justify="flex-end"
-                            gap={20}
-                            className={styles.cardImage}
-                          >
-                            <Image
-                              style={{ textAlign: "center" }}
-                              width={"30%"}
-                              src={item.IsFolder ? folder : element}
-                              preview={false}
-                            />
-                          </Flex>
-                        </Card>
-                      </Link>
-                    ))}
-                </Flex>
-              )}
-              {services.length < 1 && (
-                <Title
-                  level={2}
-                  className={styles.title}
-                  style={{ color: "#999" }}
-                >
-                  Услуг в данной категории не найдено
-                </Title>
-              )}
-            </>
-          )}
-        {error && ( // Показываем модалку с ошибкой
+        ) : error ? ( // Условие рендера модалки при ошибке
           <ErrorModal
             visible={!!error}
             error={error}
             onClose={() => setError(null)} // Закрываем модалку при клике на крестик
           />
+        ) : (
+          <>
+            <Title level={1} className={styles.title}>
+              {serviceItem ? serviceItem.Description : "Каталог услуг"}
+            </Title>
+            {services.length > 0 ? (
+              <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
+                {services
+                  .sort((a, b) => a.order - b.order)
+                  .map((item, index) => (
+                    <Link
+                      key={index}
+                      to={
+                        item.IsFolder
+                          ? `/services/${item.Ref_Key}`
+                          : `/services/item/${item.Ref_Key}`
+                      }
+                      className={styles.styleLink}
+                    >
+                      <Card className={styles.styleCard} hoverable>
+                        <Title level={4}>{item.Description}</Title>
+                        <Flex
+                          justify="flex-end"
+                          gap={20}
+                          className={styles.cardImage}
+                        >
+                          <Image
+                            style={{ textAlign: "center" }}
+                            width={"30%"}
+                            src={item.IsFolder ? folder : element}
+                            preview={false}
+                          />
+                        </Flex>
+                      </Card>
+                    </Link>
+                  ))}
+              </Flex>
+            ) : (
+              <Title
+                level={2}
+                className={styles.title}
+                style={{ color: "#999" }}
+              >
+                Услуг в данной категории не найдено
+              </Title>
+            )}
+          </>
         )}
       </Container>
     </>
