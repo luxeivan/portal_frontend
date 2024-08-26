@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, Spin, theme, Image, Breadcrumb } from "antd";
+import { Card, Flex, Typography, theme, Image, Breadcrumb } from "antd";
 import { Link, useParams, useLocation } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 import Container from "../../components/Container";
 import Preloader from "../../components/Main/Preloader";
-import ErrorModal from "../../components/ErrorModal"; 
+import ErrorModal from "../../components/ErrorModal"; // Импортируем ErrorModal
 
 const { Title, Text } = Typography;
 
@@ -54,8 +54,8 @@ export default function Services() {
             <Breadcrumb
               items={
                 !(
-                  location.pathname == "/services" ||
-                  location.pathname == "/services/"
+                  location.pathname === "/services" ||
+                  location.pathname === "/services/"
                 ) &&
                 chain &&
                 chain.map((item) => ({

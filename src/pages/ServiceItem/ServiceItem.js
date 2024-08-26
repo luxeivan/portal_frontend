@@ -17,7 +17,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
 import Preloader from "../../components/Main/Preloader";
 import Law from "../../components/Documentation/Law";
-import ErrorModal from "../../components/ErrorModal"; 
+import ErrorModal from "../../components/ErrorModal"; // Подключаем модалку с ошибкой
 
 const { Title, Text, Paragraph } = Typography;
 
