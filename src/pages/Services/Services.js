@@ -6,41 +6,40 @@ import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
 import folder from "../../img/catalog/folder.png";
 import element from "../../img/catalog/element.png";
-import {
-  FolderOutlined,
-  FileTextOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
 import Container from "../../components/Container";
 import Preloader from "../../components/Main/Preloader";
-import ErrorModal from "../../components/ErrorModal"; // Импортируем ErrorModal
+import ErrorModal from "../../components/ErrorModal";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 export default function Services() {
   const location = useLocation();
   const { colorPrimaryText } = theme.useToken().token;
-  const isLoading = useServices((state) => state.isLoading);
   const services = useServices((state) => state.services);
   const chain = useServices((state) => state.chain);
-  const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServices = useServices((state) => state.fetchServices);
+
   const { level2 } = useParams();
 
+  const [isLoading, setIsLoading] = useState(true); // Состояние для загрузки
   const [error, setError] = useState(null); // Состояние для хранения ошибок
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true); // Устанавливаем загрузку в true перед началом
+      setError(null); // Сбрасываем ошибки перед новой загрузкой
       try {
         await fetchServices(level2);
+        setIsLoading(false); // Останавливаем загрузку после успешной загрузки
       } catch (err) {
         setError(err.message || "Произошла ошибка при загрузке услуг");
+        setIsLoading(false); // Останавливаем загрузку даже при ошибке
       }
     };
 
     fetchData();
-  }, [level2, fetchServices, fetchServiceChain]);
+  }, [level2, fetchServices]);
 
   return (
     <>
@@ -50,21 +49,19 @@ export default function Services() {
       />
       <Container>
         {serviceItem && (
-          <>
-            <Breadcrumb
-              items={
-                !(
-                  location.pathname === "/services" ||
-                  location.pathname === "/services/"
-                ) &&
-                chain &&
-                chain.map((item) => ({
-                  href: `/services/${item.Ref_Key}`,
-                  title: item.Description,
-                }))
-              }
-            />
-          </>
+          <Breadcrumb
+            items={
+              !(
+                location.pathname === "/services" ||
+                location.pathname === "/services/"
+              ) &&
+              chain &&
+              chain.map((item) => ({
+                href: `/services/${item.Ref_Key}`,
+                title: item.Description,
+              }))
+            }
+          />
         )}
         {isLoading && (
           <Flex style={{ height: "300px" }} align="center" justify="center">
