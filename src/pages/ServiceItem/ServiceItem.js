@@ -9,29 +9,27 @@ import {
   Steps,
   Typography,
   theme,
-  Breadcrumb
+  Breadcrumb,
 } from "antd";
-import ListDocs from "../../components/ServiceItem/ListDocs";
-import StrapiRichText from "../../components/StrapiRichText";
 import styles from "./ServicesItem.module.css";
 import { motion } from "framer-motion";
-import { LeftOutlined, RightOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
 import Preloader from "../../components/Main/Preloader";
-import Law from '../../components/Documentation/Law'
-
+import Law from "../../components/Documentation/Law";
+import ErrorModal from "../../components/ErrorModal"; 
 
 const { Title, Text, Paragraph } = Typography;
 
 const sklonenie = (day) => {
   if (day === 1) {
-    return 'день'
+    return "день";
   } else if (day > 1 && day < 5) {
-    return 'дня'
+    return "дня";
   } else {
-    return 'дней'
+    return "дней";
   }
-}
+};
 
 export default function ServiceItem() {
   const { colorPrimaryText } = theme.useToken().token;
@@ -45,48 +43,56 @@ export default function ServiceItem() {
 
   const chain = useServices((state) => state.chain);
   const fetchServiceChain = useServices((state) => state.fetchServiceChain);
+
+  const [error, setError] = useState(null); // Состояние для хранения ошибок
+
   useEffect(() => {
-    // console.log(key)
-    fetchServiceItem(key);
-    //fetchServiceChain(key)
-  }, [level2, key]);
+    const fetchData = async () => {
+      try {
+        await fetchServiceItem(key);
+      } catch (err) {
+        setError(
+          err.message || "Произошла ошибка при загрузке данных об услуге"
+        );
+      }
+    };
+
+    fetchData();
+  }, [level2, key, fetchServiceItem]);
+
   const showDrawer = () => {
     setOpen(true);
   };
+
   const onClose = () => {
     setOpen(false);
   };
-  console.log(serviceItem)
 
   return (
     <div>
-      {serviceItem &&
+      {serviceItem && (
         <>
-          <Breadcrumb items={chain && chain.map(item => ({
-            href: `/services/${item.Ref_Key}`,
-            title: item.Description
-          }))} />
-          {/* <Flex className={styles.chainFlex}>
-
-            {chain && chain.map((item, index) => <div key={index}><Link to={`/services/${item.Ref_Key}`}>{item.Description}</Link><RightOutlined style={{ color: colorPrimaryText }} /></div>)}
-          </Flex> */}
-          {/* <Link to={`/services/${serviceItem.Parent_Key}`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link> */}
+          <Breadcrumb
+            items={
+              chain &&
+              chain.map((item) => ({
+                href: `/services/${item.Ref_Key}`,
+                title: item.Description,
+              }))
+            }
+          />
           <Title level={1} style={{ marginTop: "10px" }}>
-            {/* <span style={{ color: "gray" }}>Услуга:</span><br /> */}
             {serviceItem.Description}
           </Title>
-          {/* <Divider /> */}
         </>
-      }
-      {isLoading &&
+      )}
+      {isLoading && (
         <Flex style={{ height: "300px" }} align="center" justify="center">
           <Preloader />
         </Flex>
-      }
-      {serviceItem &&
+      )}
+      {!isLoading && !error && serviceItem && (
         <>
-
-
           <Collapse
             defaultActiveKey={["1"]}
             items={[
@@ -96,25 +102,24 @@ export default function ServiceItem() {
                 children: (
                   <div>
                     <Paragraph>{serviceItem.shortDescription}</Paragraph>
-                    {/* <StrapiRichText content={serviceItem.attributes.description} /> */}
                     <MarkDownText>{serviceItem.fullDescription}</MarkDownText>
-                    {serviceItem.descriptionOfDocumentPreparationPeriod &&
+                    {serviceItem.descriptionOfDocumentPreparationPeriod && (
                       <Paragraph>
                         <b>Срок подготовки документов:</b>{" "}
                         {serviceItem.descriptionOfDocumentPreparationPeriod}
                       </Paragraph>
-                    }
-                    {serviceItem.descriptionOfPeriodService &&
+                    )}
+                    {serviceItem.descriptionOfPeriodService && (
                       <Paragraph>
                         <b>Срок оказания услуги:</b>{" "}
                         {serviceItem.descriptionOfPeriodService}
                       </Paragraph>
-                    }
-                    {serviceItem.descriptionOfCost &&
+                    )}
+                    {serviceItem.descriptionOfCost && (
                       <Paragraph>
                         <b>Стоимость:</b> {serviceItem.descriptionOfCost}
                       </Paragraph>
-                    }
+                    )}
                   </div>
                 ),
               },
@@ -123,20 +128,9 @@ export default function ServiceItem() {
                 label: "Необходимая информация для подачи заявки",
                 children: (
                   <>
-                  <MarkDownText>{serviceItem.requiredInformation}</MarkDownText>
-                    {
-                      // serviceItem.fields && (
-                      //   serviceItem.fields.map((item, index) =>
-                      //     <Flex vertical key={index}>
-                      //       <Paragraph>
-                      //         {item.Value}
-                      //       </Paragraph>
-                      //       <Paragraph>
-                      //         {item.shortDescription}
-                      //       </Paragraph>
-                      //     </Flex>
-                      //   ))
-                    }
+                    <MarkDownText>
+                      {serviceItem.requiredInformation}
+                    </MarkDownText>
                   </>
                 ),
               },
@@ -145,7 +139,6 @@ export default function ServiceItem() {
                 label: "Этапы выполнения",
                 children: (
                   <Steps
-                    // size="small"
                     direction="vertical"
                     current={100}
                     items={serviceItem?.steps?.map((item, index) => ({
@@ -157,18 +150,37 @@ export default function ServiceItem() {
                           <Text className={styles.iconText}>{index + 1}</Text>
                         </div>
                       ),
-                      title: <><span>{item.name}</span><InfoCircleOutlined onClick={() => { setOpenDrawerSteps(index + 1) }} style={{ marginLeft: 2, color: "rgba(0, 0, 0, 0.45)" }} /></>,
-                      description: <>
-                        <span>{item.shortDescription}</span>
-                        <Drawer
-                          title={item.name}
-                          placement="right"
-                          onClose={() => { setOpenDrawerSteps(false) }}
-                          open={openDrawerSteps === (index + 1)}
-                        >
-                          <MarkDownText>{item.fullDescription || "Нет описания"}</MarkDownText>
-                        </Drawer>
-                      </>,
+                      title: (
+                        <>
+                          <span>{item.name}</span>
+                          <InfoCircleOutlined
+                            onClick={() => {
+                              setOpenDrawerSteps(index + 1);
+                            }}
+                            style={{
+                              marginLeft: 2,
+                              color: "rgba(0, 0, 0, 0.45)",
+                            }}
+                          />
+                        </>
+                      ),
+                      description: (
+                        <>
+                          <span>{item.shortDescription}</span>
+                          <Drawer
+                            title={item.name}
+                            placement="right"
+                            onClose={() => {
+                              setOpenDrawerSteps(false);
+                            }}
+                            open={openDrawerSteps === index + 1}
+                          >
+                            <MarkDownText>
+                              {item.fullDescription || "Нет описания"}
+                            </MarkDownText>
+                          </Drawer>
+                        </>
+                      ),
                       subTitle: item.periodDescription,
                     }))}
                   />
@@ -177,12 +189,7 @@ export default function ServiceItem() {
               {
                 key: "4",
                 label: "Нормативные акты и законодательство",
-                children: (
-                  <Law/>
-                  // <Paragraph>
-                  //   Здесь будут файлы и ссылки на официальные документы
-                  // </Paragraph>
-                ),
+                children: <Law />,
               },
             ]}
           />
@@ -211,8 +218,14 @@ export default function ServiceItem() {
             <Paragraph>Скоро механизм подачи заявок заработает</Paragraph>
           </Drawer>
         </>
-      }
-
+      )}
+      {error && ( // Показываем модалку с ошибкой
+        <ErrorModal
+          visible={!!error}
+          error={error}
+          onClose={() => setError(null)} // Закрываем модалку при клике на крестик
+        />
+      )}
     </div>
   );
 }
@@ -223,51 +236,80 @@ export default function ServiceItem() {
 // import {
 //   Button,
 //   Collapse,
-//   Divider,
 //   Drawer,
 //   Flex,
 //   Steps,
-//   Table,
 //   Typography,
 //   theme,
+//   Breadcrumb,
 // } from "antd";
-// import ListDocs from "../../components/ServiceItem/ListDocs";
-// import StrapiRichText from "../../components/StrapiRichText";
 // import styles from "./ServicesItem.module.css";
 // import { motion } from "framer-motion";
-// import { LeftOutlined } from "@ant-design/icons";
+// import { InfoCircleOutlined } from "@ant-design/icons";
 // import MarkDownText from "../../components/MarkDownText/MarkDownText";
-
+// import Preloader from "../../components/Main/Preloader";
+// import Law from "../../components/Documentation/Law";
 
 // const { Title, Text, Paragraph } = Typography;
 
+// const sklonenie = (day) => {
+//   if (day === 1) {
+//     return "день";
+//   } else if (day > 1 && day < 5) {
+//     return "дня";
+//   } else {
+//     return "дней";
+//   }
+// };
+
 // export default function ServiceItem() {
+//   const { colorPrimaryText } = theme.useToken().token;
 //   const [open, setOpen] = useState(false);
+//   const [openDrawerSteps, setOpenDrawerSteps] = useState(false);
 //   const { colorPrimary } = theme.useToken().token;
 //   const serviceItem = useServices((state) => state.serviceItem);
 //   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
-//   const { level2, id } = useParams();
+//   const isLoading = useServices((state) => state.isLoading);
+//   const { level2, key } = useParams();
+
+//   const chain = useServices((state) => state.chain);
+//   const fetchServiceChain = useServices((state) => state.fetchServiceChain);
 //   useEffect(() => {
-//     fetchServiceItem(level2, id);
-//   }, [level2, id]);
+//     fetchServiceItem(key);
+//   }, [level2, key]);
 //   const showDrawer = () => {
 //     setOpen(true);
 //   };
 //   const onClose = () => {
 //     setOpen(false);
 //   };
-//   console.log(serviceItem)
+//   console.log(serviceItem);
+
 //   return (
 //     <div>
 //       {serviceItem && (
 //         <>
-
-//           <Link to={`/services/${level2}`}><Button style={{ marginTop: "20px" }}><LeftOutlined /></Button></Link>
+//           <Breadcrumb
+//             items={
+//               chain &&
+//               chain.map((item) => ({
+//                 href: `/services/${item.Ref_Key}`,
+//                 title: item.Description,
+//               }))
+//             }
+//           />
 //           <Title level={1} style={{ marginTop: "10px" }}>
-//             <span style={{ color: "gray" }}>Услуга:</span><br />{serviceItem.attributes.name}
+//             {serviceItem.Description}
 //           </Title>
-//           {/* <Divider /> */}
-
+//         </>
+//       )}
+//       {isLoading && (
+//         <Flex style={{ height: "300px" }} align="center" justify="center">
+//           <Preloader />
+//         </Flex>
+//       )}
+//       {serviceItem && (
+//         <>
 //           <Collapse
 //             defaultActiveKey={["1"]}
 //             items={[
@@ -276,20 +318,25 @@ export default function ServiceItem() {
 //                 label: "Описание",
 //                 children: (
 //                   <div>
-//                     <Paragraph>{serviceItem.attributes.shortDescription}</Paragraph>
-//                     {/* <StrapiRichText content={serviceItem.attributes.description} /> */}
-//                     <MarkDownText>{serviceItem.attributes.description}</MarkDownText>
-//                     <Paragraph>
-//                       <b>Срок подготовки документов:</b>{" "}
-//                       {serviceItem.attributes.periodPreparationDocuments}
-//                     </Paragraph>
-//                     <Paragraph>
-//                       <b>Срок оказания услуги:</b>{" "}
-//                       {serviceItem.attributes.periodServiceProvision}
-//                     </Paragraph>
-//                     <Paragraph>
-//                       <b>Стоимость:</b> {serviceItem.attributes.price}
-//                     </Paragraph>
+//                     <Paragraph>{serviceItem.shortDescription}</Paragraph>
+//                     <MarkDownText>{serviceItem.fullDescription}</MarkDownText>
+//                     {serviceItem.descriptionOfDocumentPreparationPeriod && (
+//                       <Paragraph>
+//                         <b>Срок подготовки документов:</b>{" "}
+//                         {serviceItem.descriptionOfDocumentPreparationPeriod}
+//                       </Paragraph>
+//                     )}
+//                     {serviceItem.descriptionOfPeriodService && (
+//                       <Paragraph>
+//                         <b>Срок оказания услуги:</b>{" "}
+//                         {serviceItem.descriptionOfPeriodService}
+//                       </Paragraph>
+//                     )}
+//                     {serviceItem.descriptionOfCost && (
+//                       <Paragraph>
+//                         <b>Стоимость:</b> {serviceItem.descriptionOfCost}
+//                       </Paragraph>
+//                     )}
 //                   </div>
 //                 ),
 //               },
@@ -297,15 +344,12 @@ export default function ServiceItem() {
 //                 key: "2",
 //                 label: "Необходимая информация для подачи заявки",
 //                 children: (
-//                   <Paragraph>
-//                     {serviceItem.attributes.fields && (
-//                       <ListDocs
-//                         list={serviceItem.attributes.fields.filter(
-//                           (item) => item.common.showInSpecification
-//                         )}
-//                       />
-//                     )}
-//                   </Paragraph>
+//                   <>
+//                     <MarkDownText>
+//                       {serviceItem.requiredInformation}
+//                     </MarkDownText>
+//                     {}
+//                   </>
 //                 ),
 //               },
 //               {
@@ -313,10 +357,9 @@ export default function ServiceItem() {
 //                 label: "Этапы выполнения",
 //                 children: (
 //                   <Steps
-//                     // size="small"
 //                     direction="vertical"
 //                     current={100}
-//                     items={serviceItem.attributes.steps.map((item, index) => ({
+//                     items={serviceItem?.steps?.map((item, index) => ({
 //                       icon: (
 //                         <div
 //                           className={styles.icon}
@@ -325,9 +368,38 @@ export default function ServiceItem() {
 //                           <Text className={styles.iconText}>{index + 1}</Text>
 //                         </div>
 //                       ),
-//                       title: item.name,
-//                       description: item.shortDescription,
-//                       subTitle: `${item.period ? item.period : ''}`,
+//                       title: (
+//                         <>
+//                           <span>{item.name}</span>
+//                           <InfoCircleOutlined
+//                             onClick={() => {
+//                               setOpenDrawerSteps(index + 1);
+//                             }}
+//                             style={{
+//                               marginLeft: 2,
+//                               color: "rgba(0, 0, 0, 0.45)",
+//                             }}
+//                           />
+//                         </>
+//                       ),
+//                       description: (
+//                         <>
+//                           <span>{item.shortDescription}</span>
+//                           <Drawer
+//                             title={item.name}
+//                             placement="right"
+//                             onClose={() => {
+//                               setOpenDrawerSteps(false);
+//                             }}
+//                             open={openDrawerSteps === index + 1}
+//                           >
+//                             <MarkDownText>
+//                               {item.fullDescription || "Нет описания"}
+//                             </MarkDownText>
+//                           </Drawer>
+//                         </>
+//                       ),
+//                       subTitle: item.periodDescription,
 //                     }))}
 //                   />
 //                 ),
@@ -335,11 +407,7 @@ export default function ServiceItem() {
 //               {
 //                 key: "4",
 //                 label: "Нормативные акты и законодательство",
-//                 children: (
-//                   <Paragraph>
-//                     Здесь будут файлы и ссылки на официальные документы
-//                   </Paragraph>
-//                 ),
+//                 children: <Law />,
 //               },
 //             ]}
 //           />
@@ -349,7 +417,7 @@ export default function ServiceItem() {
 //               whileHover={{ scale: 1.1 }}
 //               transition={{ type: "spring", stiffness: 400, damping: 10 }}
 //             >
-//               <Link to={`/cabinet/new-claim/${level2}/${serviceItem.id}`}>
+//               <Link to={`/cabinet/new-claim/${serviceItem.Ref_Key}`}>
 //                 <Button type="primary" size="large" onClick={showDrawer}>
 //                   Получить услугу
 //                 </Button>
