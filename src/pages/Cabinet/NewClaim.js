@@ -171,7 +171,8 @@ export default function NewClaim() {
 
                 if (
                   item.component_Type.includes("LinkInput") ||
-                  item.component_Type.includes("EnumInput")
+                  item.component_Type.includes("EnumInput") ||
+                  item.component_Type.includes("SelectInput") 
                 )
                   return (
                     <SelectInput
