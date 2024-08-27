@@ -18,12 +18,13 @@ export default function Services() {
   const isLoading = useServices((state) => state.isLoading);
   const services = useServices((state) => state.services);
   const chain = useServices((state) => state.chain);
+  const error = useServices((state) => state.error);
   const fetchServiceChain = useServices((state) => state.fetchServiceChain);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServices = useServices((state) => state.fetchServices);
   const { level2 } = useParams();
 
-  const [error, setError] = useState(null); // Состояние для хранения ошибок
+  // const [error, setError] = useState(null); // Состояние для хранения ошибок
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +32,7 @@ export default function Services() {
         await fetchServices(level2);
       } catch (err) {
         console.error("Ошибка при загрузке услуг:", err); // Логирование ошибки
-        setError(err.message || "Произошла ошибка при загрузке услуг");
+        // setError(err.message || "Произошла ошибка при загрузке услуг");
       }
     };
 
@@ -66,11 +67,11 @@ export default function Services() {
           <Flex style={{ height: "300px" }} align="center" justify="center">
             <Preloader />
           </Flex>
-        ) : error ? ( // Условие рендера модалки при ошибке
+        ) : error ? (
           <ErrorModal
             visible={!!error}
             error={error}
-            onClose={() => setError(null)} // Закрываем модалку при клике на крестик
+            onClose={() => error(null)}
           />
         ) : (
           <>
