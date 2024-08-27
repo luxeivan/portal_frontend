@@ -113,7 +113,8 @@ export default function GroupInput({
                   );
                 if (
                   item.component_Type.includes("LinkInput") ||
-                  item.component_Type.includes("EnumInput")
+                  item.component_Type.includes("EnumInput") ||
+                  item.component_Type.includes("SelectInput") 
                 )
                   return (
                     <SelectInput
