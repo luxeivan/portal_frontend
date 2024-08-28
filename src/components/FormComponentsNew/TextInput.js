@@ -104,8 +104,8 @@ export default function TextInput({
       setSuggestions([]);
     }
   };
-  console.log('type', type)
-  console.log('lenght', lenght)
+  // console.log('type', type)
+  // console.log('lenght', lenght)
   const debouncedFetchSuggestions = useCallback(
     debounce(fetchSuggestions, 500),
     []

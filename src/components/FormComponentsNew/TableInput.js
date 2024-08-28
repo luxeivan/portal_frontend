@@ -37,7 +37,10 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
                                     return <NumberInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("SliderInput"))
                                     return <SliderInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
-                                if (item.component_Type.includes("LinkInput")||item.component_Type.includes("EnumInput"))
+                                if (item.component_Type.includes("LinkInput") ||
+                                    item.component_Type.includes("EnumInput") ||
+                                    item.component_Type.includes("SelectInput")
+                                )
                                     return <SelectInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [nameTable, name, item.dependIdLine] : false} howDepend={item.dependСondition} />
                                 if (item.component_Type.includes("DateInput"))
                                     return <DateInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
@@ -60,7 +63,7 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
     if (!dependOf) return formElement
     if (dependOf && howDepend && howDepend.options?.length > 0) {
         let show = false
-        if(typeof fieldDepends === "undefined")  fieldDepends = false 
+        if (typeof fieldDepends === "undefined") fieldDepends = false
         howDepend.options.forEach(item => {
             if (item.value === "true") item.value = true
             if (item.value === "false") item.value = false;
