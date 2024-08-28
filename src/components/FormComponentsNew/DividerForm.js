@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Divider, Drawer } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../MarkDownText/MarkDownText";
+import styles from './divider.module.css'
 
 function DividerForm({ label, fullDescription }) {
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -11,7 +12,7 @@ function DividerForm({ label, fullDescription }) {
 
   return (
     <>
-      <Divider>
+      <Divider style={{whiteSpace:"pre-wrap"}}>
         {label}
         <InfoCircleOutlined
           onClick={showDrawer}

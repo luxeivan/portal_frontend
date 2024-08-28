@@ -76,7 +76,7 @@ button,
   }
 }
 
-@media (max-width: 575px) {
+@media (max-width: 750px) {
   html {
     font-size: 10px;
   }

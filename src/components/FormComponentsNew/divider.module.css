@@ -1,0 +1,24 @@
+.divider{
+    display: inline-block;
+    /* width: 750px; */
+}
+@media(max-width:800px){
+    .divider{
+        width: 550px;
+    }
+}
+@media(max-width:550px){
+    .divider{
+        width: 350px;
+    }
+}
+@media(max-width:450px){
+    .divider{
+        width: 250px;
+    }
+}
+@media(max-width:350px){
+    .divider{
+        width: 150px;
+    }
+}
