@@ -7,11 +7,43 @@
   left: 0;
   top: 64px;
   bottom: 0;
+  /* ------------------- */
+  /* width: 300px; */
+  /* background-size: cover;
+  background-position: center;
+  height: 100%;
+  padding: 20px; */
 }
+/* .menuItem::before {
+  content: '';
+  background-color: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+} */
+
+
+.menu {
+  /* background-color: aquamarine; */
+  height: 100%;
+  padding: 20px; 
+}
+
+/* .menu::after {
+  content: '';
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+} */
 
 .menuItemMobile {
   line-height: 15px;
-  
+
   padding: 10px 0;
 }
 
@@ -36,7 +68,7 @@
 }
 
 
-@media only screen and (max-width: 575px) {
+@media only screen and (max-width: 750px) {
   /* .labelSizeMobile {
     font-size: 12px;
     color: rgba(0, 0, 0, 0.88);

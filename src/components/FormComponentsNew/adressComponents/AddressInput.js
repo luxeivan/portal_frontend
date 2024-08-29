@@ -38,13 +38,13 @@ const AddressInput = ({
       params.locations = [{ city_fias_id: address.city }];
 
     axios
-      .get(`${backServer}/api/cabinet/getDaData`, { 
+      .get(`${backServer}/api/cabinet/getDaData`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
         withCredentials: true,
-        params 
+        params
       })
       .then((response) => {
         if (response.data && response.data.data) {
@@ -131,12 +131,12 @@ const AddressInput = ({
     <Form.List name={name}>
       {(fields, { add, remove }) => (
         <>
-          <Flex align="center" gap={20}>
+          <Flex align="center" wrap="wrap" style={{ maxWidth: "100%", marginBottom:20 }} >
             <Form.Item
               name={'fullAddress'}
               label={label}
               rules={[{ required: required, message: "Это поле обязательное" }]}
-              style={{ flex: 1 }}
+              style={{ flex: 1, minWidth: 300,marginRight:"20px" }}
             >
               <AutoComplete
                 options={options}
@@ -145,7 +145,7 @@ const AddressInput = ({
                 placeholder={placeholder}
               />
             </Form.Item>
-            <Button type="primary" onClick={openModal}>
+            <Button type="primary" onClick={openModal} >
               Моего адреса нет в списке
             </Button>
           </Flex>

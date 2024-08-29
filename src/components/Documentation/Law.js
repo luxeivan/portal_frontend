@@ -37,7 +37,7 @@ export default function RegulatoryLegalActs() {
     <div className="page-grid__content">
       <div className="row-docs-age">
         {docs.length > 0 &&
-          docs.map((item, index) =>
+          docs.sort((a, b) => Number(a.attributes.caption) - Number(b.attributes.caption)).map((item, index) =>
             <a
               key={index}
               className={styles.docLine}

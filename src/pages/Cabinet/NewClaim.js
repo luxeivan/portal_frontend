@@ -74,7 +74,7 @@ export default function NewClaim() {
     }
 
     try {
-      await createClaim({ service: serviceItem.Ref_Key, values });
+      // await createClaim({ service: serviceItem.Ref_Key, values });
       console.log(values);
     } catch (err) {
       setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
@@ -86,9 +86,9 @@ export default function NewClaim() {
       event.preventDefault();
     }
   };
-
+// console.log(serviceItem)
   return (
-    <div>
+    <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet
         title={"Новая заявка"}
         desc={"Новая заявка - Портал цифровых услуг АО Мособлэнерго"}
@@ -107,7 +107,7 @@ export default function NewClaim() {
             layout="vertical"
             onFinish={onFinish}
             onKeyDown={handleKeyDown}
-            style={{ maxWidth: 800, margin: "0 auto" }}
+            style={{ maxWidth: "800px", width: "100%", margin: "0 auto" }}
             labelWrap
           >
             {serviceItem.fields
@@ -172,7 +172,7 @@ export default function NewClaim() {
                 if (
                   item.component_Type.includes("LinkInput") ||
                   item.component_Type.includes("EnumInput") ||
-                  item.component_Type.includes("SelectInput") 
+                  item.component_Type.includes("SelectInput")
                 )
                   return (
                     <SelectInput
@@ -232,9 +232,7 @@ export default function NewClaim() {
                     />
                   );
 
-                if (
-                  item.component_Type.includes("ConfirmationDocumentNewInput")
-                )
+                if (item.component_Type.includes("ConfirmationDocumentNewInput"))
                   return (
                     <ConfirmationDocumentNewInput
                       key={index}
@@ -255,6 +253,7 @@ export default function NewClaim() {
                       name={item.idLine}
                       dependOf={item.dependIdLine}
                       howDepend={item.dependСondition}
+                      mainForm={form}
                     />
                   );
               })}
@@ -288,11 +287,11 @@ export default function NewClaim() {
         </>
       )}
 
-      {error && ( 
+      {error && (
         <ErrorModal
           visible={!!error}
           error={error}
-          // onClose={() => setError(null)} 
+        // onClose={() => setError(null)} 
         />
       )}
     </div>
