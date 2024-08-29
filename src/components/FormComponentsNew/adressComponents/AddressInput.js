@@ -131,12 +131,12 @@ const AddressInput = ({
     <Form.List name={name}>
       {(fields, { add, remove }) => (
         <>
-          <Flex align="center" gap={20} wrap="wrap" style={{ maxWidth: "100%", marginBottom:20 }} >
+          <Flex align="center" wrap="wrap" style={{ maxWidth: "100%", marginBottom:20 }} >
             <Form.Item
               name={'fullAddress'}
               label={label}
               rules={[{ required: required, message: "Это поле обязательное" }]}
-              style={{ flex: 1, minWidth: 300 }}
+              style={{ flex: 1, minWidth: 300,marginRight:"20px" }}
             >
               <AutoComplete
                 options={options}
@@ -145,7 +145,7 @@ const AddressInput = ({
                 placeholder={placeholder}
               />
             </Form.Item>
-            <Button type="primary" onClick={openModal}>
+            <Button type="primary" onClick={openModal} >
               Моего адреса нет в списке
             </Button>
           </Flex>
