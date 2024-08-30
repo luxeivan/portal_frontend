@@ -66,6 +66,7 @@ export default function TextInput({
   label = "Label",
   disabled = false,
   placeholder = "Пример",
+  defaultValue = false,
   required = false,
   dependOf = false,
   howDepend = false,
@@ -180,6 +181,7 @@ export default function TextInput({
       placeholder={placeholder}
       maxLength={lenght}
       disabled={disabled}
+      defaultValue={defaultValue}
     />
   </Form.Item>
   let formElement = simpleInput

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form, Input, InputNumber, message, Space, Select } from 'antd';
 
-export default function SelectInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, options = [], dependOf = false, howDepend = false }) {
+export default function SelectInput({ name = 'name', label = 'Label', defaultValue = false, disabled = false, placeholder = 'placeholder', required = false, options = [], dependOf = false, howDepend = false }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
     let fieldDepends = Form.useWatch(dependOf, form);
@@ -21,6 +21,7 @@ export default function SelectInput({ name = 'name', label = 'Label', disabled =
                 // style={{ width: 120 }}
                 options={options}
                 // disabled={disabled}
+                defaultValue={defaultValue}
             />
         </Form.Item>
     )
