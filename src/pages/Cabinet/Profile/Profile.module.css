@@ -45,12 +45,24 @@
   font-size: 20px;
 }
 
+.emailDisplay {
+  padding: 5px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  margin-bottom: 10px;
+}
+
+.emailTitle {
+  white-space: nowrap; 
+}
+
+
 /* .container {
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .light {
@@ -63,28 +75,32 @@
   color: #ffffff;
 }
 
-.title {
-  color: inherit;
+.profileCard {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  transition: background-color 0.5s ease;
+}
+
+.profileCardDark {
+  background-color: #333333;
+}
+
+.profileDetailsCard {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.profileDetailsCardDark {
+  background-color: #333333;
+}
+
+.avatar {
   margin-bottom: 20px;
 }
 
-.card {
-  width: 100%;
-  max-width: 600px;
-  background-color: inherit;
-  color: inherit;
-  box-shadow: none;
-  padding: 20px;
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-.profileItem {
-  margin-bottom: 15px;
-  font-size: 1.2em;
-}
-
-.label {
-  color: inherit;
-  font-weight: bold;
-  margin-right: 10px;
+.socialIcons {
+  margin: 10px 0;
+  font-size: 20px;
 } */
