@@ -22,9 +22,12 @@ export default function NumberInput({
   min = 0,
   max = 100,
   step = 1,
+  defaultValue = false
 }) {
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form);
+  console.log('defaultValue',defaultValue)
+  console.log('disabled',disabled)
   const formElement =  (
     <Form.Item
       name={name}
@@ -36,7 +39,8 @@ export default function NumberInput({
           },
         ]
       }
-      initialValue={min}
+      initialValue={defaultValue?defaultValue:min}
+      
     >
       <InputNumber
         min={min}
@@ -44,7 +48,7 @@ export default function NumberInput({
         step={step}
         // value={inputValue}
         // onChange={onChange}
-        // disabled={disabled}
+        disabled={disabled}
       />
     </Form.Item>
     

@@ -74,7 +74,7 @@ export default function NewClaim() {
     }
 
     try {
-      await createClaim({ service: serviceItem.Ref_Key, values });
+      // await createClaim({ service: serviceItem.Ref_Key, values });
       console.log(values);
     } catch (err) {
       setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
@@ -86,7 +86,7 @@ export default function NewClaim() {
       event.preventDefault();
     }
   };
-
+// console.log(serviceItem)
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet
