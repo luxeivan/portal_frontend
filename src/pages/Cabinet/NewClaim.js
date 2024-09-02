@@ -86,7 +86,7 @@ export default function NewClaim() {
       event.preventDefault();
     }
   };
-// console.log(serviceItem)
+ console.log(serviceItem)
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet
