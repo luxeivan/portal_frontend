@@ -26,8 +26,8 @@ export default function NumberInput({
 }) {
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form);
-  console.log('defaultValue',defaultValue)
-  console.log('disabled',disabled)
+  // console.log('defaultValue',defaultValue)
+  // console.log('disabled',disabled)
   const formElement =  (
     <Form.Item
       name={name}
