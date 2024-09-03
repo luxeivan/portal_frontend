@@ -41,10 +41,15 @@ export default function GroupInput({
     mainForm.setFieldValue(name, values[name])
     setOpenModal(false)
     setItems(Fields.filter(item => !item.component_Type.includes('HiddenInput')).map(item => {
+      let val = values[name][item.idLine]
+      if (item.component_Type.includes('LinkInput')) { 
+        console.log(item.component_Expanded.options.find(option => option.value === val))
+        val = item.component_Expanded.options.find(option => option.value === val).label 
+      }
       return {
         key: item.idLine,
-        label: <>{item.required ? <span style={{color:"red"}}>*&ensp;</span> : ''}{item.label}</>,
-        children: values[name][item.idLine],
+        label: <div style={{marginLeft:20}}>{item.required ? <span style={{ color: "red" }}>*&ensp;</span> : <span>&ensp;&ensp;</span>}{item.label}</div>,
+        children: val,
       }
     }
     ))
@@ -79,7 +84,7 @@ export default function GroupInput({
         >
           <Button type="primary" onClick={handlerOpenModal}>Редактировать</Button>
         </Form.Item>
-        <Descriptions items={items} />
+        <Descriptions style={{flex:1}} items={items} column={1} bordered/>
       </Flex>
 
       <Modal title={label} open={openModal} onOk={handlerOnOK} onCancel={handlerOnClose} footer={null}>

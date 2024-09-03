@@ -10,7 +10,7 @@ export default function Login() {
     const navigate = useNavigate()
     const { toggleModal, auth, redirection, setRedirection } = useAuth();
     useEffect(() => {
-        console.log(redirection)
+        // console.log(redirection)
         if (auth) {
             if (redirection) {
                 const nav = redirection
