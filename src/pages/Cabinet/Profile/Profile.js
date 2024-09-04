@@ -4,15 +4,13 @@ import {
   Col,
   Row,
   Typography,
-  Input,
   Button,
-  Tabs,
+  Modal,
   message,
 } from "antd";
 import { useEffect, useState } from "react";
 import {
   UserOutlined,
-  MailOutlined,
   PhoneOutlined,
   LockOutlined,
 } from "@ant-design/icons";
@@ -26,19 +24,16 @@ import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
 TweenOne.plugins.push(Children);
 
 const { Title, Text } = Typography;
-const { TabPane } = Tabs;
 
 export default function Profile() {
   const profile = useProfile((store) => store.profile);
   const fetchProfile = useProfile((store) => store.fetchProfile);
-  const updatePhone = useProfile((store) => store.updatePhone);
-  const updatePassword = useProfile((store) => store.updatePassword);
   const darkMode = useGlobal((state) => state.darkMode);
 
   const [leftPanelVisible, setLeftPanelVisible] = useState(false);
   const [rightPanelVisible, setRightPanelVisible] = useState(false);
-  const [phone, setPhone] = useState(profile.phone || "");
-  const [password, setPassword] = useState("");
+  const [isPhoneModalVisible, setIsPhoneModalVisible] = useState(false);
+  const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
 
   useEffect(() => {
     fetchProfile();
@@ -46,23 +41,27 @@ export default function Profile() {
     setTimeout(() => setRightPanelVisible(true), 800);
   }, [fetchProfile]);
 
-  useEffect(() => {
-    setPhone(profile.phone || "");
-  }, [profile]);
+  const showPhoneModal = () => {
+    setIsPhoneModalVisible(true);
+  };
 
-  const handleSave = async () => {
-    try {
-      if (phone !== profile.phone) {
-        await updatePhone(phone);
-        message.success("Телефон успешно обновлен");
-      }
-      if (password) {
-        await updatePassword(password);
-        message.success("Пароль успешно обновлен");
-      }
-    } catch (error) {
-      message.error("Ошибка при обновлении профиля");
-    }
+  const showPasswordModal = () => {
+    setIsPasswordModalVisible(true);
+  };
+
+  const handlePhoneModalOk = () => {
+    message.info("Модалка для изменения номера");
+    setIsPhoneModalVisible(false);
+  };
+
+  const handlePasswordModalOk = () => {
+    message.info("Модалка для изменения пароля");
+    setIsPasswordModalVisible(false);
+  };
+
+  const handleModalCancel = () => {
+    setIsPhoneModalVisible(false);
+    setIsPasswordModalVisible(false);
   };
 
   return (
@@ -105,12 +104,6 @@ export default function Profile() {
                 <Title level={3} className={styles.emailTitle}>
                   {profile.email || "Имя пользователя"}
                 </Title>
-
-                <div className={styles.socialIcons}>
-                  <MailOutlined />
-                  <PhoneOutlined />
-                  <LockOutlined />
-                </div>
               </TweenOne>
             </Card>
           </TweenOne>
@@ -132,66 +125,67 @@ export default function Profile() {
               }`}
               bordered={false}
             >
-              <Tabs defaultActiveKey="1">
-                <TabPane tab="Профиль" key="1">
-                  <TweenOne
-                    animation={{
-                      opacity: rightPanelVisible ? 1 : 0,
-                      translateY: rightPanelVisible ? 0 : -20,
-                      duration: 500,
-                      delay: 200,
-                      ease: "easeOutCubic",
-                    }}
-                    style={{ opacity: 0, transform: "translateY(-20px)" }}
-                  >
-                    <Row gutter={16}>
-                      <Col span={12}>
-                        <Text strong>Email</Text>
-                        <div className={styles.emailDisplay}>
-                          {profile.email || ""}
-                        </div>
-                      </Col>
-                      <Col span={12}>
-                        <Text strong>Телефон</Text>
-                        <Input
-                          placeholder="+7 999 999 9999"
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                        />
-                      </Col>
-                      <Col span={12}>
-                        <Text strong>Пароль</Text>
-                        <Input.Password
-                          placeholder="Введите новый пароль"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                      </Col>
-                    </Row>
-                  </TweenOne>
-                  <Row justify="end" style={{ marginTop: "20px" }}>
+              <Row gutter={16} align="middle">
+                <Col >
+                  <Text strong>Email</Text>
+                  <div className={styles.emailDisplay}>
+                    {profile.email || ""}
+                  </div>
+                </Col>
+
+                <Col>
+                  <Text strong>Телефон</Text>
+                  <div className={styles.phoneDisplay}>
+                    {profile.phone || ""}
                     <Button
-                      type="primary"
-                      style={{ marginRight: "10px" }}
-                      onClick={handleSave}
+                      type="link"
+                      onClick={showPhoneModal}
+                      // style={{ marginLeft: "10px" }}
                     >
-                      Сохранить
+                      Изменить телефон
                     </Button>
-                  </Row>
-                </TabPane>
-                <TabPane tab="Настройки" key="2">
-                  <Text>
-                    Дополнительные настройки профиля будут доступны здесь.
-                  </Text>
-                </TabPane>
-              </Tabs>
+                  </div>
+                </Col>
+
+                <Col >
+                  <Button
+                    type="link"
+                    onClick={showPasswordModal}
+                    style={{ paddingTop: "35px" }}
+                    className={styles.changePasswordButton}
+                  >
+                    Изменить пароль
+                  </Button>
+                </Col>
+              </Row>
             </Card>
           </TweenOne>
         </Col>
       </Row>
+
+      {/* Модалка для изменения номера телефона */}
+      <Modal
+        title="Изменить номер телефона"
+        visible={isPhoneModalVisible}
+        onOk={handlePhoneModalOk}
+        onCancel={handleModalCancel}
+      >
+        <p>Модалка для изменения номера</p>
+      </Modal>
+
+      {/* Модалка для изменения пароля */}
+      <Modal
+        title="Изменить пароль"
+        visible={isPasswordModalVisible}
+        onOk={handlePasswordModalOk}
+        onCancel={handleModalCancel}
+      >
+        <p>Модалка для изменения пароля</p>
+      </Modal>
     </div>
   );
 }
+
 
 // import {
 //   Avatar,
@@ -217,9 +211,6 @@ export default function Profile() {
 // import styles from "./Profile.module.css";
 // import TweenOne from "rc-tween-one";
 // import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
-// import axios from "axios";
-
-// // const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
 // TweenOne.plugins.push(Children);
 
@@ -229,6 +220,8 @@ export default function Profile() {
 // export default function Profile() {
 //   const profile = useProfile((store) => store.profile);
 //   const fetchProfile = useProfile((store) => store.fetchProfile);
+//   const updatePhone = useProfile((store) => store.updatePhone);
+//   const updatePassword = useProfile((store) => store.updatePassword);
 //   const darkMode = useGlobal((state) => state.darkMode);
 
 //   const [leftPanelVisible, setLeftPanelVisible] = useState(false);
@@ -248,31 +241,12 @@ export default function Profile() {
 
 //   const handleSave = async () => {
 //     try {
-//       // const token = localStorage.getItem("jwt");
 //       if (phone !== profile.phone) {
-//         await axios.post(
-//           `${process.env.REACT_APP_BACK_BACK_SERVER}/api/cabinet/profile/newphone`,
-//           { phone },
-//           {
-//             headers: {
-//               Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-//             },
-//             withCredentials: true,
-//           }
-//         );
+//         await updatePhone(phone);
 //         message.success("Телефон успешно обновлен");
 //       }
 //       if (password) {
-//         await axios.post(
-//           `${process.env.REACT_APP_BACK_BACK_SERVER}/api/cabinet/profile/newpassword`,
-//           { password },
-//           {
-//             headers: {
-//               Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-//             },
-//             withCredentials: true,
-//           }
-//         );
+//         await updatePassword(password);
 //         message.success("Пароль успешно обновлен");
 //       }
 //     } catch (error) {
