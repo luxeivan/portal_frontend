@@ -84,7 +84,7 @@ export default function GroupInput({
         >
           <Button type="primary" onClick={handlerOpenModal}>Редактировать</Button>
         </Form.Item>
-        <Descriptions items={items} column={1} bordered/>
+        <Descriptions style={{flex:1}} items={items} column={1} bordered/>
       </Flex>
 
       <Modal title={label} open={openModal} onOk={handlerOnOK} onCancel={handlerOnClose} footer={null}>
