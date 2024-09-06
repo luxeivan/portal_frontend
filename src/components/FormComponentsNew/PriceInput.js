@@ -43,6 +43,8 @@ export default function PriceInput({
                     if (res.data) {
                         // console.log('price', res)
                         form.setFieldValue(name, res.data)
+                    }else{
+                        form.setFieldValue(name, NaN) 
                     }
                 })
         }

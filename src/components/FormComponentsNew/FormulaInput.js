@@ -25,14 +25,12 @@ export default function FormulaInput({
     const form = Form.useFormInstance();
     let objectProp = null
     if (properties) objectProp = JSON.parse(properties)
-    let count = Form.useWatch(objectProp["Количество"], form);
-    let price = Form.useWatch(objectProp["Цена"], form);
+    let count = 0
+    let price = 0
+    count = Form.useWatch(objectProp["Количество"], form);
+    price = Form.useWatch(objectProp["Цена"], form);
     useEffect(() => {
-        if (count && price) {
-            // console.log("count",count)
-            // console.log("price",price)
-            form.setFieldValue(name, count * price)
-        }
+        form.setFieldValue(name, count * price)
     }, [count, price])
     let fieldDepends = Form.useWatch(dependOf, form);
     // console.log('defaultValue',defaultValue)
@@ -44,7 +42,7 @@ export default function FormulaInput({
         >
             <Input
                 disabled={true}
-                style={{color:colorTextHeading}}
+                style={{ color: colorTextHeading }}
             />
         </Form.Item>
 
