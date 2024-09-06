@@ -89,6 +89,9 @@ export default function NewClaim() {
     }
   };
  console.log(serviceItem)
+ const handlerChange = (changedValues)=>{
+console.log("changedValues: ",changedValues)
+ }
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet
@@ -111,6 +114,7 @@ export default function NewClaim() {
             onKeyDown={handleKeyDown}
             style={{ maxWidth: "800px", width: "100%", margin: "0 auto" }}
             labelWrap
+            // onValuesChange={handlerChange}
           >
             {serviceItem.fields
               ?.sort((a, b) => a.lineNum - b.lineNum)
