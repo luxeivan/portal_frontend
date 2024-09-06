@@ -20,6 +20,8 @@ import AddressInput from "../../components/FormComponentsNew/adressComponents/Ad
 import ConfirmationDocumentNewInput from "../../components/FormComponentsNew/confirmationDocumentComponents/ConfirmationDocumentNewInput";
 import SnilsInput from "../../components/FormComponentsNew/SnilsInput";
 import ErrorModal from "../../components/ErrorModal"; // Импортируем ErrorModal
+import PriceInput from "../../components/FormComponentsNew/PriceInput";
+import FormulaInput from "../../components/FormComponentsNew/FormulaInput";
 
 const { Title, Paragraph } = Typography;
 
@@ -256,6 +258,28 @@ export default function NewClaim() {
                       mainForm={form}
                     />
                   );
+                  if (item.component_Type.includes("PriceInput"))
+                    return (
+                      <PriceInput
+                        key={index}
+                        {...item.component_Expanded}
+                        {...item}
+                        name={item.idLine}
+                        dependOf={item.dependIdLine}
+                        howDepend={item.dependСondition}
+                      />
+                    );
+                  if (item.component_Type.includes("componentsFormula"))
+                    return (
+                      <FormulaInput
+                        key={index}
+                        {...item.component_Expanded}
+                        {...item}
+                        name={item.idLine}
+                        dependOf={item.dependIdLine}
+                        howDepend={item.dependСondition}
+                      />
+                    );
               })}
 
             <Flex style={{ marginTop: 10 }}>
