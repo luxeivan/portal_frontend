@@ -34,7 +34,7 @@ export default function Profile() {
       "Вы вышли из системы. Перенаправление на страницу регистрации..."
     );
     setTimeout(() => {
-      window.location.href = "/"; // Перенаправляем на страницу регистрации
+      window.location.href = "/"; 
     }, 2000);
   };
 
