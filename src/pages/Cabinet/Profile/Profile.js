@@ -13,7 +13,7 @@ import { UserOutlined } from "@ant-design/icons";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import useProfile from "../../../stores/Cabinet/useProfile";
 import useGlobal from "../../../stores/useGlobal";
-import { PhoneModal, PasswordModal } from "./Modals"; 
+import { PhoneModal, PasswordModal } from "./Modals"; // Импортируем модалки
 import styles from "./Profile.module.css";
 import TweenOne from "rc-tween-one";
 import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
@@ -25,7 +25,7 @@ const { Title, Text } = Typography;
 export default function Profile() {
   const profile = useProfile((store) => store.profile);
   const fetchProfile = useProfile((store) => store.fetchProfile);
-  const updatePhone = useProfile((store) => store.updatePhone); 
+  const updatePhone = useProfile((store) => store.updatePhone);
   const updatePassword = useProfile((store) => store.updatePassword);
   const darkMode = useGlobal((state) => state.darkMode);
 
@@ -34,7 +34,7 @@ export default function Profile() {
   const [isPhoneModalVisible, setIsPhoneModalVisible] = useState(false);
   const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
 
-  const [form] = Form.useForm(); 
+  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchProfile();
