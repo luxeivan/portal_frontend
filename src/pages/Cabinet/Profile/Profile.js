@@ -1,40 +1,26 @@
 import React, { useEffect, useState } from "react";
-import {
-  Avatar,
-  Card,
-  Col,
-  Row,
-  Typography,
-  Button,
-  message,
-  Form,
-} from "antd";
+import { Avatar, Card, Col, Row, Typography, Button, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import useProfile from "../../../stores/Cabinet/useProfile";
 import useGlobal from "../../../stores/useGlobal";
-import { PhoneModal, PasswordModal } from "./Modals"; // Импортируем модалки
+import useAuth from "../../../stores/useAuth"; // Импортируем хук для логаута
 import styles from "./Profile.module.css";
 import TweenOne from "rc-tween-one";
 import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
 
 TweenOne.plugins.push(Children);
 
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 
 export default function Profile() {
   const profile = useProfile((store) => store.profile);
   const fetchProfile = useProfile((store) => store.fetchProfile);
-  const updatePhone = useProfile((store) => store.updatePhone);
-  const updatePassword = useProfile((store) => store.updatePassword);
+  const logout = useAuth((state) => state.logout); // Метод логаута
   const darkMode = useGlobal((state) => state.darkMode);
 
   const [leftPanelVisible, setLeftPanelVisible] = useState(false);
   const [rightPanelVisible, setRightPanelVisible] = useState(false);
-  const [isPhoneModalVisible, setIsPhoneModalVisible] = useState(false);
-  const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
-
-  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchProfile();
@@ -42,45 +28,14 @@ export default function Profile() {
     setTimeout(() => setRightPanelVisible(true), 800);
   }, [fetchProfile]);
 
-  const showPhoneModal = () => {
-    setIsPhoneModalVisible(true);
-  };
-
-  const showPasswordModal = () => {
-    setIsPasswordModalVisible(true);
-  };
-
-  const handlePhoneModalOk = async () => {
-    try {
-      const values = await form.validateFields();
-      await updatePhone(values.phone);
-      message.success("Телефон успешно обновлён");
-    } catch (error) {
-      message.error("Ошибка при обновлении телефона");
-    }
-    setIsPhoneModalVisible(false);
-  };
-
-  const handlePasswordModalOk = async () => {
-    try {
-      const values = await form.validateFields();
-      if (values.password !== values.repeat_password) {
-        message.error("Пароли не совпадают");
-        return;
-      }
-      await updatePassword(values.password);
-      message.success("Пароль успешно обновлён");
-      form.resetFields();
-    } catch (error) {
-      message.error("Ошибка при обновлении пароля");
-    }
-    setIsPasswordModalVisible(false);
-  };
-
-  const handleModalCancel = () => {
-    setIsPhoneModalVisible(false);
-    setIsPasswordModalVisible(false);
-    form.resetFields();
+  const handleLogout = () => {
+    logout();
+    message.success(
+      "Вы вышли из системы. Перенаправление на страницу регистрации..."
+    );
+    setTimeout(() => {
+      window.location.href = "/"; // Перенаправляем на страницу регистрации
+    }, 2000);
   };
 
   return (
@@ -145,31 +100,27 @@ export default function Profile() {
               bordered={false}
             >
               <Row gutter={16} align="middle">
-                <Col>
+                <Col span={24}>
                   <Text strong>Email</Text>
                   <div className={styles.emailDisplay}>
                     {profile.email || ""}
                   </div>
                 </Col>
 
-                <Col>
+                <Col span={24} style={{ marginTop: "20px" }}>
                   <Text strong>Телефон</Text>
                   <div className={styles.phoneDisplay}>
                     {profile.phone || ""}
-                    <Button type="link" onClick={showPhoneModal}>
-                      Изменить телефон
-                    </Button>
                   </div>
                 </Col>
 
-                <Col>
-                  <Button
-                    type="link"
-                    onClick={showPasswordModal}
-                    style={{ paddingTop: "35px" }}
-                    className={styles.changePasswordButton}
-                  >
-                    Изменить пароль
+                <Col span={24} style={{ marginTop: "20px" }}>
+                  <Paragraph>
+                    Если вы хотите изменить телефон илипароль, просто заново пройдите
+                    регистрацию с тем же email, нажав на кнопку ниже.
+                  </Paragraph>
+                  <Button type="primary" onClick={handleLogout}>
+                    Пройти регистрацию заново
                   </Button>
                 </Col>
               </Row>
@@ -177,22 +128,6 @@ export default function Profile() {
           </TweenOne>
         </Col>
       </Row>
-
-      {/* Модалка для изменения номера телефона */}
-      <PhoneModal
-        isVisible={isPhoneModalVisible}
-        onCancel={handleModalCancel}
-        onSubmit={handlePhoneModalOk}
-        form={form}
-      />
-
-      {/* Модалка для изменения пароля */}
-      <PasswordModal
-        isVisible={isPasswordModalVisible}
-        onCancel={handleModalCancel}
-        onSubmit={handlePasswordModalOk}
-        form={form}
-      />
     </div>
   );
 }
