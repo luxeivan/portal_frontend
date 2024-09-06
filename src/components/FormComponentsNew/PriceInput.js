@@ -40,10 +40,11 @@ export default function PriceInput({
                     },
                     withCredentials: true,
                 }).then(res => {
-
-                    console.log('price', res)
+                    if (res.data) {
+                        // console.log('price', res)
+                        form.setFieldValue(name, res.data)
+                    }
                 })
-            form.setFieldValue(name, 10)
         }
     }, [typePrice, nomenclature])
     let fieldDepends = Form.useWatch(dependOf, form);
