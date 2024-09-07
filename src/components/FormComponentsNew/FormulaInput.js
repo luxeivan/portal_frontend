@@ -44,13 +44,13 @@ export default function FormulaInput({
         keys.forEach(item => {
             // if (!values[item]) return;
             temp[item] = values[item] ? values[item] : NaN
-            console.log("item:", item)
-            console.log("values[item]:", values[item])
+            // console.log("item:", item)
+            // console.log("values[item]:", values[item])
             temp.formula = temp.formula.replace(item, values[item] ? values[item] : NaN)
         })
-        console.log("formula:", temp.formula)
-        console.log("evaluate", evaluate(temp.formula, temp))
-        console.log("type evaluate", isNaN(evaluate(temp.formula, temp)))
+        // console.log("formula:", temp.formula)
+        // console.log("evaluate", evaluate(temp.formula, temp))
+        // console.log("type evaluate", isNaN(evaluate(temp.formula, temp)))
         if (!isNaN(evaluate(temp.formula, temp)) && evaluate(temp.formula, temp) !== values[name]) {
             form.setFieldValue(name, evaluate(temp.formula, temp))
         }
