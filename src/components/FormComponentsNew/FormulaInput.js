@@ -51,8 +51,9 @@ export default function FormulaInput({
         // console.log("formula:", temp.formula)
         // console.log("evaluate", evaluate(temp.formula, temp))
         // console.log("type evaluate", isNaN(evaluate(temp.formula, temp)))
-        if (!isNaN(evaluate(temp.formula, temp)) && evaluate(temp.formula, temp) !== values[name]) {
-            form.setFieldValue(name, evaluate(temp.formula, temp))
+        const evalu = evaluate(temp.formula, temp)
+        if (!isNaN(evalu) && evalu !== values[name]) {
+            form.setFieldValue(name, evalu)
         }
         // setPropertiesValue(temp)
         // console.log("values: ", values)
