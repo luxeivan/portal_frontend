@@ -6,7 +6,10 @@ import {
     theme
 } from "antd";
 import { evaluate } from "mathjs";
-
+function truncated(num, decimalPlaces) {
+    let numPowerConverter = Math.pow(10, decimalPlaces);
+    return ~~(num * numPowerConverter) / numPowerConverter;
+}
 export default function FormulaInput({
     name = "name",
     label = "Label",
@@ -28,23 +31,31 @@ export default function FormulaInput({
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
     const form = Form.useFormInstance();
+
     let objectProp = {}
     if (properties) objectProp = JSON.parse(properties)
     let keys = []
     for (let key in objectProp) {
         if (objectProp.hasOwnProperty(key)) {
             keys.push(objectProp[key]);
+            // Form.useWatch(objectProp[key], form)
         }
     }
-    // console.log(properties)
+    // const watchedValues = Form.useWatch(keys, form);
+    // useEffect(() => {
+    //     console.log("Значения полей:", watchedValues);
+    // }, [watchedValues])
+    // Form.useWatch(keys, form)
+    // console.log('useWatch',Form.useWatch(keys, form))
     // console.log("formula", formula)
 
     // console.log(keys.map(item => ([item])))
     Form.useWatch((values) => {
+        console.log("values:", values)
         const temp = { formula }
         // console.log("keys:", keys)
         keys.forEach(item => {
-            // if (!values[item]) return;
+            if (!values[item]) return;
             temp[item] = values[item] ? values[item] : NaN
             // console.log("item:", item)
             // console.log("values[item]:", values[item])
@@ -54,9 +65,9 @@ export default function FormulaInput({
         // console.log("evaluate", evaluate(temp.formula, temp))
         // console.log("type evaluate", isNaN(evaluate(temp.formula, temp)))
         try {
-            const evalu = evaluate(temp.formula, temp)
+            const evalu = truncated(evaluate(temp.formula, temp), ractionDigits)
             if (!isNaN(evalu) && evalu !== values[name]) {
-                form.setFieldValue(name, evalu.toFixed(ractionDigits))
+                form.setFieldValue(name, evalu)
             }
         } catch (error) {
             return
