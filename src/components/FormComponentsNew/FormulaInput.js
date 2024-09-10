@@ -20,7 +20,9 @@ export default function FormulaInput({
     step = 1,
     defaultValue = false,
     properties = false,
-    formula = ''
+    formula = '',
+    ractionDigits = 10,
+    digits = false
 }) {
     // const [propertiesValue, setPropertiesValue] = useState({})
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
@@ -51,8 +53,13 @@ export default function FormulaInput({
         // console.log("formula:", temp.formula)
         // console.log("evaluate", evaluate(temp.formula, temp))
         // console.log("type evaluate", isNaN(evaluate(temp.formula, temp)))
-        if (!isNaN(evaluate(temp.formula, temp)) && evaluate(temp.formula, temp) !== values[name]) {
-            form.setFieldValue(name, evaluate(temp.formula, temp))
+        try {
+            const evalu = evaluate(temp.formula, temp)
+            if (!isNaN(evalu) && evalu !== values[name]) {
+                form.setFieldValue(name, evalu.toFixed(ractionDigits))
+            }
+        } catch (error) {
+            return
         }
         // setPropertiesValue(temp)
         // console.log("values: ", values)
