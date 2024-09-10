@@ -51,7 +51,7 @@ export default function FormulaInput({
 
     // console.log(keys.map(item => ([item])))
     Form.useWatch((values) => {
-        console.log("values:", values)
+        // console.log("values:", values)
         const temp = { formula }
         // console.log("keys:", keys)
         keys.forEach(item => {
@@ -66,10 +66,14 @@ export default function FormulaInput({
         // console.log("type evaluate", isNaN(evaluate(temp.formula, temp)))
         try {
             const evalu = truncated(evaluate(temp.formula, temp), ractionDigits)
+            console.log(evalu)
             if (!isNaN(evalu) && evalu !== values[name]) {
                 form.setFieldValue(name, evalu)
             }
         } catch (error) {
+            if(!isNaN(form.getFieldValue(name))){
+                form.setFieldValue(name, NaN)
+            }
             return
         }
         // setPropertiesValue(temp)
