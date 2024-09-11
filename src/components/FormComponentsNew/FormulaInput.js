@@ -66,8 +66,8 @@ export default function FormulaInput({
         // console.log("evaluate", evaluate(temp.formula, temp))
         // console.log("type evaluate", isNaN(evaluate(temp.formula, temp)))
         try {
-            const evalu = truncated(evaluate(temp.formula, temp), ractionDigits)
-            console.log(evalu)
+            const evalu = evaluate(temp.formula, temp).toFixed(ractionDigits)
+            // console.log(evalu)
             if (!isNaN(evalu) && evalu !== values[name]) {
                 form.setFieldValue(name, evalu)
             }

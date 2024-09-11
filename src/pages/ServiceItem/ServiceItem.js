@@ -201,7 +201,7 @@ export default function ServiceItem() {
             >
               <Link to={`/cabinet/new-claim/${serviceItem.Ref_Key}`}>
                 <Button type="primary" size="large" onClick={showDrawer}>
-                  Получить услугу
+                  {serviceItem.buttonText || "Получить услугу"}
                 </Button>
               </Link>
             </motion.div>
