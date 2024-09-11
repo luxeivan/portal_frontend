@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Collapse, Spin } from "antd";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
-import contactCentersData from "./contactCenters.json";
 import axios from "axios";
+
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
 const Contacts = () => {
   const [contactCenters, setContactCenters] = useState([]);
@@ -10,14 +11,16 @@ const Contacts = () => {
   const [coordinates, setCoordinates] = useState({});
 
   useEffect(() => {
-    setContactCenters(contactCentersData);
-
-    // При наличии API заменить этот код на загрузку данных с сервера
-    /*
     const fetchData = async () => {
       try {
-        const response = await axios.get('URL_API'); 
-        setContactCenters(response.data);
+        const response = await axios.get(`${backServer}/api/contacts`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+          withCredentials: true,
+        });
+        console.log(response.data); 
+        setContactCenters(response.data.value); 
       } catch (error) {
         console.error("Ошибка при получении данных из API:", error);
       } finally {
@@ -26,7 +29,6 @@ const Contacts = () => {
     };
 
     fetchData();
-    */
   }, []);
 
   const getCoordinates = async (address, index) => {
@@ -48,12 +50,13 @@ const Contacts = () => {
   };
 
   useEffect(() => {
-    contactCenters.forEach((center, index) => {
-      if (center.address) {
-        getCoordinates(center.address, index);
-      }
-    });
-    setLoading(false);
+    if (contactCenters.length > 0) {
+      contactCenters.forEach((center, index) => {
+        if (center.address) {
+          getCoordinates(center.address, index);
+        }
+      });
+    }
   }, [contactCenters]);
 
   const createRouteLink = (coords) => {
@@ -63,6 +66,10 @@ const Contacts = () => {
 
   if (loading) {
     return <Spin size="large" />;
+  }
+
+  if (!contactCenters || contactCenters.length === 0) {
+    return <div>Нет данных для отображения</div>;
   }
 
   return (
@@ -84,11 +91,11 @@ const Contacts = () => {
             </div>
             <div style={{ marginBottom: "10px" }}>
               <strong>Телефон:</strong>{" "}
-              {center.phone || "Информация отсутствует"}
+              {center.telephone || "Информация отсутствует"}
             </div>
             <div style={{ marginBottom: "10px" }}>
               <strong>Время работы:</strong>{" "}
-              {center.workHours || "Информация отсутствует"}
+              {center.workingTime || "Информация отсутствует"}
             </div>
             <div style={{ marginBottom: "10px" }}>
               <strong>Построить маршрут:</strong>{" "}
@@ -128,71 +135,3 @@ const Contacts = () => {
 };
 
 export default Contacts;
-
-//Вариант первый карточный
-// import React from "react";
-// import { Link } from "react-router-dom";
-// import AppHelmet from "../../components/Global/AppHelmet";
-// import { Row, Col, Typography, Card } from "antd";
-// import PuzzleGame from "../Games/PuzzleGame";
-
-// const { Title } = Typography;
-
-// const filials = [
-//   {
-//     id: 1,
-//     name: "Домодедовский филиал",
-//     departments: [
-//       "Дзержинское производственное отделение",
-//       "Домодедовское производственное отделение",
-//       "Подольское производственное отделение",
-//       "Чеховское производственное отделение",
-//     ],
-//     coordinates: [55.444584, 37.751287],
-//     address:
-//       "142001, Московская область, г. Домодедово, мкр. Северный, ул. Дачная, д.2",
-//   },
-//   //  остальные филиалы здесь...
-// ];
-
-// export default function Contacts() {
-//   return (
-//     <>
-//       {/* <PuzzleGame/> */}
-
-//       <AppHelmet title={"Контакты"} desc={"Контакты"} />
-//       <div>
-//         <Title level={1}>Контакты</Title>
-//         <Title level={2}>Адреса центров обслуживания клиентов</Title>
-
-//         <Row gutter={[16, 16]}>
-//           {filials.map((filial) => (
-//             <Col key={filial.id} span={8}>
-//               <Link to={`/contacts/${filial.id}`}>
-//                 <Card
-//                   title={filial.name}
-//                   hoverable
-//                   style={{
-//                     borderRadius: "8px",
-//                     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-//                   }}
-//                   headStyle={{
-//                     backgroundColor: "#f0f2f5",
-//                     borderRadius: "8px 8px 0 0",
-//                   }}
-//                   bodyStyle={{ padding: "16px" }}
-//                 >
-//                   <ul>
-//                     {filial.departments.map((department, index) => (
-//                       <li key={index}>{department}</li>
-//                     ))}
-//                   </ul>
-//                 </Card>
-//               </Link>
-//             </Col>
-//           ))}
-//         </Row>
-//       </div>
-//     </>
-//   );
-// }

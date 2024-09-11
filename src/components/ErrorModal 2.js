@@ -19,7 +19,7 @@ const ErrorModal = ({ visible, error, onClose }) => {
       </Title>
       <Text type="danger">
         Извините, наш сайт немного устал и приболел, пожалуйста, подождите пару
-        минут и попробуйте обновить страничку.
+        минут и попробуйте обновить страницу.
       </Text>
       <br />
       <img
@@ -37,7 +37,7 @@ const ErrorModal = ({ visible, error, onClose }) => {
           }}
         >
           {" "}
-          Обновить страничку
+          Обновить страницу
         </Button>
         <Button
           type="dashed"
@@ -46,7 +46,7 @@ const ErrorModal = ({ visible, error, onClose }) => {
           }}
         >
           {" "}
-          На главную страничку
+          На главную страницу
         </Button>
       </Flex>
     </Modal>
