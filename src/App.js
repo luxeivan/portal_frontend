@@ -46,7 +46,7 @@ import FormOneC from "./components/test/FormOneC";
 import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 import AddressInputTest from "./components/FormComponentsNew/adressComponents/AddressInputTest";
-import FilialDetails from "./pages/Contacts/FilialDetails";
+
 // import JumpGame from "./pages/Game/JumpGame";
 
 const { Content } = Layout;
@@ -198,7 +198,7 @@ export default function App() {
                   <Route path="/about" element={<About />} />
                   <Route path="/calc" element={<Calc />} />
                   <Route path="/contacts" element={<Contacts />} />
-                  <Route path="/contacts/:id" element={<FilialDetails />} />
+
                   <Route path="/docs" element={<Documentation />} />
                   <Route path="/test" element={<AddressInputTest />} />
                   <Route path="/login" element={<Login />} />
