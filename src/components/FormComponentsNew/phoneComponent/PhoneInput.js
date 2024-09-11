@@ -5,7 +5,7 @@ import styles from './Phone.module.css'
 
 export default function PhoneInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, dependOf = false, howDepend = false }) {
     const { colorBorderBg, colorText,colorBorder } = theme.useToken().token;
-    console.log(theme.useToken().token)
+    // console.log(theme.useToken().token)
     const form = Form.useFormInstance();
     // console.log(dependOf)
     let fieldDepends = Form.useWatch(dependOf, form);

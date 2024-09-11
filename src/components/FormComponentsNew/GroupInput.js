@@ -11,6 +11,8 @@ import SnilsInput from "./SnilsInput";
 import PhoneInput from "./phoneComponent/PhoneInput";
 import AddressInput from "./adressComponents/AddressInput";
 import ConfirmationDocumentNewInput from "./confirmationDocumentComponents/ConfirmationDocumentNewInput";
+import InnInput from "./InnInput";
+import moment from "moment";
 
 export default function GroupInput({
   name = "name",
@@ -43,8 +45,12 @@ export default function GroupInput({
     setItems(Fields.filter(item => !item.component_Type.includes('HiddenInput')).map(item => {
       let val = values[name][item.idLine]
       if (item.component_Type.includes('LinkInput')) { 
-        console.log(item.component_Expanded.options.find(option => option.value === val))
-        val = item.component_Expanded.options.find(option => option.value === val).label 
+        // console.log(item.component_Expanded.options.find(option => option.value === val))
+        val = item.component_Expanded.options.find(option => option.value === val)?.label 
+      }
+      if (item.component_Type.includes('DateInput')) {
+        val = moment(val).format();
+        // values[key] = moment(value).format();
       }
       return {
         key: item.idLine,
@@ -139,6 +145,21 @@ export default function GroupInput({
                       item.dependIdLine ? [name, item.dependIdLine] : false
                     }
                     howDepend={item.dependСondition}
+                  />
+                );
+              if (item.component_Type.includes("TextInput") && item.component_Expanded.specialField === 'ИНН')
+
+                return (
+                  <InnInput
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={[name, item.idLine]}
+                    dependOf={
+                      item.dependIdLine ? [name, item.dependIdLine] : false
+                    }
+                    howDepend={item.dependСondition}
+                    inGroup
                   />
                 );
               if (item.component_Type.includes("TextInput"))

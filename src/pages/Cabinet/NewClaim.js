@@ -88,10 +88,10 @@ export default function NewClaim() {
       event.preventDefault();
     }
   };
- console.log(serviceItem)
- const handlerChange = (changedValues)=>{
-console.log("changedValues: ",changedValues)
- }
+  console.log(serviceItem)
+  const handlerChange = (changedValues) => {
+    console.log("changedValues: ", changedValues)
+  }
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet
@@ -114,7 +114,7 @@ console.log("changedValues: ",changedValues)
             onKeyDown={handleKeyDown}
             style={{ maxWidth: "800px", width: "100%", margin: "0 auto" }}
             labelWrap
-            // onValuesChange={handlerChange}
+          // onValuesChange={handlerChange}
           >
             {serviceItem.fields
               ?.sort((a, b) => a.lineNum - b.lineNum)
@@ -262,34 +262,34 @@ console.log("changedValues: ",changedValues)
                       mainForm={form}
                     />
                   );
-                  if (item.component_Type.includes("PriceInput"))
-                    return (
-                      <PriceInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-                  if (item.component_Type.includes("componentsFormula"))
-                    return (
-                      <FormulaInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
+                if (item.component_Type.includes("PriceInput"))
+                  return (
+                    <PriceInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+                if (item.component_Type.includes("componentsFormula"))
+                  return (
+                    <FormulaInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
               })}
 
             <Flex style={{ marginTop: 10 }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  Подать заявку на услугу
+                  {serviceItem.buttonText || "Подать заявку на услугу"}
                 </Button>
               </Form.Item>
             </Flex>
