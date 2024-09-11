@@ -22,7 +22,8 @@ export default function NumberInput({
   min = 0,
   max = 100,
   step = 1,
-  defaultValue = false
+  defaultValue = false,
+  length=false
 }) {
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form);
@@ -48,6 +49,7 @@ export default function NumberInput({
         step={step}
         // value={inputValue}
         // onChange={onChange}
+        maxLength={length}
         disabled={disabled}
       />
     </Form.Item>

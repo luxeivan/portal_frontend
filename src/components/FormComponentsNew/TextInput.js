@@ -71,7 +71,7 @@ export default function TextInput({
   dependOf = false,
   howDepend = false,
   inputMask = false,
-  lenght = false,
+  length = false,
   specialField: type = false,
 }) {
   const { token } = theme.useToken();
@@ -141,7 +141,7 @@ export default function TextInput({
       value={value}
       placeholder={placeholder}
       disabled={disabled}
-      maxLength={lenght}
+      maxLength={length}
     />
   </Form.Item>
 
@@ -161,7 +161,7 @@ export default function TextInput({
   >
     <Input
       placeholder={placeholder}
-      maxLength={lenght}
+      maxLength={length}
       disabled={disabled}
     />
   </Form.Item>
@@ -179,7 +179,7 @@ export default function TextInput({
   >
     <Input
       placeholder={placeholder}
-      maxLength={lenght}
+      maxLength={length}
       disabled={disabled}
       defaultValue={defaultValue}
     />

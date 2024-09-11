@@ -6,6 +6,7 @@ import {
     theme
 } from "antd";
 import { evaluate } from "mathjs";
+
 function truncated(num, decimalPlaces) {
     let numPowerConverter = Math.pow(10, decimalPlaces);
     return ~~(num * numPowerConverter) / numPowerConverter;
