@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Collapse, Spin } from "antd";
+import { Collapse, Spin, Button } from "antd";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import axios from "axios";
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
+const backPhotoServer = process.env.REACT_APP_BACK_API_SERVER;
 
 const Contacts = () => {
   const [contactCenters, setContactCenters] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [coordinates, setCoordinates] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,8 +19,13 @@ const Contacts = () => {
           },
           withCredentials: true,
         });
-        console.log(response.data); 
-        setContactCenters(response.data.value); 
+        console.log("Полученные данные с API:", response.data);
+
+        if (Array.isArray(response.data)) {
+          setContactCenters(response.data);
+        } else {
+          console.error("Некорректные данные с бэка");
+        }
       } catch (error) {
         console.error("Ошибка при получении данных из API:", error);
       } finally {
@@ -30,34 +35,6 @@ const Contacts = () => {
 
     fetchData();
   }, []);
-
-  const getCoordinates = async (address, index) => {
-    try {
-      const response = await axios.get(
-        `https://geocode-maps.yandex.ru/1.x/?apikey=fd781d3b-b40d-4f6a-a236-865c242547cb&format=json&geocode=${encodeURIComponent(
-          address
-        )}`
-      );
-      const point =
-        response.data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(
-          " "
-        );
-      const coords = [parseFloat(point[1]), parseFloat(point[0])];
-      setCoordinates((prevState) => ({ ...prevState, [index]: coords }));
-    } catch (error) {
-      console.error("Ошибка при получении координат:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (contactCenters.length > 0) {
-      contactCenters.forEach((center, index) => {
-        if (center.address) {
-          getCoordinates(center.address, index);
-        }
-      });
-    }
-  }, [contactCenters]);
 
   const createRouteLink = (coords) => {
     const [lat, lon] = coords;
@@ -73,7 +50,7 @@ const Contacts = () => {
   }
 
   return (
-    <div>
+    <div style={{ width: "1000px", margin: "0 auto" }}>
       <h1>Контакты Центров обслуживания клиентов</h1>
       <p>
         Центры обслуживания клиентов предоставляют услуги по технологическому
@@ -97,28 +74,49 @@ const Contacts = () => {
               <strong>Время работы:</strong>{" "}
               {center.workingTime || "Информация отсутствует"}
             </div>
+            {center.photos && center.photos.length > 0 ? (
+              <div style={{ marginBottom: "10px" }}>
+                <strong>Описание маршрута:</strong>
+                <div>
+                  {center.photos.map((photo, photoIndex) => (
+                    <img
+                      key={photoIndex}
+                      src={`${backPhotoServer}/public/${photo.ПутьКФайлу}`}
+                      alt={`${center.name} - ${photoIndex + 1}`}
+                      style={{
+                        width: "100%",
+                        maxWidth: "400px",
+                        marginBottom: "10px",
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              "Фото отсутствует"
+            )}
             <div style={{ marginBottom: "10px" }}>
-              <strong>Построить маршрут:</strong>{" "}
-              {coordinates[index] ? (
-                <a
-                  href={createRouteLink(coordinates[index])}
+              {center.coordinates ? (
+                <Button
+                  type="primary"
+                  href={createRouteLink(center.coordinates)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Ссылка
-                </a>
+                  Построить маршрут
+                </Button>
               ) : (
                 "Информация отсутствует"
               )}
             </div>
-            {coordinates[index] ? (
+            {center.coordinates ? (
               <YMaps>
                 <Map
-                  defaultState={{ center: coordinates[index], zoom: 15 }}
+                  defaultState={{ center: center.coordinates, zoom: 15 }}
                   width="100%"
                   height="200px"
                 >
-                  <Placemark geometry={coordinates[index]} />
+                  <Placemark geometry={center.coordinates} />
                 </Map>
               </YMaps>
             ) : (
