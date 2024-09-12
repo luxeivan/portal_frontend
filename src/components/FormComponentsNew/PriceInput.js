@@ -20,7 +20,8 @@ export default function PriceInput({
     max = 100,
     step = 1,
     defaultValue = false,
-    properties = false
+    properties = false,
+    ТипЦен_Key = "00000000-0000-0000-0000-000000000000"
 }) {
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
@@ -29,6 +30,10 @@ export default function PriceInput({
     let objectProp = null
     if (properties) objectProp = JSON.parse(properties)
     let typePrice = Form.useWatch(objectProp["ТипЦены"], form);
+    if (ТипЦен_Key !== "00000000-0000-0000-0000-000000000000") {
+        typePrice = ТипЦен_Key;
+    }
+
     let nomenclature = Form.useWatch(objectProp["Номенклатура"], form);
     useEffect(() => {
         if (typePrice && nomenclature) {
@@ -43,8 +48,8 @@ export default function PriceInput({
                     if (res.data) {
                         // console.log('price', res)
                         form.setFieldValue(name, res.data)
-                    }else{
-                        form.setFieldValue(name, NaN) 
+                    } else {
+                        form.setFieldValue(name, NaN)
                     }
                 })
         }
