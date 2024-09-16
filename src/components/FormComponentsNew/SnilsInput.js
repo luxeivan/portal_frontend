@@ -8,10 +8,12 @@ export default function SnilsInput({
   const form = Form.useFormInstance();
 
   const validateSnils = (e) => {
-    let snils = form.getFieldValue(e.field);
+    let fieldPath = e.field.split('.')
+    let snils = form.getFieldValue(fieldPath);
     const error = { code: 0, message: "" };
     if (typeof snils !== "string") snils = "";
-    // console.log(123123)
+    console.log(e)
+    console.log(snils.length)
     if (!snils.length) {
       return Promise.resolve();
     } else if (snils.length !== 14) {
