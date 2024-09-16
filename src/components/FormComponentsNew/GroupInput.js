@@ -25,7 +25,8 @@ export default function GroupInput({
   dependOf = false,
   howDepend = false,
   fields: Fields = [],
-  mainForm
+  mainForm,
+  layout = "vertical"
 }) {
   const [openModal, setOpenModal] = useState(false)
   const [items, setItems] = useState(false)
@@ -100,7 +101,7 @@ export default function GroupInput({
         <>
           <Form
             scrollToFirstError
-            layout="vertical"
+            layout={layout}
             onFinish={handlerOnOK}
             onKeyDown={handleKeyDown}
             style={{ maxWidth: 800, margin: "0 auto" }}
@@ -238,19 +239,19 @@ export default function GroupInput({
                     howDepend={item.dependСondition}
                   />
                 );
-                if (item.component_Type.includes("SwitchInput"))
-                  return (
-                    <SwitchInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={[name, item.idLine]}
-                      dependOf={
-                        item.dependIdLine ? [name, item.dependIdLine] : false
-                      }
-                      howDepend={item.dependСondition}
-                    />
-                  );
+              if (item.component_Type.includes("SwitchInput"))
+                return (
+                  <SwitchInput
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={[name, item.idLine]}
+                    dependOf={
+                      item.dependIdLine ? [name, item.dependIdLine] : false
+                    }
+                    howDepend={item.dependСondition}
+                  />
+                );
               if (item.component_Type.includes("AddressInput"))
                 return (
                   <AddressInput
