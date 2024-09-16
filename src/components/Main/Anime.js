@@ -80,7 +80,6 @@ export const Anime = () => {
 
           <TypeAnimation
             sequence={[
-              // Same substring at the start will only be typed once, initially
               'Технологическое присоединение',
               1000,
               'Коммерческие услуги',
