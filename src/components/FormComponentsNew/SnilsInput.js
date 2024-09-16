@@ -3,13 +3,15 @@ import { Input, Form, Typography } from "antd";
 
 export default function SnilsInput({
   name = "snils",
-  label = "Label", }) {
+  label = "Label",
+  required = false }) {
   const form = Form.useFormInstance();
 
   const validateSnils = (e) => {
     let snils = form.getFieldValue(e.field);
     const error = { code: 0, message: "" };
     if (typeof snils !== "string") snils = "";
+    // console.log(123123)
     if (!snils.length) {
       return Promise.resolve();
     } else if (snils.length !== 14) {
@@ -21,6 +23,7 @@ export default function SnilsInput({
     } else {
       const nums = snils.replace(/[^0-9]/g, "");
       if (nums.length !== 11) {
+        console.log("Неправильный формат СНИЛС")
         error.code = 3;
         error.message = "Неправильный формат СНИЛС";
       } else {
@@ -45,7 +48,10 @@ export default function SnilsInput({
     <Form.Item
       label={label}
       name={name}
-      rules={[{ validator: validateSnils }]}
+      rules={[{
+        required: required,
+        message: "Это поле обязательное",
+      }, { validator: validateSnils }]}
     >
 
       <Input
