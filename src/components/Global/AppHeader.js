@@ -1,20 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  Button,
-  Dropdown,
   Layout,
   Menu,
   Space,
   Switch,
-  Popover,
+  Badge,
+  Drawer,
+  Button,
   theme,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  MenuOutlined,
+  MoonOutlined,
+  SunOutlined,
+  BellOutlined,
+} from "@ant-design/icons";
 import logoWhite from "../../img/header/logoWhite.svg";
 import logoBlue from "../../img/header/logoBlue.svg";
 import useGlobal from "../../stores/useGlobal";
 import useAuth from "../../stores/useAuth";
-import { MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
+import useNotifications from "../../stores/useNotifications";
+import NotificationList from "../../components/FormComponentsNew/Notifications/NotificationPanel";
 import styles from "./AppHeader.module.css";
 import ErrorModal from "../ErrorModal";
 
@@ -22,67 +29,48 @@ const { Header } = Layout;
 
 const items = [
   {
-    key: 1,
-    label: `О нас`,
+    key: "1",
+    label: "О нас",
     url: "/about",
   },
   {
-    key: 2,
-    label: `Каталог услуг`,
+    key: "2",
+    label: "Каталог услуг",
     url: "/services",
   },
   {
-    key: 3,
-    label: `Калькулятор`,
+    key: "3",
+    label: "Калькулятор",
     url: "/calc",
   },
   {
-    key: 4,
-    label: `Контакты`,
+    key: "4",
+    label: "Контакты",
     url: "/contacts",
   },
   {
-    key: 5,
-    label: `Документация`,
+    key: "5",
+    label: "Документация",
     url: "/docs",
   },
 ];
 
 export default function AppHeader() {
   const { darkMode, toggleDarkMode } = useGlobal();
-  const { toggleAuth, auth, logout, toggleModal } = useAuth();
+  const { auth, logout, toggleModal } = useAuth();
+  const { getUnreadCount } = useNotifications();
   const navigate = useNavigate();
 
-  const [clickCount, setClickCount] = useState(0);
-  const [showPaw, setShowPaw] = useState(false);
-  const [showPopover, setShowPopover] = useState(false);
-  const [error, setError] = useState(null); // Состояние для хранения ошибок
-  const [errorVisible, setErrorVisible] = useState(false); // Состояние для управления видимостью модального окна с ошибкой
-
-  // useEffect(() => {
-  //   try {
-  //     if (clickCount >= 1) {
-  //       setShowPaw(true);
-  //       setShowPopover(true);
-  //       setTimeout(() => {
-  //         toggleDarkMode();
-  //         setShowPaw(false);
-  //         setShowPopover(false);
-  //         setClickCount(0);
-  //       }, 3000); // Задержка для анимации лапки и диалогового окна
-  //     }
-  //   } catch (err) {
-  //     setError(err.message); // Устанавливаем ошибку в состояние
-  //     setErrorVisible(true); // Показываем модальное окно с ошибкой
-  //   }
-  // }, [clickCount, toggleDarkMode]);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [error, setError] = useState(null);
+  const [errorVisible, setErrorVisible] = useState(false);
 
   const handleLogout = () => {
     try {
       logout();
       navigate("/");
     } catch (err) {
-      setError(err.message); // Устанавливаем ошибку в состояние
+      setError(err.message);
     }
   };
 
@@ -90,43 +78,55 @@ export default function AppHeader() {
     try {
       toggleModal("isAuthModalOpen", true);
     } catch (err) {
-      setError(err.message); // Устанавливаем ошибку в состояние
-      setErrorVisible(true); // Показываем модальное окно с ошибкой
+      setError(err.message);
+      setErrorVisible(true);
     }
   };
 
   const handlerDarkMode = () => {
     try {
-        toggleDarkMode();      
+      toggleDarkMode();
     } catch (err) {
-      setError(err.message); // Устанавливаем ошибку в состояние
-      setErrorVisible(true); // Показываем модальное окно с ошибкой
+      setError(err.message);
+      setErrorVisible(true);
     }
+  };
+
+  const showDrawer = () => {
+    setDrawerVisible(true);
+  };
+
+  const closeDrawer = () => {
+    setDrawerVisible(false);
   };
 
   const {
     token: { colorBgContainer, colorText },
   } = theme.useToken();
 
-  const rightMenuArea = auth ? (
-    <Space size={"small"}>
+  const rightMenuArea = (
+    <Space size="small">
       <Switch
         onChange={handlerDarkMode}
         checkedChildren={<SunOutlined />}
         unCheckedChildren={<MoonOutlined />}
         checked={darkMode}
       />
-      <Button type="primary" onClick={handleLogout}>Выйти</Button>
-    </Space>
-  ) : (
-    <Space size={"small"}>
-      <Switch
-        onChange={handlerDarkMode}
-        checkedChildren={<SunOutlined />}
-        unCheckedChildren={<MoonOutlined />}
-        checked={darkMode}
-      />
-      <Button type="primary" onClick={handlerChangeAuth}>Войти</Button>
+      <Badge count={getUnreadCount()} overflowCount={9}>
+        <BellOutlined
+          style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
+          onClick={showDrawer}
+        />
+      </Badge>
+      {auth ? (
+        <Button type="primary" onClick={handleLogout}>
+          Выйти
+        </Button>
+      ) : (
+        <Button type="primary" onClick={handlerChangeAuth}>
+          Войти
+        </Button>
+      )}
     </Space>
   );
 
@@ -148,11 +148,33 @@ export default function AppHeader() {
       key: "3",
     },
     {
+      label: <Link to="/docs">Документация</Link>,
+      key: "4",
+    },
+    {
       type: "divider",
     },
     {
-      label: rightMenuArea,
-      key: "4",
+      label: (
+        <Space size="small">
+          <Switch
+            onChange={handlerDarkMode}
+            checkedChildren={<SunOutlined />}
+            unCheckedChildren={<MoonOutlined />}
+            checked={darkMode}
+          />
+          {auth ? (
+            <Button type="primary" onClick={handleLogout}>
+              Выйти
+            </Button>
+          ) : (
+            <Button type="primary" onClick={handlerChangeAuth}>
+              Войти
+            </Button>
+          )}
+        </Space>
+      ),
+      key: "auth",
     },
   ];
 
@@ -177,7 +199,7 @@ export default function AppHeader() {
       >
         <div className="demo-logo" style={{ padding: 10, marginRight: 20 }}>
           <Link
-            to={"/"}
+            to="/"
             style={{
               display: "flex",
               justifyContent: "center",
@@ -198,7 +220,7 @@ export default function AppHeader() {
           mode="horizontal"
           overflowedIndicator={<MenuOutlined />}
           selectable={false}
-          onClick={(item, key) => {
+          onClick={(item) => {
             navigate(item.item.props.url);
           }}
           items={items}
@@ -208,37 +230,41 @@ export default function AppHeader() {
           }}
         />
 
-        <div className={styles.rightMenu}>
-          {rightMenuArea}
-          {/* {showPaw && (
-            <Popover
-              content="МосОблЭнерго никогда не отключают свет"
-              open={showPopover}
-            >
-              <div className={styles.catPaw}></div>
-            </Popover>
-          )} */}
-        </div>
+        <div className={styles.rightMenu}>{rightMenuArea}</div>
         <div className={styles.mobileMenu}>
-          <Dropdown menu={{ items: itemsMobile }} trigger={["click"]}>
-            <a
-              onClick={(e) => e.preventDefault()}
-              style={{ fontSize: "2.5rem", color: colorText, height: 100 }}
-            >
-              <Space>
-                <MenuOutlined />
-              </Space>
-            </a>
-          </Dropdown>
+          <Menu
+            mode="horizontal"
+            overflowedIndicator={<MenuOutlined />}
+            items={itemsMobile}
+          />
         </div>
       </Header>
+
+      <Drawer
+        title="Уведомления"
+        placement="right"
+        onClose={closeDrawer}
+        open={drawerVisible}
+      >
+        <NotificationList />
+      </Drawer>
+
       <ErrorModal visible={errorVisible} error={error} onClose={closeModal} />
     </>
   );
 }
 
 // import React, { useState, useEffect } from "react";
-// import { Button, Dropdown, Layout, Menu, Space, Switch, theme } from "antd";
+// import {
+//   Button,
+//   Dropdown,
+//   Layout,
+//   Menu,
+//   Space,
+//   Switch,
+//   Popover,
+//   theme,
+// } from "antd";
 // import { Link, useNavigate } from "react-router-dom";
 // import logoWhite from "../../img/header/logoWhite.svg";
 // import logoBlue from "../../img/header/logoBlue.svg";
@@ -246,7 +272,7 @@ export default function AppHeader() {
 // import useAuth from "../../stores/useAuth";
 // import { MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
 // import styles from "./AppHeader.module.css";
-// import ErrorModal from "../FormComponentsNew/ErrorModal";
+// import ErrorModal from "../ErrorModal";
 
 // const { Header } = Layout;
 
@@ -285,31 +311,16 @@ export default function AppHeader() {
 
 //   const [clickCount, setClickCount] = useState(0);
 //   const [showPaw, setShowPaw] = useState(false);
-//   const [error, setError] = useState(null); // Состояние для хранения ошибок
-//   const [errorVisible, setErrorVisible] = useState(false); // Состояние для управления видимостью модального окна с ошибкой
-
-//   useEffect(() => {
-//     try {
-//       if (clickCount >= 1) {
-//         setShowPaw(true);
-//         setTimeout(() => {
-//           toggleDarkMode();
-//           setShowPaw(false);
-//           setClickCount(0);
-//         }, 2000); // Задержка для анимации лапки
-//       }
-//     } catch (err) {
-//       setError(err.message); // Устанавливаем ошибку в состояние
-//       setErrorVisible(true); // Показываем модальное окно с ошибкой
-//     }
-//   }, [clickCount, toggleDarkMode]);
+//   const [showPopover, setShowPopover] = useState(false);
+//   const [error, setError] = useState(null);
+//   const [errorVisible, setErrorVisible] = useState(false);
 
 //   const handleLogout = () => {
 //     try {
 //       logout();
 //       navigate("/");
 //     } catch (err) {
-//       setError(err.message); // Устанавливаем ошибку в состояние
+//       setError(err.message);
 //     }
 //   };
 
@@ -317,20 +328,17 @@ export default function AppHeader() {
 //     try {
 //       toggleModal("isAuthModalOpen", true);
 //     } catch (err) {
-//       setError(err.message); // Устанавливаем ошибку в состояние
-//       setErrorVisible(true); // Показываем модальное окно с ошибкой
+//       setError(err.message);
+//       setErrorVisible(true);
 //     }
 //   };
 
 //   const handlerDarkMode = () => {
 //     try {
-//       setClickCount(clickCount + 1);
-//       if (clickCount < 10) {
 //         toggleDarkMode();
-//       }
 //     } catch (err) {
-//       setError(err.message); // Устанавливаем ошибку в состояние
-//       setErrorVisible(true); // Показываем модальное окно с ошибкой
+//       setError(err.message);
+//       setErrorVisible(true);
 //     }
 //   };
 
@@ -346,7 +354,7 @@ export default function AppHeader() {
 //         unCheckedChildren={<MoonOutlined />}
 //         checked={darkMode}
 //       />
-//       <Button onClick={handleLogout}>Выйти</Button>
+//       <Button type="primary" onClick={handleLogout}>Выйти</Button>
 //     </Space>
 //   ) : (
 //     <Space size={"small"}>
@@ -356,7 +364,7 @@ export default function AppHeader() {
 //         unCheckedChildren={<MoonOutlined />}
 //         checked={darkMode}
 //       />
-//       <Button onClick={handlerChangeAuth}>Войти</Button>
+//       <Button type="primary" onClick={handlerChangeAuth}>Войти</Button>
 //     </Space>
 //   );
 
@@ -402,7 +410,7 @@ export default function AppHeader() {
 //           position: "fixed",
 //           left: 0,
 //           right: 0,
-//           zIndex:1000
+//           zIndex: 1000,
 //         }}
 //       >
 //         <div className="demo-logo" style={{ padding: 10, marginRight: 20 }}>
@@ -440,7 +448,6 @@ export default function AppHeader() {
 
 //         <div className={styles.rightMenu}>
 //           {rightMenuArea}
-//           {showPaw && <div className={styles.catPaw}></div>}
 //         </div>
 //         <div className={styles.mobileMenu}>
 //           <Dropdown menu={{ items: itemsMobile }} trigger={["click"]}>
