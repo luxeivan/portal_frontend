@@ -48,10 +48,13 @@ const AddressInput = ({
       })
       .then((response) => {
         if (response.data && response.data.data) {
+          console.log("response.data", response.data);
           setOptions(
-            response.data.data.map((item) => ({
-              value: item.value,
+            response.data.data.map((item) => ({              
+              label: item.value,
+              value: item.unrestricted_value,
               data: item.data,
+              // unrestricted_value: item.unrestricted_value,
             }))
           );
         } else {
@@ -68,7 +71,7 @@ const AddressInput = ({
   const onSelect = (value, option) => {
     const updatedAddress = { ...option.data };
     let updateObject = {}
-    console.log(updatedAddress)
+    console.log(option)
     // Сохраняем полный адрес под капотом
     setAddress(updatedAddress);
     updateObject.fullAddress = value
