@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Collapse, Spin, Button, Skeleton, BackTop, Card, Alert } from "antd";
 import {
   EnvironmentOutlined,
@@ -11,9 +11,22 @@ import "react-photo-album/styles.css";
 import { useContacts } from "../../stores/useContacts";
 import styles from "./Contacts.module.css";
 
+// Импортируем Lightbox и плагины
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/plugins/thumbnails.css"; // Стили для миниатюр
+
 const Contacts = () => {
-  // Используем наш кастомный хук
   const { contactCenters, loading } = useContacts();
+
+  // Состояние для управления Lightbox
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [lightboxSlides, setLightboxSlides] = useState([]);
 
   // Функция для создания ссылки на маршрут
   const createRouteLink = (coords) => {
@@ -47,10 +60,27 @@ const Contacts = () => {
           <Collapse.Panel header={center.name} key={index}>
             {/* Карточка с информацией о центре */}
             <Card bordered={false} className={styles.card}>
+              {/* Адрес */}
               <div style={{ marginBottom: "10px" }}>
                 <EnvironmentOutlined /> <strong>Адрес:</strong>{" "}
                 {center.address || "Информация отсутствует"}
               </div>
+
+              {/* Кнопка для построения маршрута */}
+              {center.coordinates && (
+                <div style={{ marginBottom: "10px" }}>
+                  <Button
+                    type="primary"
+                    href={createRouteLink(center.coordinates)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Построить маршрут
+                  </Button>
+                </div>
+              )}
+
+              {/* Телефон */}
               <div style={{ marginBottom: "10px" }}>
                 <PhoneOutlined /> <strong>Телефон:</strong>{" "}
                 {center.telephone ? (
@@ -59,51 +89,16 @@ const Contacts = () => {
                   "Информация отсутствует"
                 )}
               </div>
+
+              {/* Время работы */}
               <div style={{ marginBottom: "10px" }}>
                 <ClockCircleOutlined /> <strong>Время работы:</strong>{" "}
                 {center.workingTime || "Информация отсутствует"}
               </div>
 
-              {center.images && center.images.length > 0 ? (
-                <div style={{ marginBottom: "10px" }}>
-                  <strong>Описание маршрута:</strong>
-                  <div style={{ width: "100%", overflow: "hidden" }}>
-                    {/* Если всё ещё грузится, показываем скелетон */}
-                    {loading ? (
-                      <Skeleton.Image active />
-                    ) : (
-                      // Иначе показываем галерею фоток
-                      <ColumnsPhotoAlbum
-                        photos={center.images}
-                        columns={(containerWidth) => {
-                          if (containerWidth < 600) return 1;
-                          if (containerWidth < 900) return 2;
-                          if (containerWidth < 1200) return 3;
-                          return 4;
-                        }}
-                        spacing={10}
-                      />
-                    )}
-                  </div>
-                </div>
-              ) : (
-                "Фото отсутствует"
-              )}
-
+              {/* Карта или сообщение об отсутствии координат */}
               {center.coordinates ? (
                 <>
-                  {/* Кнопка для построения маршрута */}
-                  <div style={{ marginBottom: "10px" }}>
-                    <Button
-                      type="primary"
-                      href={createRouteLink(center.coordinates)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Построить маршрут
-                    </Button>
-                  </div>
-                  {/* Карта с меткой центра */}
                   <YMaps>
                     <Map
                       defaultState={{
@@ -126,6 +121,52 @@ const Contacts = () => {
                   showIcon
                 />
               )}
+
+              {/* Описание маршрута и фотографии */}
+              {center.images && center.images.length > 0 ? (
+                <div style={{ marginBottom: "10px" }}>
+                  <strong>Описание маршрута:</strong>
+                  <div style={{ width: "100%", overflow: "hidden" }}>
+                    {loading ? (
+                      <Skeleton.Image active />
+                    ) : (
+                      <>
+                        <ColumnsPhotoAlbum
+                          photos={center.images}
+                          onClick={({ index }) => {
+                            setCurrentImageIndex(index);
+                            setLightboxSlides(
+                              center.images.map((img) => ({
+                                src: img.src,
+                                width: img.width,
+                                height: img.height,
+                              }))
+                            );
+                            setLightboxOpen(true);
+                          }}
+                          columns={(containerWidth) => {
+                            if (containerWidth < 600) return 1;
+                            if (containerWidth < 900) return 2;
+                            if (containerWidth < 1200) return 3;
+                            return 4;
+                          }}
+                          spacing={10}
+                        />
+
+                        <Lightbox
+                          open={lightboxOpen}
+                          close={() => setLightboxOpen(false)}
+                          slides={lightboxSlides}
+                          index={currentImageIndex}
+                          plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+                        />
+                      </>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                "Фото отсутствует"
+              )}
             </Card>
           </Collapse.Panel>
         ))}
@@ -139,7 +180,7 @@ const Contacts = () => {
 export default Contacts;
 
 // import React from "react";
-// import { Collapse, Spin, Button, Skeleton, BackTop, Card } from "antd";
+// import { Collapse, Spin, Button, Skeleton, BackTop, Card, Alert } from "antd";
 // import {
 //   EnvironmentOutlined,
 //   PhoneOutlined,
@@ -150,6 +191,7 @@ export default Contacts;
 // import "react-photo-album/styles.css";
 // import { useContacts } from "../../stores/useContacts";
 // import styles from "./Contacts.module.css";
+
 // const Contacts = () => {
 //   // Используем наш кастомный хук
 //   const { contactCenters, loading } = useContacts();
@@ -186,10 +228,27 @@ export default Contacts;
 //           <Collapse.Panel header={center.name} key={index}>
 //             {/* Карточка с информацией о центре */}
 //             <Card bordered={false} className={styles.card}>
+//               {/* Адрес */}
 //               <div style={{ marginBottom: "10px" }}>
 //                 <EnvironmentOutlined /> <strong>Адрес:</strong>{" "}
 //                 {center.address || "Информация отсутствует"}
 //               </div>
+
+//               {/* Кнопка для построения маршрута */}
+//               {center.coordinates && (
+//                 <div style={{ marginBottom: "10px" }}>
+//                   <Button
+//                     type="primary"
+//                     href={createRouteLink(center.coordinates)}
+//                     target="_blank"
+//                     rel="noopener noreferrer"
+//                   >
+//                     Построить маршрут
+//                   </Button>
+//                 </div>
+//               )}
+
+//               {/* Телефон */}
 //               <div style={{ marginBottom: "10px" }}>
 //                 <PhoneOutlined /> <strong>Телефон:</strong>{" "}
 //                 {center.telephone ? (
@@ -198,14 +257,43 @@ export default Contacts;
 //                   "Информация отсутствует"
 //                 )}
 //               </div>
+
+//               {/* Время работы */}
 //               <div style={{ marginBottom: "10px" }}>
 //                 <ClockCircleOutlined /> <strong>Время работы:</strong>{" "}
 //                 {center.workingTime || "Информация отсутствует"}
 //               </div>
 
+//               {/* Карта или сообщение об отсутствии координат */}
+//               {center.coordinates ? (
+//                 <>
+//                   <YMaps>
+//                     <Map
+//                       defaultState={{
+//                         center: center.coordinates,
+//                         zoom: 15,
+//                       }}
+//                       width="100%"
+//                       height="200px"
+//                     >
+//                       <Placemark geometry={center.coordinates} />
+//                     </Map>
+//                   </YMaps>
+//                 </>
+//               ) : (
+//                 // Если координат нет, выводим сообщение
+//                 <Alert
+//                   message="Информация о координатах отсутствует"
+//                   description="Пока тут нет широты и долготы, чтобы построить маршрут и отрисовать карту. Они скоро появятся и всё красиво заработает!"
+//                   type="info"
+//                   showIcon
+//                 />
+//               )}
+
+//               {/* Описание маршрута и фотографии */}
 //               {center.images && center.images.length > 0 ? (
 //                 <div style={{ marginBottom: "10px" }}>
-//                   <strong>Описание маршрута:</strong>
+//                   <strong>Описание маршрута</strong>
 //                   <div style={{ width: "100%", overflow: "hidden" }}>
 //                     {/* Если всё ещё грузится, показываем скелетон */}
 //                     {loading ? (
@@ -227,39 +315,6 @@ export default Contacts;
 //                 </div>
 //               ) : (
 //                 "Фото отсутствует"
-//               )}
-
-//               <div style={{ marginBottom: "10px" }}>
-//                 {center.coordinates ? (
-//                   // Кнопка для построения маршрута
-//                   <Button
-//                     type="primary"
-//                     href={createRouteLink(center.coordinates)}
-//                     target="_blank"
-//                     rel="noopener noreferrer"
-//                   >
-//                     Построить маршрут
-//                   </Button>
-//                 ) : (
-//                   "Информация о маршруте отсутствует"
-//                 )}
-//               </div>
-//               {center.coordinates ? (
-//                 // Карта с меткой центра
-//                 <YMaps>
-//                   <Map
-//                     defaultState={{ center: center.coordinates, zoom: 15 }}
-//                     width="100%"
-//                     height="200px"
-//                   >
-//                     <Placemark geometry={center.coordinates} />
-//                   </Map>
-//                 </YMaps>
-//               ) : (
-//                 <Spin
-//                   size="small"
-//                   style={{ display: "block", margin: "0 auto" }}
-//                 />
 //               )}
 //             </Card>
 //           </Collapse.Panel>
