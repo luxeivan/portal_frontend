@@ -176,12 +176,13 @@ export default function TextInput({
         message: "Это поле обязательное",
       },
     ]}
+    initialValue={defaultValue}
   >
     <Input
       placeholder={placeholder}
       maxLength={length}
       disabled={disabled}
-      defaultValue={defaultValue}
+      // defaultValue={defaultValue}
     />
   </Form.Item>
   let formElement = simpleInput
@@ -200,7 +201,7 @@ export default function TextInput({
     });
     if (show) return formElement;
   }
-  if (dependOf && howDepend && howDepend.min && howDepend.max) {
+  if (dependOf && howDepend  && howDepend.max) {
     if (fieldDepends >= howDepend.min && howDepend.max) return formElement;
   }
 }

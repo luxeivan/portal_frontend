@@ -15,13 +15,14 @@ export default function SelectInput({ name = 'name', label = 'Label', defaultVal
                     message: 'Это поле обязательное'
                 }
             ]}
-            style={{flex:1}}
+            style={{flex:1}}    
+            initialValue={defaultValue}        
         >
             <Select
                 // style={{ width: 120 }}
                 options={options}
                 // disabled={disabled}
-                defaultValue={defaultValue}
+                // defaultValue={defaultValue}
             />
         </Form.Item>
     )

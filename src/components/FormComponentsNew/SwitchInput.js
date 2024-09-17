@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form, Input, InputNumber, message, Space, Switch } from 'antd';
 
-export default function SwitchInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, dependOf = false, howDepend = false }) {
+export default function SwitchInput({ name = 'name', label = 'Label', defaultValue= false, disabled = false, placeholder = 'placeholder', required = false, dependOf = false, howDepend = false }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
     let fieldDepends = Form.useWatch(dependOf, form);
@@ -15,8 +15,9 @@ export default function SwitchInput({ name = 'name', label = 'Label', disabled =
                     message: 'Это поле обязательное'
                 }
             ]}
+            initialValue={defaultValue}
         >
-            <Switch defaultValue={false}/>
+            <Switch/>
         </Form.Item>
     )
 
