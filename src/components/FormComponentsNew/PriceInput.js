@@ -21,7 +21,7 @@ export default function PriceInput({
     step = 1,
     defaultValue = false,
     properties = false,
-    ТипЦен_Key = "00000000-0000-0000-0000-000000000000"
+    priceType_Key = "00000000-0000-0000-0000-000000000000"
 }) {
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
@@ -30,14 +30,17 @@ export default function PriceInput({
     let objectProp = null
     if (properties) objectProp = JSON.parse(properties)
     let typePrice = Form.useWatch(objectProp["ТипЦены"], form);
-    if (ТипЦен_Key !== "00000000-0000-0000-0000-000000000000") {
-        typePrice = ТипЦен_Key;
+
+    console.log('priceType_Key', priceType_Key)
+    if (priceType_Key !== "00000000-0000-0000-0000-000000000000") {
+        typePrice = priceType_Key;
     }
 
     let nomenclature = Form.useWatch(objectProp["Номенклатура"], form);
     useEffect(() => {
         if (typePrice && nomenclature) {
-            const price = axios
+            console.log('typePrice', typePrice)
+            axios
                 .get(`${backServer}/api/cabinet/get-price/${typePrice}/${nomenclature}`, {
                     headers: {
                         "Content-Type": "application/json",
@@ -80,7 +83,8 @@ export default function PriceInput({
         })
         if (show) return formElement
     }
-    if (dependOf && howDepend && howDepend.min && howDepend.max) {
+    console.log('howDepend',howDepend)
+    if (dependOf && howDepend && howDepend.max) {
         if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     }
 }

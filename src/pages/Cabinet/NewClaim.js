@@ -77,7 +77,7 @@ export default function NewClaim() {
 
     try {
       // await createClaim({ service: serviceItem.Ref_Key, values });
-      console.log(values);
+      console.log("Пытаюсь понять откуда что приходит", values);
     } catch (err) {
       setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
     }

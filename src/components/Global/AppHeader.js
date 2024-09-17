@@ -105,7 +105,8 @@ export default function AppHeader() {
   } = theme.useToken();
 
   const rightMenuArea = (
-    <Space size="small">
+    <Space size="middle">
+      {" "}
       <Switch
         onChange={handlerDarkMode}
         checkedChildren={<SunOutlined />}
@@ -156,7 +157,7 @@ export default function AppHeader() {
     },
     {
       label: (
-        <Space size="small">
+        <Space size="middle">
           <Switch
             onChange={handlerDarkMode}
             checkedChildren={<SunOutlined />}
