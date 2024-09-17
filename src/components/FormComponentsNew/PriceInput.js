@@ -29,9 +29,10 @@ export default function PriceInput({
     const form = Form.useFormInstance();
     let objectProp = null
     if (properties) objectProp = JSON.parse(properties)
-    let typePrice = Form.useWatch(objectProp["ТипЦены"], form);
+    Form.useWatch(objectProp["ТипЦены"], form);
+    let typePrice = form.getFieldValue(objectProp["ТипЦены"]);
 
-    console.log('priceType_Key', priceType_Key)
+    // console.log('priceType_Key', priceType_Key)
     if (priceType_Key !== "00000000-0000-0000-0000-000000000000") {
         typePrice = priceType_Key;
     }
@@ -39,7 +40,7 @@ export default function PriceInput({
     let nomenclature = Form.useWatch(objectProp["Номенклатура"], form);
     useEffect(() => {
         if (typePrice && nomenclature) {
-            console.log('typePrice', typePrice)
+            // console.log('typePrice', typePrice)
             axios
                 .get(`${backServer}/api/cabinet/get-price/${typePrice}/${nomenclature}`, {
                     headers: {
@@ -57,7 +58,8 @@ export default function PriceInput({
                 })
         }
     }, [typePrice, nomenclature])
-    let fieldDepends = Form.useWatch(dependOf, form);
+    Form.useWatch(dependOf, form);
+    let fieldDepends = form.getFieldValue(dependOf);
     // console.log('defaultValue',defaultValue)
     // console.log('objectProp', objectProp)
     const formElement = (

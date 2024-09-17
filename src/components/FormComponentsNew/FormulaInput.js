@@ -119,7 +119,7 @@ export default function FormulaInput({
         })
         if (show) return formElement
     }
-    if (dependOf && howDepend && howDepend.min && howDepend.max) {
+    if (dependOf && howDepend  && howDepend.max) {
         if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     }
 }
