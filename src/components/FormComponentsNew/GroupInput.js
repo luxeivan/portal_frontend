@@ -13,6 +13,7 @@ import AddressInput from "./adressComponents/AddressInput";
 import ConfirmationDocumentNewInput from "./confirmationDocumentComponents/ConfirmationDocumentNewInput";
 import InnInput from "./InnInput";
 import moment from "moment";
+import SwitchInput from "./SwitchInput";
 
 export default function GroupInput({
   name = "name",
@@ -24,7 +25,8 @@ export default function GroupInput({
   dependOf = false,
   howDepend = false,
   fields: Fields = [],
-  mainForm
+  mainForm,
+  layout = "vertical"
 }) {
   const [openModal, setOpenModal] = useState(false)
   const [items, setItems] = useState(false)
@@ -44,9 +46,9 @@ export default function GroupInput({
     setOpenModal(false)
     setItems(Fields.filter(item => !item.component_Type.includes('HiddenInput')).map(item => {
       let val = values[name][item.idLine]
-      if (item.component_Type.includes('LinkInput')) { 
+      if (item.component_Type.includes('LinkInput')) {
         // console.log(item.component_Expanded.options.find(option => option.value === val))
-        val = item.component_Expanded.options.find(option => option.value === val)?.label 
+        val = item.component_Expanded.options.find(option => option.value === val)?.label
       }
       if (item.component_Type.includes('DateInput')) {
         val = moment(val).format();
@@ -54,7 +56,7 @@ export default function GroupInput({
       }
       return {
         key: item.idLine,
-        label: <div style={{marginLeft:20}}>{item.required ? <span style={{ color: "red" }}>*&ensp;</span> : <span>&ensp;&ensp;</span>}{item.label}</div>,
+        label: <div style={{ marginLeft: 20 }}>{item.required ? <span style={{ color: "red" }}>*&ensp;</span> : <span>&ensp;&ensp;</span>}{item.label}</div>,
         children: val,
       }
     }
@@ -90,14 +92,16 @@ export default function GroupInput({
         >
           <Button type="primary" onClick={handlerOpenModal}>Редактировать</Button>
         </Form.Item>
-        <Descriptions style={{flex:1}} items={items} column={1} bordered/>
+        {items &&
+          <Descriptions style={{ flex: 1 }} items={items} column={1} bordered />
+        }
       </Flex>
 
       <Modal title={label} open={openModal} onOk={handlerOnOK} onCancel={handlerOnClose} footer={null}>
         <>
           <Form
             scrollToFirstError
-            layout="vertical"
+            layout={layout}
             onFinish={handlerOnOK}
             onKeyDown={handleKeyDown}
             style={{ maxWidth: 800, margin: "0 auto" }}
@@ -235,6 +239,19 @@ export default function GroupInput({
                     howDepend={item.dependСondition}
                   />
                 );
+              if (item.component_Type.includes("SwitchInput"))
+                return (
+                  <SwitchInput
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={[name, item.idLine]}
+                    dependOf={
+                      item.dependIdLine ? [name, item.dependIdLine] : false
+                    }
+                    howDepend={item.dependСondition}
+                  />
+                );
               if (item.component_Type.includes("AddressInput"))
                 return (
                   <AddressInput
@@ -242,7 +259,9 @@ export default function GroupInput({
                     {...item.component_Expanded}
                     {...item}
                     name={item.idLine}
-                    dependOf={item.dependIdLine}
+                    dependOf={
+                      item.dependIdLine ? [name, item.dependIdLine] : false
+                    }
                     howDepend={item.dependСondition}
                   />
                 );
@@ -254,7 +273,9 @@ export default function GroupInput({
                     {...item.component_Expanded}
                     {...item}
                     name={item.idLine}
-                    dependOf={item.dependIdLine}
+                    dependOf={
+                      item.dependIdLine ? [name, item.dependIdLine] : false
+                    }
                     howDepend={item.dependСondition}
                   />
                 );

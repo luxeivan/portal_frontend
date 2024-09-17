@@ -7,7 +7,7 @@
   { "name": "settlement", "label": "Населенный пункт" },
   { "name": "street", "label": "Улица" },
   { "name": "house", "label": "Номер дома" },
-  { "name": "building", "label": "Корпус" },
+  { "name": "block", "label": "Корпус" },
   { "name": "structure", "label": "Строение" },
   { "name": "flat", "label": "Квартира/Офис/Комната" },
   { "name": "comment", "label": "Комментарий" }
