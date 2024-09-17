@@ -83,7 +83,8 @@ export default function PriceInput({
         })
         if (show) return formElement
     }
-    if (dependOf && howDepend && howDepend.min && howDepend.max) {
+    console.log('howDepend',howDepend)
+    if (dependOf && howDepend && howDepend.max) {
         if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     }
 }
