@@ -26,7 +26,7 @@ export const useContacts = () => {
         if (Array.isArray(response.data)) {
           // Обрабатываем данные и добавляем изображения и координаты
           const centersWithPhotos = response.data.map((center) => {
-            console.log(center.photos)
+            // console.log(center.photos)
 
             const images = center.photos
               ? center.photos.map((photo) => {
