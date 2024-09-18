@@ -97,7 +97,7 @@ const Contacts = () => {
               {/* Карта или сообщение об отсутствии координат */}
               {center.coordinates ? (
                 <>
-                  <YMaps>
+                  <YMaps >
                     <Map
                       defaultState={{
                         center: center.coordinates,
