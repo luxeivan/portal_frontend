@@ -1,15 +1,17 @@
 import React from "react";
-import { Collapse, Spin, Button, Skeleton, BackTop, Card, Alert } from "antd";
+import { Collapse, Spin, Button, Skeleton, BackTop, Card, Alert, Flex, Image, Typography } from "antd";
 import {
   EnvironmentOutlined,
   PhoneOutlined,
   ClockCircleOutlined,
 } from "@ant-design/icons";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
-import { ColumnsPhotoAlbum } from "react-photo-album";
+import { ColumnsPhotoAlbum, RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/styles.css";
 import { useContacts } from "../../stores/useContacts";
 import styles from "./Contacts.module.css";
+import Preloader from "../../components/Main/Preloader";
+const Text = Typography.Text
 
 const Contacts = () => {
   // Используем наш кастомный хук
@@ -23,7 +25,7 @@ const Contacts = () => {
 
   if (loading) {
     // Пока всё грузится, показываем спиннер
-    return <Spin size="large" />;
+    return <Flex justify="center"><Preloader /></Flex>;
   }
 
   if (!contactCenters || contactCenters.length === 0) {
@@ -64,31 +66,7 @@ const Contacts = () => {
                 {center.workingTime || "Информация отсутствует"}
               </div>
 
-              {center.images && center.images.length > 0 ? (
-                <div style={{ marginBottom: "10px" }}>
-                  <strong>Описание маршрута:</strong>
-                  <div style={{ width: "100%", overflow: "hidden" }}>
-                    {/* Если всё ещё грузится, показываем скелетон */}
-                    {loading ? (
-                      <Skeleton.Image active />
-                    ) : (
-                      // Иначе показываем галерею фоток
-                      <ColumnsPhotoAlbum
-                        photos={center.images}
-                        columns={(containerWidth) => {
-                          if (containerWidth < 600) return 1;
-                          if (containerWidth < 900) return 2;
-                          if (containerWidth < 1200) return 3;
-                          return 4;
-                        }}
-                        spacing={10}
-                      />
-                    )}
-                  </div>
-                </div>
-              ) : (
-                "Фото отсутствует"
-              )}
+
 
               {center.coordinates ? (
                 <>
@@ -126,6 +104,24 @@ const Contacts = () => {
                   showIcon
                 />
               )}
+
+              {center.images && center.images.length > 0 ? (
+                <div style={{ margin: "20px 0" }}>
+                  <Text strong>Описание маршрута:</Text>
+                  <div style={{ width: "100%", overflow: "hidden" }}>
+                    <Flex align="center" gap={10} wrap="wrap" >
+
+                      {center.images.map((item, index) => <div className={styles.cardContainer}><Image key={index} src={item.src} /></div>)}
+
+                    </Flex>
+
+
+                  </div>
+                </div>
+              ) : (
+                "Фото отсутствует"
+              )}
+
             </Card>
           </Collapse.Panel>
         ))}
