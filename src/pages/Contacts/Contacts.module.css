@@ -4,13 +4,11 @@
   margin: 0 auto;
 }
 
-/* Стиль для карточек */
 .card {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Стиль для фотографий */
 .photo {
   border-radius: 5px;
   transition: transform 0.3s ease;
@@ -18,4 +16,14 @@
 
 .photo:hover {
   transform: scale(1.05);
+}
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -10px; /* Отступ между колонками */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 10px; /* Отступ между колонками */
+  background-clip: padding-box;
 }

@@ -1,32 +1,29 @@
 import React, { useState } from "react";
-import { Collapse, Spin, Button, Skeleton, BackTop, Card, Alert } from "antd";
+import {
+  Collapse,
+  Spin,
+  Button,
+  Skeleton,
+  BackTop,
+  Card,
+  Alert,
+  Row,
+  Col,
+  Image,
+} from "antd";
 import {
   EnvironmentOutlined,
   PhoneOutlined,
   ClockCircleOutlined,
 } from "@ant-design/icons";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
-import { ColumnsPhotoAlbum } from "react-photo-album";
-import "react-photo-album/styles.css";
 import { useContacts } from "../../stores/useContacts";
 import styles from "./Contacts.module.css";
 
-// Импортируем Lightbox и плагины
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import "yet-another-react-lightbox/plugins/thumbnails.css"; // Стили для миниатюр
+// Удаляем импорт react-photo-album и Lightbox, так как они нам больше не нужны
 
 const Contacts = () => {
   const { contactCenters, loading } = useContacts();
-
-  // Состояние для управления Lightbox
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [lightboxSlides, setLightboxSlides] = useState([]);
 
   // Функция для создания ссылки на маршрут
   const createRouteLink = (coords) => {
@@ -130,37 +127,32 @@ const Contacts = () => {
                     {loading ? (
                       <Skeleton.Image active />
                     ) : (
-                      <>
-                        <ColumnsPhotoAlbum
-                          photos={center.images}
-                          onClick={({ index }) => {
-                            setCurrentImageIndex(index);
-                            setLightboxSlides(
-                              center.images.map((img) => ({
-                                src: img.src,
-                                width: img.width,
-                                height: img.height,
-                              }))
-                            );
-                            setLightboxOpen(true);
-                          }}
-                          columns={(containerWidth) => {
-                            if (containerWidth < 600) return 1;
-                            if (containerWidth < 900) return 2;
-                            if (containerWidth < 1200) return 3;
-                            return 4;
-                          }}
-                          spacing={10}
-                        />
-
-                        <Lightbox
-                          open={lightboxOpen}
-                          close={() => setLightboxOpen(false)}
-                          slides={lightboxSlides}
-                          index={currentImageIndex}
-                          plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
-                        />
-                      </>
+                      <Image.PreviewGroup>
+                        <Row gutter={[16, 16]}>
+                          {center.images.map((img, idx) => (
+                            <Col key={idx} xs={24} sm={12} md={8} lg={6} xl={6}>
+                              <Image
+                                src={img.src}
+                                alt={`Фото ${idx + 1}`}
+                                width="100%"
+                                height="auto"
+                                style={{
+                                  borderRadius: "5px",
+                                }}
+                                placeholder={
+                                  <div
+                                    style={{
+                                      backgroundColor: "#f0f0f0",
+                                      width: "100%",
+                                      paddingBottom: "75%", // Соотношение сторон 4:3
+                                    }}
+                                  />
+                                }
+                              />
+                            </Col>
+                          ))}
+                        </Row>
+                      </Image.PreviewGroup>
                     )}
                   </div>
                 </div>
@@ -179,7 +171,7 @@ const Contacts = () => {
 
 export default Contacts;
 
-// import React from "react";
+// import React, { useState } from "react";
 // import { Collapse, Spin, Button, Skeleton, BackTop, Card, Alert } from "antd";
 // import {
 //   EnvironmentOutlined,
@@ -192,9 +184,22 @@ export default Contacts;
 // import { useContacts } from "../../stores/useContacts";
 // import styles from "./Contacts.module.css";
 
+// // Импортируем Lightbox и плагины
+// import Lightbox from "yet-another-react-lightbox";
+// import "yet-another-react-lightbox/styles.css";
+// import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+// import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+// import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+// import Zoom from "yet-another-react-lightbox/plugins/zoom";
+// import "yet-another-react-lightbox/plugins/thumbnails.css"; // Стили для миниатюр
+
 // const Contacts = () => {
-//   // Используем наш кастомный хук
 //   const { contactCenters, loading } = useContacts();
+
+//   // Состояние для управления Lightbox
+//   const [lightboxOpen, setLightboxOpen] = useState(false);
+//   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+//   const [lightboxSlides, setLightboxSlides] = useState([]);
 
 //   // Функция для создания ссылки на маршрут
 //   const createRouteLink = (coords) => {
@@ -293,23 +298,42 @@ export default Contacts;
 //               {/* Описание маршрута и фотографии */}
 //               {center.images && center.images.length > 0 ? (
 //                 <div style={{ marginBottom: "10px" }}>
-//                   <strong>Описание маршрута</strong>
+//                   <strong>Описание маршрута:</strong>
 //                   <div style={{ width: "100%", overflow: "hidden" }}>
-//                     {/* Если всё ещё грузится, показываем скелетон */}
 //                     {loading ? (
 //                       <Skeleton.Image active />
 //                     ) : (
-//                       // Иначе показываем галерею фоток
-//                       <ColumnsPhotoAlbum
-//                         photos={center.images}
-//                         columns={(containerWidth) => {
-//                           if (containerWidth < 600) return 1;
-//                           if (containerWidth < 900) return 2;
-//                           if (containerWidth < 1200) return 3;
-//                           return 4;
-//                         }}
-//                         spacing={10}
-//                       />
+//                       <>
+//                         <ColumnsPhotoAlbum
+//                           photos={center.images}
+//                           onClick={({ index }) => {
+//                             setCurrentImageIndex(index);
+//                             setLightboxSlides(
+//                               center.images.map((img) => ({
+//                                 src: img.src,
+//                                 width: img.width,
+//                                 height: img.height,
+//                               }))
+//                             );
+//                             setLightboxOpen(true);
+//                           }}
+//                           columns={(containerWidth) => {
+//                             if (containerWidth < 600) return 1;
+//                             if (containerWidth < 900) return 2;
+//                             if (containerWidth < 1200) return 3;
+//                             return 4;
+//                           }}
+//                           spacing={10}
+//                         />
+
+//                         <Lightbox
+//                           open={lightboxOpen}
+//                           close={() => setLightboxOpen(false)}
+//                           slides={lightboxSlides}
+//                           index={currentImageIndex}
+//                           plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+//                         />
+//                       </>
 //                     )}
 //                   </div>
 //                 </div>
