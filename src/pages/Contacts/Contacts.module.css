@@ -4,6 +4,11 @@
   margin: 0 auto;
 }
 
+.cardContainer {
+  max-width: 32%;
+}
+
+/* Стиль для карточек */
 .card {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -18,12 +23,13 @@
   transform: scale(1.05);
 }
 
-.my-masonry-grid {
-  display: flex;
-  margin-left: -10px; /* Отступ между колонками */
-  width: auto;
+@media (max-width:1000px) {
+  .cardContainer {
+    max-width: 48%;
+  }
 }
-.my-masonry-grid_column {
-  padding-left: 10px; /* Отступ между колонками */
-  background-clip: padding-box;
+@media (max-width:500px) {
+  .cardContainer {
+    max-width: 100%;
+  }
 }

@@ -26,12 +26,16 @@ export const useContacts = () => {
         if (Array.isArray(response.data)) {
           // Обрабатываем данные и добавляем изображения и координаты
           const centersWithPhotos = response.data.map((center) => {
+            console.log(center.photos)
+
             const images = center.photos
-              ? center.photos.map((photo) => ({
+              ? center.photos.map((photo) => {
+                return {
                   src: `${backPhotoServer}/public/${photo.ПутьКФайлу}`,
                   width: photo.width || 800,
                   height: photo.height || 600,
-                }))
+                }
+              })
               : [];
 
             // Парсим координаты из строк в числа

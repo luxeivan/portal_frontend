@@ -1,23 +1,17 @@
-import {
-  Collapse,
-  Spin,
-  Button,
-  Skeleton,
-  FloatButton,
-  Card,
-  Alert,
-  Row,
-  Col,
-  Image,
-} from "antd";
+import React from "react";
+import { Collapse, Spin, Button, Skeleton, BackTop, Card, Alert, Flex, Image, Typography, FloatButton } from "antd";
 import {
   EnvironmentOutlined,
   PhoneOutlined,
   ClockCircleOutlined,
 } from "@ant-design/icons";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
+import { ColumnsPhotoAlbum, RowsPhotoAlbum } from "react-photo-album";
+import "react-photo-album/styles.css";
 import { useContacts } from "../../stores/useContacts";
 import styles from "./Contacts.module.css";
+import Preloader from "../../components/Main/Preloader";
+const Text = Typography.Text
 
 const Contacts = () => {
   const { contactCenters, loading } = useContacts();
@@ -30,7 +24,7 @@ const Contacts = () => {
 
   if (loading) {
     // Пока всё грузится, показываем спиннер
-    return <Spin size="large" />;
+    return <Flex justify="center"><Preloader /></Flex>;
   }
 
   if (!contactCenters || contactCenters.length === 0) {
@@ -90,7 +84,8 @@ const Contacts = () => {
                 {center.workingTime || "Информация отсутствует"}
               </div>
 
-              {/* Карта или сообщение об отсутствии координат */}
+
+
               {center.coordinates ? (
                 <>
                   <YMaps>
@@ -116,41 +111,17 @@ const Contacts = () => {
                 />
               )}
 
-              {/* Описание маршрута и фотографии */}
               {center.images && center.images.length > 0 ? (
-                <div style={{ marginBottom: "10px" }}>
-                  <strong>Описание маршрута:</strong>
+                <div style={{ margin: "20px 0" }}>
+                  <Text strong>Описание маршрута:</Text>
                   <div style={{ width: "100%", overflow: "hidden" }}>
-                    {loading ? (
-                      <Skeleton.Image active />
-                    ) : (
-                      <Image.PreviewGroup>
-                        <Row gutter={[16, 16]}>
-                          {center.images.map((img, idx) => (
-                            <Col key={idx} xs={24} sm={12} md={8} lg={6} xl={6}>
-                              <Image
-                                src={img.src}
-                                alt={`Фото ${idx + 1}`}
-                                width="100%"
-                                height="auto"
-                                style={{
-                                  borderRadius: "5px",
-                                }}
-                                placeholder={
-                                  <div
-                                    style={{
-                                      backgroundColor: "#f0f0f0",
-                                      width: "100%",
-                                      paddingBottom: "75%", // Соотношение сторон 4:3
-                                    }}
-                                  />
-                                }
-                              />
-                            </Col>
-                          ))}
-                        </Row>
-                      </Image.PreviewGroup>
-                    )}
+                    <Flex align="center" gap={10} wrap="wrap" >
+
+                      {center.images.map((item, index) => <div className={styles.cardContainer}><Image key={index} src={item.src} /></div>)}
+
+                    </Flex>
+
+
                   </div>
                 </div>
               ) : (
