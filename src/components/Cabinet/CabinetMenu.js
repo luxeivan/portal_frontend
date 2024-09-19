@@ -140,11 +140,12 @@ export default function CabinetMenu() {
           <Flex vertical >
             <Menu
               style={{ justifyContent: "space-between" }}
-              selectable={false}
+              // selectable={false}
               // inlineCollapsed={collapsed}
               mode={"horizontal"}
               items={menuItemsMobile}
-              overflowedIndicator={<Flex vertical align="center" justify="center" className={styles.menuItemMobile}>
+              overflowedIndicator={
+              <Flex vertical align="center" justify="center" className={styles.menuItemMobile}>
                 <div>
                   <Text><MenuOutlined style={iconStyle} /></Text>
                 </div>

@@ -5,6 +5,7 @@
 }
 .mobileMenu {
   display: none;
+  max-width: 50vw;
 }
 
 .catPaw {
