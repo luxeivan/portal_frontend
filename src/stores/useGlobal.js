@@ -1,22 +1,37 @@
 import { create } from "zustand";
 import axios from "axios";
 import { message } from "antd";
-import { redirect } from "react-router-dom";
 
-const backServer = process.env.REACT_APP_BACK_BACK_SERVER
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
+
 const useGlobal = create((set) => ({
   darkMode: false,
-  currentPage: '/',
+  currentPage: "/",
 
   setCurrentPage: (url) => {
-    console.log(url)
-    redirect(url)
-    set((state) => {
-      return {
-        currentPage: url,
-      };
-    });
+    console.log(url);
+    //Добавляем новый URL в историю без перезагрузки страницы, как будто ничего не произошло.
+    window.history.pushState({}, "", url);
+    // Создаем событие, чтобы React Router понял, что нужно изменить маршрут
+    const navEvent = new PopStateEvent("popstate");
+    // Отправляем это событие
+    // react заметит изменение URL и обновит представление.
+    window.dispatchEvent(navEvent);
+    set(() => ({
+      currentPage: url,
+    }));
   },
+
+  // setCurrentPage: (url) => {
+  //   console.log(url)
+  //   redirect(url)
+  //   set((state) => {
+  //     return {
+  //       currentPage: url,
+  //     };
+  //   });
+  // },
+
   toggleDarkMode: () => {
     set((state) => {
       localStorage.setItem("darkMode", !state.darkMode ? 1 : 0);
