@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Layout,
   Menu,
@@ -29,42 +29,40 @@ const { Header } = Layout;
 
 const items = [
   {
-    key: "1",
-    label: "О нас",
-    url: "/about",
+    key: "/about",
+    label: "О нас"
   },
   {
-    key: "2",
-    label: "Каталог услуг",
-    url: "/services",
+    key: "/services",
+    label: "Каталог услуг"
   },
   {
-    key: "3",
-    label: "Калькулятор",
-    url: "/calc",
+    key: "/calc",
+    label: "Калькулятор"
   },
   {
-    key: "4",
-    label: "Контакты",
-    url: "/contacts",
+    key: "/contacts",
+    label: "Контакты"
   },
   {
-    key: "5",
-    label: "Документация",
-    url: "/docs",
+    key: "/docs",
+    label: "Документация"
   },
 ];
 
 export default function AppHeader() {
-  const { darkMode, toggleDarkMode } = useGlobal();
+  const { darkMode, toggleDarkMode, currentPage, setCurrentPage } = useGlobal();
   const { auth, logout, toggleModal } = useAuth();
   const { getUnreadCount } = useNotifications();
+
   const navigate = useNavigate();
 
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [error, setError] = useState(null);
   const [errorVisible, setErrorVisible] = useState(false);
-
+useEffect(()=>{
+console.log('currentPage: ',currentPage)
+},[currentPage])
   const handleLogout = () => {
     try {
       logout();
@@ -220,10 +218,17 @@ export default function AppHeader() {
           theme="light"
           mode="horizontal"
           overflowedIndicator={<MenuOutlined />}
-          selectable={false}
-          onClick={(item) => {
-            navigate(item.item.props.url);
+          // selectable={false}
+          selectedKeys={[currentPage]}
+          onClick={({ key }) => {
+            // console.log('key: ',key)
+            // navigate(key);
+            setCurrentPage(key)
           }}
+          // onSelect={({ item, key, keyPath, domEvent }) => {
+          //   console.log('item', item)
+          //   navigate(item.props.url);
+          // }}
           items={items}
           style={{
             flex: 1,

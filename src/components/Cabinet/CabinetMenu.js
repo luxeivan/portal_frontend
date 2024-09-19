@@ -15,11 +15,13 @@ import {
 import styles from "./CabinetMenu.module.css";
 import { useNavigate } from "react-router-dom";
 import cabinetMenuBack from '../../img/cabinetMenu/cabinet-menu-back.webp'
+import useGlobal from "../../stores/useGlobal";
 
 const { Text } = Typography;
 
 export default function CabinetMenu() {
   const { colorPrimaryText } = theme.useToken().token
+  const { currentPage, setCurrentPage } = useGlobal()
   const iconStyle = {
     // color: "rgb(227, 112, 33)"
     color: "gray"
@@ -109,8 +111,9 @@ export default function CabinetMenu() {
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
-  const handlerMenu = ({ item, key, keyPath, domEvent }) => {
-    navigator(key)
+  const handlerMenu = ({ key }) => {
+    setCurrentPage(key)
+    // navigator(key)
   }
 
   return (
@@ -171,7 +174,7 @@ export default function CabinetMenu() {
           <Flex
             vertical
             className={styles.menuItem}
-            // style={{ backgroundImage: `url(${cabinetMenuBack})` }}
+          // style={{ backgroundImage: `url(${cabinetMenuBack})` }}
           >
             {/* <Button
                 type="secondary"
@@ -193,13 +196,14 @@ export default function CabinetMenu() {
                 )}
               </Button> */}
             <Menu
-              selectable={false}
+              // selectable={false}
               inlineCollapsed={collapsed}
               mode={"inline"}
               items={menuItems}
               onClick={handlerMenu}
               className={styles.menu}
-              // style={{background:"inherit"}}
+              selectedKeys={[currentPage]}
+            // style={{background:"inherit"}}
             />
           </Flex>
         </div>
