@@ -9,8 +9,6 @@ const useGlobal = create((set) => ({
   currentPage: '/',
 
   setCurrentPage: (url) => {
-    console.log(url)
-    redirect(url)
     set((state) => {
       return {
         currentPage: url,

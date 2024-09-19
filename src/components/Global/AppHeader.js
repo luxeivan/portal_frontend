@@ -30,23 +30,23 @@ const { Header } = Layout;
 const items = [
   {
     key: "/about",
-    label: "О нас"
+    label: <Link to={"/about"}>О нас</Link>
   },
   {
     key: "/services",
-    label: "Каталог услуг"
+    label:<Link to={"/services"}>Каталог услуг</Link>
   },
   {
     key: "/calc",
-    label: "Калькулятор"
+    label: <Link to={"/calc"}>Калькулятор</Link>
   },
   {
     key: "/contacts",
-    label: "Контакты"
+    label: <Link to={"/contacts"}>Контакты</Link>
   },
   {
     key: "/docs",
-    label: "Документация"
+    label: <Link to={"/docs"}>Документация</Link>
   },
 ];
 
