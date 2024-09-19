@@ -13,7 +13,6 @@ export default function Claimers() {
         fetchClaims()
     }, [])
     const { id } = useParams()
-    console.log(claims)
     return (
         <>
             {!claims &&

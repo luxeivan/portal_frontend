@@ -15,6 +15,7 @@ import {
   MoonOutlined,
   SunOutlined,
   BellOutlined,
+  QuestionCircleOutlined,
 } from "@ant-design/icons";
 import logoWhite from "../../img/header/logoWhite.svg";
 import logoBlue from "../../img/header/logoBlue.svg";
@@ -22,6 +23,7 @@ import useGlobal from "../../stores/useGlobal";
 import useAuth from "../../stores/useAuth";
 import useNotifications from "../../stores/useNotifications";
 import NotificationList from "../../components/FormComponentsNew/Notifications/NotificationPanel";
+import ModalBot from "./ModalBot"; // Импортируем компонент ModalBot
 import styles from "./AppHeader.module.css";
 import ErrorModal from "../ErrorModal";
 
@@ -30,23 +32,23 @@ const { Header } = Layout;
 const items = [
   {
     key: "/about",
-    label: <Link to={"/about"}>О нас</Link>
+    label: <Link to={"/about"}>О нас</Link>,
   },
   {
     key: "/services",
-    label: <Link to={"/services"}>Каталог услуг</Link>
+    label: <Link to={"/services"}>Каталог услуг</Link>,
   },
   {
     key: "/calc",
-    label: <Link to={"/calc"}>Калькулятор</Link>
+    label: <Link to={"/calc"}>Калькулятор</Link>,
   },
   {
     key: "/contacts",
-    label: <Link to={"/contacts"}>Контакты</Link>
+    label: <Link to={"/contacts"}>Контакты</Link>,
   },
   {
     key: "/docs",
-    label: <Link to={"/docs"}>Документация</Link>
+    label: <Link to={"/docs"}>Документация</Link>,
   },
 ];
 
@@ -58,15 +60,16 @@ export default function AppHeader() {
   const navigate = useNavigate();
 
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [chatModalVisible, setChatModalVisible] = useState(false); // Состояние для модального окна чата
   const [error, setError] = useState(null);
   const [errorVisible, setErrorVisible] = useState(false);
-  useEffect(() => {
-    console.log('currentPage: ', currentPage)
-  }, [currentPage])
+
+  useEffect(() => {}, [currentPage]);
+
   const handleLogout = () => {
     try {
       logout();
-      setCurrentPage("/")
+      setCurrentPage("/");
       navigate("/");
     } catch (err) {
       setError(err.message);
@@ -99,13 +102,20 @@ export default function AppHeader() {
     setDrawerVisible(false);
   };
 
+  const closeModal = () => {
+    setErrorVisible(false);
+  };
+
   const {
     token: { colorBgContainer, colorText },
   } = theme.useToken();
 
   const rightMenuArea = (
     <Space size="middle">
-      {" "}
+      <QuestionCircleOutlined
+        style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
+        onClick={() => setChatModalVisible(true)}
+      />
       <Switch
         onChange={handlerDarkMode}
         checkedChildren={<SunOutlined />}
@@ -132,7 +142,11 @@ export default function AppHeader() {
 
   const itemsMobile = [
     {
-      label: <Space size="middle"><Link to="/about">О нас</Link></Space>,
+      label: (
+        <Space size="middle">
+          <Link to="/about">О нас</Link>
+        </Space>
+      ),
       key: "/about",
     },
     {
@@ -148,7 +162,11 @@ export default function AppHeader() {
       key: "/contacts",
     },
     {
-      label: <Space size="middle"><Link to="/docs">Документация</Link></Space>,
+      label: (
+        <Space size="middle">
+          <Link to="/docs">Документация</Link>
+        </Space>
+      ),
       key: "/docs",
     },
     {
@@ -177,10 +195,6 @@ export default function AppHeader() {
       key: "auth",
     },
   ];
-
-  const closeModal = () => {
-    setErrorVisible(false);
-  };
 
   return (
     <>
@@ -219,17 +233,10 @@ export default function AppHeader() {
           theme="light"
           mode="horizontal"
           overflowedIndicator={<MenuOutlined />}
-          // selectable={false}
           selectedKeys={[currentPage]}
           onClick={({ key }) => {
-            // console.log('key: ',key)
-            // navigate(key);
-            setCurrentPage(key)
+            setCurrentPage(key);
           }}
-          // onSelect={({ item, key, keyPath, domEvent }) => {
-          //   console.log('item', item)
-          //   navigate(item.props.url);
-          // }}
           items={items}
           style={{
             flex: 1,
@@ -245,7 +252,7 @@ export default function AppHeader() {
             items={itemsMobile}
             selectedKeys={[currentPage]}
             onClick={({ key }) => {
-              if (key !== "auth") setCurrentPage(key)
+              if (key !== "auth") setCurrentPage(key);
             }}
           />
         </div>
@@ -260,28 +267,41 @@ export default function AppHeader() {
         <NotificationList />
       </Drawer>
 
+      {/* Используем компонент ModalBot */}
+      <ModalBot
+        visible={chatModalVisible}
+        onClose={() => setChatModalVisible(false)}
+      />
+
       <ErrorModal visible={errorVisible} error={error} onClose={closeModal} />
     </>
   );
 }
 
-// import React, { useState, useEffect } from "react";
+// import React, { useEffect, useState } from "react";
 // import {
-//   Button,
-//   Dropdown,
 //   Layout,
 //   Menu,
 //   Space,
 //   Switch,
-//   Popover,
+//   Badge,
+//   Drawer,
+//   Button,
 //   theme,
 // } from "antd";
 // import { Link, useNavigate } from "react-router-dom";
+// import {
+//   MenuOutlined,
+//   MoonOutlined,
+//   SunOutlined,
+//   BellOutlined,
+// } from "@ant-design/icons";
 // import logoWhite from "../../img/header/logoWhite.svg";
 // import logoBlue from "../../img/header/logoBlue.svg";
 // import useGlobal from "../../stores/useGlobal";
 // import useAuth from "../../stores/useAuth";
-// import { MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
+// import useNotifications from "../../stores/useNotifications";
+// import NotificationList from "../../components/FormComponentsNew/Notifications/NotificationPanel";
 // import styles from "./AppHeader.module.css";
 // import ErrorModal from "../ErrorModal";
 
@@ -289,46 +309,44 @@ export default function AppHeader() {
 
 // const items = [
 //   {
-//     key: 1,
-//     label: `О нас`,
-//     url: "/about",
+//     key: "/about",
+//     label: <Link to={"/about"}>О нас</Link>,
 //   },
 //   {
-//     key: 2,
-//     label: `Каталог услуг`,
-//     url: "/services",
+//     key: "/services",
+//     label: <Link to={"/services"}>Каталог услуг</Link>,
 //   },
 //   {
-//     key: 3,
-//     label: `Калькулятор`,
-//     url: "/calc",
+//     key: "/calc",
+//     label: <Link to={"/calc"}>Калькулятор</Link>,
 //   },
 //   {
-//     key: 4,
-//     label: `Контакты`,
-//     url: "/contacts",
+//     key: "/contacts",
+//     label: <Link to={"/contacts"}>Контакты</Link>,
 //   },
 //   {
-//     key: 5,
-//     label: `Документация`,
-//     url: "/docs",
+//     key: "/docs",
+//     label: <Link to={"/docs"}>Документация</Link>,
 //   },
 // ];
 
 // export default function AppHeader() {
-//   const { darkMode, toggleDarkMode } = useGlobal();
-//   const { toggleAuth, auth, logout, toggleModal } = useAuth();
+//   const { darkMode, toggleDarkMode, currentPage, setCurrentPage } = useGlobal();
+//   const { auth, logout, toggleModal } = useAuth();
+//   const { getUnreadCount } = useNotifications();
+
 //   const navigate = useNavigate();
 
-//   const [clickCount, setClickCount] = useState(0);
-//   const [showPaw, setShowPaw] = useState(false);
-//   const [showPopover, setShowPopover] = useState(false);
+//   const [drawerVisible, setDrawerVisible] = useState(false);
 //   const [error, setError] = useState(null);
 //   const [errorVisible, setErrorVisible] = useState(false);
+
+//   useEffect(() => {}, [currentPage]);
 
 //   const handleLogout = () => {
 //     try {
 //       logout();
+//       setCurrentPage("/");
 //       navigate("/");
 //     } catch (err) {
 //       setError(err.message);
@@ -346,62 +364,105 @@ export default function AppHeader() {
 
 //   const handlerDarkMode = () => {
 //     try {
-//         toggleDarkMode();
+//       toggleDarkMode();
 //     } catch (err) {
 //       setError(err.message);
 //       setErrorVisible(true);
 //     }
 //   };
 
+//   const showDrawer = () => {
+//     setDrawerVisible(true);
+//   };
+
+//   const closeDrawer = () => {
+//     setDrawerVisible(false);
+//   };
+
 //   const {
 //     token: { colorBgContainer, colorText },
 //   } = theme.useToken();
 
-//   const rightMenuArea = auth ? (
-//     <Space size={"small"}>
+//   const rightMenuArea = (
+//     <Space size="middle">
+//       {" "}
 //       <Switch
 //         onChange={handlerDarkMode}
 //         checkedChildren={<SunOutlined />}
 //         unCheckedChildren={<MoonOutlined />}
 //         checked={darkMode}
 //       />
-//       <Button type="primary" onClick={handleLogout}>Выйти</Button>
-//     </Space>
-//   ) : (
-//     <Space size={"small"}>
-//       <Switch
-//         onChange={handlerDarkMode}
-//         checkedChildren={<SunOutlined />}
-//         unCheckedChildren={<MoonOutlined />}
-//         checked={darkMode}
-//       />
-//       <Button type="primary" onClick={handlerChangeAuth}>Войти</Button>
+//       <Badge count={getUnreadCount()} overflowCount={9}>
+//         <BellOutlined
+//           style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
+//           onClick={showDrawer}
+//         />
+//       </Badge>
+//       {auth ? (
+//         <Button type="primary" onClick={handleLogout}>
+//           Выйти
+//         </Button>
+//       ) : (
+//         <Button type="primary" onClick={handlerChangeAuth}>
+//           Войти
+//         </Button>
+//       )}
 //     </Space>
 //   );
 
 //   const itemsMobile = [
 //     {
-//       label: <Link to="/about">О нас</Link>,
-//       key: "0",
+//       label: (
+//         <Space size="middle">
+//           <Link to="/about">О нас</Link>
+//         </Space>
+//       ),
+//       key: "/about",
 //     },
 //     {
 //       label: <Link to="/services">Каталог услуг</Link>,
-//       key: "1",
+//       key: "/services",
 //     },
 //     {
 //       label: <Link to="/calc">Калькулятор</Link>,
-//       key: "2",
+//       key: "/calc",
 //     },
 //     {
 //       label: <Link to="/contacts">Контакты</Link>,
-//       key: "3",
+//       key: "/contacts",
+//     },
+//     {
+//       label: (
+//         <Space size="middle">
+//           <Link to="/docs">Документация</Link>
+//         </Space>
+//       ),
+//       key: "/docs",
 //     },
 //     {
 //       type: "divider",
 //     },
 //     {
-//       label: rightMenuArea,
-//       key: "4",
+//       label: (
+//         <Space size="middle">
+//           <Switch
+//             onChange={handlerDarkMode}
+//             checkedChildren={<SunOutlined />}
+//             unCheckedChildren={<MoonOutlined />}
+//             checked={darkMode}
+//           />
+//           {auth ? (
+//             <Button type="primary" onClick={handleLogout}>
+//               Выйти
+//             </Button>
+//           ) : (
+//             <Button type="primary" onClick={handlerChangeAuth}>
+//               Войти
+//             </Button>
+//           )}
+//         </Space>
+//       ),
+//       key: "auth",
 //     },
 //   ];
 
@@ -426,7 +487,7 @@ export default function AppHeader() {
 //       >
 //         <div className="demo-logo" style={{ padding: 10, marginRight: 20 }}>
 //           <Link
-//             to={"/"}
+//             to="/"
 //             style={{
 //               display: "flex",
 //               justifyContent: "center",
@@ -446,10 +507,17 @@ export default function AppHeader() {
 //           theme="light"
 //           mode="horizontal"
 //           overflowedIndicator={<MenuOutlined />}
-//           selectable={false}
-//           onClick={(item, key) => {
-//             navigate(item.item.props.url);
+//           // selectable={false}
+//           selectedKeys={[currentPage]}
+//           onClick={({ key }) => {
+//             // console.log('key: ',key)
+//             // navigate(key);
+//             setCurrentPage(key);
 //           }}
+//           // onSelect={({ item, key, keyPath, domEvent }) => {
+//           //   console.log('item', item)
+//           //   navigate(item.props.url);
+//           // }}
 //           items={items}
 //           style={{
 //             flex: 1,
@@ -457,22 +525,29 @@ export default function AppHeader() {
 //           }}
 //         />
 
-//         <div className={styles.rightMenu}>
-//           {rightMenuArea}
-//         </div>
+//         <div className={styles.rightMenu}>{rightMenuArea}</div>
 //         <div className={styles.mobileMenu}>
-//           <Dropdown menu={{ items: itemsMobile }} trigger={["click"]}>
-//             <a
-//               onClick={(e) => e.preventDefault()}
-//               style={{ fontSize: "2.5rem", color: colorText, height: 100 }}
-//             >
-//               <Space>
-//                 <MenuOutlined />
-//               </Space>
-//             </a>
-//           </Dropdown>
+//           <Menu
+//             mode="horizontal"
+//             overflowedIndicator={<MenuOutlined />}
+//             items={itemsMobile}
+//             selectedKeys={[currentPage]}
+//             onClick={({ key }) => {
+//               if (key !== "auth") setCurrentPage(key);
+//             }}
+//           />
 //         </div>
 //       </Header>
+
+//       <Drawer
+//         title="Уведомления"
+//         placement="right"
+//         onClose={closeDrawer}
+//         open={drawerVisible}
+//       >
+//         <NotificationList />
+//       </Drawer>
+
 //       <ErrorModal visible={errorVisible} error={error} onClose={closeModal} />
 //     </>
 //   );

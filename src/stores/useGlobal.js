@@ -1,12 +1,12 @@
 import { create } from "zustand";
 import axios from "axios";
 import { message } from "antd";
-import { redirect } from "react-router-dom";
 
-const backServer = process.env.REACT_APP_BACK_BACK_SERVER
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
+
 const useGlobal = create((set) => ({
   darkMode: false,
-  currentPage: '/',
+  currentPage: "/",
 
   setCurrentPage: (url) => {
     set((state) => {
@@ -15,6 +15,17 @@ const useGlobal = create((set) => ({
       };
     });
   },
+
+  // setCurrentPage: (url) => {
+  //   console.log(url)
+  //   redirect(url)
+  //   set((state) => {
+  //     return {
+  //       currentPage: url,
+  //     };
+  //   });
+  // },
+
   toggleDarkMode: () => {
     set((state) => {
       localStorage.setItem("darkMode", !state.darkMode ? 1 : 0);
