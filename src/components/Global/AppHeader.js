@@ -30,23 +30,23 @@ const { Header } = Layout;
 const items = [
   {
     key: "/about",
-    label: <Link to={"/about"}>О нас</Link>
+    label: <Link to={"/about"}>О нас</Link>,
   },
   {
     key: "/services",
-    label: <Link to={"/services"}>Каталог услуг</Link>
+    label: <Link to={"/services"}>Каталог услуг</Link>,
   },
   {
     key: "/calc",
-    label: <Link to={"/calc"}>Калькулятор</Link>
+    label: <Link to={"/calc"}>Калькулятор</Link>,
   },
   {
     key: "/contacts",
-    label: <Link to={"/contacts"}>Контакты</Link>
+    label: <Link to={"/contacts"}>Контакты</Link>,
   },
   {
     key: "/docs",
-    label: <Link to={"/docs"}>Документация</Link>
+    label: <Link to={"/docs"}>Документация</Link>,
   },
 ];
 
@@ -60,13 +60,13 @@ export default function AppHeader() {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [error, setError] = useState(null);
   const [errorVisible, setErrorVisible] = useState(false);
-  useEffect(() => {
-    console.log('currentPage: ', currentPage)
-  }, [currentPage])
+
+  useEffect(() => {}, [currentPage]);
+
   const handleLogout = () => {
     try {
       logout();
-      setCurrentPage("/")
+      setCurrentPage("/");
       navigate("/");
     } catch (err) {
       setError(err.message);
@@ -132,7 +132,11 @@ export default function AppHeader() {
 
   const itemsMobile = [
     {
-      label: <Space size="middle"><Link to="/about">О нас</Link></Space>,
+      label: (
+        <Space size="middle">
+          <Link to="/about">О нас</Link>
+        </Space>
+      ),
       key: "/about",
     },
     {
@@ -148,7 +152,11 @@ export default function AppHeader() {
       key: "/contacts",
     },
     {
-      label: <Space size="middle"><Link to="/docs">Документация</Link></Space>,
+      label: (
+        <Space size="middle">
+          <Link to="/docs">Документация</Link>
+        </Space>
+      ),
       key: "/docs",
     },
     {
@@ -224,7 +232,7 @@ export default function AppHeader() {
           onClick={({ key }) => {
             // console.log('key: ',key)
             // navigate(key);
-            setCurrentPage(key)
+            setCurrentPage(key);
           }}
           // onSelect={({ item, key, keyPath, domEvent }) => {
           //   console.log('item', item)
@@ -245,7 +253,7 @@ export default function AppHeader() {
             items={itemsMobile}
             selectedKeys={[currentPage]}
             onClick={({ key }) => {
-              if (key !== "auth") setCurrentPage(key)
+              if (key !== "auth") setCurrentPage(key);
             }}
           />
         </div>

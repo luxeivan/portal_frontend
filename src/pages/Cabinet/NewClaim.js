@@ -88,10 +88,11 @@ export default function NewClaim() {
       event.preventDefault();
     }
   };
-  console.log(serviceItem)
+
   const handlerChange = (changedValues) => {
     console.log("changedValues: ", changedValues)
   }
+  
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet
