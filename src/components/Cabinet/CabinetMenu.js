@@ -13,7 +13,7 @@ import {
   FileOutlined
 } from "@ant-design/icons";
 import styles from "./CabinetMenu.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import cabinetMenuBack from '../../img/cabinetMenu/cabinet-menu-back.webp'
 import useGlobal from "../../stores/useGlobal";
 
@@ -34,17 +34,17 @@ export default function CabinetMenu() {
     {
       key: "/services",
       icon: <FileAddOutlined className={styles.icon} style={iconStyle} />,
-      label: <Text className={styles.labelSizeMobile}>Новая</Text>,
+      label: <Link to={"/services"} className={styles.labelSizeMobile}>Новая</Link>,
     },
     {
       key: "/cabinet/claimers",
       icon: <FileSyncOutlined className={styles.icon} style={iconStyle} />,
-      label: <Text className={styles.labelSizeMobile}>В работе</Text>,
+      label: <Link to={"/cabinet/claimers"} className={styles.labelSizeMobile}>В работе</Link>,
     },
     {
       key: "/cabinet/archives",
       icon: <FileZipOutlined className={styles.icon} style={iconStyle} />,
-      label: <Text className={styles.labelSizeMobile}>Архив</Text>,
+      label: <Link to={"/cabinet/archives"} className={styles.labelSizeMobile}>Архив</Link>,
     },
     {
       type: 'group',
@@ -53,12 +53,12 @@ export default function CabinetMenu() {
     {
       key: "/cabinet/drafts",
       icon: <FileUnknownOutlined className={styles.icon} style={iconStyle} />,
-      label: <Text className={styles.labelSizeMobile}>Черновики</Text>,
+      label: <Link to={"/cabinet/drafts"} className={styles.labelSizeMobile}>Черновики</Link>,
     },
     {
       key: "/cabinet/checking",
       icon: <FileSearchOutlined className={styles.icon} style={iconStyle} />,
-      label: <Text className={styles.labelSizeMobile}>На проверке</Text>,
+      label: <Link to={"/cabinet/checking"} className={styles.labelSizeMobile}>На проверке</Link>,
     },
     {
       type: 'group',
@@ -67,17 +67,17 @@ export default function CabinetMenu() {
     {
       key: "/cabinet/subjects",
       icon: <UserOutlined className={styles.icon} style={iconStyle} />,
-      label: <Text className={styles.labelSizeMobile}>Субъекты</Text>,
+      label: <Link to={"/cabinet/subjects"} className={styles.labelSizeMobile}>Субъекты</Link>,
     },
     {
       key: "/cabinet/objects",
       icon: <EnvironmentOutlined className={styles.icon} style={iconStyle} />,
-      label: <Text className={styles.labelSizeMobile}>Объекты</Text>,
+      label: <Link to={"/cabinet/objects"} className={styles.labelSizeMobile}>Объекты</Link>,
     },
     {
       key: "/cabinet/documents",
       icon: <FileOutlined className={styles.icon} style={iconStyle} />,
-      label: <Text className={styles.labelSizeMobile}>Документы</Text>,
+      label: <Link to={"/cabinet/documents"} className={styles.labelSizeMobile}>Документы</Link>,
     },
     {
       type: 'group',
@@ -86,7 +86,7 @@ export default function CabinetMenu() {
     {
       key: "/cabinet/profile",
       icon: <ProfileOutlined className={styles.icon} style={iconStyle} />,
-      label: <Text className={styles.labelSizeMobile}>Профиль</Text>,
+      label: <Link to={"/cabinet/profile"} className={styles.labelSizeMobile}>Профиль</Link>,
     },
   ];
   const menuItemsMobile = menuItems.map(item => {
@@ -140,11 +140,12 @@ export default function CabinetMenu() {
           <Flex vertical >
             <Menu
               style={{ justifyContent: "space-between" }}
-              selectable={false}
+              // selectable={false}
               // inlineCollapsed={collapsed}
               mode={"horizontal"}
               items={menuItemsMobile}
-              overflowedIndicator={<Flex vertical align="center" justify="center" className={styles.menuItemMobile}>
+              overflowedIndicator={
+              <Flex vertical align="center" justify="center" className={styles.menuItemMobile}>
                 <div>
                   <Text><MenuOutlined style={iconStyle} /></Text>
                 </div>

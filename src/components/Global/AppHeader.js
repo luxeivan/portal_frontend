@@ -30,23 +30,23 @@ const { Header } = Layout;
 const items = [
   {
     key: "/about",
-    label: "О нас"
+    label: <Link to={"/about"}>О нас</Link>
   },
   {
     key: "/services",
-    label: "Каталог услуг"
+    label: <Link to={"/services"}>Каталог услуг</Link>
   },
   {
     key: "/calc",
-    label: "Калькулятор"
+    label: <Link to={"/calc"}>Калькулятор</Link>
   },
   {
     key: "/contacts",
-    label: "Контакты"
+    label: <Link to={"/contacts"}>Контакты</Link>
   },
   {
     key: "/docs",
-    label: "Документация"
+    label: <Link to={"/docs"}>Документация</Link>
   },
 ];
 
@@ -60,12 +60,13 @@ export default function AppHeader() {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [error, setError] = useState(null);
   const [errorVisible, setErrorVisible] = useState(false);
-useEffect(()=>{
-console.log('currentPage: ',currentPage)
-},[currentPage])
+  useEffect(() => {
+    console.log('currentPage: ', currentPage)
+  }, [currentPage])
   const handleLogout = () => {
     try {
       logout();
+      setCurrentPage("/")
       navigate("/");
     } catch (err) {
       setError(err.message);
@@ -131,24 +132,24 @@ console.log('currentPage: ',currentPage)
 
   const itemsMobile = [
     {
-      label: <Link to="/about">О нас</Link>,
-      key: "0",
+      label: <Space size="middle"><Link to="/about">О нас</Link></Space>,
+      key: "/about",
     },
     {
       label: <Link to="/services">Каталог услуг</Link>,
-      key: "1",
+      key: "/services",
     },
     {
       label: <Link to="/calc">Калькулятор</Link>,
-      key: "2",
+      key: "/calc",
     },
     {
       label: <Link to="/contacts">Контакты</Link>,
-      key: "3",
+      key: "/contacts",
     },
     {
-      label: <Link to="/docs">Документация</Link>,
-      key: "4",
+      label: <Space size="middle"><Link to="/docs">Документация</Link></Space>,
+      key: "/docs",
     },
     {
       type: "divider",
@@ -242,6 +243,10 @@ console.log('currentPage: ',currentPage)
             mode="horizontal"
             overflowedIndicator={<MenuOutlined />}
             items={itemsMobile}
+            selectedKeys={[currentPage]}
+            onClick={({ key }) => {
+              if (key !== "auth") setCurrentPage(key)
+            }}
           />
         </div>
       </Header>

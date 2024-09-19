@@ -9,17 +9,11 @@ const useGlobal = create((set) => ({
   currentPage: "/",
 
   setCurrentPage: (url) => {
-    console.log(url);
-    //Добавляем новый URL в историю без перезагрузки страницы, как будто ничего не произошло.
-    window.history.pushState({}, "", url);
-    // Создаем событие, чтобы React Router понял, что нужно изменить маршрут
-    const navEvent = new PopStateEvent("popstate");
-    // Отправляем это событие
-    // react заметит изменение URL и обновит представление.
-    window.dispatchEvent(navEvent);
-    set(() => ({
-      currentPage: url,
-    }));
+    set((state) => {
+      return {
+        currentPage: url,
+      };
+    });
   },
 
   // setCurrentPage: (url) => {
