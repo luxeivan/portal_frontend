@@ -11,6 +11,7 @@ import Preloader from "../../components/Main/Preloader";
 import ErrorModal from "../../components/ErrorModal";
 
 const { Title } = Typography;
+const backPhotoServer = process.env.REACT_APP_BACK_API_SERVER;
 
 export default function Services() {
   const location = useLocation();
@@ -38,7 +39,7 @@ export default function Services() {
 
     fetchData();
   }, [level2, fetchServices, fetchServiceChain]);
-
+  console.log(services)
   return (
     <>
       <AppHelmet
@@ -102,7 +103,7 @@ export default function Services() {
                           <Image
                             style={{ textAlign: "center" }}
                             width={"30%"}
-                            src={item.IsFolder ? folder : element}
+                            src={item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)}
                             preview={false}
                           />
                         </Flex>
