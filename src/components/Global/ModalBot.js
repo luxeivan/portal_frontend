@@ -24,7 +24,9 @@ const ModalBot = ({ visible, onClose }) => {
   ]);
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const { colorPrimaryText } = theme.useToken().token;
+
+  // Получаем все токены темы
+  const { token } = theme.useToken();
 
   // Создаем реф для контейнера сообщений
   const messagesContainerRef = useRef(null);
@@ -82,16 +84,17 @@ const ModalBot = ({ visible, onClose }) => {
       onCancel={onClose}
       footer={null}
       width={600}
+      bodyStyle={{ backgroundColor: token.colorBgContainer }}
     >
       {/* Область сообщений */}
       <div
-        ref={messagesContainerRef} // Привязываем реф к контейнеру
+        ref={messagesContainerRef}
         style={{
           maxHeight: "400px",
           overflowY: "auto",
           marginBottom: "16px",
           padding: "8px",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: token.colorBgLayout,
           borderRadius: "4px",
         }}
       >
@@ -107,8 +110,13 @@ const ModalBot = ({ visible, onClose }) => {
               <div
                 style={{
                   backgroundColor:
-                    item.sender === "user" ? "#1890ff" : "#e6f7ff",
-                  color: item.sender === "user" ? "#fff" : "#000",
+                    item.sender === "user"
+                      ? token.colorPrimary
+                      : token.colorBgContainer,
+                  color:
+                    item.sender === "user"
+                      ? token.colorTextLightSolid
+                      : token.colorText,
                   padding: "8px 12px",
                   borderRadius: "16px",
                   maxWidth: "70%",
@@ -118,7 +126,7 @@ const ModalBot = ({ visible, onClose }) => {
                 <div
                   style={{
                     fontSize: "12px",
-                    color: item.sender === "user" ? "#d9d9d9" : "#8c8c8c",
+                    color: token.colorTextSecondary,
                     textAlign: "right",
                     marginTop: "4px",
                   }}
@@ -153,7 +161,6 @@ const ModalBot = ({ visible, onClose }) => {
 };
 
 export default ModalBot;
-
 // import React, { useState } from "react";
 // import { Modal, Input, List, Button, Spin, message as antdMessage, theme } from "antd";
 // import { sendMessageToGigachat } from "./gigachatApi";
