@@ -8,7 +8,7 @@ export default function MarkDownText({ children }) {
     return false
   }
   return (
-    <Markdown options={{
+    <Markdown className={styles.markdown} options={{
       overrides: {    
         p:{
           props:{
@@ -20,6 +20,11 @@ export default function MarkDownText({ children }) {
           props: {
             className: 'foo',
           },
+        },
+        code:{
+          props:{
+            className: styles.code
+          }
         },
         table: {
           props: {

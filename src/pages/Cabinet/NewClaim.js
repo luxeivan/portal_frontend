@@ -92,7 +92,7 @@ export default function NewClaim() {
   const handlerChange = (changedValues) => {
     console.log("changedValues: ", changedValues)
   }
-  
+  console.log(serviceItem)
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet

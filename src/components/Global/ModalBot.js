@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Input, List, Button, Spin, message as antdMessage } from "antd";
 import { sendMessageToGigachat } from "./gigachatApi";
+import MarkDownText from "../MarkDownText/MarkDownText";
 
 const ModalBot = ({ visible, onClose }) => {
   const [chatMessages, setChatMessages] = useState([
@@ -42,7 +43,7 @@ const ModalBot = ({ visible, onClose }) => {
   return (
     <Modal
       title="Помощник"
-      visible={visible}
+      open={visible}
       onCancel={onClose}
       footer={null}
       width={600}
@@ -77,7 +78,7 @@ const ModalBot = ({ visible, onClose }) => {
                   maxWidth: "70%",
                 }}
               >
-                {item.text}
+                <MarkDownText>{item.text}</MarkDownText>
               </div>
             </List.Item>
           )}

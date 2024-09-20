@@ -62,7 +62,7 @@ export const PhoneModal = ({ isVisible, onCancel, onSubmit, form }) => {
   return (
     <Modal
       title="Изменить номер телефона"
-      visible={isVisible}
+      open={isVisible}
       onCancel={onCancel}
       footer={null}
     >

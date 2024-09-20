@@ -39,7 +39,7 @@ export default function Services() {
 
     fetchData();
   }, [level2, fetchServices, fetchServiceChain]);
-  console.log(services)
+  // console.log(services)
   return (
     <>
       <AppHelmet
