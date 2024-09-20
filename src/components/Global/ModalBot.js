@@ -100,9 +100,7 @@ const ModalBot = ({ visible, onClose }) => {
       >
         <List
           dataSource={chatMessages}
-          renderItem={(
-            { sender, text, timestamp } // Вот здесь должна быть деструктуризация
-          ) => (
+          renderItem={({ sender, text, timestamp }) => (
             <List.Item
               style={{
                 justifyContent: sender === "user" ? "flex-end" : "flex-start",
