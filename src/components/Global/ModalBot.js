@@ -14,8 +14,6 @@ import "moment/locale/ru";
 
 import MarkDownText from "../MarkDownText/MarkDownText";
 
-moment.locale("ru");
-
 const ModalBot = ({ visible, onClose }) => {
   const [chatMessages, setChatMessages] = useState([
     {
@@ -102,21 +100,22 @@ const ModalBot = ({ visible, onClose }) => {
       >
         <List
           dataSource={chatMessages}
-          renderItem={(item) => (
+          renderItem={(
+            { sender, text, timestamp } // Вот здесь должна быть деструктуризация
+          ) => (
             <List.Item
               style={{
-                justifyContent:
-                  item.sender === "user" ? "flex-end" : "flex-start",
+                justifyContent: sender === "user" ? "flex-end" : "flex-start",
               }}
             >
               <div
                 style={{
                   backgroundColor:
-                    item.sender === "user"
+                    sender === "user"
                       ? token.colorPrimary
                       : token.colorBgContainer,
                   color:
-                    item.sender === "user"
+                    sender === "user"
                       ? token.colorTextLightSolid
                       : token.colorText,
                   padding: "8px 12px",
@@ -124,11 +123,22 @@ const ModalBot = ({ visible, onClose }) => {
                   maxWidth: "70%",
                 }}
               >
-                <MarkDownText>{item.text}</MarkDownText>
+                <MarkDownText>{text}</MarkDownText>
+                <div
+                  style={{
+                    fontSize: "12px",
+                    color: token.colorTextSecondary,
+                    textAlign: "right",
+                    marginTop: "4px",
+                  }}
+                >
+                  {moment(timestamp).format("HH:mm")}
+                </div>
               </div>
             </List.Item>
           )}
         />
+
         {loading && (
           <div style={{ textAlign: "center", padding: "10px" }}>
             <Spin tip="Бот печатает..." />
