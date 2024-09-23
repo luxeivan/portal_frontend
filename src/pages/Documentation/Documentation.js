@@ -2,6 +2,7 @@ import React from 'react'
 import { Typography, Tabs, Flex, Image } from 'antd'
 import mistakesImg from '../../img/docs/mistakes.jpg'
 import Law from '../../components/Documentation/Law'
+// import Rekvizity from '../../components/'
 const onChange = (key) => {
     console.log(key);
 };
@@ -9,7 +10,7 @@ const items = [
     {
         key: '1',
         label: 'Инструкции',
-        children: 'Content of Tab Pane 1_',
+        children: 'Когда-нибудь здесь будут инструкции. Но не сегодня... Не сегодня...',
     },
     {
         key: '2',
@@ -18,11 +19,16 @@ const items = [
     },
     {
         key: '3',
-        label: 'Не повторять ошибки',
-        children: <Flex>
-            <Image src={mistakesImg} preview={false} />
-        </Flex>,
+        label: 'Реквизиты',
+        children: <Law/>,
     },
+    // {
+    //     key: '3',
+    //     label: 'Не повторять ошибки',
+    //     children: <Flex>
+    //         <Image src={mistakesImg} preview={false} />
+    //     </Flex>,
+    // },
 ];
 export default function Documentation() {
     return (
