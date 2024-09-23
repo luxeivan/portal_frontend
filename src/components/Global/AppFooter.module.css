@@ -1,4 +1,21 @@
 .footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.footer-content {
+  max-width: 1000px; /* Ограничиваем максимальную ширину */
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Чтобы социальные иконки и текст были равномерно распределены */
+  align-items: center;
+}
+
+
+.footer {
 }
 
 @media (max-width: 575px) {
