@@ -1,6 +1,9 @@
 import React from "react";
 import { Layout, Space, Typography, Button, Row, Col } from "antd";
 
+import useAuth from "../../stores/useAuth";
+import styles from "./AppFooter.module.css";
+
 // Импортируем локальные изображения
 import telegaIcon from "../../img/socialMedia/telega.png";
 import vkIcon from "../../img/socialMedia/vk.png";
@@ -11,17 +14,12 @@ const { Footer } = Layout;
 const { Link } = Typography;
 
 export default function AppFooter() {
+  const auth = useAuth((state) => state.auth);
+
   return (
     <Footer
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        width: "100%",
-        // padding: "20px 0",
-        // backgroundColor: "#f0f2f5", 
-      }}
+      className={`${auth ? styles.footerContentAuth : styles.footerContent}`}
+
     >
       <Space direction="vertical" size="large" align="center">
         {/* Социальные сети */}
