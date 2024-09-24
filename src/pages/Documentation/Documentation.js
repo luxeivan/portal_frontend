@@ -2,7 +2,8 @@ import React from 'react'
 import { Typography, Tabs, Flex, Image } from 'antd'
 import mistakesImg from '../../img/docs/mistakes.jpg'
 import Law from '../../components/Documentation/Law'
-// import Rekvizity from '../../components/'
+import Rekvizity from '../../components/Rekvizity/Rekvizity'
+
 const onChange = (key) => {
     console.log(key);
 };
@@ -20,7 +21,7 @@ const items = [
     {
         key: '3',
         label: 'Реквизиты',
-        children: <Law/>,
+        children: <Rekvizity />,
     },
     // {
     //     key: '3',
