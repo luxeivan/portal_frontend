@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Form, Collapse, Button, Modal, Input, Flex, Descriptions } from "antd";
+import { Form, Collapse, Button, Modal, Input, Flex, Descriptions, Typography,ConfigProvider } from "antd";
 import TextInput from "./TextInput";
 import NumberInput from "./NumberInput";
 import SliderInput from "./SliderInput";
 import SelectInput from "./SelectInput";
 import DateInput from "./DateInput";
 import DividerForm from "./DividerForm";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined, PlusOutlined, EditOutlined,SaveOutlined } from "@ant-design/icons";
 import SnilsInput from "./SnilsInput";
 import PhoneInput from "./phoneComponent/PhoneInput";
 import AddressInput from "./adressComponents/AddressInput";
@@ -77,25 +77,39 @@ export default function GroupInput({
   // }))
   const formElement = (
     <div style={{ marginBottom: 20, border: "1px solid lightgray", padding: 10, borderRadius: 10 }}>
-      <Flex wrap="wrap">
-        <Form.Item
-          name={name}
-          label={label}
-          rules={[
-            {
-              required: required,
-              message: "Это поле обязательное",
+
+      <Typography.Title style={{ textAlign: "center" }} level={5}>{label}</Typography.Title>
+      {items &&
+        <Descriptions size="small" style={{ width: "100%", marginBottom: "10px" }} items={items} column={1} bordered />
+      }
+      <Form.Item
+        name={name}
+        // label={label}
+        rules={[
+          {
+            required: required,
+            message: "Это поле обязательное",
+          },
+        ]}
+        layout="horizontal"
+        style={{ marginRight: "20px", width: "100%" }}
+      >
+        {/* <Button type="primary" onClick={handlerOpenModal}>Редактировать</Button>
+           */}
+        <ConfigProvider
+          theme={{
+            components: {
+              Button: {
+                defaultGhostBorderColor: "#f37021",
+                defaultGhostColor: "#f37021",
+              },
             },
-          ]}
-          layout="horizontal"
-          style={{ marginRight: "20px" }}
+          }}
         >
-          <Button type="primary" onClick={handlerOpenModal}>Редактировать</Button>
-        </Form.Item>
-        {items &&
-          <Descriptions style={{ flex: 1 }} items={items} column={1} bordered />
-        }
-      </Flex>
+          <Button ghost onClick={handlerOpenModal} block icon={<EditOutlined />}>Редактировать</Button>
+        </ConfigProvider>
+      </Form.Item>
+
 
       <Modal title={label} open={openModal} onOk={handlerOnOK} onCancel={handlerOnClose} footer={null}>
         <>
@@ -280,7 +294,23 @@ export default function GroupInput({
                   />
                 );
             })}
-            <Button type="primary" htmlType="submit">Сохранить</Button>
+             <ConfigProvider
+          theme={{
+            components: {
+              Button: {
+                defaultBg: "#f37021",
+                defaultColor:"#fff",
+                defaultHoverBg:"#f59051",
+                defaultHoverColor:"#fff",
+                defaultHoverBorderColor:"#f59051"
+                // defaultGhostColor: "#f37021",
+              },
+            },
+          }}
+        >
+          {/* <Button ghost onClick={handlerOpenModal} block icon={<EditOutlined />}>Редактировать</Button> */}
+            <Button  block htmlType="submit" icon={<SaveOutlined />}>Сохранить</Button>
+        </ConfigProvider>
           </Form>
         </>
       </Modal>
