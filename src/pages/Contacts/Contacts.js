@@ -8,6 +8,7 @@ import {
   Image,
   Typography,
 } from "antd";
+import { createFromIconfontCN } from '@ant-design/icons';
 import {
   EnvironmentOutlined,
   PhoneOutlined,
@@ -18,6 +19,10 @@ import { useContacts } from "../../stores/useContacts";
 import styles from "./Contacts.module.css";
 import Preloader from "../../components/Main/Preloader";
 const Text = Typography.Text;
+
+const IconFont = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
+});
 
 const Contacts = () => {
   const { contactCenters, loading } = useContacts();
@@ -44,6 +49,7 @@ const Contacts = () => {
 
   return (
     <div className={styles.container}>
+ <IconFont type="green-energy" />
       <h1>Контакты Центров обслуживания клиентов</h1>
       <p>
         Центры обслуживания клиентов предоставляют услуги по технологическому
