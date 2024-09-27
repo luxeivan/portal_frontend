@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-const backServer = process.env.REACT_APP_BACK_BACK_SERVER
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 const useDocuments = create((set, get) => ({
   documents: [],
   document: {},
@@ -25,26 +25,48 @@ const useDocuments = create((set, get) => ({
     set({ openModalUpdate: id });
   },
 
+  // fetchDocuments: async () => {
+  //   set({ documents: [], loadingDocuments: true });
+  //   try {
+  //     const response = await axios.get(
+  //       `${backServer}/api/cabinet/documents`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  //         },
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     set({
+  //       documents: response.data.documents.map((doc) => ({
+  //         ...doc,
+  //         documentName: doc.documentName || doc.name,
+  //       })), loadingDocuments: false
+  //     });
+  //   } catch (error) {
+  //     set({ loadingDocuments: false, errorLoadingDocuments: "Не удалось загрузить документы" });
+  //     console.error("Ошибка при загрузке документов", error);
+  //   }
+  // },
+
   fetchDocuments: async () => {
     set({ documents: [], loadingDocuments: true });
     try {
-      const response = await axios.get(
-        `${backServer}/api/cabinet/documents`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${backServer}/api/cabinet/documents`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+        withCredentials: true,
+      });
       set({
-        documents: response.data.documents.map((doc) => ({
-          ...doc,
-          documentName: doc.documentName || doc.name,
-        })), loadingDocuments: false
+        documents: response.data.documents,
+        loadingDocuments: false,
       });
     } catch (error) {
-      set({ loadingDocuments: false, errorLoadingDocuments: "Не удалось загрузить документы" });
+      set({
+        loadingDocuments: false,
+        errorLoadingDocuments: "Не удалось загрузить документы",
+      });
       console.error("Ошибка при загрузке документов", error);
     }
   },
@@ -63,7 +85,10 @@ const useDocuments = create((set, get) => ({
       );
       set({ document: response.data.document, loadingDocument: false });
     } catch (error) {
-      set({ loadingDocument: false, errorLoadingDocument: "Не удалось загрузить документ" });
+      set({
+        loadingDocument: false,
+        errorLoadingDocument: "Не удалось загрузить документ",
+      });
       console.error("Ошибка при загрузке документа", error);
     }
   },
@@ -101,7 +126,10 @@ const useDocuments = create((set, get) => ({
       set({ document: response.data.document, loadingDocument: false });
       get().fetchDocuments(); // Обновить список документов после редактирования
     } catch (error) {
-      set({ loadingDocument: false, errorLoadingDocument: "Не удалось обновить документ" });
+      set({
+        loadingDocument: false,
+        errorLoadingDocument: "Не удалось обновить документ",
+      });
       console.error("Ошибка при обновлении документа", error);
     }
   },
