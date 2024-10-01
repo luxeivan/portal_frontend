@@ -1,22 +1,59 @@
-import React, { useState } from "react";
-import { Modal, Input, List, Button, Spin, message as antdMessage } from "antd";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  Modal,
+  Input,
+  List,
+  Button,
+  Spin,
+  message as antdMessage,
+  theme,
+} from "antd";
 import { sendMessageToGigachat } from "./gigachatApi";
+import moment from "moment";
+import "moment/locale/ru";
+
 import MarkDownText from "../MarkDownText/MarkDownText";
 
 const ModalBot = ({ visible, onClose }) => {
   const [chatMessages, setChatMessages] = useState([
-    { sender: "bot", text: "Здравствуйте! Чем я могу вам помочь?" },
+    {
+      sender: "bot",
+      text: "Здравствуйте! Чем я могу вам помочь?",
+      timestamp: new Date(),
+    },
   ]);
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Получаем все токены темы
+  const { token } = theme.useToken();
+
+  // Создаем реф для контейнера сообщений
+  const messagesContainerRef = useRef(null);
+
+  // Функция для прокрутки до последнего сообщения
+  const scrollToBottom = () => {
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: "smooth", // Плавная прокрутка
+      });
+    }
+  };
+
+  // Используем useEffect для вызова scrollToBottom при добавлении новых сообщений
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatMessages]);
+
   const handleSendMessage = async () => {
     if (userInput.trim() === "") return;
 
-    // Добавляем сообщение пользователя в историю сообщений
+    // Добавляем сообщение пользователя в историю сообщений с временем
     setChatMessages((prevMessages) => [
       ...prevMessages,
-      { sender: "user", text: userInput },
+      { sender: "user", text: userInput, timestamp: new Date() },
     ]);
 
     const userMessage = userInput;
@@ -27,10 +64,10 @@ const ModalBot = ({ visible, onClose }) => {
       // Отправляем сообщение к GigaChat
       const botResponse = await sendMessageToGigachat(userMessage);
 
-      // Добавляем ответ бота в историю сообщений
+      // Добавляем ответ бота в историю сообщений с временем
       setChatMessages((prevMessages) => [
         ...prevMessages,
-        { sender: "bot", text: botResponse },
+        { sender: "bot", text: botResponse, timestamp: new Date() },
       ]);
     } catch (error) {
       console.error("Ошибка при общении с GigaChat:", error);
@@ -47,42 +84,59 @@ const ModalBot = ({ visible, onClose }) => {
       onCancel={onClose}
       footer={null}
       width={600}
+      bodyStyle={{ backgroundColor: token.colorBgContainer }}
     >
       {/* Область сообщений */}
       <div
+        ref={messagesContainerRef}
         style={{
           maxHeight: "400px",
           overflowY: "auto",
           marginBottom: "16px",
           padding: "8px",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: token.colorBgLayout,
           borderRadius: "4px",
         }}
       >
         <List
           dataSource={chatMessages}
-          renderItem={(item) => (
+          renderItem={({ sender, text, timestamp }) => (
             <List.Item
               style={{
-                justifyContent:
-                  item.sender === "user" ? "flex-end" : "flex-start",
+                justifyContent: sender === "user" ? "flex-end" : "flex-start",
               }}
             >
               <div
                 style={{
                   backgroundColor:
-                    item.sender === "user" ? "#1890ff" : "#e6f7ff",
-                  color: item.sender === "user" ? "#fff" : "#000",
+                    sender === "user"
+                      ? token.colorPrimary
+                      : token.colorBgContainer,
+                  color:
+                    sender === "user"
+                      ? token.colorTextLightSolid
+                      : token.colorText,
                   padding: "8px 12px",
                   borderRadius: "16px",
                   maxWidth: "70%",
                 }}
               >
-                <MarkDownText>{item.text}</MarkDownText>
+                <MarkDownText>{text}</MarkDownText>
+                <div
+                  style={{
+                    fontSize: "12px",
+                    color: token.colorTextSecondary,
+                    textAlign: "right",
+                    marginTop: "4px",
+                  }}
+                >
+                  {moment(timestamp).format("HH:mm")}
+                </div>
               </div>
             </List.Item>
           )}
         />
+
         {loading && (
           <div style={{ textAlign: "center", padding: "10px" }}>
             <Spin tip="Бот печатает..." />

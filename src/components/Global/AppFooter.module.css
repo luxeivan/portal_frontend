@@ -1,8 +1,25 @@
-.footer {
+.footerContent {
+  padding: 24px 24px;
+  margin: 64px 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-@media (max-width: 575px) {
-  .footer {
-    margin-bottom: 50px;
+.footerContentAuth {
+  padding: 24px 24px;
+  margin: 64px 0 0 186px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+@media (max-width: 750px) {
+  
+  .footerContentAuth {
+    margin: 0px 0 50px 0;
   }
 }
+

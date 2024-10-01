@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Collapse,
   Button,
@@ -7,6 +7,7 @@ import {
   FloatButton,
   Image,
   Typography,
+  Input,
 } from "antd";
 import { createFromIconfontCN } from '@ant-design/icons';
 import {
@@ -18,7 +19,9 @@ import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import { useContacts } from "../../stores/useContacts";
 import styles from "./Contacts.module.css";
 import Preloader from "../../components/Main/Preloader";
-const Text = Typography.Text;
+
+const { Text } = Typography;
+const { Search } = Input;
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
@@ -26,6 +29,12 @@ const IconFont = createFromIconfontCN({
 
 const Contacts = () => {
   const { contactCenters, loading } = useContacts();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Фильтрация по названию
+  const filteredCenters = contactCenters.filter((center) =>
+    center.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // Функция для создания ссылки на маршрут
   const createRouteLink = (coords) => {
@@ -34,7 +43,6 @@ const Contacts = () => {
   };
 
   if (loading) {
-    // Пока всё грузится, показываем спиннер
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Preloader />
@@ -43,7 +51,6 @@ const Contacts = () => {
   }
 
   if (!contactCenters || contactCenters.length === 0) {
-    // Если данных нет, сообщаем об этом
     return <div>Нет данных для отображения</div>;
   }
 
@@ -58,19 +65,25 @@ const Contacts = () => {
         <a href="/services">Каталоге услуг</a>.
       </p>
 
+      {/* Добавляем строку поиска */}
+      <Search
+        placeholder="Введите название центра или города"
+        onChange={(e) => setSearchTerm(e.target.value)}
+        enterButton
+        style={{ marginBottom: "20px" }}
+      />
+
       <Collapse
-        items={contactCenters.map((center) => ({
-          key: center.id, // Используем уникальный идентификатор вместо индекса
+        items={filteredCenters.map((center) => ({
+          key: center.id, 
           label: center.name,
           children: (
             <Card bordered={false} className={styles.card}>
-              {/* Адрес */}
               <div style={{ marginBottom: "10px" }}>
                 <EnvironmentOutlined /> <strong>Адрес:</strong>{" "}
                 {center.address || "Информация отсутствует"}
               </div>
 
-              {/* Кнопка для построения маршрута */}
               {center.coordinates && (
                 <div style={{ marginBottom: "10px" }}>
                   <Button
@@ -84,7 +97,6 @@ const Contacts = () => {
                 </div>
               )}
 
-              {/* Телефон */}
               <div style={{ marginBottom: "10px" }}>
                 <PhoneOutlined /> <strong>Телефон:</strong>{" "}
                 {center.telephone ? (
@@ -94,16 +106,14 @@ const Contacts = () => {
                 )}
               </div>
 
-              {/* Время работы */}
               <div style={{ marginBottom: "10px" }}>
                 <ClockCircleOutlined /> <strong>Время работы:</strong>{" "}
                 {center.workingTime || "Информация отсутствует"}
               </div>
 
-              {/* Карта или сообщение об отсутствии координат */}
               {center.coordinates ? (
                 <>
-                  <YMaps >
+                  <YMaps>
                     <Map
                       defaultState={{
                         center: center.coordinates,
@@ -125,7 +135,6 @@ const Contacts = () => {
                 />
               )}
 
-              {/* Изображения */}
               {center.images && center.images.length > 0 ? (
                 <div style={{ margin: "20px 0" }}>
                   <Text strong>Описание маршрута:</Text>
@@ -149,7 +158,6 @@ const Contacts = () => {
         }))}
       />
 
-      {/* Кнопка для быстрого возврата наверх */}
       <FloatButton />
     </div>
   );
@@ -158,19 +166,25 @@ const Contacts = () => {
 export default Contacts;
 
 // import React from "react";
-// import { Collapse, Spin, Button, Skeleton, BackTop, Card, Alert, Flex, Image, Typography, FloatButton } from "antd";
+// import {
+//   Collapse,
+//   Button,
+//   Card,
+//   Alert,
+//   FloatButton,
+//   Image,
+//   Typography,
+// } from "antd";
 // import {
 //   EnvironmentOutlined,
 //   PhoneOutlined,
 //   ClockCircleOutlined,
 // } from "@ant-design/icons";
 // import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
-// import { ColumnsPhotoAlbum, RowsPhotoAlbum } from "react-photo-album";
-// import "react-photo-album/styles.css";
 // import { useContacts } from "../../stores/useContacts";
 // import styles from "./Contacts.module.css";
 // import Preloader from "../../components/Main/Preloader";
-// const Text = Typography.Text
+// const Text = Typography.Text;
 
 // const Contacts = () => {
 //   const { contactCenters, loading } = useContacts();
@@ -183,7 +197,11 @@ export default Contacts;
 
 //   if (loading) {
 //     // Пока всё грузится, показываем спиннер
-//     return <Flex justify="center"><Preloader /></Flex>;
+//     return (
+//       <div style={{ display: "flex", justifyContent: "center" }}>
+//         <Preloader />
+//       </div>
+//     );
 //   }
 
 //   if (!contactCenters || contactCenters.length === 0) {
@@ -202,8 +220,8 @@ export default Contacts;
 //       </p>
 
 //       <Collapse
-//         items={contactCenters.map((center, index) => ({
-//           key: index,
+//         items={contactCenters.map((center) => ({
+//           key: center.id, // Используем уникальный идентификатор вместо индекса
 //           label: center.name,
 //           children: (
 //             <Card bordered={false} className={styles.card}>
@@ -243,9 +261,10 @@ export default Contacts;
 //                 {center.workingTime || "Информация отсутствует"}
 //               </div>
 
+//               {/* Карта или сообщение об отсутствии координат */}
 //               {center.coordinates ? (
 //                 <>
-//                   <YMaps>
+//                   <YMaps >
 //                     <Map
 //                       defaultState={{
 //                         center: center.coordinates,
@@ -259,7 +278,6 @@ export default Contacts;
 //                   </YMaps>
 //                 </>
 //               ) : (
-//                 // Если координат нет, выводим сообщение
 //                 <Alert
 //                   message="Информация о координатах отсутствует"
 //                   description="Пока тут нет широты и долготы, чтобы построить маршрут и отрисовать карту. Они скоро появятся и всё красиво заработает!"
@@ -268,16 +286,20 @@ export default Contacts;
 //                 />
 //               )}
 
+//               {/* Изображения */}
 //               {center.images && center.images.length > 0 ? (
 //                 <div style={{ margin: "20px 0" }}>
 //                   <Text strong>Описание маршрута:</Text>
 //                   <div style={{ width: "100%", overflow: "hidden" }}>
-//                     <Flex align="center" gap={10} wrap="wrap" >
-
-//                       {center.images.map((item, index) => <div className={styles.cardContainer}><Image key={index} src={item.src} /></div>)}
-
-//                     </Flex>
-
+//                     <div
+//                       style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}
+//                     >
+//                       {center.images.map((item, index) => (
+//                         <div className={styles.cardContainer} key={index}>
+//                           <Image src={item.src} alt={`Фото ${index + 1}`} />
+//                         </div>
+//                       ))}
+//                     </div>
 //                   </div>
 //                 </div>
 //               ) : (
