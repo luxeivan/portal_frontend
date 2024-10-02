@@ -18,7 +18,7 @@ const type = {
 };
 const siteMosoblServer = process.env.REACT_APP_BACK_SITE_MOSOBLENERGO_SERVER
 
-export default function RegulatoryLegalActs() {
+export default function Law() {
   const [docs, setDocs] = useState([])
   useEffect(() => {
     axios.get(`${siteMosoblServer}/api/tp-normativno-pravovye-akty?populate=*`)

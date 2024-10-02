@@ -3,6 +3,7 @@ import { Typography, Tabs, Flex, Image } from 'antd'
 import mistakesImg from '../../img/docs/mistakes.jpg'
 import Law from '../../components/Documentation/Law'
 import Rekvizity from '../../components/Rekvizity/Rekvizity'
+import Instructions from '../../components/Documentation/Instructions'
 
 const onChange = (key) => {
     console.log(key);
@@ -11,7 +12,7 @@ const items = [
     {
         key: '1',
         label: 'Инструкции',
-        children: 'Когда-нибудь здесь будут инструкции. Но не сегодня... Не сегодня...',
+        children: <Instructions/>,
     },
     {
         key: '2',

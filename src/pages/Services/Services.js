@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Card, Flex, Typography, theme, Image, Breadcrumb } from "antd";
+import { Card, Flex, Typography, theme, Image, Breadcrumb, Tag } from "antd";
 import { Link, useParams, useLocation } from "react-router-dom";
 import useServices from "../../stores/useServices";
 import styles from "./Services.module.css";
@@ -93,19 +93,41 @@ export default function Services() {
                       }
                       className={styles.styleLink}
                     >
-                      <Card className={styles.styleCard} hoverable>
-                        <Title level={4}>{item.Description}</Title>
+                      <Card
+                        className={styles.styleCard}
+                        // style={{ backgroundImage: `url(${item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)})` }}
+                        hoverable
+                      // styles={{ body: { backgroundImage: folder } }}
+                      //styles={{body:{ backgroundImage: `url(${item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)})` }}}
+                      >
+                        <Title level={4} className={styles.cardTitle}>{item.Description}</Title>
+
                         <Flex
-                          justify="flex-end"
+                          justify={!item.IsFolder ? "space-between" : "flex-end"}
+                          align="center"
+                          // justify="flex-end"
                           gap={20}
-                          className={styles.cardImage}
+                          // className={styles.cardImage}
+                          style={{ width: "100%" }}
                         >
-                          <Image
-                            style={{ textAlign: "center" }}
-                            width={"30%"}
-                            src={item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)}
-                            preview={false}
-                          />
+                          {!item.IsFolder &&
+                            <Flex vertical gap={10} >
+                              <Tag style={{ fontSize: 16 }} color="red">до 15 кВт</Tag>
+                              <Tag color="blue">I Категории</Tag>
+                              <Tag color="blue">II Категории</Tag>
+                              <Tag color="blue">III Категории</Tag>
+                              <Tag color="green">для бытовых нужд</Tag>
+                            </Flex>
+                          }
+                          <div style={{width:"50%"}}>
+
+                            <Image
+                              style={{ textAlign: "center", width:  "100%"  }}
+                              // width={"50%"}
+                              src={item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)}
+                              preview={false}
+                            />
+                          </div>
                         </Flex>
                       </Card>
                     </Link>

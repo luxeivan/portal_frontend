@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Typography, Card } from "antd";
+import { PlusOutlined, FileOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
-import { PlusOutlined } from "@ant-design/icons";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
 import ModalAddDocument from "../../../components/Cabinet/Documents/ModalAddDocument";
 import ModalViewDocument from "../../../components/Cabinet/Documents/ModalViewDocument";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const Documents = () => {
   const documents = useDocuments((state) => state.documents);
@@ -14,35 +14,55 @@ const Documents = () => {
   const setOpenModalAdd = useDocuments((state) => state.setOpenModalAdd);
   const setOpenModalView = useDocuments((state) => state.setOpenModalView);
   const fetchDocuments = useDocuments((state) => state.fetchDocuments);
-  const nameDocs = useDocuments((state) => state.nameDocs);
-  const getNameDocs = useDocuments((state) => state.getNameDocs);
 
   useEffect(() => {
-    getNameDocs();
     fetchDocuments();
   }, []);
-  
+
   return (
     <div>
       <Title level={1}>Документы</Title>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
         {loadingDocuments && <SceletonCard />}
-        {documents.map((document, index) => (
-          <Card
-            key={index}
-            hoverable
-            style={{ width: 250, height: 250 }}
-            onClick={() => setOpenModalView(document.Ref_Key)}
-          >
-            <Card.Meta
-              title={
-                nameDocs.find((item) => item.Ref_Key == document.nameDoc_Key)
-                  ?.Description
-              }
-              description={`Количество файлов: ${document.files.length}`}
+        {documents.map((document, index) => {
+          // Ограничиваем количество иконок до 3
+          const iconCount = Math.min(document.files.length, 3);
+          // Создаем массив иконок
+          const icons = Array.from({ length: iconCount }, (_, i) => (
+            <FileOutlined
+              key={i}
+              style={{ fontSize: "24px", margin: "0 4px" }}
             />
-          </Card>
-        ))}
+          ));
+
+          return (
+            <Card
+              key={index}
+              hoverable
+              style={{
+                width: 250,
+                height: 250,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+              onClick={() => setOpenModalView(document.id)}
+            >
+              <Text type="secondary" style={{ fontSize: "16px" }}>
+                {document.category}
+              </Text>
+              <Title level={4} style={{ margin: "8px 0" }}>
+                {document.documentName}
+              </Title>
+              <div style={{ margin: "8px 0" }}>{icons}</div>
+              <Text type="secondary">
+                Количество файлов: {document.files.length}
+              </Text>
+            </Card>
+          );
+        })}
         <Card
           hoverable
           style={{
