@@ -34,7 +34,7 @@ const useServices = create((set, get) => ({
   },
 
   fetchServiceItem: async (key, property = { withChain: true, withFields: true }) => {
-    console.log(property)
+    // console.log(property)
     set({ serviceItem: null, isLoading: true, chain: [], error: null }); // Сбрасываем состояния
     try {
       const res = await Promise.all([

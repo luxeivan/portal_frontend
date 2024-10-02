@@ -50,6 +50,9 @@ export default function Services() {
         {serviceItem && (
           <>
             <Breadcrumb
+              itemRender={(currentRoute) => {
+                return <Link to={currentRoute.href}>{currentRoute.title}</Link>
+              }}
               items={
                 !(
                   location.pathname === "/services" ||
