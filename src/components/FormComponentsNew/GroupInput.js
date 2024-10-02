@@ -28,7 +28,7 @@ export default function GroupInput({
   mainForm,
   layout = "vertical"
 }) {
-  const { colorBgBase,colorBgContainer } = theme.useToken().token
+  const { colorBgBase, colorBgContainer } = theme.useToken().token
   const [openModal, setOpenModal] = useState(false)
   const [items, setItems] = useState(false)
   // const form = Form.useFormInstance();
@@ -115,7 +115,14 @@ export default function GroupInput({
       </Form.Item>
 
 
-      <Modal title={label} open={openModal} onOk={handlerOnOK} onCancel={handlerOnClose} footer={null}>
+      <Modal
+        // closable={false}
+        title={label}
+        open={openModal}
+        onOk={handlerOnOK}
+        onCancel={handlerOnClose}
+        footer={null}
+      >
         <>
           <Form
             scrollToFirstError

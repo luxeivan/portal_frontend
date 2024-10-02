@@ -28,12 +28,13 @@ const AddressModal = forwardRef(
 
     return (
       <Modal
+        closable={false}
         open={visible}
         title="Введите адрес вручную"
         onOk={handleOk}
         onCancel={onCancel}
         okText="Сохранить"
-        cancelText="Отмена"
+        // cancelText="Отмена"
       >
         {fieldConfig.map((field) => (
           <Form.Item name={field.name} label={field.label} key={field.name}>

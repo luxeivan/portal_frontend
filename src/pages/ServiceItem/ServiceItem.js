@@ -73,6 +73,9 @@ export default function ServiceItem() {
       {serviceItem && (
         <>
           <Breadcrumb
+          itemRender={(currentRoute) => {
+            return <Link to={currentRoute.href}>{currentRoute.title}</Link>
+          }}
             items={
               chain &&
               chain.map((item) => ({
