@@ -8,6 +8,7 @@ import {
   Drawer,
   Button,
   theme,
+  Flex,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -64,7 +65,7 @@ export default function AppHeader() {
   const [error, setError] = useState(null);
   const [errorVisible, setErrorVisible] = useState(false);
 
-  useEffect(() => {}, [currentPage]);
+  useEffect(() => { }, [currentPage]);
 
   const handleLogout = () => {
     try {
@@ -111,7 +112,7 @@ export default function AppHeader() {
   } = theme.useToken();
 
   const rightMenuArea = (
-    <Space size="middle">
+    <Flex gap={15} align="center">
       <QuestionCircleOutlined
         style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
         onClick={() => setChatModalVisible(true)}
@@ -121,6 +122,7 @@ export default function AppHeader() {
         checkedChildren={<SunOutlined />}
         unCheckedChildren={<MoonOutlined />}
         checked={darkMode}
+        style={{ background: !darkMode && colorText }}
       />
       <Badge count={getUnreadCount()} overflowCount={9}>
         <BellOutlined
@@ -137,7 +139,7 @@ export default function AppHeader() {
           Войти
         </Button>
       )}
-    </Space>
+    </Flex>
   );
 
   const itemsMobile = [

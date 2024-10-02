@@ -16,7 +16,7 @@ const useServices = create((set, get) => ({
     try {
       const res = await Promise.all([
         axios.get(`${backServer}/api/services/${key}`),
-        axios.get(`${backServer}/api/services/item/${key}`),
+        axios.get(`${backServer}/api/services/item/${key}?withFields=false`),
         get().fetchServiceChain(key),
       ]);
       set({
@@ -33,12 +33,13 @@ const useServices = create((set, get) => ({
     }
   },
 
-  fetchServiceItem: async (key) => {
+  fetchServiceItem: async (key, property = { withChain: true, withFields: true }) => {
+    console.log(property)
     set({ serviceItem: null, isLoading: true, chain: [], error: null }); // Сбрасываем состояния
     try {
       const res = await Promise.all([
-        axios.get(`${backServer}/api/services/item/${key}`),
-        get().fetchServiceChain(key),
+        axios.get(`${backServer}/api/services/item/${key}?withFields=${property.withFields}`),
+        property.withChain ? get().fetchServiceChain(key) : false,
       ]);
       set({
         serviceItem: res[0].data,
@@ -57,7 +58,7 @@ const useServices = create((set, get) => ({
     return new Promise(async (resolve, reject) => {
       let chain = [];
       async function getService(key) {
-        const res = await axios.get(`${backServer}/api/services/item/${key}`);
+        const res = await axios.get(`${backServer}/api/services/item/${key}?withFields=false`);
         chain.push({
           Description: res.data.Description,
           Ref_Key: res.data.Ref_Key,

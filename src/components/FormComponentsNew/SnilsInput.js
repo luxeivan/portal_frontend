@@ -12,8 +12,8 @@ export default function SnilsInput({
     let snils = form.getFieldValue(fieldPath);
     const error = { code: 0, message: "" };
     if (typeof snils !== "string") snils = "";
-    console.log(e)
-    console.log(snils.length)
+    // console.log(e)
+    // console.log(snils.length)
     if (!snils.length) {
       return Promise.resolve();
     } else if (snils.length !== 14) {

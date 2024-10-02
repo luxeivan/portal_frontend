@@ -49,7 +49,7 @@ export default function ServiceItem() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchServiceItem(key);
+        await fetchServiceItem(key, {  withChain: true, withFields: false });
       } catch (err) {
         setError(
           err.message || "Произошла ошибка при загрузке данных об услуге"

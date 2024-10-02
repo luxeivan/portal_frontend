@@ -17,15 +17,12 @@ const AddressModal = forwardRef(
 
     const handleOk = () => {
       let fullString = ''
-      fieldConfig.forEach(field=>{
+      fieldConfig.forEach(field => {
         let currString = form.getFieldValue([name, field.name])
-        if(currString) fullString = fullString + currString + ', '
+        if (currString) fullString = fullString + currString + ', '
       })
-      form.setFieldsValue({
-        [name]: {
-          fullAddress: fullString
-        }
-      })
+      // console.log('name: ',name)
+      form.setFieldValue([...name, 'fullAddress'], fullString)
       onCancel()
     };
 

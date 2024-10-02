@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Form, Collapse, Button, Modal, Input, Flex, Descriptions, Typography,ConfigProvider } from "antd";
+import { Form, Collapse, Button, Modal, Input, Flex, Descriptions, Typography, ConfigProvider, theme } from "antd";
 import TextInput from "./TextInput";
 import NumberInput from "./NumberInput";
 import SliderInput from "./SliderInput";
 import SelectInput from "./SelectInput";
 import DateInput from "./DateInput";
 import DividerForm from "./DividerForm";
-import { MinusCircleOutlined, PlusOutlined, EditOutlined,SaveOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined, PlusOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
 import SnilsInput from "./SnilsInput";
 import PhoneInput from "./phoneComponent/PhoneInput";
 import AddressInput from "./adressComponents/AddressInput";
@@ -28,6 +28,7 @@ export default function GroupInput({
   mainForm,
   layout = "vertical"
 }) {
+  const { colorBgBase,colorBgContainer } = theme.useToken().token
   const [openModal, setOpenModal] = useState(false)
   const [items, setItems] = useState(false)
   // const form = Form.useFormInstance();
@@ -54,6 +55,22 @@ export default function GroupInput({
         val = moment(val).format();
         // values[key] = moment(value).format();
       }
+      if (item.component_Type.includes('AddressInput')) {
+        // console.log('val',val)
+        if (val) val = val.fullAddress
+        // values[key] = moment(value).format();
+      }
+      if (item.component_Type.includes('SwitchInput')) {
+        // console.log('val',val)
+        if (val) {
+          val = 'Да'
+
+        } else {
+          val = 'Нет'
+
+        }
+        // values[key] = moment(value).format();
+      }
       return {
         key: item.idLine,
         label: <div style={{ marginLeft: 20 }}>{item.required ? <span style={{ color: "red" }}>*&ensp;</span> : <span>&ensp;&ensp;</span>}{item.label}</div>,
@@ -76,38 +93,25 @@ export default function GroupInput({
 
   // }))
   const formElement = (
-    <div style={{ marginBottom: 20, border: "1px solid lightgray", padding: 10, borderRadius: 10 }}>
+    <div style={{ marginBottom: 20, backgroundColor: colorBgContainer, padding: 10, borderRadius: 10 }}>
+      <Flex justify="space-between" align="center">
+        <Typography.Text style={{ fontWeight: 600 }}>{label}</Typography.Text>
+        <Button onClick={handlerOpenModal} color="default" variant="text" icon={<EditOutlined />}></Button>
+      </Flex>
 
-      <Typography.Title style={{ textAlign: "center" }} level={5}>{label}</Typography.Title>
       {items &&
         <Descriptions size="small" style={{ width: "100%", marginBottom: "10px" }} items={items} column={1} bordered />
       }
       <Form.Item
         name={name}
-        // label={label}
         rules={[
           {
             required: required,
             message: "Это поле обязательное",
           },
         ]}
-        layout="horizontal"
-        style={{ marginRight: "20px", width: "100%" }}
+      // style={{wi}}
       >
-        {/* <Button type="primary" onClick={handlerOpenModal}>Редактировать</Button>
-           */}
-        <ConfigProvider
-          theme={{
-            components: {
-              Button: {
-                defaultGhostBorderColor: "#f37021",
-                defaultGhostColor: "#f37021",
-              },
-            },
-          }}
-        >
-          <Button ghost onClick={handlerOpenModal} block icon={<EditOutlined />}>Редактировать</Button>
-        </ConfigProvider>
       </Form.Item>
 
 
@@ -293,38 +297,38 @@ export default function GroupInput({
                     howDepend={item.dependСondition}
                   />
                 );
-                if (item.component_Type.includes("GroupFieldsInput"))
-                  return (
-                    <GroupInput
-                      key={index}
-                      {...item.component_Expanded}
-                      {...item}
-                      name={[name, item.idLine]}
-                      dependOf={
-                        item.dependIdLine ? [name, item.idLine, item.dependIdLine] : false
-                      }
-                      howDepend={item.dependСondition}
-                      mainForm={mainForm}
-                    />
-                  );
+              if (item.component_Type.includes("GroupFieldsInput"))
+                return (
+                  <GroupInput
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={[name, item.idLine]}
+                    dependOf={
+                      item.dependIdLine ? [name, item.idLine, item.dependIdLine] : false
+                    }
+                    howDepend={item.dependСondition}
+                    mainForm={mainForm}
+                  />
+                );
             })}
-             <ConfigProvider
-          theme={{
-            components: {
-              Button: {
-                defaultBg: "#f37021",
-                defaultColor:"#fff",
-                defaultHoverBg:"#f59051",
-                defaultHoverColor:"#fff",
-                defaultHoverBorderColor:"#f59051"
-                // defaultGhostColor: "#f37021",
-              },
-            },
-          }}
-        >
-          {/* <Button ghost onClick={handlerOpenModal} block icon={<EditOutlined />}>Редактировать</Button> */}
-            <Button  block htmlType="submit" icon={<SaveOutlined />}>Сохранить</Button>
-        </ConfigProvider>
+            <ConfigProvider
+              theme={{
+                components: {
+                  Button: {
+                    defaultBg: "#f37021",
+                    defaultColor: "#fff",
+                    defaultHoverBg: "#f59051",
+                    defaultHoverColor: "#fff",
+                    defaultHoverBorderColor: "#f59051"
+                    // defaultGhostColor: "#f37021",
+                  },
+                },
+              }}
+            >
+              {/* <Button ghost onClick={handlerOpenModal} block icon={<EditOutlined />}>Редактировать</Button> */}
+              <Button block htmlType="submit" icon={<SaveOutlined />}>Сохранить</Button>
+            </ConfigProvider>
           </Form>
         </>
       </Modal>

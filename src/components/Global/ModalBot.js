@@ -84,7 +84,8 @@ const ModalBot = ({ visible, onClose }) => {
       onCancel={onClose}
       footer={null}
       width={600}
-      bodyStyle={{ backgroundColor: token.colorBgContainer }}
+      // styles={{ body: { backgroundColor: token.colorBgContainer } }}
+    // bodyStyle={{}}
     >
       {/* Область сообщений */}
       <div
