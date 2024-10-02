@@ -153,15 +153,18 @@ export default function ServiceItem() {
                       title: (
                         <>
                           <span>{item.name}</span>
-                          <InfoCircleOutlined
-                            onClick={() => {
-                              setOpenDrawerSteps(index + 1);
-                            }}
-                            style={{
-                              marginLeft: 2,
-                              color: "rgba(0, 0, 0, 0.45)",
-                            }}
-                          />
+                          {item.fullDescription &&
+
+                            <InfoCircleOutlined
+                              onClick={() => {
+                                setOpenDrawerSteps(index + 1);
+                              }}
+                              style={{
+                                marginLeft: 2,
+                                color: "rgba(0, 0, 0, 0.45)",
+                              }}
+                            />
+                          }
                         </>
                       ),
                       description: (

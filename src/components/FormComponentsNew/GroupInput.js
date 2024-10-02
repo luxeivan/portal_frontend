@@ -41,7 +41,7 @@ export default function GroupInput({
     setOpenModal(false)
   }
   const handlerOnOK = (values) => {
-    console.log('values', values[name])
+    // console.log('values', values[name])
     mainForm.setFieldValue(name, values[name])
     setOpenModal(false)
     setItems(Fields.filter(item => !item.component_Type.includes('HiddenInput')).map(item => {
@@ -137,7 +137,7 @@ export default function GroupInput({
                     label={item.label}
                   />
                 );
-              if (item.component_Type.includes("TextInput") && item.component_Expanded.specialField === 'Телефон')
+              if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'Телефон')
 
                 return (
                   <PhoneInput
@@ -151,7 +151,7 @@ export default function GroupInput({
                     howDepend={item.dependСondition}
                   />
                 );
-              if (item.component_Type.includes("TextInput") && item.component_Expanded.specialField === 'СНИЛС')
+              if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'СНИЛС')
 
                 return (
                   <SnilsInput
@@ -165,7 +165,7 @@ export default function GroupInput({
                     howDepend={item.dependСondition}
                   />
                 );
-              if (item.component_Type.includes("TextInput") && item.component_Expanded.specialField === 'ИНН')
+              if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'ИНН')
 
                 return (
                   <InnInput
@@ -272,7 +272,7 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={item.idLine}
+                    name={[name, item.idLine]}
                     dependOf={
                       item.dependIdLine ? [name, item.dependIdLine] : false
                     }
@@ -286,13 +286,27 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={item.idLine}
+                    name={[name, item.idLine]}
                     dependOf={
                       item.dependIdLine ? [name, item.dependIdLine] : false
                     }
                     howDepend={item.dependСondition}
                   />
                 );
+                if (item.component_Type.includes("GroupFieldsInput"))
+                  return (
+                    <GroupInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={[name, item.idLine]}
+                      dependOf={
+                        item.dependIdLine ? [name, item.idLine, item.dependIdLine] : false
+                      }
+                      howDepend={item.dependСondition}
+                      mainForm={mainForm}
+                    />
+                  );
             })}
              <ConfigProvider
           theme={{

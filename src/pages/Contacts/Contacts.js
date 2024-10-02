@@ -144,7 +144,7 @@ const Contacts = () => {
                     >
                       {center.images.map((item, index) => (
                         <div className={styles.cardContainer} key={index}>
-                          <Image src={item.src} alt={`Фото ${index + 1}`} />
+                          <Image src={item.src} alt={`Фото ${index + 1}`} height={200}/>
                         </div>
                       ))}
                     </div>
