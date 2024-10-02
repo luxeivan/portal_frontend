@@ -1,7 +1,7 @@
  .styleLink {
     display: block;
     width: 30%;
-    min-height: 250px;
+    /* min-height: 250px; */
     transition: transform ease .5s;
  }
 
@@ -23,8 +23,10 @@
  }
 
  .cardTitle {
-    z-index: 10;
+    /* z-index: 10; */
     /* position: absolute; */
+    margin-top: 0;
+    /* text-align: center; */
  }
 
  .cardImage {
@@ -43,6 +45,10 @@
 
  .chainFlex {
     margin: 20px 0;
+ }
+ .tags{
+   font-size: 1.2rem;
+   line-height: 2rem;
  }
 
  @media (max-width: 1900px) {

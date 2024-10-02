@@ -112,17 +112,17 @@ export default function Services() {
                         >
                           {!item.IsFolder &&
                             <Flex vertical gap={10} >
-                              <Tag style={{ fontSize: 16 }} color="red">до 15 кВт</Tag>
-                              <Tag color="blue">I Категории</Tag>
-                              <Tag color="blue">II Категории</Tag>
-                              <Tag color="blue">III Категории</Tag>
-                              <Tag color="green">для бытовых нужд</Tag>
+                              <Tag className={styles.tags} color="red">до 15 кВт</Tag>
+                              <Tag className={styles.tags} color="blue">I Категории</Tag>
+                              <Tag className={styles.tags} color="blue">II Категории</Tag>
+                              <Tag className={styles.tags} color="blue">III Категории</Tag>
+                              <Tag className={styles.tags} color="green">для бытовых нужд</Tag>
                             </Flex>
                           }
-                          <div style={{width:"50%"}}>
+                          <div style={{ width: !item.IsFolder ? "50%" : "20%" }}>
 
                             <Image
-                              style={{ textAlign: "center", width:  "100%"  }}
+                              style={{ textAlign: "center", width: "100%" }}
                               // width={"50%"}
                               src={item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)}
                               preview={false}

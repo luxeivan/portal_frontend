@@ -39,7 +39,7 @@ export default function NewClaim() {
   const [error, setError] = useState(null); // Состояние для хранения ошибок
 
   useEffect(() => {
-    fetchServiceItem(id);
+    fetchServiceItem(id, {  withChain: false, withFields: true });
   }, []);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function NewClaim() {
   };
 
   const onFinish = async (values) => {
-    console.log(values);
+    // console.log(values);
     for (const [key, value] of Object.entries(values)) {
       if (Array.isArray(value)) {
         values[key].forEach((element) => {
@@ -76,7 +76,7 @@ export default function NewClaim() {
     }
 
     try {
-      await createClaim({ service: serviceItem.Ref_Key, values });
+      // await createClaim({ service: serviceItem.Ref_Key, values });
       console.log("Пытаюсь понять откуда что приходит", values);
     } catch (err) {
       setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
@@ -92,7 +92,7 @@ export default function NewClaim() {
   const handlerChange = (changedValues) => {
     console.log("changedValues: ", changedValues)
   }
-  console.log(serviceItem)
+  // console.log(serviceItem)
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet

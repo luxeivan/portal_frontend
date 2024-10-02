@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
-import { AutoComplete, Form, Button, Flex } from "antd";
+import { AutoComplete, Form, Button, Flex, Input, ConfigProvider, theme } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
 import AddressModal from "./AddressModal";
 import fieldConfig from "./AddressInput.json";
+import { EditOutlined } from "@ant-design/icons";
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
@@ -19,6 +20,8 @@ const AddressInput = ({
   lenght = false,
   specialField: type = false,
 }) => {
+  const { colorBgSolid,colorPrimary,colorTextLightSolid } = theme.useToken().token
+  // console.log(theme.useToken().token)
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form)
   const [options, setOptions] = useState([]);
@@ -50,7 +53,7 @@ const AddressInput = ({
         if (response.data && response.data.data) {
           console.log("response.data", response.data);
           setOptions(
-            response.data.data.map((item) => ({              
+            response.data.data.map((item) => ({
               label: item.value,
               value: item.unrestricted_value,
               data: item.data,
@@ -79,9 +82,7 @@ const AddressInput = ({
       updateObject[field.name] = updatedAddress[field.name]
     })
     // Вставляем только текст подсказки в инпут
-    form.setFieldsValue({
-      [name]: updateObject
-    });
+    form.setFieldValue(name, updateObject);
 
     // Обновляем значения формы модалки
     if (modalFormRef.current) {
@@ -127,30 +128,42 @@ const AddressInput = ({
       .map(([key, value]) => `${key}: ${value}`)
       .join(", ");
 
-    form.setFieldsValue({ [name]: formattedAddress, ...filteredAddress });
+    form.setFieldValue(name, formattedAddress);
   };
   // console.log(fieldDepends)
   const formElement = (
     <Form.List name={name}>
       {(fields, { add, remove }) => (
         <>
-          <Flex align="center" wrap="wrap" style={{ maxWidth: "100%", marginBottom:20 }} >
-            <Form.Item
-              name={'fullAddress'}
-              label={label}
-              rules={[{ required: required, message: "Это поле обязательное" }]}
-              style={{ flex: 1, minWidth: 300,marginRight:"20px" }}
+          <Flex align="center" wrap="wrap" style={{ maxWidth: "100%", marginBottom: 20 }} >
+            <ConfigProvider
+              theme={{
+                components: {
+                  Input: {
+                    // addonBg: colorPrimary
+                  },
+                },
+              }}
             >
-              <AutoComplete
-                options={options}
-                onSelect={(value, option) => onSelect(value, option)}
-                onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
-                placeholder={placeholder}
-              />
-            </Form.Item>
-            <Button type="primary" onClick={openModal} >
+              <Form.Item
+                name={'fullAddress'}
+                label={label}
+                rules={[{ required: required, message: "Это поле обязательное" }]}
+                style={{ flex: 1, minWidth: 300 }}
+              >
+                <AutoComplete
+                  options={options}
+                  onSelect={(value, option) => onSelect(value, option)}
+                  onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
+                  placeholder={placeholder}
+                >
+                  <Input addonAfter={<EditOutlined onClick={openModal} />} />
+                </AutoComplete>
+              </Form.Item>
+            </ConfigProvider>
+            {/* <Button type="primary" onClick={openModal} >
               Моего адреса нет в списке
-            </Button>
+            </Button> */}
           </Flex>
           <AddressModal
             visible={modalVisible}
@@ -162,7 +175,7 @@ const AddressInput = ({
       )}
     </Form.List>
   );
-  
+
   if (!dependOf) return formElement;
   if (dependOf && howDepend && howDepend.options?.length > 0) {
     let show = false;
