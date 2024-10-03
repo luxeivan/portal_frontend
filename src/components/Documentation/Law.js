@@ -8,6 +8,7 @@ import xls from "../../img/docs/xls.svg";
 import rtf from "../../img/docs/rtf.svg";
 import axios from "axios";
 import styles from './Law.module.css'
+import AppHelmet from "../Global/AppHelmet";
 const type = {
   pdf,
   doc,
