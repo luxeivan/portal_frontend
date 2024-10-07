@@ -52,7 +52,7 @@ export default function GroupInput({
         val = item.component_Expanded.options.find(option => option.value === val)?.label
       }
       if (item.component_Type.includes('DateInput')) {
-        val = moment(val).format();
+        val = moment(val).format('DD.MM.YYYY');
         // values[key] = moment(value).format();
       }
       if (item.component_Type.includes('AddressInput')) {
@@ -100,7 +100,7 @@ export default function GroupInput({
       </Flex>
 
       {items &&
-        <Descriptions size="small" style={{ width: "100%", marginBottom: "10px" }} items={items} column={1} bordered />
+        <Descriptions size="small" style={{ width: "100%", marginBottom: "10px",border:0 }} items={items} column={1} bordered  />
       }
       <Form.Item
         name={name}

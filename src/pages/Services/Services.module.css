@@ -46,9 +46,16 @@
  .chainFlex {
     margin: 20px 0;
  }
- .tags{
-   font-size: 1.2rem;
-   line-height: 2rem;
+
+ .tags {
+    font-size: 1.2rem;
+    line-height: 2rem;
+ }
+
+ .svg {
+    stroke: #0061aa;
+    stroke-width: 5;
+    fill: none;
  }
 
  @media (max-width: 1900px) {
