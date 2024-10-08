@@ -9,7 +9,7 @@ import DividerForm from "./DividerForm";
 import { MinusCircleOutlined, PlusOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
 import SnilsInput from "./SnilsInput";
 import PhoneInput from "./phoneComponent/PhoneInput";
-import AddressInput from "./adressComponents/AddressInput";
+import AddressInput from "./addressComponents/AddressInput";
 import ConfirmationDocumentNewInput from "./confirmationDocumentComponents/ConfirmationDocumentNewInput";
 import InnInput from "./InnInput";
 import moment from "moment";

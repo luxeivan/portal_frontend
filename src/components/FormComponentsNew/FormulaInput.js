@@ -48,7 +48,7 @@ export default function FormulaInput({
     // }, [watchedValues])
     // Form.useWatch(keys, form)
     // console.log('useWatch',Form.useWatch(keys, form))
-    // console.log("formula", formula)
+    console.log("objectProp", objectProp)
 
     // console.log(keys.map(item => ([item])))
     Form.useWatch((values) => {

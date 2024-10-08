@@ -26,7 +26,7 @@ import ServiceItem from "./pages/ServiceItem/ServiceItem";
 import Page404 from "./pages/Page404";
 import Container from "./components/Container";
 import NewClaim from "./pages/Cabinet/NewClaim";
-import NewServicetest from "./pages/Cabinet/NewServicetest";
+// import NewServicetest from "./pages/Cabinet/NewServicetest";
 import Profile from "./pages/Cabinet/Profile/Profile";
 import Subjects from "./pages/Cabinet/Subjects/Subjects";
 import Objects from "./pages/Cabinet/Objects/Objects";
@@ -45,7 +45,7 @@ import FormOneC from "./components/test/FormOneC";
 // import ServicesTest from "./pages/ServicesTest/ServicesTest";
 import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
-import AddressInputTest from "./components/FormComponentsNew/adressComponents/AddressInputTest";
+import AddressInputTest from "./components/FormComponentsNew/addressComponents/AddressInputTest";
 
 // import JumpGame from "./pages/Game/JumpGame";
 
