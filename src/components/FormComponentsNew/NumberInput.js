@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -10,6 +10,7 @@ import {
   Row,
   Slider,
 } from "antd";
+import useServices from "../../stores/useServices";
 
 export default function NumberInput({
   name = "name",
@@ -23,12 +24,33 @@ export default function NumberInput({
   max = 100,
   step = 1,
   defaultValue = false,
-  length = false
+  length = false,
+  properties = false
 }) {
+  const serviceItem = useServices((state) => state.serviceItem);
+  const [unit, setUnit] = useState('')
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form);
-  // console.log('defaultValue',defaultValue)
-  // console.log('disabled',disabled)
+
+  let objectProp = null
+  if (properties) objectProp = JSON.parse(properties)
+  let idLine = Form.useWatch(objectProp?.unit?.idLine, form);
+  // console.log("useWatch: ")
+  useEffect(() => {
+    if (objectProp?.unit && objectProp?.unit?.idLine) {
+      if (serviceItem.fields) {
+        const field = serviceItem.fields.find(item => item.idLine === objectProp?.unit?.idLine)
+        if (field?.component_Expanded?.options) {
+          setUnit(field.component_Expanded.options.find(item => item.value === form.getFieldValue(objectProp?.unit?.idLine)).unit)
+        }
+      }
+    }
+    if (objectProp?.unit?.value) {
+      setUnit(objectProp?.unit?.value)
+    }
+  }, [unit, idLine])
+  // console.log('defaultValue', defaultValue)
+  // console.log('disabled', disabled)
   const formElement = (
     <Form.Item
       name={name}
@@ -47,10 +69,10 @@ export default function NumberInput({
         min={min}
         max={max}
         step={step}
-        // value={inputValue}
-        // onChange={onChange}
         maxLength={length}
         disabled={disabled}
+        suffix={objectProp?.unit?.position === "suffix" ? unit : false}
+        addonAfter={objectProp?.unit?.position === "addonAfter" ? unit : false}
       />
     </Form.Item>
 

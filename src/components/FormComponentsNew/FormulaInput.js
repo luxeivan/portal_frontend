@@ -35,10 +35,12 @@ export default function FormulaInput({
 
     let objectProp = {}
     if (properties) objectProp = JSON.parse(properties)
+        // console.log("objectProp",objectProp);
+        
     let keys = []
-    for (let key in objectProp) {
-        if (objectProp.hasOwnProperty(key)) {
-            keys.push(objectProp[key]);
+    for (let key in objectProp.formulaDetails) {
+        if (objectProp.formulaDetails.hasOwnProperty(key)) {
+            keys.push(objectProp.formulaDetails[key]);
             // Form.useWatch(objectProp[key], form)
         }
     }
@@ -48,7 +50,7 @@ export default function FormulaInput({
     // }, [watchedValues])
     // Form.useWatch(keys, form)
     // console.log('useWatch',Form.useWatch(keys, form))
-    console.log("objectProp", objectProp)
+    // console.log("objectProp", objectProp)
 
     // console.log(keys.map(item => ([item])))
     Form.useWatch((values) => {
