@@ -16,7 +16,7 @@ import AppHelmet from "../../components/Global/AppHelmet";
 import moment from "moment";
 import Preloader from "../../components/Main/Preloader";
 import GroupInput from "../../components/FormComponentsNew/GroupInput";
-import AddressInput from "../../components/FormComponentsNew/adressComponents/AddressInput";
+import AddressInput from "../../components/FormComponentsNew/addressComponents/AddressInput";
 import ConfirmationDocumentNewInput from "../../components/FormComponentsNew/confirmationDocumentComponents/ConfirmationDocumentNewInput";
 import SnilsInput from "../../components/FormComponentsNew/SnilsInput";
 import ErrorModal from "../../components/ErrorModal"; // Импортируем ErrorModal
@@ -92,7 +92,7 @@ export default function NewClaim() {
   const handlerChange = (changedValues) => {
     console.log("changedValues: ", changedValues)
   }
-  // console.log(serviceItem)
+  console.log(serviceItem)
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet

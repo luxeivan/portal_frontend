@@ -122,15 +122,31 @@ export default function Services() {
                               <Tag className={styles.tags} color="green">для бытовых нужд</Tag>
                             </Flex>
                           }
-                          <div style={{ width: !item.IsFolder ? "50%" : "20%" }}>
-
+                          <Flex align="center" justify="center" style={{ width: !item.IsFolder ? "50%" : "20%" }}>
+                            {/* <Flex
+                              align="center"
+                              justify="center"
+                              style={{
+                                border: "2px solid #f37021",
+                                background: "rgba(255,120,0,.3)",
+                                width: 120,
+                                height: 120,
+                                borderRadius: 20, boxShadow: "4px 4px 8px 0px rgba(34, 60, 80, 0.2)"
+                              }}
+                            >
+                              <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" version="1.1" viewBox="0 0 83.99 118.06">
+                                    <polygon className={styles.svg} points="51.39,2.48 2.48,65.64 31.63,65.32 32.14,115.58 81.51,51.7 51.57,51.84 " />                                 
+                                </svg>
+                              </div>
+                            </Flex> */}
                             <Image
                               style={{ textAlign: "center", width: "100%" }}
                               // width={"50%"}
                               src={item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)}
                               preview={false}
                             />
-                          </div>
+                          </Flex>
                         </Flex>
                       </Card>
                     </Link>

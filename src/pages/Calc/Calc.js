@@ -86,6 +86,9 @@ export default function Calc() {
           </Paragraph>
         </div>
       </div>
+      <div className={styles.mobileMessage}>
+        Воспользоваться калькулятором расчета мощности можно только на десктопной версии сайта.
+      </div>
       <div className={lawStyles.documentsSection}>
         <Title level={4}>Нормативные документы:</Title>
         <div className={lawStyles.rowDocsAge}>
@@ -114,9 +117,6 @@ export default function Calc() {
             </div>
           </a>
         </div>
-      </div>
-      <div className={styles.mobileMessage}>
-        Произвести расчет калькулятора вы сможете на полной версии нашего сайта.
       </div>
     </>
   );
