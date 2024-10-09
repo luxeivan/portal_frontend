@@ -25,6 +25,7 @@ export default function PriceInput({
 }) {
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
+    const [currency, setCurrency] = useState(null)
     // console.log(theme.useToken().token)
     const form = Form.useFormInstance();
     let objectProp = null
@@ -37,7 +38,7 @@ export default function PriceInput({
         typePrice = priceType_Key;
     }
 
-    let nomenclature = Form.useWatch(objectProp["Номенклатура"], form);
+    let nomenclature = Form.useWatch(objectProp["price"]["Номенклатура"], form);
     useEffect(() => {
         if (typePrice && nomenclature) {
             // console.log('typePrice', typePrice)
@@ -51,7 +52,8 @@ export default function PriceInput({
                 }).then(res => {
                     if (res.data) {
                         // console.log('price', res)
-                        form.setFieldValue(name, res.data)
+                        setCurrency(res.data.currency)
+                        form.setFieldValue(name, res.data.price)
                     } else {
                         form.setFieldValue(name, NaN)
                     }
@@ -69,7 +71,8 @@ export default function PriceInput({
         >
             <Input
                 disabled={true}
-                style={{ color: colorTextHeading }}
+                style={{ color: colorTextHeading, width: "inherit" }}
+                suffix={currency}
             />
         </Form.Item>
 
@@ -85,7 +88,7 @@ export default function PriceInput({
         })
         if (show) return formElement
     }
-    console.log('howDepend',howDepend)
+    console.log('howDepend', howDepend)
     if (dependOf && howDepend && howDepend.max) {
         if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     }
