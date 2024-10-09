@@ -5,6 +5,7 @@ import {
     theme
 } from "antd";
 import axios from "axios";
+import useTemp from "../../stores/Cabinet/useTemp";
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
@@ -25,7 +26,9 @@ export default function PriceInput({
 }) {
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
-    const [currency, setCurrency] = useState(null)
+    // const [currency, setCurrency] = useState(null)
+    const currency = useTemp((state) => state.currency);
+    const setCurrency = useTemp((state) => state.setCurrency);
     // console.log(theme.useToken().token)
     const form = Form.useFormInstance();
     let objectProp = null
@@ -52,7 +55,7 @@ export default function PriceInput({
                 }).then(res => {
                     if (res.data) {
                         // console.log('price', res)
-                        setCurrency(res.data.currency)
+                        setCurrency({ [name]: res.data.currency })
                         form.setFieldValue(name, res.data.price)
                     } else {
                         form.setFieldValue(name, NaN)
@@ -72,7 +75,7 @@ export default function PriceInput({
             <Input
                 disabled={true}
                 style={{ color: colorTextHeading, width: "inherit" }}
-                suffix={currency}
+                suffix={currency[name]}
             />
         </Form.Item>
 
