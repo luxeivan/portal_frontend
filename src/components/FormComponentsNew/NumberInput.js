@@ -11,6 +11,7 @@ import {
   Slider,
 } from "antd";
 import useServices from "../../stores/useServices";
+import useTemp from "../../stores/Cabinet/useTemp";
 
 export default function NumberInput({
   name = "name",
@@ -28,7 +29,9 @@ export default function NumberInput({
   properties = false
 }) {
   const serviceItem = useServices((state) => state.serviceItem);
-  const [unit, setUnit] = useState('')
+  const unit = useTemp((state) => state.unit);
+  const setUnit = useTemp((state) => state.setUnit);
+  // const [unit, setUnit] = useState('')
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form);
 
@@ -41,14 +44,14 @@ export default function NumberInput({
       if (serviceItem.fields) {
         const field = serviceItem.fields.find(item => item.idLine === objectProp?.unit?.idLine)
         if (field?.component_Expanded?.options) {
-          setUnit(field.component_Expanded.options.find(item => item.value === form.getFieldValue(objectProp?.unit?.idLine)).unit)
+          setUnit({ [name]: field.component_Expanded.options.find(item => item.value === form.getFieldValue(objectProp?.unit?.idLine)).unit })
         }
       }
     }
     if (objectProp?.unit?.value) {
-      setUnit(objectProp?.unit?.value)
+      setUnit({ [name]: objectProp?.unit?.value })
     }
-  }, [unit, idLine])
+  }, [idLine])
   // console.log('defaultValue', defaultValue)
   // console.log('disabled', disabled)
   const formElement = (
@@ -71,8 +74,8 @@ export default function NumberInput({
         step={step}
         maxLength={length}
         disabled={disabled}
-        suffix={objectProp?.unit?.position === "suffix" ? unit : false}
-        addonAfter={objectProp?.unit?.position === "addonAfter" ? unit : false}
+        suffix={objectProp?.unit?.position === "suffix" ? unit[name] : false}
+        addonAfter={objectProp?.unit?.position === "addonAfter" ? unit[name] : false}
       />
     </Form.Item>
 

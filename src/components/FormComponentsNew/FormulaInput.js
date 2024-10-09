@@ -6,6 +6,7 @@ import {
     theme
 } from "antd";
 import { evaluate } from "mathjs";
+import useTemp from "../../stores/Cabinet/useTemp";
 
 function truncated(num, decimalPlaces) {
     let numPowerConverter = Math.pow(10, decimalPlaces);
@@ -32,11 +33,12 @@ export default function FormulaInput({
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
     const form = Form.useFormInstance();
-
+    const currency  = useTemp((state) => state.currency);
     let objectProp = {}
     if (properties) objectProp = JSON.parse(properties)
-        // console.log("objectProp",objectProp);
-        
+    // console.log("objectProp",objectProp);
+    // console.log("unit",unit);
+
     let keys = []
     for (let key in objectProp.formulaDetails) {
         if (objectProp.formulaDetails.hasOwnProperty(key)) {
@@ -74,7 +76,7 @@ export default function FormulaInput({
                 form.setFieldValue(name, evalu)
             }
         } catch (error) {
-            if(!isNaN(form.getFieldValue(name))){
+            if (!isNaN(form.getFieldValue(name))) {
                 form.setFieldValue(name, NaN)
             }
             return
@@ -105,7 +107,10 @@ export default function FormulaInput({
         >
             <Input
                 disabled={true}
-                style={{ color: colorTextHeading }}
+                style={{ color: colorTextHeading, width: "inherit" }}
+                // style={{ color: colorTextHeading }}
+                suffix={objectProp?.currency?.position === "suffix" ? currency[objectProp.currency.idLine] : false}
+                addonAfter={objectProp?.currency?.position === "addonAfter" ? currency[objectProp.currency.idLine] : false}
             />
         </Form.Item>
 
@@ -121,7 +126,7 @@ export default function FormulaInput({
         })
         if (show) return formElement
     }
-    if (dependOf && howDepend  && howDepend.max) {
+    if (dependOf && howDepend && howDepend.max) {
         if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     }
 }
