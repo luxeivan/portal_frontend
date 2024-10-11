@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
-import { Form, Upload, message, theme, Image, Flex } from "antd";
-import axios from "axios";
+import { Form, Upload, message, theme, Image } from "antd";
 import iconPdf from "../../img/pdf.svg";
 
-const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 const { Dragger } = Upload;
 
 export default function UploaderInput({
@@ -28,63 +26,20 @@ export default function UploaderInput({
         file.type === "image/png" ||
         file.type === "application/pdf";
       if (!isSupported) {
-        message.error(`${file.name} не поддерживающего формата`);
+        message.error(`${file.name} не поддерживается`);
       }
-      return isSupported || Upload.LIST_IGNORE;
+      return false; // Предотвращаем автоматическую загрузку
+    },
+    onChange: ({ fileList }) => {
+      setFileList(fileList);
+      form.setFieldsValue({ fileDoc: fileList });
     },
     listType: "text",
     fileList,
-    name: "file",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onRemove: (event) => {
-      setFileList(fileList.filter((item) => item.uid !== event.uid));
-    },
-    onPreview: async (file) => {
-      if (file?.name.includes(".pdf")) return window.open(file.url, "_blank");
-      if (!file.url && !file.preview) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => {
-          setPreviewImage(reader.result);
-          setPreviewOpen(true);
-        };
-      } else {
-        setPreviewImage(file.url || file.preview);
-        setPreviewOpen(true);
-      }
-    },
-    customRequest({ file, onSuccess, onError }) {
-      const formData = new FormData();
-      formData.append("file", file);
-      const token = localStorage.getItem("jwt");
-      axios
-        .post(`${backServer}/api/cabinet/upload-file`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        })
-        .then((response) => {
-          const relativePath = response.data.file; // Получаем объединенный файл
-          setFileList([
-            {
-              uid: relativePath,
-              name: `Объединенный документ.pdf`,
-              status: "done",
-              url: `${backServer}/api/cabinet/get-file/${relativePath}`,
-            },
-          ]);
-          onSuccess(relativePath, file);
-          message.success(`Файлы успешно загружены и объединены в PDF`);
-        })
-        .catch((error) => {
-          console.error("Ошибка при загрузке файла", error);
-          onError(error);
-          message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
-        });
+    onRemove: (file) => {
+      const updatedFileList = fileList.filter((item) => item.uid !== file.uid);
+      setFileList(updatedFileList);
+      form.setFieldsValue({ fileDoc: updatedFileList });
     },
   };
 
@@ -111,7 +66,7 @@ export default function UploaderInput({
         </Dragger>
       )}
       {read && (
-        <Flex gap={"small"} wrap="wrap">
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
           {fileList.map((item, index) =>
             item.name.includes(".pdf") ? (
               <a
@@ -120,28 +75,174 @@ export default function UploaderInput({
                 href={item.url}
                 rel="noopener noreferrer"
               >
-                <Flex
+                <div
                   style={{
                     boxSizing: "border-box",
                     width: 150,
                     height: 150,
                     border: "1px solid gray",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
-                  align="center"
-                  justify="center"
                 >
                   <Image preview={false} src={iconPdf} />
-                </Flex>
+                </div>
               </a>
             ) : (
               <Image key={index} width={150} src={item.url} />
             )
           )}
-        </Flex>
+        </div>
       )}
     </Form.Item>
   );
 }
+
+// import React, { useEffect, useState } from "react";
+// import { InboxOutlined } from "@ant-design/icons";
+// import { Form, Upload, message, theme, Image, Flex } from "antd";
+// import axios from "axios";
+// import iconPdf from "../../img/pdf.svg";
+
+// const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
+// const { Dragger } = Upload;
+
+// export default function UploaderInput({
+//   read,
+//   edit,
+//   value,
+//   depends,
+//   required = false,
+// }) {
+//   const [previewOpen, setPreviewOpen] = useState(false);
+//   const [previewImage, setPreviewImage] = useState("");
+//   const [fileList, setFileList] = useState([]);
+//   const { colorPrimaryText } = theme.useToken().token;
+//   const form = Form.useFormInstance();
+
+//   const uploadProps = {
+//     multiple: true,
+//     beforeUpload: (file) => {
+//       const isSupported =
+//         file.type === "image/jpeg" ||
+//         file.type === "image/png" ||
+//         file.type === "application/pdf";
+//       if (!isSupported) {
+//         message.error(`${file.name} не поддерживающего формата`);
+//       }
+//       return isSupported || Upload.LIST_IGNORE;
+//     },
+//     listType: "text",
+//     fileList,
+//     name: "file",
+//     headers: {
+//       authorization: "authorization-text",
+//     },
+//     onRemove: (event) => {
+//       setFileList(fileList.filter((item) => item.uid !== event.uid));
+//     },
+//     onPreview: async (file) => {
+//       if (file?.name.includes(".pdf")) return window.open(file.url, "_blank");
+//       if (!file.url && !file.preview) {
+//         const reader = new FileReader();
+//         reader.readAsDataURL(file.originFileObj);
+//         reader.onload = () => {
+//           setPreviewImage(reader.result);
+//           setPreviewOpen(true);
+//         };
+//       } else {
+//         setPreviewImage(file.url || file.preview);
+//         setPreviewOpen(true);
+//       }
+//     },
+//     customRequest({ file, onSuccess, onError }) {
+//       const formData = new FormData();
+//       formData.append("file", file);
+//       const token = localStorage.getItem("jwt");
+//       axios
+//         .post(`${backServer}/api/cabinet/upload-file`, formData, {
+//           headers: {
+//             "Content-Type": "multipart/form-data",
+//             Authorization: `Bearer ${token}`,
+//           },
+//           withCredentials: true,
+//         })
+//         .then((response) => {
+//           const relativePath = response.data.file; // Получаем объединенный файл
+//           setFileList([
+//             {
+//               uid: relativePath,
+//               name: `Объединенный документ.pdf`,
+//               status: "done",
+//               url: `${backServer}/api/cabinet/get-file/${relativePath}`,
+//             },
+//           ]);
+//           onSuccess(relativePath, file);
+//           message.success(`Файлы успешно загружены и объединены в PDF`);
+//         })
+//         .catch((error) => {
+//           console.error("Ошибка при загрузке файла", error);
+//           onError(error);
+//           message.error(`${file.name} файл не загрузился, попробуйте ещё раз.`);
+//         });
+//     },
+//   };
+
+//   return (
+//     <Form.Item
+//       label={read ? "Файлы" : "Загрузить файлы"}
+//       name={"fileDoc"}
+//       rules={[
+//         {
+//           required: required,
+//           message: "Пожалуйста, загрузите файл",
+//         },
+//       ]}
+//     >
+//       {!read && (
+//         <Dragger {...uploadProps}>
+//           <div>
+//             <InboxOutlined
+//               style={{ color: colorPrimaryText, fontSize: "48px" }}
+//             />
+//           </div>
+//           <p className="ant-upload-text">Файлы размером не более 10МБ</p>
+//           <p className="ant-upload-hint">форматы PDF, JPEG, PNG</p>
+//         </Dragger>
+//       )}
+//       {read && (
+//         <Flex gap={"small"} wrap="wrap">
+//           {fileList.map((item, index) =>
+//             item.name.includes(".pdf") ? (
+//               <a
+//                 key={index}
+//                 target="_blank"
+//                 href={item.url}
+//                 rel="noopener noreferrer"
+//               >
+//                 <Flex
+//                   style={{
+//                     boxSizing: "border-box",
+//                     width: 150,
+//                     height: 150,
+//                     border: "1px solid gray",
+//                   }}
+//                   align="center"
+//                   justify="center"
+//                 >
+//                   <Image preview={false} src={iconPdf} />
+//                 </Flex>
+//               </a>
+//             ) : (
+//               <Image key={index} width={150} src={item.url} />
+//             )
+//           )}
+//         </Flex>
+//       )}
+//     </Form.Item>
+//   );
+// }
 
 // import React, { useEffect, useState } from "react";
 // import { InboxOutlined } from "@ant-design/icons";

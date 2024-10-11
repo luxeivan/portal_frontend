@@ -32,28 +32,36 @@ export default function ModalAddDocument() {
   const handleSaveDocument = async (values) => {
     try {
       setLoading(true);
-      const formData = {
-        category: values.category,
-        documentName: values.documentName,
-        files: form.getFieldValue("fileDoc").map((file) => ({
-          name: file,
-        })),
-      };
+      const files = form.getFieldValue("fileDoc");
 
-      // Отправка данных на сервер (замените на реальный запрос)
+      if (!files || files.length === 0) {
+        message.error("Пожалуйста, загрузите файлы");
+        setLoading(false);
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("category", values.category);
+      formData.append("documentName", values.documentName);
+
+      files.forEach((file) => {
+        formData.append("files", file.originFileObj);
+      });
+
+      const token = localStorage.getItem("jwt");
+
       const response = await axios.post(
-        `${backServer}/api/cabinet/documents`,
+        `${backServer}/api/cabinet/upload-file`,
         formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
           withCredentials: true,
         }
       );
 
-      // Имитация успешного сохранения
       message.success("Документ успешно сохранен");
       fetchDocuments();
       setOpenModalAdd(false);
