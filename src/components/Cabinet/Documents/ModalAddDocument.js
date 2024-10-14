@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, message, Form, Select } from "antd";
 import axios from "axios";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
 import UploaderInput from "../../FormComponents/UploaderInput";
 import ErrorModal from "../../ErrorModal";
-import documentData from "../../../pages/Cabinet/Documents/exampleDocument.json";
+// Удаляем импорт моковых данных
+// import documentData from "../../../pages/Cabinet/Documents/exampleDocument.json";
 
 const { Option } = Select;
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
@@ -21,8 +22,40 @@ export default function ModalAddDocument() {
 
   const token = localStorage.getItem("jwt");
 
-  // Извлекаем уникальные категории из данных
-  const categories = [...new Set(documentData.map((doc) => doc.category))];
+  // Добавляем состояние для хранения категорий и документов
+  const [categoriesData, setCategoriesData] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    // Шаг 2: Получение категорий документов из бэкенда
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          `${backServer}/api/cabinet/documents/categories`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          }
+        );
+        setCategoriesData(response.data.categories);
+        console.log(
+          "Получены категории документов из бэкенда:",
+          response.data.categories
+        ); // Выводим полученные категории
+        // Извлекаем уникальные категории
+        const uniqueCategories = response.data.categories.map(
+          (item) => item.category.Description
+        );
+        setCategories(uniqueCategories);
+      } catch (error) {
+        console.error("Ошибка при загрузке категорий документов:", error);
+      }
+    };
+
+    fetchCategories();
+  }, [token]);
 
   const handleModalClose = () => {
     setOpenModalAdd(false);
@@ -116,8 +149,8 @@ export default function ModalAddDocument() {
           >
             {() => {
               const selectedCategory = form.getFieldValue("category");
-              const filteredDocuments = documentData.filter(
-                (doc) => doc.category === selectedCategory
+              const filteredDocuments = categoriesData.filter(
+                (doc) => doc.category.Description === selectedCategory
               );
 
               return (
@@ -140,8 +173,11 @@ export default function ModalAddDocument() {
                     disabled={!selectedCategory}
                   >
                     {filteredDocuments.map((doc) => (
-                      <Option key={doc.id} value={doc.name}>
-                        {doc.name}
+                      <Option
+                        key={doc.category.Ref_Key}
+                        value={doc.category.label}
+                      >
+                        {doc.category.label}
                       </Option>
                     ))}
                   </Select>
