@@ -4,8 +4,6 @@ import axios from "axios";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
 import UploaderInput from "../../FormComponents/UploaderInput";
 import ErrorModal from "../../ErrorModal";
-// Удаляем импорт моковых данных
-// import documentData from "../../../pages/Cabinet/Documents/exampleDocument.json";
 
 const { Option } = Select;
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
@@ -22,12 +20,13 @@ export default function ModalAddDocument() {
 
   const token = localStorage.getItem("jwt");
 
-  // Добавляем состояние для хранения категорий и документов
   const [categoriesData, setCategoriesData] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [allowedExtensions, setAllowedExtensions] = useState([]);
+  const [maxFileSize, setMaxFileSize] = useState(10); // По умолчанию 10 МБ
 
   useEffect(() => {
-    // Шаг 2: Получение категорий документов из бэкенда
+    // Получение категорий документов из бэкенда
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
@@ -40,10 +39,6 @@ export default function ModalAddDocument() {
           }
         );
         setCategoriesData(response.data.categories);
-        console.log(
-          "Получены категории документов из бэкенда:",
-          response.data.categories
-        ); // Выводим полученные категории
         // Извлекаем уникальные категории
         const uniqueCategories = response.data.categories.map(
           (item) => item.category.Description
@@ -60,9 +55,12 @@ export default function ModalAddDocument() {
   const handleModalClose = () => {
     setOpenModalAdd(false);
     form.resetFields();
+    setAllowedExtensions([]);
+    setMaxFileSize(10);
   };
 
   const handleSaveDocument = async (values) => {
+    console.log("Значения перед отправкой:", values); // Логируем значения
     try {
       setLoading(true);
       const files = form.getFieldValue("fileDoc");
@@ -76,6 +74,8 @@ export default function ModalAddDocument() {
       const formData = new FormData();
       formData.append("category", values.category);
       formData.append("documentName", values.documentName);
+      formData.append("categoryKey", values.categoryKey);
+      console.log("FormData categoryKey:", values.categoryKey); // Логируем categoryKey
 
       files.forEach((file) => {
         formData.append("files", file.originFileObj);
@@ -94,6 +94,8 @@ export default function ModalAddDocument() {
           withCredentials: true,
         }
       );
+
+      console.log("Ответ от сервера после загрузки файла:", response.data); // Логируем ответ от сервера
 
       message.success("Документ успешно сохранен");
       fetchDocuments();
@@ -171,6 +173,33 @@ export default function ModalAddDocument() {
                         : "Сначала выберите категорию"
                     }
                     disabled={!selectedCategory}
+                    onChange={(value, option) => {
+                      // Устанавливаем допустимые расширения и максимальный размер
+                      const selectedDoc = filteredDocuments.find(
+                        (doc) => doc.category.label === value
+                      );
+                      if (selectedDoc) {
+                        const extensions = JSON.parse(
+                          selectedDoc.category.availableExtensionsJSON
+                        );
+                        setAllowedExtensions(extensions);
+                        setMaxFileSize(
+                          parseInt(selectedDoc.category.maximumSize)
+                        );
+                        form.setFieldsValue({
+                          categoryKey: selectedDoc.category.Ref_Key,
+                        });
+                        console.log("Допустимые расширения:", extensions); // Логируем допустимые расширения
+                        console.log(
+                          "Максимальный размер файла:",
+                          selectedDoc.category.maximumSize
+                        ); // Логируем максимальный размер
+                        console.log(
+                          "Выбранный categoryKey:",
+                          selectedDoc.category.Ref_Key
+                        ); // Логируем categoryKey
+                      }
+                    }}
                   >
                     {filteredDocuments.map((doc) => (
                       <Option
@@ -186,7 +215,14 @@ export default function ModalAddDocument() {
             }}
           </Form.Item>
 
-          <UploaderInput />
+          <Form.Item name="categoryKey" hidden>
+            <input type="hidden" />
+          </Form.Item>
+
+          <UploaderInput
+            allowedExtensions={allowedExtensions}
+            maxFileSize={maxFileSize}
+          />
 
           <Form.Item>
             <Button type="primary" htmlType="submit" disabled={loading}>

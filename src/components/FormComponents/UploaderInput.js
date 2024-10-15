@@ -11,9 +11,9 @@ export default function UploaderInput({
   value,
   depends,
   required = false,
+  allowedExtensions = [],
+  maxFileSize = 10, // По умолчанию 10 МБ
 }) {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
   const { colorPrimaryText } = theme.useToken().token;
   const form = Form.useFormInstance();
@@ -21,12 +21,18 @@ export default function UploaderInput({
   const uploadProps = {
     multiple: true,
     beforeUpload: (file) => {
-      const isSupported =
-        file.type === "image/jpeg" ||
-        file.type === "image/png" ||
-        file.type === "application/pdf";
+      const fileExtension = file.name.split(".").pop().toUpperCase();
+      const isSupported = allowedExtensions.includes(fileExtension);
       if (!isSupported) {
         message.error(`${file.name} не поддерживается`);
+        return Upload.LIST_IGNORE;
+      }
+      const isSizeOk = file.size / 1024 / 1024 < maxFileSize;
+      if (!isSizeOk) {
+        message.error(
+          `${file.name} превышает максимальный размер ${maxFileSize} МБ`
+        );
+        return Upload.LIST_IGNORE;
       }
       return false; // Предотвращаем автоматическую загрузку
     },
@@ -42,6 +48,12 @@ export default function UploaderInput({
       form.setFieldsValue({ fileDoc: updatedFileList });
     },
   };
+
+  useEffect(() => {
+    // При смене допустимых расширений или размера очищаем список файлов
+    setFileList([]);
+    form.setFieldsValue({ fileDoc: [] });
+  }, [allowedExtensions, maxFileSize]);
 
   return (
     <Form.Item
@@ -61,8 +73,12 @@ export default function UploaderInput({
               style={{ color: colorPrimaryText, fontSize: "48px" }}
             />
           </div>
-          <p className="ant-upload-text">Файлы размером не более 10МБ</p>
-          <p className="ant-upload-hint">форматы PDF, JPEG, PNG</p>
+          <p className="ant-upload-text">
+            Файлы размером не более {maxFileSize} МБ
+          </p>
+          <p className="ant-upload-hint">
+            Форматы: {allowedExtensions.join(", ")}
+          </p>
         </Dragger>
       )}
       {read && (
