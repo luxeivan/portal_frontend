@@ -34,7 +34,7 @@ import Documents from "./pages/Cabinet/Documents/Documents";
 import Drafts from "./pages/Cabinet/Drafts/Drafts";
 import Checking from "./pages/Cabinet/Checking/Checking";
 import ClaimItem from "./pages/Cabinet/Claims/ClaimItem";
-import PuzzleGame from "./pages/Games/PuzzleGame";
+import Game from "./pages/Games/Game";
 import Contacts from "./pages/Contacts/Contacts";
 import Claimers from "./pages/Cabinet/Claims/Claimers";
 import Archives from "./pages/Cabinet/Claims/Archives";
@@ -232,7 +232,7 @@ export default function App() {
                   </Route>
 
                   {/* ----------------------------------------- */}
-                  <Route path="/puzzle-game" element={<PuzzleGame />} />
+                  <Route path="/game" element={<Game />} />
                   <Route path="*" element={<Page404 />} />
                   {/* <Route path="/jump-game" element={<JumpGame />} /> */}
                 </Routes>
