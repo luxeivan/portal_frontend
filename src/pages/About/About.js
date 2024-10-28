@@ -15,20 +15,16 @@ export default function About() {
   const navigate = useNavigate();
 
   // Функция для обработки клика
-  const handlePuzzleClick = () => {
-    navigate("/puzzle-game");
+  const handleGameClick = () => {
+    navigate("/game");
   };
-
-  // const handleJumpClick = () => {
-  //   navigate("/jump-game");
-  // };
 
   return (
     <>
       <AppHelmet title={"О нас"} desc={"Информация о компании"} />
       <div>
         <Title level={1}>О компании Мособлэнерго</Title>
-      <Preloader/>
+        <Preloader />
         <Flex wrap="wrap">
           <div className={styles.textArea}>
             <div>
@@ -128,12 +124,15 @@ export default function About() {
             />
           </div>
         </Flex>
-        {/* <Button type="dashed" onClick={handlePuzzleClick}>
-          Энергосберегающие пятнашки
-        </Button> */}
-        {/* <Button type="dashed" onClick={handleJumpClick}>
-          МосОблДжамп
-        </Button> */}
+        <button
+          type="button"
+          className={styles.button}
+          onClick={handleGameClick}
+        >
+          <div className={styles.buttonTop}>Нажми на меня</div>
+          <div className={styles.buttonBottom}></div>
+          <div className={styles.buttonBase}></div>
+        </button>
       </div>
     </>
   );

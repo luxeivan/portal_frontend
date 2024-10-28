@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Typography, Card } from "antd";
-import { PlusOutlined, FileOutlined } from "@ant-design/icons";
+import { PlusOutlined, FilePdfOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
 import ModalAddDocument from "../../../components/Cabinet/Documents/ModalAddDocument";
@@ -19,50 +19,55 @@ const Documents = () => {
     fetchDocuments();
   }, []);
 
+  useEffect(() => {
+    console.log("Документы загружены:", documents); // Выводим загруженные документы
+  }, [documents]);
+
   return (
     <div>
       <Title level={1}>Документы</Title>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
         {loadingDocuments && <SceletonCard />}
-        {documents.map((document, index) => {
-          // Ограничиваем количество иконок до 3
-          const iconCount = Math.min(document.files.length, 3);
-          // Создаем массив иконок
-          const icons = Array.from({ length: iconCount }, (_, i) => (
-            <FileOutlined
-              key={i}
-              style={{ fontSize: "24px", margin: "0 4px" }}
-            />
-          ));
-
-          return (
-            <Card
-              key={index}
-              hoverable
-              style={{
-                width: 250,
-                height: 250,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-              onClick={() => setOpenModalView(document.id)}
-            >
-              <Text type="secondary" style={{ fontSize: "16px" }}>
-                {document.category}
-              </Text>
-              <Title level={4} style={{ margin: "8px 0" }}>
-                {document.documentName}
-              </Title>
-              <div style={{ margin: "8px 0" }}>{icons}</div>
-              <Text type="secondary">
-                Количество файлов: {document.files.length}
-              </Text>
-            </Card>
-          );
-        })}
+        {documents &&
+          documents.map((document, index) => {
+            return (
+              <Card
+                key={index}
+                hoverable
+                style={{
+                  width: 250,
+                  height: 250,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+                onClick={() => {
+                  console.log(
+                    "Открываем документ с Ref_Key:",
+                    document.Ref_Key
+                  ); // Логируем Ref_Key документа
+                  setOpenModalView(document.Ref_Key);
+                }}
+              >
+                <Text type="secondary" style={{ fontSize: "16px" }}>
+                  {document.ВидФайла}
+                </Text>
+                <Title level={4} style={{ margin: "8px 0" }}>
+                  {document.Description}
+                </Title>
+                <div style={{ margin: "8px 0" }}>
+                  <FilePdfOutlined
+                    style={{ fontSize: "48px", color: "#e37020" }}
+                  />
+                </div>
+                <Text type="secondary">
+                  Размер файла: {Math.round(document.Размер / 1024)} КБ
+                </Text>
+              </Card>
+            );
+          })}
         <Card
           hoverable
           style={{

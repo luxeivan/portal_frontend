@@ -1,0 +1,11 @@
+.mapContainer {
+  padding: 20px;
+  background-color: #f0f2f5;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.regionCard img {
+  height: 150px;
+  object-fit: cover;
+}

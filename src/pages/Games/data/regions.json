@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Подольск",
+    "status": "Норма",
+    "upgradeLevel": 0,
+    "progress": 30,
+    "energyConsumption": 20,
+    "energyProduction": 10
+  },
+  {
+    "id": 2,
+    "name": "Химки",
+    "status": "Норма",
+    "upgradeLevel": 0,
+    "progress": 30,
+    "energyConsumption": 20,
+    "energyProduction": 10
+  },
+  {
+    "id": 3,
+    "name": "Домодедово",
+    "status": "Норма",
+    "upgradeLevel": 0,
+    "progress": 30,
+    "energyConsumption": 20,
+    "energyProduction": 10
+  },
+  {
+    "id": 4,
+    "name": "Коломна",
+    "status": "Норма",
+    "upgradeLevel": 0,
+    "progress": 30,
+    "energyConsumption": 20,
+    "energyProduction": 10
+  },
+  {
+    "id": 5,
+    "name": "Красногорск",
+    "status": "Норма",
+    "upgradeLevel": 0,
+    "progress": 30,
+    "energyConsumption": 20,
+    "energyProduction": 10
+  },
+  {
+    "id": 6,
+    "name": "Мытищи",
+    "status": "Норма",
+    "upgradeLevel": 0,
+    "progress": 30,
+    "energyConsumption": 20,
+    "energyProduction": 10
+  },
+  {
+    "id": 7,
+    "name": "Одинцово",
+    "status": "Норма",
+    "upgradeLevel": 0,
+    "progress": 30,
+    "energyConsumption": 20,
+    "energyProduction": 10
+  },
+  {
+    "id": 8,
+    "name": "Раменское",
+    "status": "Норма",
+    "upgradeLevel": 0,
+    "progress": 30,
+    "energyConsumption": 20,
+    "energyProduction": 10
+  }
+]
