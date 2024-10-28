@@ -1,5 +1,3 @@
-// /Users/yanutstas/Desktop/Project/portal_frontend/src/pages/Games/components/Map.js
-
 import React from "react";
 import {
   Card,
