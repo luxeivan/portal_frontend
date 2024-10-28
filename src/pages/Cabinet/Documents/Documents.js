@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Typography, Card } from "antd";
+import AppHelmet from "../../../components/Global/AppHelmet";
 import { PlusOutlined, FilePdfOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
@@ -25,6 +26,7 @@ const Documents = () => {
 
   return (
     <div>
+      <AppHelmet title={"Документы"} desc={"Документы"} />
       <Title level={1}>Документы</Title>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
         {loadingDocuments && <SceletonCard />}
