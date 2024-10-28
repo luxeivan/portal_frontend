@@ -9,28 +9,31 @@ function DividerForm({ label, fullDescription }) {
 
   const showDrawer = () => setDrawerVisible(true);
   const onClose = () => setDrawerVisible(false);
-
-  return (
-    <>
-      <Divider style={{whiteSpace:"pre-wrap"}}>
-        {label}
-        <InfoCircleOutlined
-          onClick={showDrawer}
-          style={{ marginLeft: 10, color: "rgba(0, 0, 0, 0.45)" }}
-        />
-      </Divider>
-      <Drawer
-        title={label}
-        placement="right"
-        onClose={onClose}
-        open={drawerVisible}
-      >
-        <MarkDownText>
-          {fullDescription}
-        </MarkDownText>
-      </Drawer>
-    </>
-  );
+  if (fullDescription) {
+    return (
+      <>
+        <Divider style={{ whiteSpace: "pre-wrap" }}>
+          {label}
+          <InfoCircleOutlined
+            onClick={showDrawer}
+            style={{ marginLeft: 10, color: "rgba(0, 0, 0, 0.45)" }}
+          />
+        </Divider>
+        <Drawer
+          title={label}
+          placement="right"
+          onClose={onClose}
+          open={drawerVisible}
+        >
+          <MarkDownText>
+            {fullDescription}
+          </MarkDownText>
+        </Drawer>
+      </>
+    );
+  } else {
+    return <Divider />
+  }
 }
 
 export default DividerForm;

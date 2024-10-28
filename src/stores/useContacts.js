@@ -31,7 +31,7 @@ export const useContacts = () => {
             const images = center.photos
               ? center.photos.map((photo) => {
                 return {
-                  src: `${backPhotoServer}/public/${photo.ПутьКФайлу}`,
+                  src: `${backPhotoServer}/${photo.ПутьКФайлу}`,
                   width: photo.width || 800,
                   height: photo.height || 600,
                 }
