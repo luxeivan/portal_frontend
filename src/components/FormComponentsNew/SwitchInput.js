@@ -4,14 +4,23 @@ import { Form, Switch } from "antd";
 export default function SwitchInput({
   name = "name",
   label = "Label",
-//   defaultValue = false,
+  defaultValue = false,
   required = false,
   dependOf = false,
   howDepend = false,
 }) {
+
+  if (defaultValue && defaultValue === "true") {
+    // console.log(typeof defaultValue)
+    defaultValue = true
+  }
+  if (defaultValue && defaultValue === "false") {
+    // console.log(typeof defaultValue)
+    defaultValue = false
+  }
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form);
-
+  // console.log(label, defaultValue)
   const formElement = (
     <Form.Item
       name={name}
@@ -22,11 +31,11 @@ export default function SwitchInput({
           message: "Это поле обязательное",
         },
       ]}
-    //   initialValue={defaultValue}
-    // labelAlign="right"
-    // labelCol={{span: 12}}
-    // colon={false}
-    layout="horizontal"
+      initialValue={defaultValue}
+      // labelAlign="right"
+      // labelCol={{span: 12}}
+      // colon={false}
+      layout="horizontal"
     >
       <Switch />
     </Form.Item>
