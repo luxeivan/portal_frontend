@@ -121,7 +121,7 @@ export default function TextInput({
       />
     </Form.Item>
   );
-  console.log(`${label} - ${type}: ${defaultValue}`)
+  // console.log(`${label} - ${type}: ${defaultValue}`)
   const simpleInput = (
     <Form.Item
       name={name}

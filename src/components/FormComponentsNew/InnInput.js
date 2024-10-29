@@ -22,7 +22,7 @@ export default function InnInput({
     const form = Form.useFormInstance();
     let fieldDepends = Form.useWatch(dependOf, form);
     const [options, setOptions] = useState([])
-    const objProperties = JSON.parse(properties)
+    const objProperties = JSON.parse(properties).externalService
 
 
     const fetchSuggestions = debounce((inn) => {
@@ -65,7 +65,7 @@ export default function InnInput({
                 let value = arrKey.reduce((nestedObj, key) => (nestedObj || {})[key], currentData);
                 console.log('value', value)
                 form.setFieldValue(inGroup ? [name[0], objProperties[key]] : objProperties[key], value)
-                console.log('objProperties[key]', objProperties[key])
+                console.log('objProperties[key][1]', objProperties[key])
             }
         }
 
