@@ -202,7 +202,7 @@ export default function GroupInput({
                     dependOf={
                       item.dependIdLine ? [name, item.dependIdLine] : false
                     }
-                    howDepend={item.dependСondition}
+                    howDepend={item.dependСondition}                    
                   />
                 );
 
