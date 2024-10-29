@@ -89,7 +89,7 @@ export default function TextInput({
   ];
 
   const autoComplete = (
-    <Form.Item name={name} label={label} rules={formItemRules}>
+    <Form.Item name={name} label={label} rules={formItemRules} initialValue={defaultValue}>
       <AutoComplete
         options={suggestions.map((suggestion) => ({ value: suggestion }))}
         onChange={handlerOnChange}
@@ -112,6 +112,7 @@ export default function TextInput({
           message: "Это поле в формате Email",
         },
       ]}
+      initialValue={defaultValue}
     >
       <Input
         placeholder={placeholder}
@@ -120,7 +121,7 @@ export default function TextInput({
       />
     </Form.Item>
   );
-
+  console.log(`${label} - ${type}: ${defaultValue}`)
   const simpleInput = (
     <Form.Item
       name={name}
@@ -132,6 +133,7 @@ export default function TextInput({
         placeholder={placeholder}
         maxLength={length || undefined} // Убираем `false`, если `length` не задано
         disabled={disabled}
+
       />
     </Form.Item>
   );
