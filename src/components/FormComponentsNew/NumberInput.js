@@ -28,7 +28,6 @@ export default function NumberInput({
   let objectProp = null;
   if (properties) objectProp = JSON.parse(properties);
   let idLine = Form.useWatch(objectProp?.unit?.idLine, form);
-
   useEffect(() => {
     if (objectProp?.unit && objectProp?.unit?.idLine) {
       if (serviceItem.fields) {
@@ -46,7 +45,7 @@ export default function NumberInput({
       }
     }
     if (objectProp?.unit?.value) {
-      setUnit({ [name]: objectProp?.unit?.value });
+      setUnit(name, objectProp?.unit?.value );
     }
   }, [idLine]);
 

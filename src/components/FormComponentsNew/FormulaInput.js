@@ -27,13 +27,14 @@ export default function FormulaInput({
     properties = false,
     formula = '',
     ractionDigits = 10,
-    digits = false
+    digits = false,
+    valueValidate = false
 }) {
     // const [propertiesValue, setPropertiesValue] = useState({})
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
     const form = Form.useFormInstance();
-    const currency  = useTemp((state) => state.currency);
+    const currency = useTemp((state) => state.currency);
     let objectProp = {}
     if (properties) objectProp = JSON.parse(properties)
     // console.log("objectProp",objectProp);
@@ -100,17 +101,32 @@ export default function FormulaInput({
     // console.log('defaultValue',defaultValue)
     // console.log('propsFormula', objectProp)
     if (formula === '') return false;
+    
     const formElement = (
         <Form.Item
             name={name}
             label={label}
+
+            rules={valueValidate ? [
+                () => ({
+                    validator(_, value) {
+                        if (value >= min && value <= max) {
+                            console.log('Сработал валидатор');
+                            return Promise.resolve();
+                        }
+                        return Promise.reject(new Error(`Значение должно быть между ${min} и ${max}`));
+                    },
+                }),
+            ] : null}
         >
             <Input
                 disabled={true}
+                validateTrigger="onBlur"
                 style={{ color: colorTextHeading, width: "inherit" }}
                 // style={{ color: colorTextHeading }}
                 suffix={objectProp?.currency?.position === "suffix" ? currency[objectProp.currency.idLine] : false}
                 addonAfter={objectProp?.currency?.position === "addonAfter" ? currency[objectProp.currency.idLine] : false}
+
             />
         </Form.Item>
 
