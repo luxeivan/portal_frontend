@@ -49,14 +49,14 @@ const Documents = () => {
                   console.log(
                     "Открываем документ с Ref_Key:",
                     document.Ref_Key
-                  ); // Логируем Ref_Key документа
+                  );
                   setOpenModalView(document.Ref_Key);
                 }}
               >
-                <Text type="secondary" style={{ fontSize: "16px" }}>
-                  {document.ВидФайла}
-                </Text>
-                <Title level={4} style={{ margin: "8px 0" }}>
+                {/* <Text type="secondary" style={{ fontSize: "16px" }}>
+                  Категория: {document.ВидФайла}
+                </Text> */}
+                <Title level={5} style={{ margin: "8px 0" }}>
                   {document.Description}
                 </Title>
                 <div style={{ margin: "8px 0" }}>
@@ -64,12 +64,13 @@ const Documents = () => {
                     style={{ fontSize: "48px", color: "#e37020" }}
                   />
                 </div>
-                <Text type="secondary">
+                {/* <Text type="secondary">
                   Размер файла: {Math.round(document.Размер / 1024)} КБ
-                </Text>
+                </Text> */}
               </Card>
             );
           })}
+
         <Card
           hoverable
           style={{
