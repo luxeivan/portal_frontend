@@ -24,7 +24,7 @@ const useDocuments = create((set, get) => ({
   setOpenModalUpdate: (id = false) => {
     set({ openModalUpdate: id });
   },
-  
+
   fetchDocuments: async () => {
     set({ documents: [], loadingDocuments: true });
     try {
@@ -46,6 +46,28 @@ const useDocuments = create((set, get) => ({
       console.error("Ошибка при загрузке документов", error);
     }
   },
+
+  // fetchDocuments: async () => {
+  //   set({ documents: [], loadingDocuments: true });
+  //   try {
+  //     const response = await axios.get(`${backServer}/api/cabinet/documents`, {
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  //       },
+  //       withCredentials: true,
+  //     });
+  //     set({
+  //       documents: response.data.documents,
+  //       loadingDocuments: false,
+  //     });
+  //   } catch (error) {
+  //     set({
+  //       loadingDocuments: false,
+  //       errorLoadingDocuments: "Не удалось загрузить документы",
+  //     });
+  //     console.error("Ошибка при загрузке документов", error);
+  //   }
+  // },
 
   fetchDocument: async (id) => {
     set({ loadingDocument: true });
