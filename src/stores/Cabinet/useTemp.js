@@ -1,10 +1,10 @@
 import { create } from "zustand";
 const useTemp = create((set) => ({
     unit: {},
-    setUnit: (props) => {
+    setUnit: (name, value) => {
         set((state) => {
             return {
-                unit: { ...props }
+                unit: {...state.unit, [name]: value }
             };
         })
     },
