@@ -32,6 +32,7 @@ export default function SwitchInput({
         },
       ]}
       initialValue={defaultValue}
+      
       // labelAlign="right"
       // labelCol={{span: 12}}
       // colon={false}
