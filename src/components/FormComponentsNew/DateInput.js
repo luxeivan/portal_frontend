@@ -9,7 +9,7 @@ moment.locale("ru");
 export default function DateInput({ name = 'name', part = 'Дата', label = 'Label', defaultValue = false, disabled = false, placeholder = 'Пример', required = false, dependOf = false, howDepend = false }) {
     const form = Form.useFormInstance()
     const fieldDepends = Form.useWatch(dependOf, form)
-    // console.log(name)
+    console.log(part)
     const formElement = (
         <ConfigProvider locale={locale}>
 
@@ -26,6 +26,9 @@ export default function DateInput({ name = 'name', part = 'Дата', label = 'L
             >
                 {part === "Дата" &&
                     <DatePicker format={"DD.MM.YYYY"} placeholder={placeholder}  />
+                }
+                {part === "МесяцГод" &&
+                    <DatePicker format={"MM.YYYY"} placeholder={placeholder}  picker='month'/>
                 }
                 {part === "ДатаВремя" &&
                     <DatePicker format={"DD.MM.YYYY HH:mm"} showTime placeholder={placeholder}  />
