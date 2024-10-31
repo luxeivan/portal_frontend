@@ -325,3 +325,6 @@ export default Documents;
 // };
 
 // export default Documents;
+
+
+// const requestUrl = `${SERVER_1C}/InformationRegister_connectionsOfElements/SliceLast(,Condition='element2 eq cast(guid'${userId}', 'Catalog_profile') and usage eq true')?$format=json&$expand=element1`;
