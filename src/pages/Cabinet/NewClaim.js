@@ -9,6 +9,7 @@ import {
   Badge,
   Flex,
   Divider,
+  Tag,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -33,6 +34,7 @@ import ErrorModal from "../../components/ErrorModal";
 import PriceInput from "../../components/FormComponentsNew/PriceInput";
 import FormulaInput from "../../components/FormComponentsNew/FormulaInput";
 import DocumentSelectModal from "../../components/FormComponentsNew/DocumentSelectModal";
+import { FileTextOutlined } from "@ant-design/icons";
 
 const { Title, Paragraph } = Typography;
 
@@ -358,44 +360,89 @@ export default function NewClaim() {
                   );
               })}
 
-            <Divider orientation="left" style={{ marginTop: 40 }}>
-              ФАЙЛЫ
-            </Divider>
+            <Divider>Файлы</Divider>
 
             <Row gutter={[16, 16]}>
               {serviceItem.categoriesFiles &&
                 serviceItem.categoriesFiles.map((item, index) => (
                   <Col xs={24} sm={12} md={8} key={index}>
-                    <Card bordered style={{ height: "100%" }}>
-                      {/* Отображаем полное название категории */}
-                      <Card.Meta
-                        title={
-                          <div style={{ whiteSpace: "normal" }}>
-                            {item.categoryName}
+                    <Card
+                      bordered
+                      style={{
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        borderRadius: "8px",
+                        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                        backgroundColor: form.getFieldValue(
+                          `document_${item.category_Key}`
+                        )
+                          ? "#e6ffe6"
+                          : "#fff",
+                      }}
+                      bodyStyle={{
+                        display: "flex",
+                        flexDirection: "column",
+                        flex: 1,
+                      }}
+                    >
+                      {/* Верхняя часть карточки */}
+                      <div style={{ flex: 1 }}>
+                        {/* Заголовок с иконкой */}
+                        <Card.Meta
+                          avatar={
+                            <FileTextOutlined
+                              style={{ fontSize: "24px", color: "#1890ff" }}
+                            />
+                          }
+                          title={
+                            <div style={{ whiteSpace: "normal" }}>
+                              {item.categoryName}
+                            </div>
+                          }
+                          description={item.shortDescription || ""}
+                          style={{ marginBottom: 16 }}
+                        />
+                        {/* Отображение названия выбранного документа */}
+                        {form.getFieldValue(
+                          `document_${item.category_Key}`
+                        ) && (
+                          <div style={{ marginBottom: 16 }}>
+                            <strong>Документ:</strong>{" "}
+                            {
+                              form.getFieldValue(
+                                `document_${item.category_Key}`
+                              ).Description
+                            }
                           </div>
-                        }
-                        description={item.shortDescription || ""}
-                        style={{ marginBottom: 16 }}
-                      />
-                      {/* Добавляем Badge внутри контента карточки */}
-                      <div style={{ marginBottom: 16 }}>
-                        {form.getFieldValue(`document_${item.category_Key}`) ? (
-                          <Badge status="success" text="Прикреплено" />
-                        ) : (
-                          <Badge status="warning" text="Не прикреплено" />
                         )}
                       </div>
-                      {/* Добавляем кнопку */}
-                      <Button
-                        type="primary"
-                        onClick={() => handleSelectDocument(item.category_Key)}
-                        style={{ marginTop: "auto" }}
-                        block
-                      >
-                        {form.getFieldValue(`document_${item.category_Key}`)
-                          ? "Изменить"
-                          : "Выбрать"}
-                      </Button>
+                      {/* Нижняя часть карточки с плашкой и кнопкой */}
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        {form.getFieldValue(`document_${item.category_Key}`) ? (
+                          <Tag color="green" style={{ marginRight: "auto" }}>
+                            Прикреплено
+                          </Tag>
+                        ) : (
+                          <Tag color="red" style={{ marginRight: "auto" }}>
+                            Не прикреплено
+                          </Tag>
+                        )}
+                        <Button
+                          type="primary"
+                          style={{
+                            backgroundColor: "#0052cc",
+                            borderColor: "#0052cc",
+                          }}
+                          onClick={() =>
+                            handleSelectDocument(item.category_Key)
+                          }
+                        >
+                          {form.getFieldValue(`document_${item.category_Key}`)
+                            ? "Изменить"
+                            : "Выбрать"}
+                        </Button>
+                      </div>
                     </Card>
                   </Col>
                 ))}
@@ -414,7 +461,6 @@ export default function NewClaim() {
                   {serviceItem.buttonText || "Подать заявку на услугу"}
                 </Button>
               </Form.Item>
-             
             </Flex>
           </Form>
 
