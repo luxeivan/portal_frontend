@@ -1,5 +1,3 @@
-// /src/stores/Cabinet/useDocuments.js
-
 import { create } from "zustand";
 import axios from "axios";
 import { message } from "antd";
@@ -26,6 +24,9 @@ const useDocuments = create((set, get) => ({
         },
         withCredentials: true,
       });
+
+      console.log("response.data!!!!!!", response.data);
+
       set({
         documents: response.data.documents,
         loadingDocuments: false,
