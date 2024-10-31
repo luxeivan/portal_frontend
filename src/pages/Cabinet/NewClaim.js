@@ -287,6 +287,8 @@ export default function NewClaim() {
                   );
               })}
 
+              {/* Анализировать категорияфайлс и отрисовывать кнопки */}
+
             <Flex style={{ marginTop: 10 }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
