@@ -15,22 +15,21 @@ const useDocuments = create((set, get) => ({
     set({ openModalAdd: status });
   },
 
-  fetchDocuments: async () => {
+  fetchDocuments: async (categoryKey) => {
     set({ documents: [], loadingDocuments: true });
     try {
-      const response = await axios.get(`${backServer}/api/cabinet/documents`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
+      let url = `${backServer}/api/cabinet/documents`;
+
+      if (categoryKey) {
+        url += `/by-category?categoryKey=${categoryKey}`;
+      }
+
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
         withCredentials: true,
       });
 
-      console.log("response.data!!!!!!", response.data);
-
-      set({
-        documents: response.data.documents,
-        loadingDocuments: false,
-      });
+      set({ documents: response.data.documents, loadingDocuments: false });
     } catch (error) {
       set({
         loadingDocuments: false,
@@ -39,6 +38,31 @@ const useDocuments = create((set, get) => ({
       console.error("Ошибка при загрузке документов", error);
     }
   },
+
+  // fetchDocuments: async () => {
+  //   set({ documents: [], loadingDocuments: true });
+  //   try {
+  //     const response = await axios.get(`${backServer}/api/cabinet/documents`, {
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  //       },
+  //       withCredentials: true,
+  //     });
+
+  //     console.log("response.data!!!!!!", response.data);
+
+  //     set({
+  //       documents: response.data.documents,
+  //       loadingDocuments: false,
+  //     });
+  //   } catch (error) {
+  //     set({
+  //       loadingDocuments: false,
+  //       errorLoadingDocuments: "Не удалось загрузить документы",
+  //     });
+  //     console.error("Ошибка при загрузке документов", error);
+  //   }
+  // },
 
   getNameDocs: async () => {
     try {

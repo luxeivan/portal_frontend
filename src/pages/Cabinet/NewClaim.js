@@ -1,5 +1,15 @@
-//ОБРАБОТКА ОШИБКИ
-import { Form, Typography, Button, Drawer, Descriptions, Flex } from "antd";
+import {
+  Form,
+  Typography,
+  Button,
+  Drawer,
+  Row,
+  Col,
+  Card,
+  Badge,
+  Flex,
+  Divider,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useClaims from "../../stores/Cabinet/useClaims";
@@ -19,14 +29,17 @@ import GroupInput from "../../components/FormComponentsNew/GroupInput";
 import AddressInput from "../../components/FormComponentsNew/addressComponents/AddressInput";
 import ConfirmationDocumentNewInput from "../../components/FormComponentsNew/confirmationDocumentComponents/ConfirmationDocumentNewInput";
 import SnilsInput from "../../components/FormComponentsNew/SnilsInput";
-import ErrorModal from "../../components/ErrorModal"; // Импортируем ErrorModal
+import ErrorModal from "../../components/ErrorModal";
 import PriceInput from "../../components/FormComponentsNew/PriceInput";
 import FormulaInput from "../../components/FormComponentsNew/FormulaInput";
+import DocumentSelectModal from "../../components/FormComponentsNew/DocumentSelectModal";
 
 const { Title, Paragraph } = Typography;
 
 export default function NewClaim() {
   const [open, setOpen] = useState(false);
+  const [documentModalVisible, setDocumentModalVisible] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
   const isLoading = useServices((state) => state.isLoading);
@@ -39,7 +52,7 @@ export default function NewClaim() {
   const [error, setError] = useState(null); // Состояние для хранения ошибок
 
   useEffect(() => {
-    fetchServiceItem(id, {  withChain: false, withFields: true });
+    fetchServiceItem(id, { withChain: false, withFields: true });
   }, []);
 
   useEffect(() => {
@@ -74,12 +87,50 @@ export default function NewClaim() {
         values[key] = moment(value).format();
       }
     }
-
     try {
       // await createClaim({ service: serviceItem.Ref_Key, values });
       console.log("Пытаюсь понять откуда что приходит", values);
     } catch (err) {
       setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
+    }
+
+    const attachedDocuments = [];
+    if (serviceItem.categoriesFiles) {
+      serviceItem.categoriesFiles.forEach((item) => {
+        const document = values[`document_${item.category_Key}`];
+        if (document) {
+          attachedDocuments.push({
+            categoryKey: item.category_Key,
+            document,
+          });
+          // *** Добавляем логирование здесь ***
+          console.log(
+            `Документ для категории ${item.categoryName} добавлен:`,
+            document
+          );
+        } else {
+          // *** Если документ не найден, тоже логируем ***
+          console.log(
+            `Документ для категории ${item.categoryName} не прикреплен`
+          );
+        }
+        delete values[`document_${item.category_Key}`];
+      });
+    }
+
+    // Готовим данные для отправки
+    const dataToSubmit = {
+      ...values,
+      attachedDocuments,
+    };
+
+    console.log("Данные для отправки заявки:", dataToSubmit);
+
+    try {
+      await createClaim({ service: serviceItem.Ref_Key, values: dataToSubmit });
+      // Дополнительная обработка при успехе
+    } catch (err) {
+      setError(err.message || "Ошибка при создании заявки.");
     }
   };
 
@@ -90,9 +141,24 @@ export default function NewClaim() {
   };
 
   const handlerChange = (changedValues) => {
-    console.log("changedValues: ", changedValues)
-  }
-  console.log(serviceItem)
+    console.log("changedValues: ", changedValues);
+  };
+
+  const handleSelectDocument = (categoryKey) => {
+    setSelectedCategory(categoryKey);
+    setDocumentModalVisible(true);
+  };
+
+  const handleDocumentSelected = (document) => {
+    console.log(
+      `Пользователь выбрал документ для категории ${selectedCategory}:`,
+      document
+    );
+    form.setFieldsValue({ [`document_${selectedCategory}`]: document });
+    setDocumentModalVisible(false);
+  };
+
+  console.log(serviceItem);
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet
@@ -115,7 +181,7 @@ export default function NewClaim() {
             onKeyDown={handleKeyDown}
             style={{ maxWidth: "800px", width: "100%", margin: "0 auto" }}
             labelWrap
-          // onValuesChange={handlerChange}
+            // onValuesChange={handlerChange}
           >
             {serviceItem.fields
               ?.sort((a, b) => a.lineNum - b.lineNum)
@@ -140,7 +206,10 @@ export default function NewClaim() {
                       howDepend={item.dependСondition}
                     />
                   );
-                if (item.component_Type.includes("TextInput") && item.component_Expanded.specialField === 'СНИЛС')
+                if (
+                  item.component_Type.includes("TextInput") &&
+                  item.component_Expanded.specialField === "СНИЛС"
+                )
                   return (
                     <SnilsInput
                       key={index}
@@ -239,7 +308,9 @@ export default function NewClaim() {
                     />
                   );
 
-                if (item.component_Type.includes("ConfirmationDocumentNewInput"))
+                if (
+                  item.component_Type.includes("ConfirmationDocumentNewInput")
+                )
                   return (
                     <ConfirmationDocumentNewInput
                       key={index}
@@ -287,7 +358,55 @@ export default function NewClaim() {
                   );
               })}
 
-              {/* Анализировать категорияфайлс и отрисовывать кнопки */}
+            <Divider orientation="left" style={{ marginTop: 40 }}>
+              ФАЙЛЫ
+            </Divider>
+
+            <Row gutter={[16, 16]}>
+              {serviceItem.categoriesFiles &&
+                serviceItem.categoriesFiles.map((item, index) => (
+                  <Col xs={24} sm={12} md={8} key={index}>
+                    <Card bordered style={{ height: "100%" }}>
+                      {/* Отображаем полное название категории */}
+                      <Card.Meta
+                        title={
+                          <div style={{ whiteSpace: "normal" }}>
+                            {item.categoryName}
+                          </div>
+                        }
+                        description={item.shortDescription || ""}
+                        style={{ marginBottom: 16 }}
+                      />
+                      {/* Добавляем Badge внутри контента карточки */}
+                      <div style={{ marginBottom: 16 }}>
+                        {form.getFieldValue(`document_${item.category_Key}`) ? (
+                          <Badge status="success" text="Прикреплено" />
+                        ) : (
+                          <Badge status="warning" text="Не прикреплено" />
+                        )}
+                      </div>
+                      {/* Добавляем кнопку */}
+                      <Button
+                        type="primary"
+                        onClick={() => handleSelectDocument(item.category_Key)}
+                        style={{ marginTop: "auto" }}
+                        block
+                      >
+                        {form.getFieldValue(`document_${item.category_Key}`)
+                          ? "Изменить"
+                          : "Выбрать"}
+                      </Button>
+                    </Card>
+                  </Col>
+                ))}
+            </Row>
+
+            <DocumentSelectModal
+              visible={documentModalVisible}
+              onClose={() => setDocumentModalVisible(false)}
+              categoryKey={selectedCategory}
+              onSelectDocument={handleDocumentSelected}
+            />
 
             <Flex style={{ marginTop: 10 }}>
               <Form.Item>
@@ -322,10 +441,9 @@ export default function NewClaim() {
         <ErrorModal
           visible={!!error}
           error={error}
-        // onClose={() => setError(null)} 
+          // onClose={() => setError(null)}
         />
       )}
     </div>
   );
 }
-

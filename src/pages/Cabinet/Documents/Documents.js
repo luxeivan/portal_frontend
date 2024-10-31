@@ -13,7 +13,7 @@ import ModalAddDocument from "../../../components/Cabinet/Documents/ModalAddDocu
 
 const { Title, Text } = Typography;
 
-const Documents = () => {
+const Documents = ({ categoryKey, onSelectDocument }) => {
   const documents = useDocuments((state) => state.documents);
   const loadingDocuments = useDocuments((state) => state.loadingDocuments);
   const openModalAdd = useDocuments((state) => state.openModalAdd);
@@ -24,6 +24,12 @@ const Documents = () => {
   useEffect(() => {
     fetchDocuments();
   }, [fetchDocuments]);
+
+  useEffect(() => {
+    fetchDocuments(categoryKey);
+  }, [categoryKey]);
+
+  // В обработчике клика по документу
 
   const openDocument = (document) => {
     const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
@@ -82,6 +88,14 @@ const Documents = () => {
     }
   };
 
+  const handleDocumentClick = (document) => {
+    if (onSelectDocument) {
+      onSelectDocument(document);
+    } else {
+      openDocument(document);
+    }
+  };
+
   const confirmDelete = (id) => {
     Modal.confirm({
       title: "Вы уверены, что хотите удалить этот документ?",
@@ -121,7 +135,7 @@ const Documents = () => {
                     "Открываем документ с ПутьКФайлу:",
                     document.ПутьКФайлу
                   );
-                  openDocument(document);
+                  handleDocumentClick(document);
                 }}
               >
                 <Button
@@ -325,6 +339,3 @@ export default Documents;
 // };
 
 // export default Documents;
-
-
-// const requestUrl = `${SERVER_1C}/InformationRegister_connectionsOfElements/SliceLast(,Condition='element2 eq cast(guid'${userId}', 'Catalog_profile') and usage eq true')?$format=json&$expand=element1`;
