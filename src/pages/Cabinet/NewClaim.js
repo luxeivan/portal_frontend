@@ -1,5 +1,17 @@
-//ОБРАБОТКА ОШИБКИ
-import { Form, Typography, Button, Drawer, Descriptions, Flex, Breadcrumb } from "antd";
+import {
+  Form,
+  Typography,
+  Button,
+  Drawer,
+  Row,
+  Col,
+  Card,
+  Badge,
+  Flex,
+  Divider,
+  Tag,
+  Breadcrumb
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams,Link } from "react-router-dom";
 import useClaims from "../../stores/Cabinet/useClaims";
@@ -19,14 +31,18 @@ import GroupInput from "../../components/FormComponentsNew/GroupInput";
 import AddressInput from "../../components/FormComponentsNew/addressComponents/AddressInput";
 import ConfirmationDocumentNewInput from "../../components/FormComponentsNew/confirmationDocumentComponents/ConfirmationDocumentNewInput";
 import SnilsInput from "../../components/FormComponentsNew/SnilsInput";
-import ErrorModal from "../../components/ErrorModal"; // Импортируем ErrorModal
+import ErrorModal from "../../components/ErrorModal";
 import PriceInput from "../../components/FormComponentsNew/PriceInput";
 import FormulaInput from "../../components/FormComponentsNew/FormulaInput";
+import DocumentSelectModal from "../../components/FormComponentsNew/DocumentSelectModal";
+import { FileTextOutlined } from "@ant-design/icons";
 
 const { Title, Paragraph } = Typography;
 
 export default function NewClaim() {
   const [open, setOpen] = useState(false);
+  const [documentModalVisible, setDocumentModalVisible] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const chain = useServices((state) => state.chain);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
@@ -75,13 +91,51 @@ export default function NewClaim() {
         values[key] = moment(value).format();
       }
     }
-
     try {
       console.log("Пытаюсь понять откуда что приходит", values);
       await createClaim({ service: serviceItem.Ref_Key, values });
     } catch (err) {
       console.log(err.message || "Ошибка при создании заявки.");
       // setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
+    }
+
+    const attachedDocuments = [];
+    if (serviceItem.categoriesFiles) {
+      serviceItem.categoriesFiles.forEach((item) => {
+        const document = values[`document_${item.category_Key}`];
+        if (document) {
+          attachedDocuments.push({
+            categoryKey: item.category_Key,
+            document,
+          });
+          // *** Добавляем логирование здесь ***
+          console.log(
+            `Документ для категории ${item.categoryName} добавлен:`,
+            document
+          );
+        } else {
+          // *** Если документ не найден, тоже логируем ***
+          console.log(
+            `Документ для категории ${item.categoryName} не прикреплен`
+          );
+        }
+        delete values[`document_${item.category_Key}`];
+      });
+    }
+
+    // Готовим данные для отправки
+    const dataToSubmit = {
+      ...values,
+      attachedDocuments,
+    };
+
+    console.log("Данные для отправки заявки:", dataToSubmit);
+
+    try {
+      await createClaim({ service: serviceItem.Ref_Key, values: dataToSubmit });
+      // Дополнительная обработка при успехе
+    } catch (err) {
+      setError(err.message || "Ошибка при создании заявки.");
     }
   };
 
@@ -92,9 +146,24 @@ export default function NewClaim() {
   };
 
   const handlerChange = (changedValues) => {
-    console.log("changedValues: ", changedValues)
-  }
-  console.log(serviceItem)
+    console.log("changedValues: ", changedValues);
+  };
+
+  const handleSelectDocument = (categoryKey) => {
+    setSelectedCategory(categoryKey);
+    setDocumentModalVisible(true);
+  };
+
+  const handleDocumentSelected = (document) => {
+    console.log(
+      `Пользователь выбрал документ для категории ${selectedCategory}:`,
+      document
+    );
+    form.setFieldsValue({ [`document_${selectedCategory}`]: document });
+    setDocumentModalVisible(false);
+  };
+
+  console.log(serviceItem);
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet
@@ -129,7 +198,7 @@ export default function NewClaim() {
             onKeyDown={handleKeyDown}
             style={{ maxWidth: "800px", width: "100%", margin: "0 auto" }}
             labelWrap
-          // onValuesChange={handlerChange}
+            // onValuesChange={handlerChange}
           >
             {serviceItem.fields
               ?.sort((a, b) => a.lineNum - b.lineNum)
@@ -154,7 +223,10 @@ export default function NewClaim() {
                       howDepend={item.dependСondition}
                     />
                   );
-                if (item.component_Type.includes("TextInput") && item.component_Expanded.specialField === 'СНИЛС')
+                if (
+                  item.component_Type.includes("TextInput") &&
+                  item.component_Expanded.specialField === "СНИЛС"
+                )
                   return (
                     <SnilsInput
                       key={index}
@@ -253,7 +325,9 @@ export default function NewClaim() {
                     />
                   );
 
-                if (item.component_Type.includes("ConfirmationDocumentNewInput"))
+                if (
+                  item.component_Type.includes("ConfirmationDocumentNewInput")
+                )
                   return (
                     <ConfirmationDocumentNewInput
                       key={index}
@@ -301,13 +375,107 @@ export default function NewClaim() {
                   );
               })}
 
+            <Divider>Файлы</Divider>
+
+            <Row gutter={[16, 16]}>
+              {serviceItem.categoriesFiles &&
+                serviceItem.categoriesFiles.map((item, index) => (
+                  <Col xs={24} sm={12} md={8} key={index}>
+                    <Card
+                      bordered
+                      style={{
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        borderRadius: "8px",
+                        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                        backgroundColor: form.getFieldValue(
+                          `document_${item.category_Key}`
+                        )
+                          ? "#e6ffe6"
+                          : "#fff",
+                      }}
+                      bodyStyle={{
+                        display: "flex",
+                        flexDirection: "column",
+                        flex: 1,
+                      }}
+                    >
+                      {/* Верхняя часть карточки */}
+                      <div style={{ flex: 1 }}>
+                        {/* Заголовок с иконкой */}
+                        <Card.Meta
+                          avatar={
+                            <FileTextOutlined
+                              style={{ fontSize: "24px", color: "#1890ff" }}
+                            />
+                          }
+                          title={
+                            <div style={{ whiteSpace: "normal" }}>
+                              {item.categoryName}
+                            </div>
+                          }
+                          description={item.shortDescription || ""}
+                          style={{ marginBottom: 16 }}
+                        />
+                        {/* Отображение названия выбранного документа */}
+                        {form.getFieldValue(
+                          `document_${item.category_Key}`
+                        ) && (
+                          <div style={{ marginBottom: 16 }}>
+                            <strong>Документ:</strong>{" "}
+                            {
+                              form.getFieldValue(
+                                `document_${item.category_Key}`
+                              ).Description
+                            }
+                          </div>
+                        )}
+                      </div>
+                      {/* Нижняя часть карточки с плашкой и кнопкой */}
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        {form.getFieldValue(`document_${item.category_Key}`) ? (
+                          <Tag color="green" style={{ marginRight: "auto" }}>
+                            Прикреплено
+                          </Tag>
+                        ) : (
+                          <Tag color="red" style={{ marginRight: "auto" }}>
+                            Не прикреплено
+                          </Tag>
+                        )}
+                        <Button
+                          type="primary"
+                          style={{
+                            backgroundColor: "#0052cc",
+                            borderColor: "#0052cc",
+                          }}
+                          onClick={() =>
+                            handleSelectDocument(item.category_Key)
+                          }
+                        >
+                          {form.getFieldValue(`document_${item.category_Key}`)
+                            ? "Изменить"
+                            : "Выбрать"}
+                        </Button>
+                      </div>
+                    </Card>
+                  </Col>
+                ))}
+            </Row>
+
+            <DocumentSelectModal
+              visible={documentModalVisible}
+              onClose={() => setDocumentModalVisible(false)}
+              categoryKey={selectedCategory}
+              onSelectDocument={handleDocumentSelected}
+            />
+
             <Flex style={{ marginTop: 10 }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
                   {serviceItem.buttonText || "Подать заявку на услугу"}
                 </Button>
               </Form.Item>
-
             </Flex>
           </Form>
 
@@ -335,10 +503,9 @@ export default function NewClaim() {
         <ErrorModal
           visible={!!error}
           error={error}
-        // onClose={() => setError(null)} 
+          // onClose={() => setError(null)}
         />
       )}
     </div>
   );
 }
-
