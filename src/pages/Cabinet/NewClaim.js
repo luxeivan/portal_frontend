@@ -93,7 +93,8 @@ export default function NewClaim() {
       console.log("Пытаюсь понять откуда что приходит", values);
       await createClaim({ service: serviceItem.Ref_Key, values });
     } catch (err) {
-      setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
+      console.log(err.message || "Ошибка при создании заявки.");
+      // setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
     }
 
     const attachedDocuments = [];
