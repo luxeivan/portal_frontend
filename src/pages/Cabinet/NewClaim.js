@@ -1,7 +1,7 @@
 //ОБРАБОТКА ОШИБКИ
-import { Form, Typography, Button, Drawer, Descriptions, Flex } from "antd";
+import { Form, Typography, Button, Drawer, Descriptions, Flex, Breadcrumb } from "antd";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 import useClaims from "../../stores/Cabinet/useClaims";
 import useServices from "../../stores/useServices";
 import TextInput from "../../components/FormComponentsNew/TextInput";
@@ -27,6 +27,7 @@ const { Title, Paragraph } = Typography;
 
 export default function NewClaim() {
   const [open, setOpen] = useState(false);
+  const chain = useServices((state) => state.chain);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
   const isLoading = useServices((state) => state.isLoading);
@@ -39,7 +40,7 @@ export default function NewClaim() {
   const [error, setError] = useState(null); // Состояние для хранения ошибок
 
   useEffect(() => {
-    fetchServiceItem(id, { withChain: false, withFields: true });
+    fetchServiceItem(id, { withChain: true, withFields: true });
   }, []);
 
   useEffect(() => {
@@ -107,6 +108,18 @@ export default function NewClaim() {
       )}
       {!isLoading && serviceItem && (
         <>
+        <Breadcrumb
+          itemRender={(currentRoute) => {
+            return <Link to={currentRoute.href}>{currentRoute.title}</Link>
+          }}
+            items={
+              chain &&
+              chain.map((item) => ({
+                href: `/services/${item.Ref_Key}`,
+                title: item.Description,
+              }))
+            }
+          />
           <Title>{serviceItem.Description}</Title>
           <Form
             scrollToFirstError
