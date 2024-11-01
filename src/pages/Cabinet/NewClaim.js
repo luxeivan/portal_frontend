@@ -328,13 +328,37 @@ export default function NewClaim() {
               categoriesFiles={serviceItem.categoriesFiles}
             />
 
-            <Flex style={{ marginTop: 10 }}>
+            <div
+              style={{
+                marginTop: 20,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{
+                    backgroundColor: "#0052cc",
+                    borderColor: "#0052cc",
+                    padding: "10px 20px",
+                    fontSize: "16px",
+                    borderRadius: "8px",
+                  }}
+                >
+                  {serviceItem.buttonText || "Подать заявку на услугу"}
+                </Button>
+              </Form.Item>
+            </div>
+
+            {/* <Flex style={{ marginTop: 10 }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
                   {serviceItem.buttonText || "Подать заявку на услугу"}
                 </Button>
               </Form.Item>
-            </Flex>
+            </Flex> */}
           </Form>
 
           <Drawer
