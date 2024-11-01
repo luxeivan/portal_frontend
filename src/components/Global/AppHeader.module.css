@@ -1,9 +1,22 @@
-
 .rightMenu {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userEmail {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .mobileMenu {
   display: none;
   max-width: 50vw;
