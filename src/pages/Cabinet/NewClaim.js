@@ -39,7 +39,7 @@ export default function NewClaim() {
   const [error, setError] = useState(null); // Состояние для хранения ошибок
 
   useEffect(() => {
-    fetchServiceItem(id, {  withChain: false, withFields: true });
+    fetchServiceItem(id, { withChain: false, withFields: true });
   }, []);
 
   useEffect(() => {
@@ -79,7 +79,8 @@ export default function NewClaim() {
       console.log("Пытаюсь понять откуда что приходит", values);
       await createClaim({ service: serviceItem.Ref_Key, values });
     } catch (err) {
-      setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
+      console.log(err.message || "Ошибка при создании заявки.");
+      // setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
     }
   };
 
@@ -293,7 +294,7 @@ export default function NewClaim() {
                   {serviceItem.buttonText || "Подать заявку на услугу"}
                 </Button>
               </Form.Item>
-             
+
             </Flex>
           </Form>
 

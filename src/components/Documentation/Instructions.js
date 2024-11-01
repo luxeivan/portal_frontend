@@ -8,6 +8,7 @@ import xls from "../../img/docs/xls.svg";
 import rtf from "../../img/docs/rtf.svg";
 import axios from "axios";
 import styles from './Law.module.css'
+import politica_file from '../../files/politica.pdf'
 import { Typography } from "antd";
 import AppHelmet from "../Global/AppHelmet";
 
@@ -43,7 +44,7 @@ export default function Instructions() {
         <Typography.Title level={3}>Политики и регламенты</Typography.Title>
         <a
           className={styles.docLine}
-          href={'/#'}
+          href={politica_file}
           download=""
           rel="noopener noreferrer"
           target="_blank"
@@ -55,11 +56,11 @@ export default function Instructions() {
             />
           </div>
           <div className="docLine__wrapText">
-            <span className={styles.docLine__name}>Политика 1</span>
-            <span className={styles.docLine__fileInfo}>1 МБ</span>
+            <span className={styles.docLine__name}>Политика обработки персональных данных АО Мособлэнерго</span>
+            <span className={styles.docLine__fileInfo}>2.6 МБ</span>
           </div>
         </a>
-        <a
+        {/* <a
           className={styles.docLine}
           href={'/#'}
           download=""
@@ -76,7 +77,7 @@ export default function Instructions() {
             <span className={styles.docLine__name}>Политика 2</span>
             <span className={styles.docLine__fileInfo}>2 МБ</span>
           </div>
-        </a>
+        </a> */}
         <Typography.Title level={3}>Руководства пользователя</Typography.Title>
         <a
           className={styles.docLine}
