@@ -24,7 +24,7 @@ import logoBlue from "../../img/header/logoBlue.svg";
 import useGlobal from "../../stores/useGlobal";
 import useAuth from "../../stores/useAuth";
 import useNotifications from "../../stores/useNotifications";
-import useProfile from "../../stores/Cabinet/useProfile"; // Import profile store
+import useProfile from "../../stores/Cabinet/useProfile";
 import NotificationList from "../../components/FormComponentsNew/Notifications/NotificationPanel";
 import ModalBot from "./ModalBot";
 import styles from "./AppHeader.module.css";
@@ -59,7 +59,7 @@ export default function AppHeader() {
   const { darkMode, toggleDarkMode, currentPage, setCurrentPage } = useGlobal();
   const { auth, logout, toggleModal } = useAuth();
   const { getUnreadCount } = useNotifications();
-  const { profile, fetchProfile } = useProfile(); // Access profile and fetchProfile
+  const { profile, fetchProfile } = useProfile();
 
   const navigate = useNavigate();
 
