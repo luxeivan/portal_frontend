@@ -1,16 +1,4 @@
-import {
-  Form,
-  Typography,
-  Button,
-  Drawer,
-  Row,
-  Col,
-  Card,
-  Badge,
-  Flex,
-  Divider,
-  Tag,
-} from "antd";
+import { Form, Typography, Button, Drawer, Flex } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useClaims from "../../stores/Cabinet/useClaims";
@@ -33,15 +21,12 @@ import SnilsInput from "../../components/FormComponentsNew/SnilsInput";
 import ErrorModal from "../../components/ErrorModal";
 import PriceInput from "../../components/FormComponentsNew/PriceInput";
 import FormulaInput from "../../components/FormComponentsNew/FormulaInput";
-import DocumentSelectModal from "../../components/FormComponentsNew/DocumentSelectModal";
-import { FileTextOutlined } from "@ant-design/icons";
+import DocumentAttachments from "../../components/FormComponentsNew/DocumentAttachments";
 
 const { Title, Paragraph } = Typography;
 
 export default function NewClaim() {
   const [open, setOpen] = useState(false);
-  const [documentModalVisible, setDocumentModalVisible] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
   const isLoading = useServices((state) => state.isLoading);
@@ -51,7 +36,7 @@ export default function NewClaim() {
   const { id } = useParams();
   const [form] = Form.useForm();
 
-  const [error, setError] = useState(null); // Состояние для хранения ошибок
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchServiceItem(id, { withChain: false, withFields: true });
@@ -73,7 +58,6 @@ export default function NewClaim() {
   };
 
   const onFinish = async (values) => {
-    // console.log(values);
     for (const [key, value] of Object.entries(values)) {
       if (Array.isArray(value)) {
         values[key].forEach((element) => {
@@ -105,13 +89,11 @@ export default function NewClaim() {
             categoryKey: item.category_Key,
             document,
           });
-          // *** Добавляем логирование здесь ***
           console.log(
             `Документ для категории ${item.categoryName} добавлен:`,
             document
           );
         } else {
-          // *** Если документ не найден, тоже логируем ***
           console.log(
             `Документ для категории ${item.categoryName} не прикреплен`
           );
@@ -120,7 +102,6 @@ export default function NewClaim() {
       });
     }
 
-    // Готовим данные для отправки
     const dataToSubmit = {
       ...values,
       attachedDocuments,
@@ -130,7 +111,6 @@ export default function NewClaim() {
 
     try {
       await createClaim({ service: serviceItem.Ref_Key, values: dataToSubmit });
-      // Дополнительная обработка при успехе
     } catch (err) {
       setError(err.message || "Ошибка при создании заявки.");
     }
@@ -142,25 +122,8 @@ export default function NewClaim() {
     }
   };
 
-  const handlerChange = (changedValues) => {
-    console.log("changedValues: ", changedValues);
-  };
-
-  const handleSelectDocument = (categoryKey) => {
-    setSelectedCategory(categoryKey);
-    setDocumentModalVisible(true);
-  };
-
-  const handleDocumentSelected = (document) => {
-    console.log(
-      `Пользователь выбрал документ для категории ${selectedCategory}:`,
-      document
-    );
-    form.setFieldsValue({ [`document_${selectedCategory}`]: document });
-    setDocumentModalVisible(false);
-  };
-
   console.log(serviceItem);
+
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>
       <AppHelmet
@@ -360,99 +323,9 @@ export default function NewClaim() {
                   );
               })}
 
-            <Divider>Файлы</Divider>
-
-            <Row gutter={[16, 16]}>
-              {serviceItem.categoriesFiles &&
-                serviceItem.categoriesFiles.map((item, index) => (
-                  <Col xs={24} sm={12} md={8} key={index}>
-                    <Card
-                      bordered
-                      style={{
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        borderRadius: "8px",
-                        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-                        backgroundColor: form.getFieldValue(
-                          `document_${item.category_Key}`
-                        )
-                          ? "#e6ffe6"
-                          : "#fff",
-                      }}
-                      bodyStyle={{
-                        display: "flex",
-                        flexDirection: "column",
-                        flex: 1,
-                      }}
-                    >
-                      {/* Верхняя часть карточки */}
-                      <div style={{ flex: 1 }}>
-                        {/* Заголовок с иконкой */}
-                        <Card.Meta
-                          avatar={
-                            <FileTextOutlined
-                              style={{ fontSize: "24px", color: "#1890ff" }}
-                            />
-                          }
-                          title={
-                            <div style={{ whiteSpace: "normal" }}>
-                              {item.categoryName}
-                            </div>
-                          }
-                          description={item.shortDescription || ""}
-                          style={{ marginBottom: 16 }}
-                        />
-                        {/* Отображение названия выбранного документа */}
-                        {form.getFieldValue(
-                          `document_${item.category_Key}`
-                        ) && (
-                          <div style={{ marginBottom: 16 }}>
-                            <strong>Документ:</strong>{" "}
-                            {
-                              form.getFieldValue(
-                                `document_${item.category_Key}`
-                              ).Description
-                            }
-                          </div>
-                        )}
-                      </div>
-                      {/* Нижняя часть карточки с плашкой и кнопкой */}
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        {form.getFieldValue(`document_${item.category_Key}`) ? (
-                          <Tag color="green" style={{ marginRight: "auto" }}>
-                            Прикреплено
-                          </Tag>
-                        ) : (
-                          <Tag color="red" style={{ marginRight: "auto" }}>
-                            Не прикреплено
-                          </Tag>
-                        )}
-                        <Button
-                          type="primary"
-                          style={{
-                            backgroundColor: "#0052cc",
-                            borderColor: "#0052cc",
-                          }}
-                          onClick={() =>
-                            handleSelectDocument(item.category_Key)
-                          }
-                        >
-                          {form.getFieldValue(`document_${item.category_Key}`)
-                            ? "Изменить"
-                            : "Выбрать"}
-                        </Button>
-                      </div>
-                    </Card>
-                  </Col>
-                ))}
-            </Row>
-
-            <DocumentSelectModal
-              visible={documentModalVisible}
-              onClose={() => setDocumentModalVisible(false)}
-              categoryKey={selectedCategory}
-              onSelectDocument={handleDocumentSelected}
+            <DocumentAttachments
+              form={form}
+              categoriesFiles={serviceItem.categoriesFiles}
             />
 
             <Flex style={{ marginTop: 10 }}>
