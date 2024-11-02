@@ -82,40 +82,42 @@ export default function NewClaim() {
       // setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
     }
 
-    const attachedDocuments = [];
-    if (serviceItem.categoriesFiles) {
-      serviceItem.categoriesFiles.forEach((item) => {
-        const document = values[`document_${item.category_Key}`];
-        if (document) {
-          attachedDocuments.push({
-            categoryKey: item.category_Key,
-            document,
-          });
-          console.log(
-            `Документ для категории ${item.categoryName} добавлен:`,
-            document
-          );
-        } else {
-          console.log(
-            `Документ для категории ${item.categoryName} не прикреплен`
-          );
-        }
-        delete values[`document_${item.category_Key}`];
-      });
-    }
 
-    const dataToSubmit = {
-      ...values,
-      attachedDocuments,
-    };
+    // const attachedDocuments = [];
+    // if (serviceItem.categoriesFiles) {
+    //   serviceItem.categoriesFiles.forEach((item) => {
+    //     const document = values[`document_${item.category_Key}`];
+    //     if (document) {
+    //       attachedDocuments.push({
+    //         categoryKey: item.category_Key,
+    //         document,
+    //       });
+    //       console.log(
+    //         `Документ для категории ${item.categoryName} добавлен:`,
+    //         document
+    //       );
+    //     } else {
+    //       console.log(
+    //         `Документ для категории ${item.categoryName} не прикреплен`
+    //       );
+    //     }
+    //     delete values[`document_${item.category_Key}`];
+    //   });
+    // }
 
-    console.log("Данные для отправки заявки:", dataToSubmit);
+    // const dataToSubmit = {
+    //   ...values,
+    //   attachedDocuments,
+    // };
 
-    try {
-      await createClaim({ service: serviceItem.Ref_Key, values: dataToSubmit });
-    } catch (err) {
-      setError(err.message || "Ошибка при создании заявки.");
-    }
+    // console.log("Данные для отправки заявки:", dataToSubmit);
+
+    // try {
+    //   await createClaim({ service: serviceItem.Ref_Key, values: dataToSubmit });
+    // } catch (err) {
+    //   setError(err.message || "Ошибка при создании заявки.");
+    // }
+
   };
 
   const handleKeyDown = (event) => {
