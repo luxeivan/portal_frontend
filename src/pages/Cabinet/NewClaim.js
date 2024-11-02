@@ -1,19 +1,6 @@
-import {
-  Form,
-  Typography,
-  Button,
-  Drawer,
-  Row,
-  Col,
-  Card,
-  Badge,
-  Flex,
-  Divider,
-  Tag,
-  Breadcrumb
-} from "antd";
+import { Form, Typography, Button, Drawer, Flex, Breadcrumb } from "antd";
 import React, { useEffect, useState } from "react";
-import { useParams,Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import useClaims from "../../stores/Cabinet/useClaims";
 import useServices from "../../stores/useServices";
 import TextInput from "../../components/FormComponentsNew/TextInput";
@@ -40,8 +27,6 @@ const { Title, Paragraph } = Typography;
 
 export default function NewClaim() {
   const [open, setOpen] = useState(false);
-  const [documentModalVisible, setDocumentModalVisible] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const chain = useServices((state) => state.chain);
   const serviceItem = useServices((state) => state.serviceItem);
   const fetchServiceItem = useServices((state) => state.fetchServiceItem);
@@ -97,6 +82,7 @@ export default function NewClaim() {
       // setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
     }
 
+
     // const attachedDocuments = [];
     // if (serviceItem.categoriesFiles) {
     //   serviceItem.categoriesFiles.forEach((item) => {
@@ -131,6 +117,7 @@ export default function NewClaim() {
     // } catch (err) {
     //   setError(err.message || "Ошибка при создании заявки.");
     // }
+
   };
 
   const handleKeyDown = (event) => {
@@ -154,10 +141,10 @@ export default function NewClaim() {
       )}
       {!isLoading && serviceItem && (
         <>
-        <Breadcrumb
-          itemRender={(currentRoute) => {
-            return <Link to={currentRoute.href}>{currentRoute.title}</Link>
-          }}
+          <Breadcrumb
+            itemRender={(currentRoute) => {
+              return <Link to={currentRoute.href}>{currentRoute.title}</Link>;
+            }}
             items={
               chain &&
               chain.map((item) => ({
