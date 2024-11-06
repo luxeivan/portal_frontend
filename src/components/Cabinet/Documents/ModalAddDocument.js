@@ -60,7 +60,6 @@ export default function ModalAddDocument() {
   };
 
   const handleSaveDocument = async (values) => {
-    console.log("Значения перед отправкой:", values); // Логируем значения
     try {
       setLoading(true);
       const files = form.getFieldValue("fileDoc");
@@ -98,6 +97,7 @@ export default function ModalAddDocument() {
       console.log("Ответ от сервера после загрузки файла:", response.data); // Логируем ответ от сервера
 
       message.success("Документ успешно сохранен");
+      //Ниже пробросить категорию
       fetchDocuments();
       setOpenModalAdd(false);
       form.resetFields();

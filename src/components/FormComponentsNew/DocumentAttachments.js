@@ -21,6 +21,8 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
     setDocumentModalVisible(false);
   };
 
+  console.log("Категории в заявке categoriesFiles", categoriesFiles);
+
   return (
     <>
       <Divider>Файлы</Divider>
