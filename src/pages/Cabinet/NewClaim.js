@@ -22,6 +22,7 @@ import ErrorModal from "../../components/ErrorModal";
 import PriceInput from "../../components/FormComponentsNew/PriceInput";
 import FormulaInput from "../../components/FormComponentsNew/FormulaInput";
 import DocumentAttachments from "../../components/FormComponentsNew/DocumentAttachments";
+import { motion } from "framer-motion";
 
 const { Title, Paragraph } = Typography;
 
@@ -82,7 +83,6 @@ export default function NewClaim() {
       // setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
     }
 
-
     // const attachedDocuments = [];
     // if (serviceItem.categoriesFiles) {
     //   serviceItem.categoriesFiles.forEach((item) => {
@@ -117,7 +117,6 @@ export default function NewClaim() {
     // } catch (err) {
     //   setError(err.message || "Ошибка при создании заявки.");
     // }
-
   };
 
   const handleKeyDown = (event) => {
@@ -352,19 +351,24 @@ export default function NewClaim() {
               }}
             >
               <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  style={{
-                    backgroundColor: "#0052cc",
-                    borderColor: "#0052cc",
-                    padding: "10px 20px",
-                    fontSize: "16px",
-                    borderRadius: "8px",
-                  }}
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
-                  {serviceItem.buttonText || "Подать заявку на услугу"}
-                </Button>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    // style={{
+                    //   backgroundColor: "#0052cc",
+                    //   borderColor: "#0052cc",
+                    //   padding: "10px 20px",
+                    //   fontSize: "16px",
+                    //   borderRadius: "8px",
+                    // }}
+                  >
+                    {serviceItem.buttonText || "Подать заявку на услугу"}
+                  </Button>
+                </motion.div>
               </Form.Item>
             </div>
 
