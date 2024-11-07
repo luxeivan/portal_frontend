@@ -14,6 +14,8 @@ import ConfirmationDocumentNewInput from "./confirmationDocumentComponents/Confi
 import InnInput from "./InnInput";
 import moment from "moment";
 import SwitchInput from "./SwitchInput";
+import TextConcatenation from "./TextConcatenation";
+import FormulaInput from "./FormulaInput";
 
 export default function GroupInput({
   name = "name",
@@ -100,7 +102,7 @@ export default function GroupInput({
       </Flex>
 
       {items &&
-        <Descriptions size="small" style={{ width: "100%", marginBottom: "10px",border:0 }} items={items} column={1} bordered  />
+        <Descriptions size="small" style={{ width: "100%", marginBottom: "10px", border: 0 }} items={items} column={1} bordered />
       }
       <Form.Item
         name={name}
@@ -136,6 +138,11 @@ export default function GroupInput({
             // wrapperCol={{
             //   span: 18,
             // }}
+            // onValuesChange={(changedValues, allValues) => {
+            //   console.log("changedValues: ",changedValues);
+            //   console.log("allValues: ",changedValues);
+
+            // }}
             labelWrap
           >
 
@@ -155,10 +162,8 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                   />
                 );
@@ -169,10 +174,8 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                   />
                 );
@@ -183,10 +186,8 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                     inGroup
                   />
@@ -198,11 +199,9 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
-                    howDepend={item.dependСondition}                    
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
+                    howDepend={item.dependСondition}
                   />
                 );
 
@@ -212,10 +211,8 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                   />
                 );
@@ -225,10 +222,8 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                   />
                 );
@@ -242,12 +237,8 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine
-                        ? [nameTable, name, item.dependIdLine]
-                        : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                   />
                 );
@@ -257,10 +248,8 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                   />
                 );
@@ -270,10 +259,8 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                   />
                 );
@@ -283,10 +270,8 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                   />
                 );
@@ -297,10 +282,30 @@ export default function GroupInput({
                     key={index}
                     {...item.component_Expanded}
                     {...item}
-                    name={[name, item.idLine]}
-                    dependOf={
-                      item.dependIdLine ? [name, item.dependIdLine] : false
-                    }
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
+                    howDepend={item.dependСondition}
+                  />
+                );
+              if (item.component_Type.includes("componentsFormula"))
+                return (
+                  <FormulaInput
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
+                    howDepend={item.dependСondition}
+                  />
+                );
+              if (item.component_Type.includes("TextConcatenation"))
+                return (
+                  <TextConcatenation
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
                     howDepend={item.dependСondition}
                   />
                 );

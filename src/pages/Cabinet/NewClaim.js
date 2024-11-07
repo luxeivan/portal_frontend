@@ -22,6 +22,7 @@ import ErrorModal from "../../components/ErrorModal";
 import PriceInput from "../../components/FormComponentsNew/PriceInput";
 import FormulaInput from "../../components/FormComponentsNew/FormulaInput";
 import DocumentAttachments from "../../components/FormComponentsNew/DocumentAttachments";
+import TextConcatenation from "../../components/FormComponentsNew/TextConcatenation";
 
 const { Title, Paragraph } = Typography;
 
@@ -329,6 +330,17 @@ export default function NewClaim() {
                 if (item.component_Type.includes("componentsFormula"))
                   return (
                     <FormulaInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
+                if (item.component_Type.includes("TextConcatenation"))
+                  return (
+                    <TextConcatenation
                       key={index}
                       {...item.component_Expanded}
                       {...item}
