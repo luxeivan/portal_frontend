@@ -9,7 +9,7 @@ moment.locale("ru");
 export default function DateInput({ name = 'name', part = 'Дата', label = 'Label', defaultValue = false, disabled = false, placeholder = 'Пример', required = false, dependOf = false, howDepend = false }) {
     const form = Form.useFormInstance()
     const fieldDepends = Form.useWatch(dependOf, form)
-    console.log(part)
+    // console.log(part)
     const formElement = (
         <ConfigProvider locale={locale}>
 
