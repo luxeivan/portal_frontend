@@ -5,6 +5,7 @@ import {
   PlusOutlined,
   FilePdfOutlined,
   DeleteOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
@@ -13,7 +14,7 @@ import ModalAddDocument from "../../../components/Cabinet/Documents/ModalAddDocu
 
 const { Title, Text } = Typography;
 
-const Documents = ({ categoryKey, onSelectDocument }) => {
+const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
   const documents = useDocuments((state) => state.documents);
   const loadingDocuments = useDocuments((state) => state.loadingDocuments);
   const openModalAdd = useDocuments((state) => state.openModalAdd);
@@ -21,11 +22,9 @@ const Documents = ({ categoryKey, onSelectDocument }) => {
   const fetchDocuments = useDocuments((state) => state.fetchDocuments);
   const deleteDocument = useDocuments((state) => state.deleteDocument);
 
-
   useEffect(() => {
     fetchDocuments(categoryKey);
   }, [categoryKey, fetchDocuments]);
-
 
   const openDocument = (document) => {
     const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
@@ -134,17 +133,38 @@ const Documents = ({ categoryKey, onSelectDocument }) => {
                   handleDocumentClick(document);
                 }}
               >
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<DeleteOutlined />}
-                  size="small"
-                  style={{ position: "absolute", top: 10, right: 10 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    confirmDelete(document.Ref_Key);
-                  }}
-                />
+                {/* Показываем кнопку удаления только если не в модалке */}
+                {!isModal && (
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<DeleteOutlined />}
+                    size="small"
+                    style={{ position: "absolute", top: 10, right: 10 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      confirmDelete(document.Ref_Key);
+                    }}
+                  />
+                )}
+
+                {/* Добавляем иконку предпросмотра в модалке */}
+                {isModal && (
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<EyeOutlined />}
+                    size="small"
+                    style={{ position: "absolute", top: 10, right: 10 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openDocument(document);
+                    }}
+                  />
+                )}
+
+
+
                 <Text type="secondary" style={{ fontSize: "16px" }}>
                   Категория: {document.ВидФайла}
                 </Text>
@@ -185,4 +205,3 @@ const Documents = ({ categoryKey, onSelectDocument }) => {
 };
 
 export default Documents;
-
