@@ -36,10 +36,7 @@ export default function NumberInput({
         );
         if (field?.component_Expanded?.options) {
           setUnit({
-            [name]: field.component_Expanded.options.find(
-              (item) =>
-                item.value === form.getFieldValue(objectProp?.unit?.idLine)
-            ).unit,
+            [name]: field.component_Expanded.options.find((item) =>item.value === form.getFieldValue(objectProp?.unit?.idLine))?.unit,
           });
         }
       }
