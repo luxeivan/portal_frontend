@@ -44,35 +44,17 @@ export default function TextConcatenation({
     // console.log("keys: ",keys)
     const arrFormula = formula.split('+')
     formula = arrFormula.map(item => item.trim().replaceAll("\"", "")).join('')
-    let prevValues = {}
-    // Form.useWatch((values) => {
-    //     const temp = { formula }        
-    //     keys.forEach(item => {
-    //         temp[item] = values[item] ? values[item] : null
-    //         temp.formula = temp.formula.replace(item, values[item])
-    //     })
-    //     // if(set.has(1)) return
-    //     if (temp.formula !== values[name]) {
-    //         console.log("values: ", values)
-    //         console.log("prevValues: ", prevValues)
-    //         form.setFieldValue(name, temp.formula)
-    //     }
-    //     // if (prevValues[name] !== values[name]) {
-    //     //     form.setFieldValue(name, values[name])
-    //     // }
-    //     prevValues = values
-    //     console.log("formula: ", temp.formula)
-    // }, form);
-    // Form.useWatch(keys, form)
-
     let fieldDepends = Form.useWatch(dependOf, form);
     if (formula === '') return false;
+
+    let prevValues = {}
     // console.log('TextConcatenation')
     const formElement = (
         <Form.Item
             name={name}
             label={label}
             dependencies={keys}
+            initialValue={''}
             rules={[
                 {
                     required: required,
@@ -80,32 +62,34 @@ export default function TextConcatenation({
                 ({ getFieldsValue, setFieldValue }) => ({
                     validator(pole, value) {
                         const values = getFieldsValue(keys)
-
-                        // console.log("pole: ", pole);
-                        // console.log("value: ", value);
-                        // console.log("values: ", values);
-
                         const prevTemp = { formula }
                         const temp = { formula }
                         keys.forEach(item => {
                             prevTemp[item] = prevValues[item] ? prevValues[item] : null
                             prevTemp.formula = prevTemp.formula.replace(item, prevValues[item])
-
                             temp[item] = values[item] ? values[item] : null
                             temp.formula = temp.formula.replace(item, values[item])
                         })
-                        // if(set.has(1)) return
+                        prevTemp.formula = prevTemp.formula.trim().replace(/ +(?= )/g, '')
+                        temp.formula = temp.formula.trim().replace(/ +(?= )/g, '')
+
+                        console.log("value: ",value);
+
+                        // if (value === '') {
+                        //     form.setFieldValue(name, temp.formula)
+                        //     return prevValues = { ...values, value }
+                        // }
+                        // if (!prevValues?.value) {
+                        //     return prevValues = { ...values, value }
+                        // }
                         prevValues = { ...values, value }
                         if (temp.formula === prevTemp.formula) {
-                            // console.log('set')
-                            return form.setFieldValue(name, value)
+                            console.log(1212)
+                            form.setFieldValue(name, value)
+                            return Promise.resolve();
                         }
                         form.setFieldValue(name, temp.formula)
-
-                        // if (!value || getFieldValue(keys) === value) {
-                        //   return Promise.resolve();
-                        // }
-                        // return Promise.reject(new Error('The new password that you entered do not match!'));
+                        return Promise.resolve();
                     },
                 }),
             ]}
@@ -114,7 +98,7 @@ export default function TextConcatenation({
                 validateTrigger="onBlur"
                 suffix={objectProp?.currency?.position === "suffix" ? currency[objectProp.currency.idLine] : false}
                 addonAfter={objectProp?.currency?.position === "addonAfter" ? currency[objectProp.currency.idLine] : false}
-
+                placeholder={placeholder}
             />
         </Form.Item>
 
