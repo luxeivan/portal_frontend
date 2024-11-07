@@ -48,7 +48,7 @@ export default function GroupInput({
     mainForm.setFieldValue(name, values[name])
     setOpenModal(false)
     setItems(Fields.filter(item => !item.component_Type.includes('HiddenInput')).map(item => {
-      let val = values[name][item.idLine]
+      let val = values[item.idLine]
       if (item.component_Type.includes('LinkInput')) {
         // console.log(item.component_Expanded.options.find(option => option.value === val))
         val = item.component_Expanded.options.find(option => option.value === val)?.label
