@@ -21,6 +21,8 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
     setDocumentModalVisible(false);
   };
 
+  console.log("Категории в заявке categoriesFiles", categoriesFiles);
+
   return (
     <>
       <Divider>Файлы</Divider>
@@ -89,10 +91,10 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
                   )}
                   <Button
                     type="primary"
-                    style={{
-                      backgroundColor: "#0052cc",
-                      borderColor: "#0052cc",
-                    }}
+                    // style={{
+                    //   backgroundColor: "#0052cc",
+                    //   borderColor: "#0052cc",
+                    // }}
                     onClick={() => handleSelectDocument(item.category_Key)}
                   >
                     {form.getFieldValue(`document_${item.category_Key}`)

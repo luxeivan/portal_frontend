@@ -21,15 +21,11 @@ const Documents = ({ categoryKey, onSelectDocument }) => {
   const fetchDocuments = useDocuments((state) => state.fetchDocuments);
   const deleteDocument = useDocuments((state) => state.deleteDocument);
 
-  useEffect(() => {
-    fetchDocuments();
-  }, [fetchDocuments]);
 
   useEffect(() => {
     fetchDocuments(categoryKey);
-  }, [categoryKey]);
+  }, [categoryKey, fetchDocuments]);
 
-  // В обработчике клика по документу
 
   const openDocument = (document) => {
     const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
