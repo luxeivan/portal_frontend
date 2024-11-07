@@ -15,6 +15,7 @@ export default function ModalAddDocument() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [errorVisible, setErrorVisible] = useState(false);
+  const [uploaderKey, setUploaderKey] = useState(0);
 
   const [form] = Form.useForm();
 
@@ -57,7 +58,15 @@ export default function ModalAddDocument() {
     form.resetFields();
     setAllowedExtensions([]);
     setMaxFileSize(10);
+    setUploaderKey((prevKey) => prevKey + 1); // Добавлено
   };
+
+  // const handleModalClose = () => {
+  //   setOpenModalAdd(false);
+  //   form.resetFields();
+  //   setAllowedExtensions([]);
+  //   setMaxFileSize(10);
+  // };
 
   const handleSaveDocument = async (values) => {
     try {
@@ -97,11 +106,11 @@ export default function ModalAddDocument() {
       console.log("Ответ от сервера после загрузки файла:", response.data); // Логируем ответ от сервера
 
       message.success("Документ успешно сохранен");
-      //Ниже пробросить категорию
       fetchDocuments();
       setOpenModalAdd(false);
       form.resetFields();
       setLoading(false);
+      setUploaderKey((prevKey) => prevKey + 1); // Добавлено
     } catch (error) {
       console.error("Ошибка при сохранении документа:", error);
       setError(error.message || "Неизвестная ошибка");
@@ -109,6 +118,57 @@ export default function ModalAddDocument() {
       setLoading(false);
     }
   };
+
+  // const handleSaveDocument = async (values) => {
+  //   try {
+  //     setLoading(true);
+  //     const files = form.getFieldValue("fileDoc");
+
+  //     if (!files || files.length === 0) {
+  //       message.error("Пожалуйста, загрузите файлы");
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     const formData = new FormData();
+  //     formData.append("category", values.category);
+  //     formData.append("documentName", values.documentName);
+  //     formData.append("categoryKey", values.categoryKey);
+  //     console.log("FormData categoryKey:", values.categoryKey); // Логируем categoryKey
+
+  //     files.forEach((file) => {
+  //       formData.append("files", file.originFileObj);
+  //     });
+
+  //     const token = localStorage.getItem("jwt");
+
+  //     const response = await axios.post(
+  //       `${backServer}/api/cabinet/upload-file`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         withCredentials: true,
+  //       }
+  //     );
+
+  //     console.log("Ответ от сервера после загрузки файла:", response.data); // Логируем ответ от сервера
+
+  //     message.success("Документ успешно сохранен");
+  //     //Ниже пробросить категорию
+  //     fetchDocuments();
+  //     setOpenModalAdd(false);
+  //     form.resetFields();
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error("Ошибка при сохранении документа:", error);
+  //     setError(error.message || "Неизвестная ошибка");
+  //     setErrorVisible(true);
+  //     setLoading(false);
+  //   }
+  // };
 
   const closeModal = () => {
     setErrorVisible(false);
@@ -220,9 +280,15 @@ export default function ModalAddDocument() {
           </Form.Item>
 
           <UploaderInput
+            resetTrigger={uploaderKey} // Добавлено
             allowedExtensions={allowedExtensions}
             maxFileSize={maxFileSize}
           />
+
+          {/* <UploaderInput
+            allowedExtensions={allowedExtensions}
+            maxFileSize={maxFileSize}
+          /> */}
 
           <Form.Item>
             <Button type="primary" htmlType="submit" disabled={loading}>
