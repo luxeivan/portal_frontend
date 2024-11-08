@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Row, Col, Card, Button, Tag, Divider, theme } from "antd";
 import { FileTextOutlined } from "@ant-design/icons";
 import DocumentSelectModal from "./DocumentSelectModal";
-// Удаляем импорт useGlobal, так как будем использовать токены темы
 
 const DocumentAttachments = ({ form, categoriesFiles }) => {
   const [documentModalVisible, setDocumentModalVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const { token } = theme.useToken(); // Получаем токены темы
+  const { token } = theme.useToken();
 
   const handleSelectDocument = (categoryKey) => {
     setSelectedCategory(categoryKey);
