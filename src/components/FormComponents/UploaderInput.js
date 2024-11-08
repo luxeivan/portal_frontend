@@ -6,24 +6,27 @@ import iconPdf from "../../img/pdf.svg";
 const { Dragger } = Upload;
 
 export default function UploaderInput({
-  resetTrigger, // Добавлено
+  resetTrigger, 
   read,
   edit,
   value,
   depends,
   required = false,
-  allowedExtensions = [],
-  maxFileSize = 10, // По умолчанию 10 МБ
+  // allowedExtensions = [],
+  maxFileSize = 10, 
 }) {
   const [fileList, setFileList] = useState([]);
   const { colorPrimaryText } = theme.useToken().token;
   const form = Form.useFormInstance();
+  const allowedExtensions = ["JPEG", "JPG", "PDF", "HREF", "PNG"]
 
   const uploadProps = {
     multiple: true,
     beforeUpload: (file) => {
+      
       const fileExtension = file.name.split(".").pop().toUpperCase();
       const isSupported = allowedExtensions.includes(fileExtension);
+
       if (!isSupported) {
         message.error(`${file.name} не поддерживается`);
         return Upload.LIST_IGNORE;
@@ -50,6 +53,9 @@ export default function UploaderInput({
     },
   };
 
+  console.log("allowedExtensions", allowedExtensions);
+  
+
   // Добавленный эффект для сброса fileList при изменении resetTrigger
   useEffect(() => {
     setFileList([]);
@@ -60,7 +66,7 @@ export default function UploaderInput({
     // При смене допустимых расширений или размера очищаем список файлов
     setFileList([]);
     form.setFieldsValue({ fileDoc: [] });
-  }, [allowedExtensions, maxFileSize]);
+  }, [maxFileSize]);
 
   return (
     <Form.Item
