@@ -177,6 +177,7 @@ export default function NewClaim() {
             <Form
               scrollToFirstError
               form={form}
+              labelAlign="right"
               layout="vertical"
               onFinish={onFinish}
               onKeyDown={handleKeyDown}

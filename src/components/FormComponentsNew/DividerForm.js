@@ -4,7 +4,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../MarkDownText/MarkDownText";
 import styles from './divider.module.css'
 
-function DividerForm({ label, fullDescription, type = "horizontal", orientation = "center", }) {
+function DividerForm({ label, fullDescription, variant = "solid", borderColor = "gray", dashed = false, type = "horizontal", orientation = "center", }) {
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const showDrawer = () => setDrawerVisible(true);
@@ -13,9 +13,13 @@ function DividerForm({ label, fullDescription, type = "horizontal", orientation 
     return (
       <>
         <Divider
-          style={{ whiteSpace: "pre-wrap" }}
+          style={{ borderColor: "gray" }}
+          dashed={dashed}
+          variant={variant}
           type={type}
           orientation={orientation}
+          orientationMargin="0"
+          // style={{ whiteSpace: "pre-wrap" }}
         >
           {label}
           <InfoCircleOutlined
@@ -37,9 +41,13 @@ function DividerForm({ label, fullDescription, type = "horizontal", orientation 
     );
   } else {
     return <Divider
+      style={{ borderColor: "gray" }}
       orientation={orientation}
+      orientationMargin="0"
+      dashed={dashed}
+      variant={variant}
+      type={type}
       // style={{ whiteSpace: "pre-wrap" }}
-      type={"horizontal"}
     >{label}</Divider>
   }
 }

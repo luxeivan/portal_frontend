@@ -96,13 +96,55 @@ export default function GroupInput({
   // }))
   const formElement = (
     <div style={{ marginBottom: 20, backgroundColor: colorBgContainer, padding: 10, borderRadius: 10 }}>
-      
+      <Flex justify="space-between" align="center">
+        <Typography.Text style={{ fontWeight: 600 }}>{label}</Typography.Text>
+        <Button onClick={handlerOpenModal} color="default" variant="text" icon={<EditOutlined />}></Button>
+      </Flex>
 
       {items &&
         <Descriptions size="small" style={{ width: "100%", marginBottom: "10px", border: 0 }} items={items} column={1} bordered />
       }
-      
-      
+      <Form.Item
+        name={name}
+        rules={[
+          {
+            required: required,
+            message: "Это поле обязательное",
+          },
+        ]}
+      // style={{wi}}
+      >
+      </Form.Item>
+
+
+      <Modal
+        // closable={false}
+        title={label}
+        open={openModal}
+        onOk={handlerOnOK}
+        onCancel={handlerOnClose}
+        footer={null}
+      >
+        <>
+          <Form
+            scrollToFirstError
+            layout={layout}
+            onFinish={handlerOnOK}
+            onKeyDown={handleKeyDown}
+            style={{ maxWidth: 800, margin: "0 auto" }}
+            // labelCol={{
+            //   span: 6,
+            // }}
+            // wrapperCol={{
+            //   span: 18,
+            // }}
+            // onValuesChange={(changedValues, allValues) => {
+            //   console.log("changedValues: ",changedValues);
+            //   console.log("allValues: ",changedValues);
+
+            // }}
+            labelWrap
+          >
 
             {Fields.map((item, index) => {
               if (item.component_Type.includes("Divider"))
@@ -282,7 +324,26 @@ export default function GroupInput({
                   />
                 );
             })}
-           
+            <ConfigProvider
+              theme={{
+                components: {
+                  Button: {
+                    defaultBg: "#f37021",
+                    defaultColor: "#fff",
+                    defaultHoverBg: "#f59051",
+                    defaultHoverColor: "#fff",
+                    defaultHoverBorderColor: "#f59051"
+                    // defaultGhostColor: "#f37021",
+                  },
+                },
+              }}
+            >
+              {/* <Button ghost onClick={handlerOpenModal} block icon={<EditOutlined />}>Редактировать</Button> */}
+              <Button block htmlType="submit" icon={<SaveOutlined />}>Сохранить</Button>
+            </ConfigProvider>
+          </Form>
+        </>
+      </Modal>
 
     </div>
   );
