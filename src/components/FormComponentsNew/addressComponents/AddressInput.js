@@ -136,15 +136,7 @@ const AddressInput = ({
       {(fields, { add, remove }) => (
         <>
           <Flex align="center" wrap="wrap" style={{ maxWidth: "100%", marginBottom: 20 }} >
-            <ConfigProvider
-              theme={{
-                components: {
-                  Input: {
-                    // addonBg: colorPrimary
-                  },
-                },
-              }}
-            >
+            
               <Form.Item
                 name={'fullAddress'}
                 label={label}
@@ -160,7 +152,6 @@ const AddressInput = ({
                   <Input addonAfter={<EditOutlined onClick={openModal} />} />
                 </AutoComplete>
               </Form.Item>
-            </ConfigProvider>
             {/* <Button type="primary" onClick={openModal} >
               Моего адреса нет в списке
             </Button> */}
