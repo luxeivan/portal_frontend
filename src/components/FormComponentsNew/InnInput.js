@@ -64,7 +64,7 @@ export default function InnInput({
                 const arrKey = key.split('.');
                 let value = arrKey.reduce((nestedObj, key) => (nestedObj || {})[key], currentData);
                 console.log('value', value)
-                form.setFieldValue(inGroup ? [name[0], objProperties[key]] : objProperties[key], value)
+                form.setFieldValue(objProperties[key], value)
                 console.log('objProperties[key][1]', objProperties[key])
             }
         }
