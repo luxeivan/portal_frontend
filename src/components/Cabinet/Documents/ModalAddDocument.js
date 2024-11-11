@@ -25,7 +25,7 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
   const [categories, setCategories] = useState([]);
   const [allowedExtensions, setAllowedExtensions] = useState([]);
   const [maxFileSize, setMaxFileSize] = useState(10); // По умолчанию 10 МБ
-  const [isCategoryDisabled, setIsCategoryDisabled] = useState(false); // Добавлено
+  const [isCategoryDisabled, setIsCategoryDisabled] = useState(false);
 
   useEffect(() => {
     // Получение категорий документов из бэкенда
@@ -64,6 +64,7 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
         form.setFieldsValue({
           category: selectedCategory,
           documentName: selectedCategoryItem.category.label,
+          categoryKey: selectedCategoryItem.category.Ref_Key,
         });
         setIsCategoryDisabled(true); // Блокируем поля
         // Устанавливаем допустимые расширения и максимальный размер файла
@@ -72,9 +73,6 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
         );
         setAllowedExtensions(extensions);
         setMaxFileSize(parseInt(selectedCategoryItem.category.maximumSize));
-        form.setFieldsValue({
-          categoryKey: selectedCategoryItem.category.Ref_Key,
-        });
       }
     } else {
       setIsCategoryDisabled(false); // Разблокируем поля
@@ -154,7 +152,7 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
         footer={null}
       >
         <Form form={form} onFinish={handleSaveDocument}>
-          {/* Поле выбора категории */}
+          {/* Категория */}
           <Form.Item
             label="Категория"
             name="category"
@@ -177,87 +175,124 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
             </Select>
           </Form.Item>
 
-          {/* Поле выбора названия документа, зависит от категории */}
+          {/* Название */}
           <Form.Item
+            noStyle
             shouldUpdate={(prevValues, currentValues) =>
-              prevValues.category !== currentValues.category
+              prevValues.category !== currentValues.category ||
+              prevValues.documentName !== currentValues.documentName
             }
           >
             {() => {
               const selectedCategory = form.getFieldValue("category");
-              const filteredDocuments = categoriesData.filter(
-                (doc) => doc.category.Description === selectedCategory
-              );
+              const documentName = form.getFieldValue("documentName");
 
               return (
-                <Form.Item
-                  label="Название"
-                  name="documentName"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Пожалуйста, выберите название документа",
-                    },
-                  ]}
-                >
-                  <Select
-                    placeholder={
-                      selectedCategory
-                        ? "Выберите название документа"
-                        : "Сначала выберите категорию"
-                    }
-                    disabled={!selectedCategory || isCategoryDisabled}
-                    onChange={(value, option) => {
-                      // Устанавливаем допустимые расширения и максимальный размер
-                      const selectedDoc = filteredDocuments.find(
-                        (doc) => doc.category.label === value
-                      );
-                      if (selectedDoc) {
-                        const extensions = JSON.parse(
-                          selectedDoc.category.availableExtensionsJSON
-                        );
-                        setAllowedExtensions(extensions);
-                        setMaxFileSize(
-                          parseInt(selectedDoc.category.maximumSize)
-                        );
-                        form.setFieldsValue({
-                          categoryKey: selectedDoc.category.Ref_Key,
-                        });
-                      }
-                    }}
-                  >
-                    {filteredDocuments.map((doc) => (
-                      <Option
-                        key={doc.category.Ref_Key}
-                        value={doc.category.label}
+                <>
+                  {(selectedCategory || isCategoryDisabled) && (
+                    <Form.Item
+                      label="Название"
+                      name="documentName"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Пожалуйста, выберите название документа",
+                        },
+                      ]}
+                    >
+                      <Select
+                        placeholder={
+                          selectedCategory
+                            ? "Выберите название документа"
+                            : "Сначала выберите категорию"
+                        }
+                        disabled={!selectedCategory || isCategoryDisabled}
+                        onChange={(value, option) => {
+                          // Устанавливаем допустимые расширения и максимальный размер
+                          const filteredDocuments = categoriesData.filter(
+                            (doc) =>
+                              doc.category.Description === selectedCategory
+                          );
+                          const selectedDoc = filteredDocuments.find(
+                            (doc) => doc.category.label === value
+                          );
+                          if (selectedDoc) {
+                            const extensions = JSON.parse(
+                              selectedDoc.category.availableExtensionsJSON
+                            );
+                            setAllowedExtensions(extensions);
+                            setMaxFileSize(
+                              parseInt(selectedDoc.category.maximumSize)
+                            );
+                            form.setFieldsValue({
+                              categoryKey: selectedDoc.category.Ref_Key,
+                            });
+                          }
+                        }}
                       >
-                        {doc.category.label}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
+                        {categoriesData
+                          .filter(
+                            (doc) =>
+                              doc.category.Description === selectedCategory
+                          )
+                          .map((doc) => (
+                            <Option
+                              key={doc.category.Ref_Key}
+                              value={doc.category.label}
+                            >
+                              {doc.category.label}
+                            </Option>
+                          ))}
+                      </Select>
+                    </Form.Item>
+                  )}
+                </>
               );
             }}
           </Form.Item>
 
-          <Form.Item name="categoryKey" hidden>
-            <input type="hidden" />
-          </Form.Item>
+          {/* UploaderInput и кнопка сохранения */}
+          <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.documentName !== currentValues.documentName
+            }
+          >
+            {() => {
+              const documentName = form.getFieldValue("documentName");
 
-          <UploaderInput
-            resetTrigger={uploaderKey}
-            allowedExtensions={allowedExtensions}
-            maxFileSize={maxFileSize}
-          />
+              return (
+                <>
+                  {(documentName || isCategoryDisabled) && (
+                    <>
+                      <Form.Item name="categoryKey" hidden>
+                        <input type="hidden" />
+                      </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" disabled={loading}>
-              Сохранить файлы
-            </Button>
+                      <UploaderInput
+                        resetTrigger={uploaderKey}
+                        allowedExtensions={allowedExtensions}
+                        maxFileSize={maxFileSize}
+                      />
+
+                      <Form.Item>
+                        <Button
+                          type="primary"
+                          htmlType="submit"
+                          disabled={loading}
+                        >
+                          Сохранить файлы
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </>
+              );
+            }}
           </Form.Item>
         </Form>
+        <ErrorModal visible={errorVisible} error={error} onClose={closeModal} />
       </Modal>
-      <ErrorModal visible={errorVisible} error={error} onClose={closeModal} />
     </>
   );
 }
@@ -289,6 +324,7 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
 //   const [categories, setCategories] = useState([]);
 //   const [allowedExtensions, setAllowedExtensions] = useState([]);
 //   const [maxFileSize, setMaxFileSize] = useState(10); // По умолчанию 10 МБ
+//   const [isCategoryDisabled, setIsCategoryDisabled] = useState(false); // Добавлено
 
 //   useEffect(() => {
 //     // Получение категорий документов из бэкенда
@@ -324,14 +360,23 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
 //       );
 //       if (selectedCategoryItem) {
 //         const selectedCategory = selectedCategoryItem.category.Description;
-//         form.setFieldsValue({ category: selectedCategory });
-//         // Также устанавливаем допустимые расширения и максимальный размер файла
+//         form.setFieldsValue({
+//           category: selectedCategory,
+//           documentName: selectedCategoryItem.category.label,
+//         });
+//         setIsCategoryDisabled(true); // Блокируем поля
+//         // Устанавливаем допустимые расширения и максимальный размер файла
 //         const extensions = JSON.parse(
 //           selectedCategoryItem.category.availableExtensionsJSON
 //         );
 //         setAllowedExtensions(extensions);
 //         setMaxFileSize(parseInt(selectedCategoryItem.category.maximumSize));
+//         form.setFieldsValue({
+//           categoryKey: selectedCategoryItem.category.Ref_Key,
+//         });
 //       }
+//     } else {
+//       setIsCategoryDisabled(false); // Разблокируем поля
 //     }
 //   }, [categoryKey, categoriesData, form]);
 
@@ -344,7 +389,8 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
 //     form.resetFields();
 //     setAllowedExtensions([]);
 //     setMaxFileSize(10);
-//     setUploaderKey((prevKey) => prevKey + 1); // Добавлено
+//     setUploaderKey((prevKey) => prevKey + 1);
+//     setIsCategoryDisabled(false); // Сбрасываем блокировку полей
 //   };
 
 //   const handleSaveDocument = async (values) => {
@@ -362,7 +408,6 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
 //       formData.append("category", values.category);
 //       formData.append("documentName", values.documentName);
 //       formData.append("categoryKey", values.categoryKey);
-//       console.log("FormData categoryKey:", values.categoryKey); // Логируем categoryKey
 
 //       files.forEach((file) => {
 //         formData.append("files", file.originFileObj);
@@ -382,13 +427,11 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
 //         }
 //       );
 
-//       console.log("Ответ от сервера после загрузки файла:", response.data); // Логируем ответ от сервера
-
 //       message.success("Документ успешно сохранен");
 //       fetchDocuments(categoryKey);
 //       handleModalClose();
 //       setLoading(false);
-//       setUploaderKey((prevKey) => prevKey + 1); // Добавлено
+//       setUploaderKey((prevKey) => prevKey + 1);
 //     } catch (error) {
 //       console.error("Ошибка при сохранении документа:", error);
 //       setError(error.message || "Неизвестная ошибка");
@@ -421,7 +464,10 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
 //               },
 //             ]}
 //           >
-//             <Select placeholder="Выберите категорию">
+//             <Select
+//               placeholder="Выберите категорию"
+//               disabled={isCategoryDisabled}
+//             >
 //               {categories.map((category, index) => (
 //                 <Option key={index} value={category}>
 //                   {category}
@@ -459,7 +505,7 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
 //                         ? "Выберите название документа"
 //                         : "Сначала выберите категорию"
 //                     }
-//                     disabled={!selectedCategory}
+//                     disabled={!selectedCategory || isCategoryDisabled}
 //                     onChange={(value, option) => {
 //                       // Устанавливаем допустимые расширения и максимальный размер
 //                       const selectedDoc = filteredDocuments.find(
@@ -476,15 +522,6 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
 //                         form.setFieldsValue({
 //                           categoryKey: selectedDoc.category.Ref_Key,
 //                         });
-//                         console.log("Допустимые расширения:", extensions); // Логируем допустимые расширения
-//                         console.log(
-//                           "Максимальный размер файла:",
-//                           selectedDoc.category.maximumSize
-//                         ); // Логируем максимальный размер
-//                         console.log(
-//                           "Выбранный categoryKey:",
-//                           selectedDoc.category.Ref_Key
-//                         ); // Логируем categoryKey
 //                       }
 //                     }}
 //                   >
@@ -507,314 +544,10 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
 //           </Form.Item>
 
 //           <UploaderInput
-//             resetTrigger={uploaderKey} // Добавлено
+//             resetTrigger={uploaderKey}
 //             allowedExtensions={allowedExtensions}
 //             maxFileSize={maxFileSize}
 //           />
-
-//           <Form.Item>
-//             <Button type="primary" htmlType="submit" disabled={loading}>
-//               Сохранить файлы
-//             </Button>
-//           </Form.Item>
-//         </Form>
-//       </Modal>
-//       <ErrorModal visible={errorVisible} error={error} onClose={closeModal} />
-//     </>
-//   );
-// }
-
-// import React, { useState, useEffect } from "react";
-// import { Modal, Button, message, Form, Select } from "antd";
-// import axios from "axios";
-// import useDocuments from "../../../stores/Cabinet/useDocuments";
-// import UploaderInput from "../../FormComponents/UploaderInput";
-// import ErrorModal from "../../ErrorModal";
-
-// const { Option } = Select;
-// const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
-
-// export default function ModalAddDocument() {
-//   const openModalAdd = useDocuments((state) => state.openModalAdd);
-//   const setOpenModalAdd = useDocuments((state) => state.setOpenModalAdd);
-//   const fetchDocuments = useDocuments((state) => state.fetchDocuments);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState(null);
-//   const [errorVisible, setErrorVisible] = useState(false);
-//   const [uploaderKey, setUploaderKey] = useState(0);
-
-//   const [form] = Form.useForm();
-
-//   const token = localStorage.getItem("jwt");
-
-//   const [categoriesData, setCategoriesData] = useState([]);
-//   const [categories, setCategories] = useState([]);
-//   const [allowedExtensions, setAllowedExtensions] = useState([]);
-//   const [maxFileSize, setMaxFileSize] = useState(10); // По умолчанию 10 МБ
-
-//   useEffect(() => {
-//     // Получение категорий документов из бэкенда
-//     const fetchCategories = async () => {
-//       try {
-//         const response = await axios.get(
-//           `${backServer}/api/cabinet/documents/categories`,
-//           {
-//             headers: {
-//               Authorization: `Bearer ${token}`,
-//             },
-//             withCredentials: true,
-//           }
-//         );
-//         setCategoriesData(response.data.categories);
-//         // Извлекаем уникальные категории
-//         const uniqueCategories = response.data.categories.map(
-//           (item) => item.category.Description
-//         );
-//         setCategories(uniqueCategories);
-//       } catch (error) {
-//         console.error("Ошибка при загрузке категорий документов:", error);
-//       }
-//     };
-
-//     fetchCategories();
-//   }, [token]);
-
-//   const handleModalClose = () => {
-//     setOpenModalAdd(false);
-//     form.resetFields();
-//     setAllowedExtensions([]);
-//     setMaxFileSize(10);
-//     setUploaderKey((prevKey) => prevKey + 1); // Добавлено
-//   };
-
-//   // const handleModalClose = () => {
-//   //   setOpenModalAdd(false);
-//   //   form.resetFields();
-//   //   setAllowedExtensions([]);
-//   //   setMaxFileSize(10);
-//   // };
-
-//   const handleSaveDocument = async (values) => {
-//     try {
-//       setLoading(true);
-//       const files = form.getFieldValue("fileDoc");
-
-//       if (!files || files.length === 0) {
-//         message.error("Пожалуйста, загрузите файлы");
-//         setLoading(false);
-//         return;
-//       }
-
-//       const formData = new FormData();
-//       formData.append("category", values.category);
-//       formData.append("documentName", values.documentName);
-//       formData.append("categoryKey", values.categoryKey);
-//       console.log("FormData categoryKey:", values.categoryKey); // Логируем categoryKey
-
-//       files.forEach((file) => {
-//         formData.append("files", file.originFileObj);
-//       });
-
-//       const token = localStorage.getItem("jwt");
-
-//       const response = await axios.post(
-//         `${backServer}/api/cabinet/upload-file`,
-//         formData,
-//         {
-//           headers: {
-//             "Content-Type": "multipart/form-data",
-//             Authorization: `Bearer ${token}`,
-//           },
-//           withCredentials: true,
-//         }
-//       );
-
-//       console.log("Ответ от сервера после загрузки файла:", response.data); // Логируем ответ от сервера
-
-//       message.success("Документ успешно сохранен");
-//       fetchDocuments();
-//       setOpenModalAdd(false);
-//       form.resetFields();
-//       setLoading(false);
-//       setUploaderKey((prevKey) => prevKey + 1); // Добавлено
-//     } catch (error) {
-//       console.error("Ошибка при сохранении документа:", error);
-//       setError(error.message || "Неизвестная ошибка");
-//       setErrorVisible(true);
-//       setLoading(false);
-//     }
-//   };
-
-//   // const handleSaveDocument = async (values) => {
-//   //   try {
-//   //     setLoading(true);
-//   //     const files = form.getFieldValue("fileDoc");
-
-//   //     if (!files || files.length === 0) {
-//   //       message.error("Пожалуйста, загрузите файлы");
-//   //       setLoading(false);
-//   //       return;
-//   //     }
-
-//   //     const formData = new FormData();
-//   //     formData.append("category", values.category);
-//   //     formData.append("documentName", values.documentName);
-//   //     formData.append("categoryKey", values.categoryKey);
-//   //     console.log("FormData categoryKey:", values.categoryKey); // Логируем categoryKey
-
-//   //     files.forEach((file) => {
-//   //       formData.append("files", file.originFileObj);
-//   //     });
-
-//   //     const token = localStorage.getItem("jwt");
-
-//   //     const response = await axios.post(
-//   //       `${backServer}/api/cabinet/upload-file`,
-//   //       formData,
-//   //       {
-//   //         headers: {
-//   //           "Content-Type": "multipart/form-data",
-//   //           Authorization: `Bearer ${token}`,
-//   //         },
-//   //         withCredentials: true,
-//   //       }
-//   //     );
-
-//   //     console.log("Ответ от сервера после загрузки файла:", response.data); // Логируем ответ от сервера
-
-//   //     message.success("Документ успешно сохранен");
-//   //     //Ниже пробросить категорию
-//   //     fetchDocuments();
-//   //     setOpenModalAdd(false);
-//   //     form.resetFields();
-//   //     setLoading(false);
-//   //   } catch (error) {
-//   //     console.error("Ошибка при сохранении документа:", error);
-//   //     setError(error.message || "Неизвестная ошибка");
-//   //     setErrorVisible(true);
-//   //     setLoading(false);
-//   //   }
-//   // };
-
-//   const closeModal = () => {
-//     setErrorVisible(false);
-//   };
-
-//   return (
-//     <>
-//       <Modal
-//         title="Загрузить новый документ"
-//         open={openModalAdd}
-//         onCancel={handleModalClose}
-//         footer={null}
-//       >
-//         <Form form={form} onFinish={handleSaveDocument}>
-//           {/* Поле выбора категории */}
-//           <Form.Item
-//             label="Категория"
-//             name="category"
-//             rules={[
-//               {
-//                 required: true,
-//                 message: "Пожалуйста, выберите категорию документа",
-//               },
-//             ]}
-//           >
-//             <Select placeholder="Выберите категорию">
-//               {categories.map((category, index) => (
-//                 <Option key={index} value={category}>
-//                   {category}
-//                 </Option>
-//               ))}
-//             </Select>
-//           </Form.Item>
-
-//           {/* Поле выбора названия документа, зависит от категории */}
-//           <Form.Item
-//             shouldUpdate={(prevValues, currentValues) =>
-//               prevValues.category !== currentValues.category
-//             }
-//           >
-//             {() => {
-//               const selectedCategory = form.getFieldValue("category");
-//               const filteredDocuments = categoriesData.filter(
-//                 (doc) => doc.category.Description === selectedCategory
-//               );
-
-//               return (
-//                 <Form.Item
-//                   label="Название"
-//                   name="documentName"
-//                   rules={[
-//                     {
-//                       required: true,
-//                       message: "Пожалуйста, выберите название документа",
-//                     },
-//                   ]}
-//                 >
-//                   <Select
-//                     placeholder={
-//                       selectedCategory
-//                         ? "Выберите название документа"
-//                         : "Сначала выберите категорию"
-//                     }
-//                     disabled={!selectedCategory}
-//                     onChange={(value, option) => {
-//                       // Устанавливаем допустимые расширения и максимальный размер
-//                       const selectedDoc = filteredDocuments.find(
-//                         (doc) => doc.category.label === value
-//                       );
-//                       if (selectedDoc) {
-//                         const extensions = JSON.parse(
-//                           selectedDoc.category.availableExtensionsJSON
-//                         );
-//                         setAllowedExtensions(extensions);
-//                         setMaxFileSize(
-//                           parseInt(selectedDoc.category.maximumSize)
-//                         );
-//                         form.setFieldsValue({
-//                           categoryKey: selectedDoc.category.Ref_Key,
-//                         });
-//                         console.log("Допустимые расширения:", extensions); // Логируем допустимые расширения
-//                         console.log(
-//                           "Максимальный размер файла:",
-//                           selectedDoc.category.maximumSize
-//                         ); // Логируем максимальный размер
-//                         console.log(
-//                           "Выбранный categoryKey:",
-//                           selectedDoc.category.Ref_Key
-//                         ); // Логируем categoryKey
-//                       }
-//                     }}
-//                   >
-//                     {filteredDocuments.map((doc) => (
-//                       <Option
-//                         key={doc.category.Ref_Key}
-//                         value={doc.category.label}
-//                       >
-//                         {doc.category.label}
-//                       </Option>
-//                     ))}
-//                   </Select>
-//                 </Form.Item>
-//               );
-//             }}
-//           </Form.Item>
-
-//           <Form.Item name="categoryKey" hidden>
-//             <input type="hidden" />
-//           </Form.Item>
-
-//           <UploaderInput
-//             resetTrigger={uploaderKey} // Добавлено
-//             allowedExtensions={allowedExtensions}
-//             maxFileSize={maxFileSize}
-//           />
-
-//           {/* <UploaderInput
-//             allowedExtensions={allowedExtensions}
-//             maxFileSize={maxFileSize}
-//           /> */}
 
 //           <Form.Item>
 //             <Button type="primary" htmlType="submit" disabled={loading}>
