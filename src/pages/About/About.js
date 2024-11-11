@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Flex, Image, List, Typography, Button } from "antd";
+import { Flex, Image, List, Typography, Button, Form, Input, Tabs, ConfigProvider } from "antd";
 import styles from "./About.module.css";
 import mosoblik from "../../img/about/mosoblik.png";
 import mosoblikShadow from "../../img/about/mosoblik_shadow.png";
@@ -11,6 +11,7 @@ import Preloader from "../../components/Main/Preloader";
 const { Title, Paragraph } = Typography;
 
 export default function About() {
+  const [activeKey, setActiveKey] = useState(null)
   const { darkMode } = useGlobal();
   const navigate = useNavigate();
 
@@ -19,12 +20,118 @@ export default function About() {
     navigate("/game");
   };
 
+  const items = [
+    {
+      key: 'Form1',
+      label: 'Form1',
+      children: <Form name="Form1">
+        <Form.Item
+          name={"form1_input1"}
+          label={"form1_input1"}
+          rules={[
+            {
+              required: true
+            }
+          ]}
+        >
+
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name={"form1_input2"}
+          label={"form1_input2"}
+        >
+          <Input />
+        </Form.Item>
+        <Button htmlType="submit">Save1</Button>
+      </Form>,
+    },
+    {
+      key: 'Form2',
+      label: 'Form2',
+      children: <Form name="Form2">
+        <Form.Item
+          name={"form2_input1"}
+          label={"form2_input1"}
+          rules={[
+            {
+              required: true
+            }
+          ]}
+        >
+
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name={"form2_input2"}
+          label={"form2_input2"}
+        >
+          <Input />
+        </Form.Item>
+        <Button htmlType="submit">Save2</Button>
+      </Form>,
+    },
+    {
+      key: '3',
+      label: 'Tab 3',
+      children: 'Content of Tab Pane 3',
+    },
+  ];
+  useEffect(() => {
+    setActiveKey(items[0].key)
+  }, [])
+  const onChangeTab = (key) => {
+    console.log(key);
+    setActiveKey(key)
+  };
   return (
     <>
       <AppHelmet title={"О нас"} desc={"Информация о компании"} />
       <div>
         <Title level={1}>О компании Мособлэнерго</Title>
         <Preloader />
+        <Form.Provider
+          onFormFinish={async (name, { forms, values }) => {
+            console.log("forms", forms)
+            console.log("values", values)
+            forms.Form1.validateFields().then(result => console.log("form1Validating", result)).catch(result => {
+              console.log("Error_form1Validating", result)
+              setActiveKey("Form1")
+            })
+            forms.Form2.validateFields().then(result => console.log("form2Validating", result)).catch(result => {
+              console.log("Error_form1Validating", result)
+              setActiveKey("Form2")
+            })
+
+
+            if (name === 'form1') {
+              // Do something...
+            }
+          }}
+        >
+
+
+          <Tabs renderTabBar={(props, DefaultTabBar) => (
+            <Flex
+            vertical
+              offsetTop={64}
+              offsetBottom={20}
+              style={{
+                zIndex: 1,
+              }}
+              className="qwerty"
+            >
+              123
+              <DefaultTabBar
+                {...props}
+                style={{
+                  background: "green",
+                }}
+              />
+            </Flex>
+          )} type="card" activeKey={activeKey} items={items} onChange={onChangeTab} />
+
+        </Form.Provider>
         <Flex wrap="wrap">
           <div className={styles.textArea}>
             <div>
