@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Card, Button, Modal, message } from "antd";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import {
   PlusOutlined,
   FilePdfOutlined,
   DeleteOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
@@ -13,7 +14,8 @@ import ModalAddDocument from "../../../components/Cabinet/Documents/ModalAddDocu
 
 const { Title, Text } = Typography;
 
-const Documents = ({ categoryKey, onSelectDocument }) => {
+const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
+  const [modalCategoryKey, setModalCategoryKey] = useState(null);
   const documents = useDocuments((state) => state.documents);
   const loadingDocuments = useDocuments((state) => state.loadingDocuments);
   const openModalAdd = useDocuments((state) => state.openModalAdd);
@@ -21,11 +23,9 @@ const Documents = ({ categoryKey, onSelectDocument }) => {
   const fetchDocuments = useDocuments((state) => state.fetchDocuments);
   const deleteDocument = useDocuments((state) => state.deleteDocument);
 
-
   useEffect(() => {
     fetchDocuments(categoryKey);
   }, [categoryKey, fetchDocuments]);
-
 
   const openDocument = (document) => {
     const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
@@ -104,6 +104,15 @@ const Documents = ({ categoryKey, onSelectDocument }) => {
     });
   };
 
+  const handleAddDocument = () => {
+    setOpenModalAdd(true);
+    if (isModal) {
+      setModalCategoryKey(categoryKey);
+    } else {
+      setModalCategoryKey(null);
+    }
+  };
+
   return (
     <div>
       <AppHelmet title={"Документы"} desc={"Документы"} />
@@ -134,17 +143,36 @@ const Documents = ({ categoryKey, onSelectDocument }) => {
                   handleDocumentClick(document);
                 }}
               >
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<DeleteOutlined />}
-                  size="small"
-                  style={{ position: "absolute", top: 10, right: 10 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    confirmDelete(document.Ref_Key);
-                  }}
-                />
+                {/* Показываем кнопку удаления только если не в модалке */}
+                {!isModal && (
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<DeleteOutlined />}
+                    size="small"
+                    style={{ position: "absolute", top: 10, right: 10 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      confirmDelete(document.Ref_Key);
+                    }}
+                  />
+                )}
+
+                {/* Добавляем иконку предпросмотра в модалке */}
+                {isModal && (
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<EyeOutlined />}
+                    size="small"
+                    style={{ position: "absolute", top: 10, right: 10 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openDocument(document);
+                    }}
+                  />
+                )}
+
                 <Text type="secondary" style={{ fontSize: "16px" }}>
                   Категория: {document.ВидФайла}
                 </Text>
@@ -162,7 +190,7 @@ const Documents = ({ categoryKey, onSelectDocument }) => {
               </Card>
             );
           })}
-        <Card
+        {/* <Card
           hoverable
           style={{
             width: 250,
@@ -174,11 +202,29 @@ const Documents = ({ categoryKey, onSelectDocument }) => {
           onClick={() => setOpenModalAdd(true)}
         >
           <PlusOutlined style={{ fontSize: "24px" }} />
+        </Card> */}
+        <Card
+          hoverable
+          style={{
+            width: 250,
+            height: 250,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={handleAddDocument} // Изменено
+        >
+          <PlusOutlined style={{ fontSize: "24px" }} />
         </Card>
       </div>
+      {/* <ModalAddDocument
+        visible={openModalAdd}
+        onClose={() => setOpenModalAdd(false)}
+      /> */}
       <ModalAddDocument
         visible={openModalAdd}
         onClose={() => setOpenModalAdd(false)}
+        categoryKey={modalCategoryKey} // Передаем modalCategoryKey
       />
     </div>
   );
@@ -193,6 +239,7 @@ export default Documents;
 //   PlusOutlined,
 //   FilePdfOutlined,
 //   DeleteOutlined,
+//   EyeOutlined,
 // } from "@ant-design/icons";
 // import SceletonCard from "../../../components/SceletonCard";
 // import useDocuments from "../../../stores/Cabinet/useDocuments";
@@ -201,7 +248,7 @@ export default Documents;
 
 // const { Title, Text } = Typography;
 
-// const Documents = () => {
+// const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
 //   const documents = useDocuments((state) => state.documents);
 //   const loadingDocuments = useDocuments((state) => state.loadingDocuments);
 //   const openModalAdd = useDocuments((state) => state.openModalAdd);
@@ -210,36 +257,72 @@ export default Documents;
 //   const deleteDocument = useDocuments((state) => state.deleteDocument);
 
 //   useEffect(() => {
-//     fetchDocuments();
-//   }, [fetchDocuments]);
-
-//   console.log("document", document);
+//     fetchDocuments(categoryKey);
+//   }, [categoryKey, fetchDocuments]);
 
 //   const openDocument = (document) => {
 //     const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
-//     const fileUrl = `${backServer}/api/cabinet/get-file/${document.Ref_Key}`;
-//     console.log("fileUrl", fileUrl);
 
-//     const newWindow = window.open("", "_blank");
+//     if (document.ПутьКФайлу) {
+//       // Если есть ПутьКФайлу, используем маршрут по имени файла
+//       const fileName = document.ПутьКФайлу.split("/")[1]; // Извлекаем имя файла
+//       const fileUrl = `${backServer}/api/cabinet/get-file/by-filename/${fileName}`;
+//       console.log("fileUrl", fileUrl);
 
-//     axios
-//       .get(fileUrl, {
-//         headers: {
-//           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-//         },
-//         // responseType: "blob",
-//         withCredentials: true,
-//       })
-//       .then((response) => {
-//         const file = new Blob([response.data], { type: "application/pdf" });
-//         console.log("response.data", response.data);
-//         const fileURL = URL.createObjectURL(file);
-//         newWindow.location.href = fileURL;
-//       })
-//       .catch((error) => {
-//         console.error("Ошибка при открытии документа:", error);
-//         newWindow.document.write("<p>Не удалось загрузить документ.</p>");
-//       });
+//       // Открываем новое окно сразу, чтобы избежать блокировки
+//       const newWindow = window.open("", "_blank");
+
+//       axios
+//         .get(fileUrl, {
+//           headers: {
+//             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+//           },
+//           responseType: "blob",
+//           withCredentials: true,
+//         })
+//         .then((response) => {
+//           const file = new Blob([response.data], { type: "application/pdf" });
+//           const fileURL = URL.createObjectURL(file);
+//           newWindow.location.href = fileURL;
+//         })
+//         .catch((error) => {
+//           console.error("Ошибка при открытии документа:", error);
+//           newWindow.document.write("<p>Не удалось загрузить документ.</p>");
+//         });
+//     } else {
+//       // Иначе используем маршрут по ID
+//       const fileId = document.Ref_Key;
+//       const fileUrl = `${backServer}/api/cabinet/get-file/by-id/${fileId}`;
+//       console.log("fileUrl", fileUrl);
+
+//       const newWindow = window.open("", "_blank");
+
+//       axios
+//         .get(fileUrl, {
+//           headers: {
+//             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+//           },
+//           responseType: "blob",
+//           withCredentials: true,
+//         })
+//         .then((response) => {
+//           const file = new Blob([response.data], { type: "application/pdf" });
+//           const fileURL = URL.createObjectURL(file);
+//           newWindow.location.href = fileURL;
+//         })
+//         .catch((error) => {
+//           console.error("Ошибка при открытии документа:", error);
+//           newWindow.document.write("<p>Не удалось загрузить документ.</p>");
+//         });
+//     }
+//   };
+
+//   const handleDocumentClick = (document) => {
+//     if (onSelectDocument) {
+//       onSelectDocument(document);
+//     } else {
+//       openDocument(document);
+//     }
 //   };
 
 //   const confirmDelete = (id) => {
@@ -278,23 +361,42 @@ export default Documents;
 //                 }}
 //                 onClick={() => {
 //                   console.log(
-//                     "Открываем документ с Ref_Key:",
-//                     document.Ref_Key
+//                     "Открываем документ с ПутьКФайлу:",
+//                     document.ПутьКФайлу
 //                   );
-//                   openDocument(document);
+//                   handleDocumentClick(document);
 //                 }}
 //               >
-//                 <Button
-//                   type="primary"
-//                   shape="circle"
-//                   icon={<DeleteOutlined />}
-//                   size="small"
-//                   style={{ position: "absolute", top: 10, right: 10 }}
-//                   onClick={(e) => {
-//                     e.stopPropagation();
-//                     confirmDelete(document.Ref_Key);
-//                   }}
-//                 />
+//                 {/* Показываем кнопку удаления только если не в модалке */}
+//                 {!isModal && (
+//                   <Button
+//                     type="primary"
+//                     shape="circle"
+//                     icon={<DeleteOutlined />}
+//                     size="small"
+//                     style={{ position: "absolute", top: 10, right: 10 }}
+//                     onClick={(e) => {
+//                       e.stopPropagation();
+//                       confirmDelete(document.Ref_Key);
+//                     }}
+//                   />
+//                 )}
+
+//                 {/* Добавляем иконку предпросмотра в модалке */}
+//                 {isModal && (
+//                   <Button
+//                     type="primary"
+//                     shape="circle"
+//                     icon={<EyeOutlined />}
+//                     size="small"
+//                     style={{ position: "absolute", top: 10, right: 10 }}
+//                     onClick={(e) => {
+//                       e.stopPropagation();
+//                       openDocument(document);
+//                     }}
+//                   />
+//                 )}
+
 //                 <Text type="secondary" style={{ fontSize: "16px" }}>
 //                   Категория: {document.ВидФайла}
 //                 </Text>

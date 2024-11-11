@@ -19,22 +19,15 @@ const useDocuments = create((set, get) => ({
     try {
       let url = `${backServer}/api/cabinet/documents`;
 
-
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
         withCredentials: true,
       });
 
-      // Логируем весь объект документов, чтобы проверить его структуру
-      console.log("Загруженные документы:", response.data.documents);
-
       if (response.data.documents && categoryKey ) {
-        // Теперь логируем название документа (Description) и его ВидФайла_Key
-        
         response.data.documents = response.data.documents.filter(
           (document) => document.ВидФайла_Key === categoryKey
         );
-
       }
 
       set({ documents: response.data.documents, loadingDocuments: false });
