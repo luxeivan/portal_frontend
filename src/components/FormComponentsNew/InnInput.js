@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AutoComplete, Form, Button, Flex } from "antd";
+import { AutoComplete, Form, Button, Flex, Input } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
 
@@ -79,13 +79,18 @@ export default function InnInput({
             name={name}
             label={label}
             rules={[{ required: required, message: "Это поле обязательное" }]}
-            style={{ flex: 1, minWidth: 300, marginRight: "20px" }}
+            style={{
+                flex: 1,
+                minWidth: 300,
+                // marginRight: "20px"
+            }}
         >
             <AutoComplete
                 options={options}
                 onSelect={(value, option) => onSelect(value, option)}
                 onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
                 placeholder={placeholder}
+                                              
             />
         </Form.Item>
     )
