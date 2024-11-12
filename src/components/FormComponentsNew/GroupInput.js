@@ -17,6 +17,7 @@ import SwitchInput from "./SwitchInput";
 import TextConcatenation from "./TextConcatenation";
 import FormulaInput from "./FormulaInput";
 import BikInput from "./BikInput";
+import TableInput from "./TableInput";
 
 export default function GroupInput({
   name = "name",
@@ -295,7 +296,19 @@ export default function GroupInput({
                     mainForm={mainForm}
                   />
                 );
+                if (item.component_Type.includes("TableInput"))
+                  return (
+                    <TableInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
             })}
+
            
 
     </div>
