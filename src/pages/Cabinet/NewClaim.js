@@ -190,11 +190,18 @@ export default function NewClaim() {
               layout="vertical"
               onFinish={onFinish}
               onKeyDown={handleKeyDown}
-              style={{ maxWidth: "800px", width: "100%", margin: "0 auto" }}
+              style={{ 
+                // maxWidth: "800px", 
+                width: "100%", 
+                margin: "0 auto" 
+              }}
               labelWrap
-              validateTrigger={["onSubmit"]}
+              validateTrigger={["onSubmit","onChange"]}
             // onValuesChange={handlerChange}
             >
+              <Flex wrap={true} gap={20}>
+
+              
               {serviceItem.fields
                 ?.sort((a, b) => a.lineNum - b.lineNum)
                 .map((item, index) => {
@@ -404,6 +411,7 @@ export default function NewClaim() {
                       />
                     );
                 })}
+                </Flex>
 
               <DocumentAttachments
                 form={form}

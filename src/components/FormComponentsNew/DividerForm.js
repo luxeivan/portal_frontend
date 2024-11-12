@@ -41,7 +41,7 @@ function DividerForm({ label, fullDescription, variant = "solid", borderColor = 
     );
   } else {
     return <Divider
-      style={{ borderColor: "gray" }}
+      style={{ borderColor: "gray", margin:0 }}
       orientation={orientation}
       orientationMargin="0"
       dashed={dashed}
