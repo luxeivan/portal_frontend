@@ -16,6 +16,7 @@ import moment from "moment";
 import SwitchInput from "./SwitchInput";
 import TextConcatenation from "./TextConcatenation";
 import FormulaInput from "./FormulaInput";
+import BikInput from "./BikInput";
 
 export default function GroupInput({
   name = "name",
@@ -141,6 +142,19 @@ export default function GroupInput({
 
                 return (
                   <InnInput
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
+                    howDepend={item.dependСondition}
+                    inGroup
+                  />
+                );
+              if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'БИК')
+
+                return (
+                  <BikInput
                     key={index}
                     {...item.component_Expanded}
                     {...item}

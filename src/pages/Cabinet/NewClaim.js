@@ -25,6 +25,8 @@ import DocumentAttachments from "../../components/FormComponentsNew/DocumentAtta
 import TextConcatenation from "../../components/FormComponentsNew/TextConcatenation";
 
 import { motion } from "framer-motion";
+import InnInput from "../../components/FormComponentsNew/InnInput";
+import BikInput from "../../components/FormComponentsNew/BikInput";
 
 
 const { Title, Paragraph } = Typography;
@@ -203,6 +205,30 @@ export default function NewClaim() {
                         label={item.label}
                       />
                     );
+                    if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'ИНН')
+
+                      return (
+                        <InnInput
+                          key={index}
+                          {...item.component_Expanded}
+                          {...item}
+                          name={item.idLine}
+                          dependOf={item.dependIdLine}
+                          howDepend={item.dependСondition}                          
+                        />
+                      );
+                    if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'БИК')
+      
+                      return (
+                        <BikInput
+                          key={index}
+                          {...item.component_Expanded}
+                          {...item}
+                          name={item.idLine}
+                          dependOf={item.dependIdLine}
+                          howDepend={item.dependСondition}                          
+                        />
+                      );
 
                   if (item.component_Type.includes("TextInput"))
                     return (
