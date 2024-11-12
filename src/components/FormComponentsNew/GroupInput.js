@@ -16,6 +16,8 @@ import moment from "moment";
 import SwitchInput from "./SwitchInput";
 import TextConcatenation from "./TextConcatenation";
 import FormulaInput from "./FormulaInput";
+import BikInput from "./BikInput";
+import TableInput from "./TableInput";
 
 export default function GroupInput({
   name = "name",
@@ -96,7 +98,7 @@ export default function GroupInput({
   // }))
   const formElement = (
     <div style={{ marginBottom: 20, backgroundColor: colorBgContainer, padding: 10, borderRadius: 10 }}>
-      
+      <Typography.Title level={5} style={{margin:"0 0 10px 0"}}>{label}</Typography.Title>
 
       {items &&
         <Descriptions size="small" style={{ width: "100%", marginBottom: "10px", border: 0 }} items={items} column={1} bordered />
@@ -141,6 +143,19 @@ export default function GroupInput({
 
                 return (
                   <InnInput
+                    key={index}
+                    {...item.component_Expanded}
+                    {...item}
+                    name={item.idLine}
+                    dependOf={item.dependIdLine}
+                    howDepend={item.dependСondition}
+                    inGroup
+                  />
+                );
+              if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'БИК')
+
+                return (
+                  <BikInput
                     key={index}
                     {...item.component_Expanded}
                     {...item}
@@ -281,7 +296,19 @@ export default function GroupInput({
                     mainForm={mainForm}
                   />
                 );
+                if (item.component_Type.includes("TableInput"))
+                  return (
+                    <TableInput
+                      key={index}
+                      {...item.component_Expanded}
+                      {...item}
+                      name={item.idLine}
+                      dependOf={item.dependIdLine}
+                      howDepend={item.dependСondition}
+                    />
+                  );
             })}
+
            
 
     </div>

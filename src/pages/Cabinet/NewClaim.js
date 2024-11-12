@@ -25,6 +25,8 @@ import DocumentAttachments from "../../components/FormComponentsNew/DocumentAtta
 import TextConcatenation from "../../components/FormComponentsNew/TextConcatenation";
 
 import { motion } from "framer-motion";
+import InnInput from "../../components/FormComponentsNew/InnInput";
+import BikInput from "../../components/FormComponentsNew/BikInput";
 
 
 const { Title, Paragraph } = Typography;
@@ -163,6 +165,13 @@ export default function NewClaim() {
                 fontSizeHeading1: 24
               },
               components: {
+                Select: {
+                  optionFontSize: 16,
+                  fontSize:16
+                },
+                Input: {
+                  fontSize: 16,
+                },
                 Form: {
                   /* here is your component tokens */
                   labelFontSize: 16,
@@ -183,6 +192,7 @@ export default function NewClaim() {
               onKeyDown={handleKeyDown}
               style={{ maxWidth: "800px", width: "100%", margin: "0 auto" }}
               labelWrap
+              validateTrigger={["onSubmit"]}
             // onValuesChange={handlerChange}
             >
               {serviceItem.fields
@@ -196,6 +206,30 @@ export default function NewClaim() {
                         label={item.label}
                       />
                     );
+                    if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'ИНН')
+
+                      return (
+                        <InnInput
+                          key={index}
+                          {...item.component_Expanded}
+                          {...item}
+                          name={item.idLine}
+                          dependOf={item.dependIdLine}
+                          howDepend={item.dependСondition}                          
+                        />
+                      );
+                    if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'БИК')
+      
+                      return (
+                        <BikInput
+                          key={index}
+                          {...item.component_Expanded}
+                          {...item}
+                          name={item.idLine}
+                          dependOf={item.dependIdLine}
+                          howDepend={item.dependСondition}                          
+                        />
+                      );
 
                   if (item.component_Type.includes("TextInput"))
                     return (

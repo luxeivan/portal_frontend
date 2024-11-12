@@ -5,7 +5,7 @@ import axios from "axios";
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
-export default function InnInput({
+export default function BikInput({
     name = "name",
     label = "Label",
     disabled = false,
@@ -26,7 +26,7 @@ export default function InnInput({
 
 
     const fetchSuggestions = debounce((inn) => {
-        const params = { type: "ИНН", query: inn };
+        const params = { type: "БИК", query: inn };
         axios
             .get(`${backServer}/api/cabinet/getDaData`, {
                 headers: {
