@@ -163,6 +163,13 @@ export default function NewClaim() {
                 fontSizeHeading1: 24
               },
               components: {
+                Select: {
+                  optionFontSize: 16,
+                  fontSize:16
+                },
+                Input: {
+                  fontSize: 16,
+                },
                 Form: {
                   /* here is your component tokens */
                   labelFontSize: 16,
