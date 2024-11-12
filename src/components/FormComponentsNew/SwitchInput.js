@@ -36,7 +36,7 @@ export default function SwitchInput({
       // labelAlign="right"
       // labelCol={{span: 12}}
       // colon={false}
-      layout="horizontal"
+      // layout="vertical"
     >
       <Switch />
     </Form.Item>
