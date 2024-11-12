@@ -97,7 +97,14 @@ export default function GroupInput({
 
   // }))
   const formElement = (
-    <div style={{ marginBottom: 20, backgroundColor: colorBgContainer, padding: 10, borderRadius: 10 }}>
+    <div style={{ 
+      // marginBottom: 20, 
+      width:"32%", 
+      minWidth:"350px", 
+      backgroundColor: colorBgContainer, 
+      padding: 10, 
+      borderRadius: 10, 
+      }}>
       <Typography.Title level={5} style={{margin:"0 0 10px 0"}}>{label}</Typography.Title>
 
       {items &&
