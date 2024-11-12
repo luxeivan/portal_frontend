@@ -192,6 +192,7 @@ export default function NewClaim() {
               onKeyDown={handleKeyDown}
               style={{ maxWidth: "800px", width: "100%", margin: "0 auto" }}
               labelWrap
+              validateTrigger={["onSubmit"]}
             // onValuesChange={handlerChange}
             >
               {serviceItem.fields
