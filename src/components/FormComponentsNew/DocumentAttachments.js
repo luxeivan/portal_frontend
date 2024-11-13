@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Row, Col, Card, Button, Tag, Divider, theme } from "antd";
+import { Row, Col, Card, Button, Tag, Divider, theme, Flex } from "antd";
 import { FileTextOutlined, EyeOutlined } from "@ant-design/icons";
 import axios from "axios"; 
 import DocumentSelectModal from "./DocumentSelectModal";
@@ -62,7 +62,7 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
   return (
     <>
       <Divider>Файлы</Divider>
-      <Row gutter={[16, 16]}>
+      <Row align={"stretch"} gutter={[20, 20]} >
         {categoriesFiles &&
           categoriesFiles.map((item, index) => {
             const attachedDocument = form.getFieldValue(
@@ -71,11 +71,12 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
             const isAttached = !!attachedDocument;
 
             return (
-              <Col xs={24} sm={12} md={8} key={index}>
+              <Col xxl={6} xl={8} lg={12} span={24} key={index}>
                 <Card
                   bordered
                   style={{
-                    height: "100%",
+                    // margin:10,
+                    height: 200,
                     display: "flex",
                     flexDirection: "column",
                     borderRadius: "8px",
@@ -83,12 +84,12 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
                       ? token.colorSuccessBg
                       : token.colorBgContainer,
                   }}
-                  bodyStyle={{
-                    display: "flex",
-                    flexDirection: "column",
-                    flex: 1,
-                    position: "relative", // Добавлено для размещения иконки
-                  }}
+                  // bodyStyle={{
+                  //   display: "flex",
+                  //   flexDirection: "column",
+                  //   flex: 1,
+                  //   position: "relative", // Добавлено для размещения иконки
+                  // }}
                 >
                   {/* Иконка глаза в верхнем правом углу */}
                   {isAttached && (
@@ -130,13 +131,13 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
                     )}
                   </div>
                   {/* Нижняя часть карточки с плашкой и кнопкой */}
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <Flex vertical gap={10} align="center" justify="center">
                     {isAttached ? (
-                      <Tag color="success" style={{ marginRight: "auto" }}>
+                      <Tag color="success" >
                         Прикреплено
                       </Tag>
                     ) : (
-                      <Tag color="error" style={{ marginRight: "auto" }}>
+                      <Tag color="error">
                         Не прикреплено
                       </Tag>
                     )}
@@ -146,7 +147,7 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
                     >
                       {isAttached ? "Изменить" : "Выбрать"}
                     </Button>
-                  </div>
+                  </Flex>
                 </Card>
               </Col>
             );
