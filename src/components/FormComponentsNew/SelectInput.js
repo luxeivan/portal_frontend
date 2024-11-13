@@ -15,7 +15,7 @@ export default function SelectInput({
   const [optionsAuto, setOptionsAuto] = useState();
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form);
-  
+
   useEffect(() => {
     if (autoComplete) {
       setOptionsAuto(options);
@@ -35,7 +35,11 @@ export default function SelectInput({
       style={{ flex: 1 }}
       initialValue={defaultValue}
     >
-      <Select showSearch optionFilterProp="label" options={options} />
+      <Select
+        showSearch
+        optionFilterProp="label"
+        options={options}
+      />
     </Form.Item>
   );
 

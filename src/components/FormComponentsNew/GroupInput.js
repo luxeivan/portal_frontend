@@ -18,6 +18,7 @@ import TextConcatenation from "./TextConcatenation";
 import FormulaInput from "./FormulaInput";
 import BikInput from "./BikInput";
 import TableInput from "./TableInput";
+import styles from './GroupInput.module.css'
 
 export default function GroupInput({
   name = "name",
@@ -97,14 +98,11 @@ export default function GroupInput({
 
   // }))
   const formElement = (
-    <div style={{ 
-      // marginBottom: 20, 
-      width:"32%", 
-      minWidth:"350px", 
-      backgroundColor: colorBgContainer, 
-      padding: 10, 
-      borderRadius: 10, 
-      }}>
+    <div style={{
+      backgroundColor: colorBgContainer,
+      }}
+      className={styles.formElement}
+      >
       <Typography.Title level={5} style={{margin:"0 0 10px 0"}}>{label}</Typography.Title>
 
       {items &&
