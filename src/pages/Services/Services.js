@@ -10,6 +10,8 @@ import Container from "../../components/Container";
 import Preloader from "../../components/Main/Preloader";
 import ErrorModal from "../../components/ErrorModal";
 import { IconConnect } from "../../components/icons/IconConnect";
+import { column } from "mathjs";
+import { IconHandEnergy } from "../../components/icons/IconHandEnergy";
 
 const { Title } = Typography;
 const backPhotoServer = process.env.REACT_APP_BACK_API_SERVER;
@@ -99,9 +101,17 @@ export default function Services() {
                       className={styles.styleLink}
                     >
                       <Card
-                        onMouseEnter={() => setIsHoverCard((prev)=>({ ...prev, [index]: true }))}
-                        onMouseLeave={() => setIsHoverCard((prev)=>({ ...prev, [index]: false }))}
+                        onMouseEnter={() => setIsHoverCard((prev) => ({ ...prev, [index]: true }))}
+                        onMouseLeave={() => setIsHoverCard((prev) => ({ ...prev, [index]: false }))}
                         className={styles.styleCard}
+                        styles={{
+                          body: {
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            height: "100%"
+                          }
+                        }}
                         // style={{ backgroundImage: `url(${item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)})` }}
                         hoverable
                       // styles={{ body: { backgroundImage: folder } }}
@@ -112,10 +122,11 @@ export default function Services() {
                         <Flex
                           justify={!item.IsFolder ? "space-between" : "flex-end"}
                           align="center"
-                          // justify="flex-end"
+
+                          //  justify="flex-end"
                           gap={20}
                           // className={styles.cardImage}
-                          style={{ width: "100%" }}
+                          style={{ width: "100%", flex: 1 }}
                         >
                           {!item.IsFolder &&
                             <Flex vertical gap={10} >
@@ -144,17 +155,22 @@ export default function Services() {
                                 </svg>
                               </div>
                             </Flex> */}
-                            {!item.IsFolder && <IconConnect
-                              isHover={isHoverCard[index]}
-                              style={{ textAlign: "center", width: "100%", height: 200 }}
-                            />
+                            {!item.IsFolder && <div
+                              style={{ textAlign: "center", width: "100%", padding: 40 }}
+                            >
+                              {index % 2 == 0 ? <IconConnect
+                                isHover={isHoverCard[index]}
+                              /> : <IconHandEnergy
+                                isHover={isHoverCard[index]}
+                              />}
+                            </div>
                             }
                             {item.IsFolder && <Image
                               style={{ textAlign: "center", width: "100%" }}
                               // width={"50%"}
                               src={item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)}
                               preview={false}
-                            /> }
+                            />}
                           </Flex>
                         </Flex>
                       </Card>

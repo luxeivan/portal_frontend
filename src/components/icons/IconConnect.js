@@ -67,7 +67,7 @@ export const IconConnect = ({ isHover = false }) => {
                 height={"100%"}
                 viewBox="0 0 97.06 97.06"
                 style={{
-                    strokeWidth: 7.23,
+                    strokeWidth: 3.23,
                     strokeLinecap: "round",
                     strokeLinejoin: "round",
                     fill: "transparent",
