@@ -99,8 +99,8 @@ export default function Services() {
                       className={styles.styleLink}
                     >
                       <Card
-                        onMouseEnter={() => setIsHoverCard({ ...isHoverCard, [index]: true })}
-                        onMouseLeave={() => setIsHoverCard({ ...isHoverCard, [index]: false })}
+                        onMouseEnter={() => setIsHoverCard((prev)=>({ ...prev, [index]: true }))}
+                        onMouseLeave={() => setIsHoverCard((prev)=>({ ...prev, [index]: false }))}
                         className={styles.styleCard}
                         // style={{ backgroundImage: `url(${item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)})` }}
                         hoverable
@@ -144,16 +144,17 @@ export default function Services() {
                                 </svg>
                               </div>
                             </Flex> */}
-                            <IconConnect
+                            {!item.IsFolder && <IconConnect
                               isHover={isHoverCard[index]}
                               style={{ textAlign: "center", width: "100%", height: 200 }}
                             />
-                            {/* <Image
+                            }
+                            {item.IsFolder && <Image
                               style={{ textAlign: "center", width: "100%" }}
                               // width={"50%"}
                               src={item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)}
                               preview={false}
-                            /> */}
+                            /> }
                           </Flex>
                         </Flex>
                       </Card>

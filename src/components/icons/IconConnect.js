@@ -3,10 +3,10 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import styles from './IconConnect.module.css'
 import { useState } from "react";
 
-export const IconConnect = ({isHover = false}) => {
+export const IconConnect = ({ isHover = false }) => {
     // const [isHover, setIsHover] = useState(false)
     console.log(isHover);
-    
+
     const draw = {
         hidden: {
             opacity: 0,
@@ -59,7 +59,7 @@ export const IconConnect = ({isHover = false}) => {
 
     return (
         <motion.div
-         
+
         // className={styles.box}
         >
             <motion.svg
@@ -77,7 +77,7 @@ export const IconConnect = ({isHover = false}) => {
                     stroke="#0061aa"
                     animate={isHover ? "visible" : "hidden"}
                     initial="hidden"
-                    >
+                >
                     <motion.g >
                         <motion.path variants={unDraw} d="M50.76 77.17l-30.87 -30.87 -6.72 6.72c-7.04,7.04 -7.04,18.55 0,25.58l5.29 5.29c7.03,7.03 18.54,7.03 25.57,0l6.73 -6.72z" />
                         <motion.line variants={unDraw} x1="15.81" y1="81.25" x2="3.62" y2="93.44" />
