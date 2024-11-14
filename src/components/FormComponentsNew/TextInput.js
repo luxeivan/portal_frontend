@@ -14,7 +14,6 @@ const listTypeForDadata = [
   "Город",
   "Улица",
   "Район",
-  "АдресПолный",
 ];
 
 export default function TextInput({
