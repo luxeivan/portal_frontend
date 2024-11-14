@@ -7,8 +7,11 @@ import mosoblik from "../../img/about/mosoblik.png";
 import mosoblikShadow from "../../img/about/mosoblik_shadow.png";
 import useGlobal from "../../stores/useGlobal";
 import Preloader from "../../components/Main/Preloader";
+import { motion } from "framer-motion";
+import { IconConnect } from "../../components/icons/IconConnect";
 
 const { Title, Paragraph } = Typography;
+
 
 export default function About() {
   const [activeKey, setActiveKey] = useState(null)
@@ -90,7 +93,9 @@ export default function About() {
       <div>
         <Title level={1}>О компании Мособлэнерго</Title>
         <Preloader />
-        <Form.Provider
+        <div></div>
+        <IconConnect/>
+        {/* <Form.Provider
           onFormFinish={async (name, { forms, values }) => {
             console.log("forms", forms)
             console.log("values", values)
@@ -131,7 +136,7 @@ export default function About() {
             </Flex>
           )} type="card" activeKey={activeKey} items={items} onChange={onChangeTab} />
 
-        </Form.Provider>
+        </Form.Provider> */}
         <Flex wrap="wrap">
           <div className={styles.textArea}>
             <div>

@@ -5,7 +5,8 @@ import {
     Input,
     Button,
     theme,
-    Space
+    Space,
+    Flex
 } from "antd";
 import { evaluate } from "mathjs";
 import useTemp from "../../stores/Cabinet/useTemp";
@@ -95,8 +96,10 @@ export default function TextConcatenation({
         // return form.setFieldValue(name, temp.formula)
     }
     const formElement = (
-        
+        <Flex align="center">
+
             <Form.Item
+                style={{ flex: 1 }}
                 name={name}
                 label={label}
                 dependencies={keys}
@@ -113,16 +116,20 @@ export default function TextConcatenation({
                     }),
                 ]}
             >
-                <Input
+                <Input.TextArea
+
                     // validateTrigger="onBlur"
                     // suffix={objectProp?.currency?.position === "suffix" ? currency[objectProp.currency.idLine] : false}
-                    addonAfter={<div style={{cursor:"pointer",color:auto?"green":"red"}} onClick={() => {
+                    addonAfter={<div style={{ cursor: "pointer", color: auto ? "green" : "red" }} onClick={() => {
                         setAuto(!auto)
                     }}>{auto ? 'Автоматически' : 'Вручную'}</div>}
                     placeholder={placeholder}
                 />
             </Form.Item>
-            
+            <div style={{ cursor: "pointer", color: auto ? "green" : "red" }} onClick={() => {
+                setAuto(!auto)
+            }}>{auto ? 'Автоматически' : 'Вручную'}</div>
+        </Flex>
 
     );
     if (!dependOf) return formElement

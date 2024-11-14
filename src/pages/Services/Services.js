@@ -9,11 +9,13 @@ import element from "../../img/catalog/element.png";
 import Container from "../../components/Container";
 import Preloader from "../../components/Main/Preloader";
 import ErrorModal from "../../components/ErrorModal";
+import { IconConnect } from "../../components/icons/IconConnect";
 
 const { Title } = Typography;
 const backPhotoServer = process.env.REACT_APP_BACK_API_SERVER;
 
 export default function Services() {
+  const [isHoverCard, setIsHoverCard] = useState({})
   const location = useLocation();
   const { colorPrimaryText } = theme.useToken().token;
   const isLoading = useServices((state) => state.isLoading);
@@ -97,6 +99,8 @@ export default function Services() {
                       className={styles.styleLink}
                     >
                       <Card
+                        onMouseEnter={() => setIsHoverCard({ ...isHoverCard, [index]: true })}
+                        onMouseLeave={() => setIsHoverCard({ ...isHoverCard, [index]: false })}
                         className={styles.styleCard}
                         // style={{ backgroundImage: `url(${item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)})` }}
                         hoverable
@@ -140,12 +144,16 @@ export default function Services() {
                                 </svg>
                               </div>
                             </Flex> */}
-                            <Image
+                            <IconConnect
+                              isHover={isHoverCard[index]}
+                              style={{ textAlign: "center", width: "100%", height: 200 }}
+                            />
+                            {/* <Image
                               style={{ textAlign: "center", width: "100%" }}
                               // width={"50%"}
                               src={item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)}
                               preview={false}
-                            />
+                            /> */}
                           </Flex>
                         </Flex>
                       </Card>
