@@ -9,6 +9,7 @@ import useGlobal from "../../stores/useGlobal";
 import Preloader from "../../components/Main/Preloader";
 import { motion } from "framer-motion";
 import { IconConnect } from "../../components/icons/IconConnect";
+import { IconHandEnergy } from "../../components/icons/IconHandEnergy";
 
 const { Title, Paragraph } = Typography;
 
@@ -94,7 +95,7 @@ export default function About() {
         <Title level={1}>О компании Мособлэнерго</Title>
         <Preloader />
         <div></div>
-        <IconConnect/>
+        <IconHandEnergy/>
         {/* <Form.Provider
           onFormFinish={async (name, { forms, values }) => {
             console.log("forms", forms)
