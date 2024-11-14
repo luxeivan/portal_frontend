@@ -22,6 +22,7 @@ const arr = [
 ];
 
 const icon = {
+  
   hidden: {
     opacity: 0,
     pathLength: 0,
