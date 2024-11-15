@@ -88,6 +88,8 @@ export default function About() {
     console.log(key);
     setActiveKey(key)
   };
+
+  
   return (
     <>
       <AppHelmet title={"О нас"} desc={"Информация о компании"} />
@@ -95,7 +97,7 @@ export default function About() {
         <Title level={1}>О компании Мособлэнерго</Title>
         <Preloader />
         <div></div>
-        <IconHandEnergy/>
+
         {/* <Form.Provider
           onFormFinish={async (name, { forms, values }) => {
             console.log("forms", forms)
