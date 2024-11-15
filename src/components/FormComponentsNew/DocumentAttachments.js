@@ -57,7 +57,7 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
       });
   }, []);
 
-  console.log("Категории в заявке categoriesFiles", categoriesFiles);
+  // console.log("Категории в заявке categoriesFiles", categoriesFiles);
 
   return (
     <>

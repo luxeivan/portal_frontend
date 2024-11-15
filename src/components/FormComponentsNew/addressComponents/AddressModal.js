@@ -22,7 +22,7 @@ const AddressModal = forwardRef(
         if (currString) fullString = fullString + currString + ', '
       })
       // console.log('name: ',name)
-      form.setFieldValue([...name, 'fullAddress'], fullString)
+      form.setFieldValue([name, 'fullAddress'], fullString)
       onCancel()
     };
 

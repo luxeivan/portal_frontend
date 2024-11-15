@@ -70,8 +70,8 @@ export default function TextConcatenation({
         // prevTemp.formula = prevTemp.formula.trim().replace(/ +(?= )/g, '')
         temp.formula = temp.formula.trim().replace(/ +(?= )/g, '')
 
-        console.log("value: ", value);
-        console.log("values: ", values);
+        // console.log("value: ", value);
+        // console.log("values: ", values);
 
         // if (value === '') {
         //     form.setFieldValue(name, temp.formula)
@@ -126,7 +126,7 @@ export default function TextConcatenation({
                     placeholder={placeholder}
                 />
             </Form.Item>
-            <div style={{ cursor: "pointer", color: auto ? "green" : "red" }} onClick={() => {
+            <div style={{ cursor: "pointer", color: auto ? "green" : "red", padding: 5 }} onClick={() => {
                 setAuto(!auto)
             }}>{auto ? 'Автоматически' : 'Вручную'}</div>
         </Flex>
