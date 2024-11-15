@@ -88,10 +88,7 @@ export default function About() {
     console.log(key);
     setActiveKey(key)
   };
-  const textFirst = 'cvbcvbcv dffgdf gdfgdf [Статья 2](/back/upload/1234kldgdfg)bvcvbcvbcvbcvbcvbcvb dfgdfgdfg cvbcvbcv dffgdf gdfgdf [Статья3](/back/upload/12334344kldgdfg)bvcvbcvbcvbcvbcvbcvb dfgdfgdfg'
-  const textReget = textFirst.replaceAll(/\]\([a-zA-Z0-9_\/\)]{2,}\)/gm, (result) => {
-    return result.slice(0, 2) + 'https://mosoblenergo.ru' + result.slice(2)
-  })
+
   
   return (
     <>
@@ -100,8 +97,6 @@ export default function About() {
         <Title level={1}>О компании Мособлэнерго</Title>
         <Preloader />
         <div></div>
-        {/* <IconHandEnergy/> */}
-        <p>{textReget}</p>
 
         {/* <Form.Provider
           onFormFinish={async (name, { forms, values }) => {

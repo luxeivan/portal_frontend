@@ -28,7 +28,9 @@ import { motion } from "framer-motion";
 import InnInput from "../../components/FormComponentsNew/InnInput";
 import BikInput from "../../components/FormComponentsNew/BikInput";
 import DocumentInput from "../../components/FormComponentsNew/DocumentInput";
+
 import { selectComponent } from "../../components/selectComponent";
+
 
 
 const { Title, Paragraph } = Typography;
@@ -210,7 +212,9 @@ export default function NewClaim() {
 
                 {serviceItem.fields
                   ?.sort((a, b) => a.lineNum - b.lineNum)
+
                   .map(selectComponent)}
+
               </Flex>
 
               <DocumentAttachments
