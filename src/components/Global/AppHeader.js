@@ -139,11 +139,8 @@ export default function AppHeader() {
       </Badge>
       {auth ? (
         <div className={styles.userInfo}>
-          <Tooltip title={profile.email}>
-            <UserOutlined style={{ fontSize: "20px", color: colorText }} />
-            <span className={styles.userEmail}>
-              {profile.email ? profile.email : "Пользователь"}
-            </span>
+          <Tooltip title={profile.email ? profile.email : "Пользователь"}>
+            <UserOutlined style={{ fontSize: "20px", color: colorText, cursor: "pointer" }} />
           </Tooltip>
           <Button type="primary" onClick={handleLogout}>
             Выйти
@@ -192,16 +189,26 @@ export default function AppHeader() {
     {
       label: (
         <Space size="middle">
+          <QuestionCircleOutlined
+            style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
+            onClick={() => setChatModalVisible(true)}
+          />
           <Switch
             onChange={handlerDarkMode}
             checkedChildren={<SunOutlined />}
             unCheckedChildren={<MoonOutlined />}
             checked={darkMode}
+            style={{ background: !darkMode && colorText }}
           />
           {auth ? (
-            <Button type="primary" onClick={handleLogout}>
-              Выйти
-            </Button>
+            <>
+              <Tooltip title={profile.email ? profile.email : "Пользователь"}>
+                <UserOutlined style={{ fontSize: "20px", color: colorText, cursor: "pointer" }} />
+              </Tooltip>
+              <Button type="primary" onClick={handleLogout}>
+                Выйти
+              </Button>
+            </>
           ) : (
             <Button type="primary" onClick={handlerChangeAuth}>
               Войти
@@ -262,19 +269,43 @@ export default function AppHeader() {
         />
 
         <div className={styles.rightMenu}>{rightMenuArea}</div>
+
+        {/* Мобильное меню */}
         <div className={styles.mobileMenu}>
           <Menu
             mode="horizontal"
-            overflowedIndicator={<MenuOutlined />}
-            items={itemsMobile}
-            selectedKeys={[currentPage]}
-            onClick={({ key }) => {
-              if (key !== "auth") setCurrentPage(key);
-            }}
+            overflowedIndicator={<MenuOutlined style={{ fontSize: "24px" }} />}
+            items={[
+              {
+                key: "menu",
+                icon: <MenuOutlined style={{ fontSize: "24px" }} />,
+                onTitleClick: () => setDrawerVisible(true),
+              },
+            ]}
+            selectable={false}
           />
         </div>
       </Header>
 
+      {/* Боковая панель для мобильного меню */}
+      <Drawer
+        title="Меню"
+        placement="left"
+        onClose={() => setDrawerVisible(false)}
+        open={drawerVisible}
+      >
+        <Menu
+          mode="inline"
+          selectedKeys={[currentPage]}
+          onClick={({ key }) => {
+            setCurrentPage(key);
+            setDrawerVisible(false);
+          }}
+          items={itemsMobile}
+        />
+      </Drawer>
+
+      {/* Drawer для уведомлений */}
       <Drawer
         title="Уведомления"
         placement="right"
@@ -303,8 +334,8 @@ export default function AppHeader() {
 //   Badge,
 //   Drawer,
 //   Button,
+//   Tooltip,
 //   theme,
-//   Flex,
 // } from "antd";
 // import { Link, useNavigate } from "react-router-dom";
 // import {
@@ -313,14 +344,16 @@ export default function AppHeader() {
 //   SunOutlined,
 //   BellOutlined,
 //   QuestionCircleOutlined,
+//   UserOutlined,
 // } from "@ant-design/icons";
 // import logoWhite from "../../img/header/logoWhite.svg";
 // import logoBlue from "../../img/header/logoBlue.svg";
 // import useGlobal from "../../stores/useGlobal";
 // import useAuth from "../../stores/useAuth";
 // import useNotifications from "../../stores/useNotifications";
+// import useProfile from "../../stores/Cabinet/useProfile";
 // import NotificationList from "../../components/FormComponentsNew/Notifications/NotificationPanel";
-// import ModalBot from "./ModalBot"; // Импортируем компонент ModalBot
+// import ModalBot from "./ModalBot";
 // import styles from "./AppHeader.module.css";
 // import ErrorModal from "../ErrorModal";
 
@@ -353,15 +386,20 @@ export default function AppHeader() {
 //   const { darkMode, toggleDarkMode, currentPage, setCurrentPage } = useGlobal();
 //   const { auth, logout, toggleModal } = useAuth();
 //   const { getUnreadCount } = useNotifications();
+//   const { profile, fetchProfile } = useProfile();
 
 //   const navigate = useNavigate();
 
 //   const [drawerVisible, setDrawerVisible] = useState(false);
-//   const [chatModalVisible, setChatModalVisible] = useState(false); // Состояние для модального окна чата
+//   const [chatModalVisible, setChatModalVisible] = useState(false);
 //   const [error, setError] = useState(null);
 //   const [errorVisible, setErrorVisible] = useState(false);
 
-//   useEffect(() => {}, [currentPage]);
+//   useEffect(() => {
+//     if (auth) {
+//       fetchProfile();
+//     }
+//   }, [auth, fetchProfile]);
 
 //   const handleLogout = () => {
 //     try {
@@ -408,7 +446,7 @@ export default function AppHeader() {
 //   } = theme.useToken();
 
 //   const rightMenuArea = (
-//     <Flex gap={15} align="center">
+//     <div className={styles.rightMenu}>
 //       <QuestionCircleOutlined
 //         style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
 //         onClick={() => setChatModalVisible(true)}
@@ -427,15 +465,23 @@ export default function AppHeader() {
 //         />
 //       </Badge>
 //       {auth ? (
-//         <Button type="primary" onClick={handleLogout}>
-//           Выйти
-//         </Button>
+//         <div className={styles.userInfo}>
+//           <Tooltip title={profile.email}>
+//             <UserOutlined style={{ fontSize: "20px", color: colorText }} />
+//             <span className={styles.userEmail}>
+//               {profile.email ? profile.email : "Пользователь"}
+//             </span>
+//           </Tooltip>
+//           <Button type="primary" onClick={handleLogout}>
+//             Выйти
+//           </Button>
+//         </div>
 //       ) : (
 //         <Button type="primary" onClick={handlerChangeAuth}>
 //           Войти
 //         </Button>
 //       )}
-//     </Flex>
+//     </div>
 //   );
 
 //   const itemsMobile = [
@@ -565,7 +611,6 @@ export default function AppHeader() {
 //         <NotificationList />
 //       </Drawer>
 
-//       {/* Используем компонент ModalBot */}
 //       <ModalBot
 //         visible={chatModalVisible}
 //         onClose={() => setChatModalVisible(false)}
