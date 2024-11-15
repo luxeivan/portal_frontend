@@ -20,7 +20,7 @@ const AddressInput = ({
   lenght = false,
   specialField: type = false,
 }) => {
-  const { colorBgSolid,colorPrimary,colorTextLightSolid } = theme.useToken().token
+  const { colorBgSolid, colorPrimary, colorTextLightSolid } = theme.useToken().token
   // console.log(theme.useToken().token)
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form)
@@ -135,23 +135,30 @@ const AddressInput = ({
     <Form.List name={name}>
       {(fields, { add, remove }) => (
         <>
-          <Flex align="center" wrap="wrap" style={{ maxWidth: "100%", marginBottom: 20 }} >
-            
-              <Form.Item
-                name={'fullAddress'}
-                label={label}
-                rules={[{ required: required, message: "Это поле обязательное" }]}
-                style={{ flex: 1, minWidth: 300 }}
+          <Flex align="center"
+          // wrap="wrap" 
+          // style={{ maxWidth: "100%", marginBottom: 20 }} 
+          >
+
+            <Form.Item
+              name={'fullAddress'}
+              label={label}
+              rules={[{ required: required, message: "Это поле обязательное" }]}
+              style={{ flex: 1, minWidth: 300 }}
+            >
+              <AutoComplete
+                options={options}
+                onSelect={(value, option) => onSelect(value, option)}
+                onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
+                placeholder={placeholder}
               >
-                <AutoComplete
-                  options={options}
-                  onSelect={(value, option) => onSelect(value, option)}
-                  onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
-                  placeholder={placeholder}
-                >
-                  <Input addonAfter={<EditOutlined onClick={openModal} />} />
-                </AutoComplete>
-              </Form.Item>
+                <Input.TextArea
+                  // addonAfter={<EditOutlined onClick={openModal} />}
+                  // placeholder={placeholder}
+                />
+              </AutoComplete>
+            </Form.Item>
+            <div style={{ cursor: "pointer", color: "green", padding: 5 }} onClick={openModal}>Заполнить</div>
             {/* <Button type="primary" onClick={openModal} >
               Моего адреса нет в списке
             </Button> */}
