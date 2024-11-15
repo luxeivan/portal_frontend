@@ -23,17 +23,17 @@ export default function DocumentInput({
 
     const form = Form.useFormInstance();
     let fieldDepends = Form.useWatch(dependOf, form);
-    const handleSelectDocument = (categoryKey) => {
+    const handlerSelectDocument = (categoryKey) => {
         setSelectedCategory(categoryKey);
         setDocumentModalVisible(true);
     };
 
-    const handleDocumentSelected = (document) => {
+    const handlerDocumentSelected = (document) => {
         console.log(
             `Пользователь выбрал документ для категории ${selectedCategory}:`,
             document
         );
-        form.setFieldsValue({ [`document_${selectedCategory}`]: document });
+        form.setFieldValue(`document_${selectedCategory}`, document );
         setDocumentModalVisible(false);
     };
 
@@ -74,12 +74,12 @@ export default function DocumentInput({
         `document_${category_Key}`
       );
       const isAttached = !!attachedDocument;
-      console.log(category_Key)
+    //   console.log(category_Key)
     const formElement = (
         <>
             <Form.Item
                 name={name}
-                label={label}
+                // label={label}
                 rules={[
                     {
                         required: required,
@@ -135,7 +135,7 @@ export default function DocumentInput({
                         {/* Отображение названия выбранного документа */}
                         {isAttached && (
                             <div style={{ marginBottom: 16 }}>
-                                <strong>Документ:</strong> {attachedDocument.Description}
+                                <strong>Документ:</strong> {attachedDocument.label}
                             </div>
                         )}
                     </div>
@@ -152,7 +152,7 @@ export default function DocumentInput({
                         )}
                         <Button
                             type="primary"
-                            onClick={() => handleSelectDocument(category_Key)}
+                            onClick={() => handlerSelectDocument(category_Key)}
                         >
                             {isAttached ? "Изменить" : "Выбрать"}
                         </Button>
@@ -163,7 +163,7 @@ export default function DocumentInput({
                 visible={documentModalVisible}
                 onClose={() => setDocumentModalVisible(false)}
                 categoryKey={selectedCategory}
-                onSelectDocument={handleDocumentSelected}
+                onSelectDocument={handlerDocumentSelected}
             />
         </>
     );
