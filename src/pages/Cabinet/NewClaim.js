@@ -27,6 +27,10 @@ import TextConcatenation from "../../components/FormComponentsNew/TextConcatenat
 import { motion } from "framer-motion";
 import InnInput from "../../components/FormComponentsNew/InnInput";
 import BikInput from "../../components/FormComponentsNew/BikInput";
+import DocumentInput from "../../components/FormComponentsNew/DocumentInput";
+
+import { selectComponent } from "../../components/selectComponent";
+
 
 
 const { Title, Paragraph } = Typography;
@@ -167,7 +171,7 @@ export default function NewClaim() {
               components: {
                 Select: {
                   optionFontSize: 16,
-                  fontSize:16
+                  fontSize: 16
                 },
                 Input: {
                   fontSize: 16,
@@ -181,7 +185,7 @@ export default function NewClaim() {
             }}
           >
 
-            <Title >{serviceItem.Description}</Title>
+            <Title>{serviceItem.Description}</Title>
 
             <Form
               scrollToFirstError
@@ -190,228 +194,28 @@ export default function NewClaim() {
               layout="vertical"
               onFinish={onFinish}
               onKeyDown={handleKeyDown}
-              style={{ 
+              style={{
                 // maxWidth: "800px", 
-                width: "100%", 
-                margin: "0 auto" 
+                width: "100%",
+                margin: "0 auto"
               }}
               labelWrap
-              validateTrigger={["onSubmit","onChange"]}
+              validateTrigger={["onSubmit", "onChange"]}
             // onValuesChange={handlerChange}
             >
-              <Flex wrap={true} gap={20}>
+              <Flex
+                wrap={true}
+                gap={20}
+                // justify="space-between"
+              >
 
-              
-              {serviceItem.fields
-                ?.sort((a, b) => a.lineNum - b.lineNum)
-                .map((item, index) => {
-                  if (item.component_Type.includes("Divider"))
-                    return (
-                      <DividerForm
-                        key={index}
-                        {...item.component_Expanded}
-                        label={item.label}
-                      />
-                    );
-                    if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'ИНН')
 
-                      return (
-                        <InnInput
-                          key={index}
-                          {...item.component_Expanded}
-                          {...item}
-                          name={item.idLine}
-                          dependOf={item.dependIdLine}
-                          howDepend={item.dependСondition}                          
-                        />
-                      );
-                    if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'БИК')
-      
-                      return (
-                        <BikInput
-                          key={index}
-                          {...item.component_Expanded}
-                          {...item}
-                          name={item.idLine}
-                          dependOf={item.dependIdLine}
-                          howDepend={item.dependСondition}                          
-                        />
-                      );
+                {serviceItem.fields
+                  ?.sort((a, b) => a.lineNum - b.lineNum)
 
-                  if (item.component_Type.includes("TextInput"))
-                    return (
-                      <TextInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-                  if (
-                    item.component_Type.includes("TextInput") &&
-                    item.component_Expanded.specialField === "СНИЛС"
-                  )
-                    return (
-                      <SnilsInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
+                  .map(selectComponent)}
 
-                  if (item.component_Type.includes("NumberInput"))
-                    return (
-                      <NumberInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-
-                  if (item.component_Type.includes("SliderInput"))
-                    return (
-                      <SliderInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-
-                  if (
-                    item.component_Type.includes("LinkInput") ||
-                    item.component_Type.includes("EnumInput") ||
-                    item.component_Type.includes("SelectInput")
-                  )
-                    return (
-                      <SelectInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-
-                  if (item.component_Type.includes("TableInput"))
-                    return (
-                      <TableInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-
-                  if (item.component_Type.includes("DateInput"))
-                    return (
-                      <DateInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-
-                  if (item.component_Type.includes("SwitchInput"))
-                    return (
-                      <SwitchInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-                  if (item.component_Type.includes("AddressInput"))
-                    return (
-                      <AddressInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-
-                  if (
-                    item.component_Type.includes("ConfirmationDocumentNewInput")
-                  )
-                    return (
-                      <ConfirmationDocumentNewInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-
-                  if (item.component_Type.includes("GroupFieldsInput"))
-                    return (
-                      <GroupInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                        mainForm={form}
-                      />
-                    );
-                  if (item.component_Type.includes("PriceInput"))
-                    return (
-                      <PriceInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-                  if (item.component_Type.includes("componentsFormula"))
-                    return (
-                      <FormulaInput
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-                  if (item.component_Type.includes("TextConcatenation"))
-                    return (
-                      <TextConcatenation
-                        key={index}
-                        {...item.component_Expanded}
-                        {...item}
-                        name={item.idLine}
-                        dependOf={item.dependIdLine}
-                        howDepend={item.dependСondition}
-                      />
-                    );
-                })}
-                </Flex>
+              </Flex>
 
               <DocumentAttachments
                 form={form}

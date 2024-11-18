@@ -1,3 +1,9 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .rightMenu {
   display: flex;
   align-items: center;
@@ -19,7 +25,6 @@
 
 .mobileMenu {
   display: none;
-  max-width: 50vw;
 }
 
 .catPaw {
@@ -62,6 +67,4 @@
   .header {
     padding: 0 10px;
   }
-}
-@media only screen and (max-width: 575px) {
 }
