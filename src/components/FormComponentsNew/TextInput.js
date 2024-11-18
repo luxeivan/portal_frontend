@@ -117,22 +117,22 @@ export default function TextInput({
         placeholder={placeholder}
         maxLength={length || undefined} // Убираем `false`, если `length` не задано
         disabled={disabled}
-      />
+        />
     </Form.Item>
   );
   // console.log(`${label} - ${type}: ${defaultValue}`)
   const simpleInput = (
     <Form.Item
-      name={name}
-      label={label}
-      rules={formItemRules}
-      initialValue={defaultValue}
+    name={name}
+    label={label}
+    rules={formItemRules}
+    initialValue={defaultValue}
     >
-      <Input
+      <Input.TextArea
         placeholder={placeholder}
         maxLength={length || undefined} // Убираем `false`, если `length` не задано
         disabled={disabled}
-
+        autoSize={{ minRows: 1, maxRows: 4 }}
       />
     </Form.Item>
   );
