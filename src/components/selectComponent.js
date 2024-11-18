@@ -1,5 +1,6 @@
 import AddressInput from "./FormComponentsNew/addressComponents/AddressInput";
 import BikInput from "./FormComponentsNew/BikInput";
+import CommentInput from "./FormComponentsNew/CommentInput";
 import ConfirmationDocumentNewInput from "./FormComponentsNew/confirmationDocumentComponents/ConfirmationDocumentNewInput";
 import DateInput from "./FormComponentsNew/DateInput";
 import DividerForm from "./FormComponentsNew/DividerForm";
@@ -56,6 +57,18 @@ export const selectComponent = (item, index) => {
 
       return (
         <BikInput
+          key={index}
+          {...item.component_Expanded}
+          {...item}
+          name={item.idLine}
+          dependOf={item.dependIdLine}
+          howDepend={item.dependСondition}
+        />
+      );
+    if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'Комментарий')
+
+      return (
+        <CommentInput
           key={index}
           {...item.component_Expanded}
           {...item}
