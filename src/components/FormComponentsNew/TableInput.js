@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, theme,Input, InputNumber, message, Space, Select, Flex, Typography } from 'antd';
+import { Button, Form, theme, Input, InputNumber, message, Space, Select, Flex, Typography } from 'antd';
 import TextInput from '../../components/FormComponentsNew/TextInput'
 import NumberInput from '../../components/FormComponentsNew/NumberInput'
 import SliderInput from '../../components/FormComponentsNew/SliderInput'
@@ -16,7 +16,18 @@ import styles from './GroupInput.module.css'
 
 
 
-export default function TableInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, options = [], dependOf = false, howDepend = false, fields: Fields = [] }) {
+export default function TableInput({
+    name = 'name',
+    label = 'Label',
+    disabled = false,
+    placeholder = 'placeholder',
+    required = false,
+    options = [],
+    dependOf = false,
+    howDepend = false,
+    backgroundColorHex = false,
+    fields: Fields = []
+}) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
     const { colorBgBase, colorBgContainer } = theme.useToken().token
@@ -25,8 +36,8 @@ export default function TableInput({ name = 'name', label = 'Label', disabled = 
     const formElement = (
         <>
             <div style={{
-                backgroundColor: colorBgContainer,
-                width:"100%"
+                backgroundColor: backgroundColorHex,
+                width: "100%"
             }}
                 className={styles.formElement}
             >

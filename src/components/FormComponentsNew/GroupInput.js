@@ -88,7 +88,7 @@ export default function GroupInput({
       backgroundColor: backgroundColorHex,
       border: border ? `1px solid ${colorBorder}` : undefined
     }}
-      className={styles.formElement}
+      className={'formElement'}
     >
       <Typography.Title level={5} style={{ margin: "0 0 10px 0" }}>{label}</Typography.Title>
 

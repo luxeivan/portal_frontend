@@ -56,6 +56,33 @@ button,
   margin: 64px 0 0 186px;
 }
 
+/* .formElement -----------------------*/
+.formElement {
+  width: calc(33.33% - 20px);
+  min-width: 500px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.formElement .formElement {
+  /* width: calc(33.33% - 20px); */
+  width: 100% ;
+  min-width: inherit;
+  padding: 10px;
+  border-radius: 10px;
+}
+@media(max-width:1800px){
+  .formElement {
+    /* width: calc(50% - 10px); */
+  }
+}
+@media(max-width:1300px){
+  .formElement {
+    width: 100% ;
+    min-width: 300px;
+  }
+}
+/* .formElement ---------------------------*/
+
 @media (max-width: 1199px) {
   html {
     font-size: 14px;
