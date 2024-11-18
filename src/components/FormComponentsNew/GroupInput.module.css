@@ -4,9 +4,15 @@
     padding: 10px;
     border-radius: 10px;
 }
+.formElement .formElement {
+    /* width: calc(33.33% - 20px); */
+    min-width: 500px;
+    padding: 10px;
+    border-radius: 10px;
+}
 @media(max-width:1800px){
     .formElement {
-        width: calc(50% - 10px);
+        /* width: calc(50% - 10px); */
     }
 }
 @media(max-width:1300px){

@@ -15,6 +15,7 @@ import SliderInput from "./FormComponentsNew/SliderInput";
 import SnilsInput from "./FormComponentsNew/SnilsInput";
 import SwitchInput from "./FormComponentsNew/SwitchInput";
 import TableInput from "./FormComponentsNew/TableInput";
+import TableInputNew from "./FormComponentsNew/TableInputNew";
 import TextConcatenation from "./FormComponentsNew/TextConcatenation";
 import TextInput from "./FormComponentsNew/TextInput";
 
@@ -130,6 +131,17 @@ export const selectComponent = (item, index) => {
         />
       );
 
+    // if (item.component_Type.includes("TableInput"))
+    //   return (
+    //     <TableInputNew
+    //       key={index}
+    //       {...item.component_Expanded}
+    //       {...item}
+    //       name={item.idLine}
+    //       dependOf={item.dependIdLine}
+    //       howDepend={item.dependСondition}
+    //     />
+    //   );
     if (item.component_Type.includes("TableInput"))
       return (
         <TableInput

@@ -10,6 +10,7 @@ import Preloader from "../../components/Main/Preloader";
 import { motion } from "framer-motion";
 import { IconConnect } from "../../components/icons/IconConnect";
 import { IconHandEnergy } from "../../components/icons/IconHandEnergy";
+import TableInputNew from "../../components/FormComponentsNew/TableInputNew";
 
 const { Title, Paragraph } = Typography;
 
@@ -89,7 +90,7 @@ export default function About() {
     setActiveKey(key)
   };
 
-  
+
   return (
     <>
       <AppHelmet title={"О нас"} desc={"Информация о компании"} />
@@ -97,7 +98,249 @@ export default function About() {
         <Title level={1}>О компании Мособлэнерго</Title>
         <Preloader />
         <div></div>
+        <Form
+          onFinish={(values) => {
+            console.log('values: ', values)
+          }}
 
+        >
+
+          <TableInputNew name={'forma1'} fields={[
+            {
+              "object": "711d2bc6-50ce-11ef-94f8-5ef3fcb042f8",
+              "object_Type": "StandardODATA.Catalog_componentsTableInput",
+              "idLine": "b4988155-7819-47f4-938f-dbb566352476",
+              "lineNum": "1",
+              "fieldNum": "1",
+              "nameOwner_Key": "00000000-0000-0000-0000-000000000000",
+              "name_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+              "label": "Кадастровый номер земельного участка",
+              "component": "efffe13c-50a7-11ef-94f8-5ef3fcb042f8",
+              "component_Type": "StandardODATA.Catalog_componentsTextInput",
+              "required": true,
+              "hidden": false,
+              "disabled": false,
+              "placeholder": "",
+              "editingPossible": false,
+              "dependIdLine": "",
+              "dependName_Key": "00000000-0000-0000-0000-000000000000",
+              "dependСondition_Key": "00000000-0000-0000-0000-000000000000",
+              "dependRequired": false,
+              "dependHidden": false,
+              "dependDisabled": false,
+              "dependPlaceholder": "",
+              "dependEditingPossible": false,
+              "dependDefaultValue": "",
+              "dependDefaultValue_Type": "StandardODATA.Undefined",
+              "defaultValue": "",
+              "defaultValue_Type": "StandardODATA.Undefined",
+              "specialField": "КадастровыйНомер",
+              "topLevelGroup_Key": "00000000-0000-0000-0000-000000000000",
+              "properties": "",
+              "linkUrl": "",
+              "formula": "",
+              "idVersionComponent": "",
+              "versionChecksumComponent": "",
+              "groupFields_Key": "00000000-0000-0000-0000-000000000000",
+              "component_Expanded@navigationLinkUrl": "Catalog_componentsTextInput(guid'efffe13c-50a7-11ef-94f8-5ef3fcb042f8')",
+              "component_Expanded": {
+                "linkInput_Key": "00000000-0000-0000-0000-000000000000",
+                "Predefined": false,
+                "PredefinedDataName": "",
+                "Ref_Key": "efffe13c-50a7-11ef-94f8-5ef3fcb042f8",
+                "typeOData": "Edm.String",
+                "specialField": "КадастровыйНомер",
+                "inputMask": "",
+                "valueFromLink": false,
+                "length": "25",
+                "DataVersion": "AAAAAAAEqeg=",
+                "DeletionMark": false,
+                "Description": "Поле \"Кадастровый номер\"",
+                "Имя": "ПолеКадастровыйНомер"
+              },
+              "name@navigationLinkUrl": "InformationRegister_portalFields(object='711d2bc6-50ce-11ef-94f8-5ef3fcb042f8', object_Type='StandardODATA.Catalog_componentsTableInput', idLine='b4988155-7819-47f4-938f-dbb566352476')/name",
+              "name": {
+                "PredefinedDataName": "КадастровыеНомераЗУ",
+                "Predefined": true,
+                "inputMask": "",
+                "DeletionMark": false,
+                "label": "Объект присоединения кадастровые номера ЗУ",
+                "ValueType": {
+                  "Types": [
+                    "String"
+                  ],
+                  "NumberQualifiers": {
+                    "AllowedSign": "Any",
+                    "Digits": 0,
+                    "FractionDigits": 0
+                  },
+                  "StringQualifiers": {
+                    "AllowedLength": "Variable",
+                    "Length": "355"
+                  },
+                  "DateQualifiers": {
+                    "DateFractions": "DateTime"
+                  },
+                  "BinaryDataQualifiers": {
+                    "AllowedLength": "Variable",
+                    "Length": "0"
+                  }
+                },
+                "fieldsExternalServices": [],
+                "placeHolder": "",
+                "fieldAssignments": [
+                  {
+                    "Ref_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+                    "LineNumber": "1",
+                    "assignment": "Услуга"
+                  },
+                  {
+                    "Ref_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+                    "LineNumber": "2",
+                    "assignment": "Объект"
+                  }
+                ],
+                "auxiliary": false,
+                "specialField": "КадастровыйНомер",
+                "Ref_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+                "Description": "Кадастровые номера ЗУ",
+                "DataVersion": "AAAAAAAErMw=",
+                "fullDescription": "",
+                "shortDescription": "",
+                "availableComponents": [
+                  {
+                    "Ref_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+                    "LineNumber": "1",
+                    "component": "efffe13c-50a7-11ef-94f8-5ef3fcb042f8",
+                    "component_Type": "StandardODATA.Catalog_componentsTextInput"
+                  }
+                ],
+                "Постановления": []
+              },
+              "dependName@navigationLinkUrl": "InformationRegister_portalFields(object='711d2bc6-50ce-11ef-94f8-5ef3fcb042f8', object_Type='StandardODATA.Catalog_componentsTableInput', idLine='b4988155-7819-47f4-938f-dbb566352476')/dependName",
+              "dependName": null,
+              "dependСondition@navigationLinkUrl": "InformationRegister_portalFields(object='711d2bc6-50ce-11ef-94f8-5ef3fcb042f8', object_Type='StandardODATA.Catalog_componentsTableInput', idLine='b4988155-7819-47f4-938f-dbb566352476')/dependСondition",
+              "dependСondition": null
+            },
+            {
+              "object": "711d2bc6-50ce-11ef-94f8-5ef3fcb042f8",
+              "object_Type": "StandardODATA.Catalog_componentsTableInput",
+              "idLine": "b4988155-7819-47f4-938f-dbb566352476",
+              "lineNum": "1",
+              "fieldNum": "1",
+              "nameOwner_Key": "00000000-0000-0000-0000-000000000000",
+              "name_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+              "label": "Второе поле",
+              "component": "efffe13c-50a7-11ef-94f8-5ef3fcb042f8",
+              "component_Type": "StandardODATA.Catalog_componentsTextInput",
+              "required": true,
+              "hidden": false,
+              "disabled": false,
+              "placeholder": "",
+              "editingPossible": false,
+              "dependIdLine": "",
+              "dependName_Key": "00000000-0000-0000-0000-000000000000",
+              "dependСondition_Key": "00000000-0000-0000-0000-000000000000",
+              "dependRequired": false,
+              "dependHidden": false,
+              "dependDisabled": false,
+              "dependPlaceholder": "",
+              "dependEditingPossible": false,
+              "dependDefaultValue": "",
+              "dependDefaultValue_Type": "StandardODATA.Undefined",
+              "defaultValue": "",
+              "defaultValue_Type": "StandardODATA.Undefined",
+              "specialField": "КадастровыйНомер",
+              "topLevelGroup_Key": "00000000-0000-0000-0000-000000000000",
+              "properties": "",
+              "linkUrl": "",
+              "formula": "",
+              "idVersionComponent": "",
+              "versionChecksumComponent": "",
+              "groupFields_Key": "00000000-0000-0000-0000-000000000000",
+              "component_Expanded@navigationLinkUrl": "Catalog_componentsTextInput(guid'efffe13c-50a7-11ef-94f8-5ef3fcb042f8')",
+              "component_Expanded": {
+                "linkInput_Key": "00000000-0000-0000-0000-000000000000",
+                "Predefined": false,
+                "PredefinedDataName": "",
+                "Ref_Key": "efffe13c-50a7-11ef-94f8-5ef3fcb042f8",
+                "typeOData": "Edm.String",
+                "specialField": "КадастровыйНомер",
+                "inputMask": "",
+                "valueFromLink": false,
+                "length": "25",
+                "DataVersion": "AAAAAAAEqeg=",
+                "DeletionMark": false,
+                "Description": "Поле \"Кадастровый номер\"",
+                "Имя": "ПолеКадастровыйНомер"
+              },
+              "name@navigationLinkUrl": "InformationRegister_portalFields(object='711d2bc6-50ce-11ef-94f8-5ef3fcb042f8', object_Type='StandardODATA.Catalog_componentsTableInput', idLine='b4988155-7819-47f4-938f-dbb566352476')/name",
+              "name": {
+                "PredefinedDataName": "КадастровыеНомераЗУ",
+                "Predefined": true,
+                "inputMask": "",
+                "DeletionMark": false,
+                "label": "Объект присоединения кадастровые номера ЗУ",
+                "ValueType": {
+                  "Types": [
+                    "String"
+                  ],
+                  "NumberQualifiers": {
+                    "AllowedSign": "Any",
+                    "Digits": 0,
+                    "FractionDigits": 0
+                  },
+                  "StringQualifiers": {
+                    "AllowedLength": "Variable",
+                    "Length": "355"
+                  },
+                  "DateQualifiers": {
+                    "DateFractions": "DateTime"
+                  },
+                  "BinaryDataQualifiers": {
+                    "AllowedLength": "Variable",
+                    "Length": "0"
+                  }
+                },
+                "fieldsExternalServices": [],
+                "placeHolder": "",
+                "fieldAssignments": [
+                  {
+                    "Ref_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+                    "LineNumber": "1",
+                    "assignment": "Услуга"
+                  },
+                  {
+                    "Ref_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+                    "LineNumber": "2",
+                    "assignment": "Объект"
+                  }
+                ],
+                "auxiliary": false,
+                "specialField": "КадастровыйНомер",
+                "Ref_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+                "Description": "Кадастровые номера ЗУ",
+                "DataVersion": "AAAAAAAErMw=",
+                "fullDescription": "",
+                "shortDescription": "",
+                "availableComponents": [
+                  {
+                    "Ref_Key": "00adb624-1cd0-11ef-94f0-5ef3fcb042f8",
+                    "LineNumber": "1",
+                    "component": "efffe13c-50a7-11ef-94f8-5ef3fcb042f8",
+                    "component_Type": "StandardODATA.Catalog_componentsTextInput"
+                  }
+                ],
+                "Постановления": []
+              },
+              "dependName@navigationLinkUrl": "InformationRegister_portalFields(object='711d2bc6-50ce-11ef-94f8-5ef3fcb042f8', object_Type='StandardODATA.Catalog_componentsTableInput', idLine='b4988155-7819-47f4-938f-dbb566352476')/dependName",
+              "dependName": null,
+              "dependСondition@navigationLinkUrl": "InformationRegister_portalFields(object='711d2bc6-50ce-11ef-94f8-5ef3fcb042f8', object_Type='StandardODATA.Catalog_componentsTableInput', idLine='b4988155-7819-47f4-938f-dbb566352476')/dependСondition",
+              "dependСondition": null
+            }
+          ]} />
+          <Button htmlType="submit">Save</Button>
+        </Form>
         {/* <Form.Provider
           onFormFinish={async (name, { forms, values }) => {
             console.log("forms", forms)
