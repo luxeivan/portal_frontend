@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, InputNumber } from "antd";
 import useServices from "../../stores/useServices";
 import useTemp from "../../stores/Cabinet/useTemp";
@@ -11,13 +11,14 @@ export default function NumberInput({
   required = false,
   dependOf = false,
   howDepend = false,
-  min = 0,
-  max = 100,
+  min = false,
+  max = false,
   step = 1,
   defaultValue = false,
   length = false,
   properties = false,
 }) {
+  const [stepMain,setStepMain] = useState(step)
   const serviceItem = useServices((state) => state.serviceItem);
   const unit = useTemp((state) => state.unit);
   const setUnit = useTemp((state) => state.setUnit);
@@ -38,6 +39,7 @@ export default function NumberInput({
           setUnit({
             [name]: field.component_Expanded.options.find((item) =>item.value === form.getFieldValue(objectProp?.unit?.idLine))?.unit,
           });
+          // setStepMain()
         }
       }
     }
@@ -61,7 +63,7 @@ export default function NumberInput({
       <InputNumber
         min={min}
         max={max}
-        step={step}
+        step={stepMain}
         maxLength={length || undefined} // Убираем `false`, если `length` не задано
         disabled={disabled}
         suffix={
