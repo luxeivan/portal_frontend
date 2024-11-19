@@ -61,11 +61,11 @@ export default function FormulaInput({
         const temp = { formula }
         // console.log("keys:", keys)
         keys.forEach(item => {
-            if (!values[item]) return;
-            temp[item] = values[item] ? values[item] : NaN
+            if (typeof values[item] === "undefined") return;
+            temp[item] = typeof values[item] !== "undefined" ? Number(values[item]) : 0
             // console.log("item:", item)
             // console.log("values[item]:", values[item])
-            temp.formula = temp.formula.replace(item, values[item] ? values[item] : NaN)
+            temp.formula = temp.formula.replace(item, typeof values[item] !== "undefined" ? Number(values[item]) : 0)
         })
         // console.log("formula:", temp.formula)
         // console.log("evaluate", evaluate(temp.formula, temp))
@@ -101,7 +101,7 @@ export default function FormulaInput({
     // console.log('defaultValue',defaultValue)
     // console.log('propsFormula', objectProp)
     if (formula === '') return false;
-    
+
     const formElement = (
         <Form.Item
             name={name}
