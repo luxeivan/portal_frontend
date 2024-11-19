@@ -58,6 +58,10 @@
     stroke-width: 5;
     fill: none;
  }
+ .iconDiv{
+   text-align: center;
+   width: 150px;
+ }
 
  @media (max-width: 1900px) {
     .styleLink {
@@ -85,4 +89,8 @@
     }
  }
 
- @media (max-width: 575px) {}
+ @media (max-width: 575px) {
+   .iconDiv{
+      width: 100px;
+    }
+ }

@@ -40,6 +40,7 @@ export default function CommentInput({
                 <Input.TextArea
                     placeholder={placeholder}
                     disabled={disabled}
+                    autoSize={{ minRows: 2, maxRows: 6 }}
                 />
             </Form.Item>        
 

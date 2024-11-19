@@ -58,15 +58,16 @@ button,
 
 /* .formElement -----------------------*/
 .formElement {
-  width: calc(33.33% - 20px);
-  min-width: 500px;
+  /* width: calc(33.33% - 20px); */
+  /* min-width: 500px; */
   padding: 10px;
   border-radius: 10px;
+  height: 100%;
 }
 .formElement .formElement {
   /* width: calc(33.33% - 20px); */
-  width: 100% ;
-  min-width: inherit;
+  /* width: 100% ; */
+  /* min-width: inherit; */
   padding: 10px;
   border-radius: 10px;
 }

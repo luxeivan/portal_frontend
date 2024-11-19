@@ -10,7 +10,6 @@ import Container from "../../components/Container";
 import Preloader from "../../components/Main/Preloader";
 import ErrorModal from "../../components/ErrorModal";
 import { IconConnect } from "../../components/icons/IconConnect";
-import { column } from "mathjs";
 import { IconHandEnergy } from "../../components/icons/IconHandEnergy";
 
 const { Title } = Typography;
@@ -155,9 +154,7 @@ export default function Services() {
                                 </svg>
                               </div>
                             </Flex> */}
-                            {!item.IsFolder && <div
-                              style={{ textAlign: "center", width: "100%", padding: 40 }}
-                            >
+                            {!item.IsFolder && <div className={styles.iconDiv}>
                               {index % 2 == 0 ? <IconConnect
                                 isHover={isHoverCard[index]}
                               /> : <IconHandEnergy

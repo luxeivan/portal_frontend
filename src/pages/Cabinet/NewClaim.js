@@ -1,4 +1,4 @@
-import { Form, Typography, Button, Drawer, Flex, Breadcrumb, ConfigProvider } from "antd";
+import { Form, Typography, Button, Drawer, Flex, Breadcrumb, ConfigProvider, Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useClaims from "../../stores/Cabinet/useClaims";
@@ -179,7 +179,8 @@ export default function NewClaim() {
                 Form: {
                   /* here is your component tokens */
                   labelFontSize: 16,
-                  verticalLabelPadding: "0 0 4px"
+                  verticalLabelPadding: "0 0 4px",
+                  itemMarginBottom:0
                 },
               },
             }}
@@ -203,24 +204,27 @@ export default function NewClaim() {
               validateTrigger={["onSubmit", "onChange"]}
             // onValuesChange={handlerChange}
             >
-              <Flex
+              {/* <Flex
                 wrap={true}
                 gap={20}
                 // justify="space-between"
+              > */}
+              <Row 
+              gutter={[20,20]} 
+              align={"stretch"}
               >
+                  {serviceItem.fields
+                    ?.sort((a, b) => a.lineNum - b.lineNum)
 
+                    .map(selectComponent)}
+              </Row>
 
-                {serviceItem.fields
-                  ?.sort((a, b) => a.lineNum - b.lineNum)
-
-                  .map(selectComponent)}
-
-              </Flex>
-
+              {/* </Flex> */}
+{/* 
               <DocumentAttachments
                 form={form}
                 categoriesFiles={serviceItem.categoriesFiles}
-              />
+              /> */}
 
               <div
                 style={{
