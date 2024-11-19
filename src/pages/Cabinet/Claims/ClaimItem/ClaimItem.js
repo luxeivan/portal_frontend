@@ -7,6 +7,7 @@ import useClaims from "../../../../stores/Cabinet/useClaims";
 import ChatComponent from "../ChatComponent/ChatComponent";
 import styles from "./ClaimItem.module.css";
 import { FileTextOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import zayavka from '../../../../assets/zayavka.pdf'
 
 const { Title } = Typography;
 const { Step } = Steps;
@@ -94,14 +95,17 @@ export default function ClaimItem() {
             <Title level={1} className={styles.title}>
               Заявка №{claim.Number}
             </Title>
-            <Button
-              type="primary"
-              icon={<FileTextOutlined />}
-              loading={pdfLoading}
-              onClick={handleViewPDF}
-            >
-              Просмотреть заявку
-            </Button>
+            <a target="_blank" href={zayavka}>
+
+              <Button
+                type="primary"
+                icon={<FileTextOutlined />}
+                loading={pdfLoading}
+              // onClick={handleViewPDF}
+              >
+                Просмотреть заявку
+              </Button>
+            </a>
           </div>
 
           {/* Статусы заявки */}

@@ -15,7 +15,7 @@ export default function GroupInput({
   howDepend = false,
   fields: Fields = [],
   layout = "vertical",
-  backgroundColorHex = false,
+  // backgroundColorHex = false,
   border = true,
   span = 12
 }) {
@@ -84,9 +84,10 @@ export default function GroupInput({
   //     children: <p>Zhou Maomao</p>,
 
   // }))
+  console.log(theme.useToken().token)
   const formElement = (
     <div style={{
-      backgroundColor: backgroundColorHex,
+      backgroundColor: colorBgContainer,
       border: border ? `1px solid ${colorBorder}` : undefined
     }}
       className={'formElement'}

@@ -21,7 +21,7 @@ import TableInputNew from "./FormComponentsNew/TableInputNew";
 import TextConcatenation from "./FormComponentsNew/TextConcatenation";
 import TextInput from "./FormComponentsNew/TextInput";
 export const selectComponent = (item, index) => {
-  return <Col span={item.component_Expanded?.span ? item.component_Expanded.span : 24}>
+  return <Col xxl={item.component_Expanded?.span ? item.component_Expanded.span : 24} xs={24}>
     {selectComponentChildren(item, index)}
   </Col>
 }
