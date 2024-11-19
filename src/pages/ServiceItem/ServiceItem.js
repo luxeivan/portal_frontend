@@ -67,7 +67,7 @@ export default function ServiceItem() {
   const onClose = () => {
     setOpen(false);
   };
-
+console.log(serviceItem)
   return (
     <div>
       {serviceItem && (
