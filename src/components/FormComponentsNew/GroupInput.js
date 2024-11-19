@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Flex, Descriptions, Typography, theme } from "antd";
+import { Form, Flex, Descriptions, Typography, theme, Col, Row } from "antd";
 import moment from "moment";
 import styles from './GroupInput.module.css'
 import { selectComponent } from "../selectComponent";
@@ -16,7 +16,8 @@ export default function GroupInput({
   fields: Fields = [],
   layout = "vertical",
   backgroundColorHex = false,
-  border = true
+  border = true,
+  span = 12
 }) {
   const { colorBgBase, colorBgContainer, colorBorder } = theme.useToken().token
   const [openModal, setOpenModal] = useState(false)
@@ -95,13 +96,18 @@ export default function GroupInput({
       {items &&
         <Descriptions size="small" style={{ width: "100%", marginBottom: "10px", border: 0 }} items={items} column={1} bordered />
       }
-      <Flex
+      {/* <Flex
         vertical={layout === 'vertical' ? true : undefined}
         gap={layout === 'vertical' ? 0 : 10}
         align={layout === 'vertical' ? undefined : "flex-end"}
-      >
-        {Fields.map(selectComponent)}
-      </Flex>
+      > */}
+      <Row 
+      gutter={[20,20]} 
+      align={"stretch"}
+      >        
+          {Fields.map(selectComponent)}        
+      </Row>
+      {/* </Flex> */}
     </div>
   );
 
