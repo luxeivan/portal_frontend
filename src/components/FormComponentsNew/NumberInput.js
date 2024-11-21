@@ -11,24 +11,25 @@ export default function NumberInput({
   required = false,
   dependOf = false,
   howDepend = false,
-  min = false,
+  min = 0,
   max = false,
   step = 1,
   defaultValue = false,
   length = false,
   properties = false,
+  ractionDigits = undefined
 }) {
-  const [stepMain,setStepMain] = useState(step)
+  const [stepMain, setStepMain] = useState(step)
   const serviceItem = useServices((state) => state.serviceItem);
   const unit = useTemp((state) => state.unit);
   const setUnit = useTemp((state) => state.setUnit);
-
   const form = Form.useFormInstance();
   let fieldDepends = Form.useWatch(dependOf, form);
 
   let objectProp = null;
   if (properties) objectProp = JSON.parse(properties);
   let idLine = Form.useWatch(objectProp?.unit?.idLine, form);
+
   useEffect(() => {
     if (objectProp?.unit && objectProp?.unit?.idLine) {
       if (serviceItem.fields) {
@@ -37,14 +38,14 @@ export default function NumberInput({
         );
         if (field?.component_Expanded?.options) {
           setUnit({
-            [name]: field.component_Expanded.options.find((item) =>item.value === form.getFieldValue(objectProp?.unit?.idLine))?.unit,
+            [name]: field.component_Expanded.options.find((item) => item.value === form.getFieldValue(objectProp?.unit?.idLine))?.unit,
           });
           // setStepMain()
         }
       }
     }
     if (objectProp?.unit?.value) {
-      setUnit(name, objectProp?.unit?.value );
+      setUnit(name, objectProp?.unit?.value);
     }
   }, [idLine]);
 
@@ -64,6 +65,8 @@ export default function NumberInput({
         min={min}
         max={max}
         step={stepMain}
+        decimalSeparator=","
+        precision={ractionDigits > 0 ? ractionDigits : undefined}
         maxLength={length || undefined} // Убираем `false`, если `length` не задано
         disabled={disabled}
         suffix={
