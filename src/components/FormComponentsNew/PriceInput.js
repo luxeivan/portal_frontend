@@ -64,7 +64,7 @@ export default function PriceInput({
         }
     }, [typePrice, nomenclature])
     Form.useWatch(dependOf, form);
-    let fieldDepends = form.getFieldValue(dependOf);
+    // let fieldDepends = form.getFieldValue(dependOf);
     // console.log('defaultValue',defaultValue)
     // console.log('objectProp', objectProp)
     const formElement = (
@@ -80,19 +80,20 @@ export default function PriceInput({
         </Form.Item>
 
     );
-    if (!dependOf) return formElement
-    if (dependOf && howDepend && howDepend.options?.length > 0) {
-        let show = false
-        if (typeof fieldDepends === "undefined") fieldDepends = false
-        howDepend.options.forEach(item => {
-            if (item.value === "true") item.value = true
-            if (item.value === "false") item.value = false;
-            if (item.value == fieldDepends) show = true
-        })
-        if (show) return formElement
-    }
-    console.log('howDepend', howDepend)
-    if (dependOf && howDepend && howDepend.max) {
-        if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
-    }
+    // if (!dependOf) return formElement
+    // if (dependOf && howDepend && howDepend.options?.length > 0) {
+    //     let show = false
+    //     if (typeof fieldDepends === "undefined") fieldDepends = false
+    //     howDepend.options.forEach(item => {
+    //         if (item.value === "true") item.value = true
+    //         if (item.value === "false") item.value = false;
+    //         if (item.value == fieldDepends) show = true
+    //     })
+    //     if (show) return formElement
+    // }
+    // console.log('howDepend', howDepend)
+    // if (dependOf && howDepend && howDepend.max) {
+    //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
+    // }
+    return formElement
 }

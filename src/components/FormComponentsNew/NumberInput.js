@@ -24,7 +24,7 @@ export default function NumberInput({
   const unit = useTemp((state) => state.unit);
   const setUnit = useTemp((state) => state.setUnit);
   const form = Form.useFormInstance();
-  let fieldDepends = Form.useWatch(dependOf, form);
+  // let fieldDepends = Form.useWatch(dependOf, form);
 
   let objectProp = null;
   if (properties) objectProp = JSON.parse(properties);
@@ -79,24 +79,24 @@ export default function NumberInput({
     </Form.Item>
   );
 
-  if (!dependOf) return formElement;
+  // if (!dependOf) return formElement;
 
-  if (dependOf && howDepend && howDepend.options?.length > 0) {
-    let show = false;
-    if (typeof fieldDepends === "undefined") fieldDepends = false;
-    howDepend.options.forEach((item) => {
-      if (item.value === "true") item.value = true;
-      if (item.value === "false") item.value = false;
-      if (item.value == fieldDepends) show = true;
-    });
-    if (show) return formElement;
-  }
+  // if (dependOf && howDepend && howDepend.options?.length > 0) {
+  //   let show = false;
+  //   if (typeof fieldDepends === "undefined") fieldDepends = false;
+  //   howDepend.options.forEach((item) => {
+  //     if (item.value === "true") item.value = true;
+  //     if (item.value === "false") item.value = false;
+  //     if (item.value == fieldDepends) show = true;
+  //   });
+  //   if (show) return formElement;
+  // }
 
-  if (dependOf && howDepend && howDepend.max) {
-    if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
-      return formElement;
-  }
-
-  return null;
+  // if (dependOf && howDepend && howDepend.max) {
+  //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
+  //     return formElement;
+  // }
+  return formElement
+  // return null;
 }
 

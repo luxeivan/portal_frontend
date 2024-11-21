@@ -22,7 +22,7 @@ export default function DocumentInput({
     const { token } = theme.useToken();
 
     const form = Form.useFormInstance();
-    let fieldDepends = Form.useWatch(dependOf, form);
+    // let fieldDepends = Form.useWatch(dependOf, form);
 
     const handlerSelectDocument = (categoryKey) => {
 
@@ -180,24 +180,23 @@ export default function DocumentInput({
         </>
     );
 
-    if (!dependOf) return formElement;
+    // if (!dependOf) return formElement;
 
-    if (dependOf && howDepend && howDepend.options?.length > 0) {
-        let show = false;
-        if (typeof fieldDepends === "undefined") fieldDepends = false;
-        howDepend.options.forEach((item) => {
-            if (item.value === "true") item.value = true;
-            if (item.value === "false") item.value = false;
-            if (item.value == fieldDepends) show = true;
-        });
-        if (show) return formElement;
-    }
+    // if (dependOf && howDepend && howDepend.options?.length > 0) {
+    //     let show = false;
+    //     if (typeof fieldDepends === "undefined") fieldDepends = false;
+    //     howDepend.options.forEach((item) => {
+    //         if (item.value === "true") item.value = true;
+    //         if (item.value === "false") item.value = false;
+    //         if (item.value == fieldDepends) show = true;
+    //     });
+    //     if (show) return formElement;
+    // }
 
-    if (dependOf && howDepend && howDepend.max) {
-        if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
-            return formElement;
-    }
-
-    return null;
+    // if (dependOf && howDepend && howDepend.max) {
+    //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
+    //         return formElement;
+    // }
+    return formElement
 }
 

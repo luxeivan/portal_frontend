@@ -3,7 +3,7 @@ import { Button, Form, Input, InputNumber, message, Space, Col, Row, Slider, Fle
 
 export default function SliderInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, depend = false, min = 0, max = 100, step = 1 }) {
     const form = Form.useFormInstance()
-    const fieldDepends = Form.useWatch(depend && depend.field, form)
+    // const fieldDepends = Form.useWatch(depend && depend.field, form)
     const [inputValue, setInputValue] = useState(min);
     const onChange = (value) => {
         form.setFieldValue(name, value)

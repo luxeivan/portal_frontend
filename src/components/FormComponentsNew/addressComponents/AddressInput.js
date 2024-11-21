@@ -23,7 +23,7 @@ const AddressInput = ({
   const { colorBgSolid, colorPrimary, colorTextLightSolid } = theme.useToken().token
   // console.log(theme.useToken().token)
   const form = Form.useFormInstance();
-  let fieldDepends = Form.useWatch(dependOf, form)
+  // let fieldDepends = Form.useWatch(dependOf, form)
   const [options, setOptions] = useState([]);
   const [address, setAddress] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -174,20 +174,21 @@ const AddressInput = ({
     </Form.List>
   );
 
-  if (!dependOf) return formElement;
-  if (dependOf && howDepend && howDepend.options?.length > 0) {
-    let show = false;
-    if (typeof fieldDepends === "undefined") fieldDepends = false
-    howDepend.options.forEach((item) => {
-      if (item.value === "true") item.value = true;
-      if (item.value === "false") item.value = false;
-      if (item.value == fieldDepends) show = true;
-    });
-    if (show) return formElement;
-  }
-  if (dependOf && howDepend && howDepend.min && howDepend.max) {
-    if (fieldDepends >= howDepend.min && howDepend.max) return formElement;
-  }
+  // if (!dependOf) return formElement;
+  // if (dependOf && howDepend && howDepend.options?.length > 0) {
+  //   let show = false;
+  //   if (typeof fieldDepends === "undefined") fieldDepends = false
+  //   howDepend.options.forEach((item) => {
+  //     if (item.value === "true") item.value = true;
+  //     if (item.value === "false") item.value = false;
+  //     if (item.value == fieldDepends) show = true;
+  //   });
+  //   if (show) return formElement;
+  // }
+  // if (dependOf && howDepend && howDepend.min && howDepend.max) {
+  //   if (fieldDepends >= howDepend.min && howDepend.max) return formElement;
+  // }
+  return formElement
 };
 
 export default AddressInput;
