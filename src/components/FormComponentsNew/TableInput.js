@@ -36,7 +36,7 @@ export default function TableInput({
     const formElement = (
         <>
             <div style={{
-                backgroundColor: backgroundColorHex,
+                backgroundColor: colorBgContainer,
                 width: "100%"
             }}
                 className={styles.formElement}
