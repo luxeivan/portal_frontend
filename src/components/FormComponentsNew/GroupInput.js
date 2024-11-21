@@ -84,7 +84,7 @@ export default function GroupInput({
   //     children: <p>Zhou Maomao</p>,
 
   // }))
-  console.log(theme.useToken().token)
+  // console.log(theme.useToken().token)
   const formElement = (
     <div style={{
       backgroundColor: colorBgContainer,

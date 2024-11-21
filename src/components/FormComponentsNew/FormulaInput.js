@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
     Form,
     Input,
+    InputNumber,
     theme
 } from "antd";
 import { evaluate } from "mathjs";
@@ -26,7 +27,7 @@ export default function FormulaInput({
     defaultValue = false,
     properties = false,
     formula = '',
-    ractionDigits = 10,
+    ractionDigits = undefined,
     digits = false,
     valueValidate = false
 }) {
@@ -119,9 +120,11 @@ export default function FormulaInput({
                 }),
             ] : null}
         >
-            <Input
+            <InputNumber
                 disabled={true}
                 validateTrigger="onBlur"
+                decimalSeparator=","
+                // precision={}
                 style={{ color: colorTextHeading, width: "inherit" }}
                 // style={{ color: colorTextHeading }}
                 suffix={objectProp?.currency?.position === "suffix" ? currency[objectProp.currency.idLine] : false}
