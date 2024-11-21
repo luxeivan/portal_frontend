@@ -20,7 +20,7 @@ export default function InnInput({
     inGroup = false
 }) {
     const form = Form.useFormInstance();
-    let fieldDepends = Form.useWatch(dependOf, form);
+    // let fieldDepends = Form.useWatch(dependOf, form);
     const [options, setOptions] = useState([])
     const objProperties = JSON.parse(properties).externalService
 

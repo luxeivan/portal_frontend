@@ -1,4 +1,4 @@
-import { Col } from "antd";
+import { Col, Form } from "antd";
 import AddressInput from "./FormComponentsNew/addressComponents/AddressInput";
 import BikInput from "./FormComponentsNew/BikInput";
 import CommentInput from "./FormComponentsNew/CommentInput";
@@ -20,12 +20,34 @@ import TableInput from "./FormComponentsNew/TableInput";
 import TableInputNew from "./FormComponentsNew/TableInputNew";
 import TextConcatenation from "./FormComponentsNew/TextConcatenation";
 import TextInput from "./FormComponentsNew/TextInput";
-export const selectComponent = (item, index) => {
-  return <Col xxl={item.component_Expanded?.span ? item.component_Expanded.span : 24} xs={24}>
+
+export default function SelectComponent ({item, index}) {
+  const dependOf = item.dependIdLine
+  const name = item.idLine
+  const howDepend = item.dependСondition
+  const mainForm = Form.useFormInstance()
+  let fieldDepends = Form.useWatch(dependOf, mainForm);
+  const formElement = (<Col xxl={item.component_Expanded?.span ? item.component_Expanded.span : 24} xs={24}>
     {selectComponentChildren(item, index)}
-  </Col>
+  </Col>)
+  if (!dependOf) return formElement;
+  if (dependOf && howDepend && howDepend.options?.length > 0) {
+    let show = false;
+    if (typeof fieldDepends === "undefined") fieldDepends = false
+    howDepend.options.forEach((item) => {
+      if (item.value === "true") item.value = true;
+      if (item.value === "false") item.value = false;
+      if (item.value == fieldDepends) show = true;
+    });
+    if (show) return formElement;
+  }
+  if (dependOf && howDepend && howDepend.max) {
+    mainForm.setFieldValue(name, "");
+    if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
+      return formElement;
+  }
 }
-const selectComponentChildren = (item, index) => {
+function selectComponentChildren (item, index) {
   if (item.component_Type.includes("Divider"))
     return (
       <DividerForm
