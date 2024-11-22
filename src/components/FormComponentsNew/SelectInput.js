@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form,  Select,  } from "antd";
+import { Form,  Select,Typography  } from "antd";
 import WrapperComponent from "./WrapperComponent";
 
 export default function SelectInput({
@@ -43,10 +43,10 @@ export default function SelectInput({
         optionFilterProp="label"
         options={options}
         // dropdownStyle={{ backgroundColor: "#eee", whiteSpace: "pre-wrap" }}
-        // optionRender={(option) => {
-        //   console.log(option)
-        //   return <Typography.Paragraph style={{ width: "100%", whiteSpace: "pre-wrap", marginBottom: 5 }}>{option.label}</Typography.Paragraph>
-        // }}
+        optionRender={(option) => {
+          // console.log(option)
+          return <Typography.Paragraph style={{ width: "100%", whiteSpace: "pre-wrap", marginBottom: 5 }}>{option.label}</Typography.Paragraph>
+        }}
       />
     </Form.Item>
   );
