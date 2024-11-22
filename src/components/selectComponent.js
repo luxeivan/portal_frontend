@@ -21,35 +21,35 @@ import TableInputNew from "./FormComponentsNew/TableInputNew";
 import TextConcatenation from "./FormComponentsNew/TextConcatenation";
 import TextInput from "./FormComponentsNew/TextInput";
 
-export default function SelectComponent ({item, index}) {
-  // const dependOf = false
-  const dependOf = item.dependIdLine
-  const name = item.idLine
-  const howDepend = item.dependСondition
-  const mainForm = Form.useFormInstance()
-  let fieldDepends = Form.useWatch(dependOf, mainForm);
+// export default function SelectComponent ({item, index}) {
+//   // const dependOf = false
+//   const dependOf = item.dependIdLine
+//   const name = item.idLine
+//   const howDepend = item.dependСondition
+//   const mainForm = Form.useFormInstance()
+//   let fieldDepends = Form.useWatch(dependOf, mainForm);
   
-  const formElement = (<Col xxl={item.component_Expanded?.span ? item.component_Expanded.span : 24} xs={24}>
-    {selectComponentChildren(item, index)}
-  </Col>)
-  if (!dependOf) return formElement;
-  if (dependOf && howDepend && howDepend.options?.length > 0) {
-    let show = false;
-    if (typeof fieldDepends === "undefined") fieldDepends = false
-    howDepend.options.forEach((item) => {
-      if (item.value === "true") item.value = true;
-      if (item.value === "false") item.value = false;
-      if (item.value == fieldDepends) show = true;
-    });
-    if (show) return formElement;
-  }
-  if (dependOf && howDepend && howDepend.max) {
-    mainForm.setFieldValue(name, "");
-    if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
-      return formElement;
-  }
-}
-function selectComponentChildren (item, index) {
+//   const formElement = (<Col xxl={item.component_Expanded?.span ? item.component_Expanded.span : 24} xs={24}>
+//     {selectComponentChildren(item, index)}
+//   </Col>)
+//   if (!dependOf) return formElement;
+//   if (dependOf && howDepend && howDepend.options?.length > 0) {
+//     let show = false;
+//     if (typeof fieldDepends === "undefined") fieldDepends = false
+//     howDepend.options.forEach((item) => {
+//       if (item.value === "true") item.value = true;
+//       if (item.value === "false") item.value = false;
+//       if (item.value == fieldDepends) show = true;
+//     });
+//     if (show) return formElement;
+//   }
+//   if (dependOf && howDepend && howDepend.max) {
+//     mainForm.setFieldValue(name, "");
+//     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
+//       return formElement;
+//   }
+// }
+export default function selectComponent (item, index) {
   if (item.component_Type.includes("Divider"))
     return (
       <DividerForm

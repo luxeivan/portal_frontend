@@ -1,10 +1,15 @@
-import React, { useState } from "react";
-import { Input, Form, Typography } from "antd";
+import React from "react";
+import { Input, Form } from "antd";
+import WrapperComponent from "./WrapperComponent";
 
 export default function SnilsInput({
   name = "snils",
   label = "Label",
-  required = false }) {
+  required = false,
+  dependOf = false,
+  howDepend = false,
+  span = false
+}) {
   const form = Form.useFormInstance();
 
   const validateSnils = (e) => {
@@ -46,7 +51,7 @@ export default function SnilsInput({
     return Promise.reject(new Error(error.message));
   };
 
-  return (
+  const formElement = (
     <Form.Item
       label={label}
       name={name}
@@ -81,4 +86,6 @@ export default function SnilsInput({
 
     </Form.Item>
   );
+
+  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

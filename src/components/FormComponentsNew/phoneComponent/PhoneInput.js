@@ -1,9 +1,10 @@
 import React from 'react'
-import { Button, Form, Input, InputNumber, message, Space, Switch,theme } from 'antd';
+import {  Form, theme } from 'antd';
 import ReactInputMask from 'react-input-mask';
 import styles from './Phone.module.css'
+import WrapperComponent from '../WrapperComponent';
 
-export default function PhoneInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, dependOf = false, howDepend = false }) {
+export default function PhoneInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, dependOf = false, howDepend = false,span = false }) {
     const { colorBorderBg, colorText,colorBorder } = theme.useToken().token;
     // console.log(theme.useToken().token)
     const form = Form.useFormInstance();
@@ -44,5 +45,5 @@ export default function PhoneInput({ name = 'name', label = 'Label', disabled = 
     //     // form.setFieldValue(name, '')
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return formElement
+    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

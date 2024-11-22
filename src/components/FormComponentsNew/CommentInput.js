@@ -1,14 +1,12 @@
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
     Form,
     Input,
-    Button,
     theme,
-    Space,
-    Flex
 } from "antd";
-import useTemp from "../../stores/Cabinet/useTemp";
+// import useTemp from "../../stores/Cabinet/useTemp";
+import WrapperComponent from "./WrapperComponent";
 
 
 export default function CommentInput({
@@ -19,10 +17,11 @@ export default function CommentInput({
     required = false,
     dependOf = false,
     howDepend = false,
+    span = false
 }) {
     const { colorTextHeading } = theme.useToken().token
     const form = Form.useFormInstance();
-    let fieldDepends = Form.useWatch(dependOf, form);
+    // let fieldDepends = Form.useWatch(dependOf, form);
 
     const formElement = (
         
@@ -45,18 +44,19 @@ export default function CommentInput({
             </Form.Item>        
 
     );
-    if (!dependOf) return formElement
-    if (dependOf && howDepend && howDepend.options?.length > 0) {
-        let show = false
-        if (typeof fieldDepends === "undefined") fieldDepends = false
-        howDepend.options.forEach(item => {
-            if (item.value === "true") item.value = true
-            if (item.value === "false") item.value = false;
-            if (item.value == fieldDepends) show = true
-        })
-        if (show) return formElement
-    }
-    if (dependOf && howDepend && howDepend.max) {
-        if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
-    }
+    // if (!dependOf) return formElement
+    // if (dependOf && howDepend && howDepend.options?.length > 0) {
+    //     let show = false
+    //     if (typeof fieldDepends === "undefined") fieldDepends = false
+    //     howDepend.options.forEach(item => {
+    //         if (item.value === "true") item.value = true
+    //         if (item.value === "false") item.value = false;
+    //         if (item.value == fieldDepends) show = true
+    //     })
+    //     if (show) return formElement
+    // }
+    // if (dependOf && howDepend && howDepend.max) {
+    //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
+    // }
+    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

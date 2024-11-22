@@ -29,7 +29,7 @@ import InnInput from "../../components/FormComponentsNew/InnInput";
 import BikInput from "../../components/FormComponentsNew/BikInput";
 import DocumentInput from "../../components/FormComponentsNew/DocumentInput";
 
-import SelectComponent  from "../../components/SelectComponent";
+import selectComponent  from "../../components/selectComponent";
 
 
 
@@ -217,7 +217,7 @@ export default function NewClaim() {
                   {serviceItem.fields
                     ?.sort((a, b) => a.lineNum - b.lineNum)
 
-                    .map((item,index)=><SelectComponent key={index} item={item} index={index}/>)}
+                    .map(selectComponent)}
               </Row>
 
               {/* </Flex> */}

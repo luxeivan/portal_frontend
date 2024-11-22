@@ -2,6 +2,7 @@ import { Form, theme, Input, AutoComplete } from "antd";
 import { useState, useEffect, useCallback } from "react";
 import { debounce } from "lodash";
 import axios from "axios";
+import WrapperComponent from "./WrapperComponent";
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
 const listTypeForDadata = [
@@ -28,6 +29,7 @@ export default function TextInput({
   inputMask = false,
   length = false,
   specialField: type = false,
+  span = false
 }) {
   const { token } = theme.useToken();
   const [value, setValue] = useState("");
@@ -156,7 +158,7 @@ export default function TextInput({
   //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
   //     return formElement;
   // }
-return formElement
+return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
   return null;
 }
 

@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
-import { AutoComplete, Form, Button, Flex, Input, ConfigProvider, theme } from "antd";
+import { AutoComplete, Form,  Flex, Input, ConfigProvider, theme } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
 import AddressModal from "./AddressModal";
 import fieldConfig from "./AddressInput.json";
 import { EditOutlined } from "@ant-design/icons";
+import WrapperComponent from "../WrapperComponent";
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
@@ -19,6 +20,7 @@ const AddressInput = ({
   inputMask = false,
   lenght = false,
   specialField: type = false,
+  span = false
 }) => {
   const { colorBgSolid, colorPrimary, colorTextLightSolid } = theme.useToken().token
   // console.log(theme.useToken().token)
@@ -132,66 +134,66 @@ const AddressInput = ({
   };
   // console.log(fieldDepends)
   const formElement = (
-    <ConfigProvider
-      theme={{
-        components: {
-          Form: {
-            itemMarginBottom: 20
+      <ConfigProvider
+        theme={{
+          components: {
+            Form: {
+              itemMarginBottom: 20
+            },
           },
-        },
-      }}
-    >
+        }}
+      >
 
-      <Form.List name={name}>
-        {(fields, { add, remove }) => (
-          <>
-            <Flex align="flex-start"
-            // wrap="wrap" 
-            // style={{ maxWidth: "100%", marginBottom: 20 }} 
-            >
-
-              <Form.Item
-                name={'fullAddress'}
-                label={label}
-                rules={[{ required: required, message: "Это поле обязательное" }]}
-                style={{ flex: 1, minWidth: 300 }}
+        <Form.List name={name}>
+          {(fields, { add, remove }) => (
+            <>
+              <Flex align="flex-start"
+              // wrap="wrap" 
+              // style={{ maxWidth: "100%", marginBottom: 20 }} 
               >
-                <AutoComplete
-                  options={options}
-                  onSelect={(value, option) => onSelect(value, option)}
-                  onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
-                  placeholder={placeholder}
+
+                <Form.Item
+                  name={'fullAddress'}
+                  label={label}
+                  rules={[{ required: required, message: "Это поле обязательное" }]}
+                  style={{ flex: 1, minWidth: 300 }}
                 >
-                  <Input.TextArea
-                  // suffix={<EditOutlined onClick={openModal} />}                  
-                  // addonAfter={<EditOutlined onClick={openModal} />}
-                  // placeholder={placeholder}
-                  />                  
-                </AutoComplete>
-              </Form.Item>
-              <div style={{
-                cursor: "pointer",
-                // color: "green",
-                padding: 5,
-                paddingTop:25
-              }} onClick={openModal}>
-                <EditOutlined />
-                {/* Заполнить */}
-              </div>
-              {/* <Button type="primary" onClick={openModal} >
+                  <AutoComplete
+                    options={options}
+                    onSelect={(value, option) => onSelect(value, option)}
+                    onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
+                    placeholder={placeholder}
+                  >
+                    <Input.TextArea
+                    // suffix={<EditOutlined onClick={openModal} />}                  
+                    // addonAfter={<EditOutlined onClick={openModal} />}
+                    // placeholder={placeholder}
+                    />
+                  </AutoComplete>
+                </Form.Item>
+                <div style={{
+                  cursor: "pointer",
+                  // color: "green",
+                  padding: 5,
+                  paddingTop: 25
+                }} onClick={openModal}>
+                  <EditOutlined />
+                  {/* Заполнить */}
+                </div>
+                {/* <Button type="primary" onClick={openModal} >
               Моего адреса нет в списке
             </Button> */}
-            </Flex>
-            <AddressModal
-              visible={modalVisible}
-              onSave={handleModalSave}
-              onCancel={() => setModalVisible(false)}
-              name={name}
-            />
-          </>
-        )}
-      </Form.List>
-    </ConfigProvider>
+              </Flex>
+              <AddressModal
+                visible={modalVisible}
+                onSave={handleModalSave}
+                onCancel={() => setModalVisible(false)}
+                name={name}
+              />
+            </>
+          )}
+        </Form.List>
+      </ConfigProvider>
   );
 
   // if (!dependOf) return formElement;
@@ -208,7 +210,7 @@ const AddressInput = ({
   // if (dependOf && howDepend && howDepend.min && howDepend.max) {
   //   if (fieldDepends >= howDepend.min && howDepend.max) return formElement;
   // }
-  return formElement
+  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 };
 
 export default AddressInput;

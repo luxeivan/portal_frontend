@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, InputNumber } from "antd";
 import useServices from "../../stores/useServices";
 import useTemp from "../../stores/Cabinet/useTemp";
+import WrapperComponent from "./WrapperComponent";
 
 export default function NumberInput({
   name = "name",
@@ -17,7 +18,8 @@ export default function NumberInput({
   defaultValue = false,
   length = false,
   properties = false,
-  ractionDigits = undefined
+  ractionDigits = undefined,
+  span = false
 }) {
   const [stepMain, setStepMain] = useState(step)
   const serviceItem = useServices((state) => state.serviceItem);
@@ -28,8 +30,11 @@ export default function NumberInput({
 
   let objectProp = null;
   if (properties) objectProp = JSON.parse(properties);
-  let idLine = Form.useWatch(objectProp?.unit?.idLine, form);
-
+  console.log("objectProp",objectProp);
+  console.log("objectProp?.unit?.idLine",objectProp?.unit?.idLine);
+  
+  let idLine = Form.useWatch(objectProp?.unit?.idLine || '', form);
+  // let idLine = false
   useEffect(() => {
     if (objectProp?.unit && objectProp?.unit?.idLine) {
       if (serviceItem.fields) {
@@ -96,7 +101,7 @@ export default function NumberInput({
   //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
   //     return formElement;
   // }
-  return formElement
+  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
   // return null;
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Switch } from "antd";
+import WrapperComponent from "./WrapperComponent";
 
 export default function SwitchInput({
   name = "name",
@@ -8,6 +9,7 @@ export default function SwitchInput({
   required = false,
   dependOf = false,
   howDepend = false,
+  span = false
 }) {
 
   if (defaultValue && defaultValue === "true") {
@@ -57,5 +59,5 @@ export default function SwitchInput({
   //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
   //     return formElement;
   // }
-  return formElement
+  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

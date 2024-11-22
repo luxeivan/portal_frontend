@@ -1,12 +1,13 @@
 import React from 'react'
-import { Button, ConfigProvider, DatePicker, Form, Input, InputNumber, message, Space, TimePicker } from 'antd';
+import { ConfigProvider, DatePicker, Form, TimePicker } from 'antd';
 import moment from "moment";
 import "moment/locale/ru";
 import locale from "antd/es/locale/ru_RU";
+import WrapperComponent from './WrapperComponent';
 
 moment.locale("ru");
 
-export default function DateInput({ name = 'name', part = 'Дата', label = 'Label', defaultValue = false, disabled = false, placeholder = 'Пример', required = false, dependOf = false, howDepend = false }) {
+export default function DateInput({ name = 'name', part = 'Дата', label = 'Label', defaultValue = false, disabled = false, placeholder = 'Пример', required = false, dependOf = false, howDepend = false,span = false }) {
     const form = Form.useFormInstance()
     // const fieldDepends = Form.useWatch(dependOf, form)
     // console.log(part)
@@ -53,5 +54,5 @@ export default function DateInput({ name = 'name', part = 'Дата', label = 'L
     // if (dependOf && howDepend && howDepend.min && howDepend.max) {
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return formElement
+    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }
