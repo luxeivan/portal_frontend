@@ -132,46 +132,57 @@ const AddressInput = ({
   };
   // console.log(fieldDepends)
   const formElement = (
-    <Form.List name={name}>
-      {(fields, { add, remove }) => (
-        <>
-          <Flex align="center"
-          // wrap="wrap" 
-          // style={{ maxWidth: "100%", marginBottom: 20 }} 
-          >
+    <ConfigProvider
+      theme={{
+        components: {
+          Form: {
+            itemMarginBottom: 20
+          },
+        },
+      }}
+    >
 
-            <Form.Item
-              name={'fullAddress'}
-              label={label}
-              rules={[{ required: required, message: "Это поле обязательное" }]}
-              style={{ flex: 1, minWidth: 300 }}
+      <Form.List name={name}>
+        {(fields, { add, remove }) => (
+          <>
+            <Flex align="center"
+            // wrap="wrap" 
+            // style={{ maxWidth: "100%", marginBottom: 20 }} 
             >
-              <AutoComplete
-                options={options}
-                onSelect={(value, option) => onSelect(value, option)}
-                onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
-                placeholder={placeholder}
+
+              <Form.Item
+                name={'fullAddress'}
+                label={label}
+                rules={[{ required: required, message: "Это поле обязательное" }]}
+                style={{ flex: 1, minWidth: 300 }}
               >
-                <Input.TextArea
+                <AutoComplete
+                  options={options}
+                  onSelect={(value, option) => onSelect(value, option)}
+                  onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
+                  placeholder={placeholder}
+                >
+                  <Input.TextArea
                   // addonAfter={<EditOutlined onClick={openModal} />}
                   // placeholder={placeholder}
-                />
-              </AutoComplete>
-            </Form.Item>
-            <div style={{ cursor: "pointer", color: "green", padding: 5 }} onClick={openModal}>Заполнить</div>
-            {/* <Button type="primary" onClick={openModal} >
+                  />
+                </AutoComplete>
+              </Form.Item>
+              <div style={{ cursor: "pointer", color: "green", padding: 5 }} onClick={openModal}>Заполнить</div>
+              {/* <Button type="primary" onClick={openModal} >
               Моего адреса нет в списке
             </Button> */}
-          </Flex>
-          <AddressModal
-            visible={modalVisible}
-            onSave={handleModalSave}
-            onCancel={() => setModalVisible(false)}
-            name={name}
-          />
-        </>
-      )}
-    </Form.List>
+            </Flex>
+            <AddressModal
+              visible={modalVisible}
+              onSave={handleModalSave}
+              onCancel={() => setModalVisible(false)}
+              name={name}
+            />
+          </>
+        )}
+      </Form.List>
+    </ConfigProvider>
   );
 
   // if (!dependOf) return formElement;

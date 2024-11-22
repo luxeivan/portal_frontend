@@ -200,6 +200,7 @@ export default function NewClaim() {
                 width: "100%",
                 margin: "0 auto"
               }}
+              
               labelWrap
               validateTrigger={["onSubmit", "onChange"]}
             // onValuesChange={handlerChange}

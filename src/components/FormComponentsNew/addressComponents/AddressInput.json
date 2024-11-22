@@ -10,5 +10,5 @@
   { "name": "block", "label": "Корпус" },
   { "name": "structure", "label": "Строение" },
   { "name": "flat", "label": "Квартира/Офис/Комната" },
-  { "name": "comment", "label": "Комментарий" }
+  { "name": "comment", "label": "Комментарий", "type":"textArea" }
 ]
