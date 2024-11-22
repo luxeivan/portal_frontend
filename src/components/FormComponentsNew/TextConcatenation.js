@@ -2,15 +2,12 @@
 import React, { useEffect, useState } from "react";
 import {
     Form,
-    Input,
-    Button,
-    theme,
-    Space,
+    Input,    
+    theme,    
     Flex
 } from "antd";
-import { evaluate } from "mathjs";
 import useTemp from "../../stores/Cabinet/useTemp";
-import { SettingOutlined } from "@ant-design/icons";
+import WrapperComponent from "./WrapperComponent";
 
 function truncated(num, decimalPlaces) {
     let numPowerConverter = Math.pow(10, decimalPlaces);
@@ -30,7 +27,8 @@ export default function TextConcatenation({
     formula = '',
     ractionDigits = 10,
     digits = false,
-    valueValidate = false
+    valueValidate = false,
+    span = false
 }) {
     const [auto, setAuto] = useState(true)
     const { colorTextHeading } = theme.useToken().token
@@ -96,7 +94,7 @@ export default function TextConcatenation({
         // return form.setFieldValue(name, temp.formula)
     }
     const formElement = (
-        <Flex align="center">
+        <Flex align="flex-start">
 
             <Form.Item
                 style={{ flex: 1 }}
@@ -115,20 +113,25 @@ export default function TextConcatenation({
                         },
                     }),
                 ]}
+
             >
                 <Input.TextArea
-
+                    // disabled={auto}
+                    // readOnly={auto}
                     // validateTrigger="onBlur"
                     // suffix={objectProp?.currency?.position === "suffix" ? currency[objectProp.currency.idLine] : false}
-                    addonAfter={<div style={{ cursor: "pointer", color: auto ? "green" : "red" }} onClick={() => {
-                        setAuto(!auto)
-                    }}>{auto ? 'Автоматически' : 'Вручную'}</div>}
+                    // addonAfter={<div style={{ cursor: "pointer", color: auto ? "green" : "red" }} onClick={() => {
+                    //     setAuto(!auto)
+                    // }}>{auto ? 'Автоматически' : 'Вручную'}</div>}
                     placeholder={placeholder}
                 />
             </Form.Item>
-            <div style={{ cursor: "pointer", color: auto ? "green" : "red", padding: 5 }} onClick={() => {
+            <div style={{ cursor: "pointer", color: auto ? "green" : "red", padding: 5, paddingTop: 25 }} onClick={() => {
                 setAuto(!auto)
-            }}>{auto ? 'Автоматически' : 'Вручную'}</div>
+            }}>
+                {/* <EditOutlined /> */}
+                {auto ? 'Автоматически' : 'Вручную'}
+            </div>
         </Flex>
 
     );
@@ -146,5 +149,5 @@ export default function TextConcatenation({
     // if (dependOf && howDepend && howDepend.max) {
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return formElement
+    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

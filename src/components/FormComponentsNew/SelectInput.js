@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form,  Select,  } from "antd";
+import WrapperComponent from "./WrapperComponent";
 
 export default function SelectInput({
   name = "name",
@@ -10,6 +11,7 @@ export default function SelectInput({
   options = [],
   dependOf = false,
   howDepend = false,
+  span = false
 }) {
 
   const [optionsAuto, setOptionsAuto] = useState();
@@ -67,5 +69,5 @@ export default function SelectInput({
   //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
   //     return formElement;
   // }
-  return formElement
+  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

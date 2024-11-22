@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form, Input, InputNumber, message, Space, Col, Row, Slider, Flex } from 'antd';
+import {  Form,  Slider } from 'antd';
 
 export default function SliderInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, depend = false, min = 0, max = 100, step = 1 }) {
     const form = Form.useFormInstance()

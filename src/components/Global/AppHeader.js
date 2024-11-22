@@ -63,7 +63,11 @@ export default function AppHeader() {
 
   const navigate = useNavigate();
 
-  const [drawerVisible, setDrawerVisible] = useState(false);
+  // Раздельные состояния для Drawer
+  const [menuDrawerVisible, setMenuDrawerVisible] = useState(false);
+  const [notificationDrawerVisible, setNotificationDrawerVisible] =
+    useState(false);
+
   const [chatModalVisible, setChatModalVisible] = useState(false);
   const [error, setError] = useState(null);
   const [errorVisible, setErrorVisible] = useState(false);
@@ -102,12 +106,22 @@ export default function AppHeader() {
     }
   };
 
-  const showDrawer = () => {
-    setDrawerVisible(true);
+  // Функции для управления Drawer
+
+  const showMenuDrawer = () => {
+    setMenuDrawerVisible(true);
   };
 
-  const closeDrawer = () => {
-    setDrawerVisible(false);
+  const closeMenuDrawer = () => {
+    setMenuDrawerVisible(false);
+  };
+
+  const showNotificationDrawer = () => {
+    setNotificationDrawerVisible(true);
+  };
+
+  const closeNotificationDrawer = () => {
+    setNotificationDrawerVisible(false);
   };
 
   const closeModal = () => {
@@ -134,13 +148,15 @@ export default function AppHeader() {
       <Badge count={getUnreadCount()} overflowCount={9}>
         <BellOutlined
           style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
-          onClick={showDrawer}
+          onClick={showNotificationDrawer}
         />
       </Badge>
       {auth ? (
         <div className={styles.userInfo}>
           <Tooltip title={profile.email ? profile.email : "Пользователь"}>
-            <UserOutlined style={{ fontSize: "20px", color: colorText, cursor: "pointer" }} />
+            <UserOutlined
+              style={{ fontSize: "20px", color: colorText, cursor: "pointer" }}
+            />
           </Tooltip>
           <Button type="primary" onClick={handleLogout}>
             Выйти
@@ -156,11 +172,7 @@ export default function AppHeader() {
 
   const itemsMobile = [
     {
-      label: (
-        <Space size="middle">
-          <Link to="/about">О нас</Link>
-        </Space>
-      ),
+      label: <Link to="/about">О нас</Link>,
       key: "/about",
     },
     {
@@ -176,47 +188,11 @@ export default function AppHeader() {
       key: "/contacts",
     },
     {
-      label: (
-        <Space size="middle">
-          <Link to="/docs">Документация</Link>
-        </Space>
-      ),
+      label: <Link to="/docs">Документация</Link>,
       key: "/docs",
     },
     {
       type: "divider",
-    },
-    {
-      label: (
-        <Space size="middle">
-          <QuestionCircleOutlined
-            style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
-            onClick={() => setChatModalVisible(true)}
-          />
-          <Switch
-            onChange={handlerDarkMode}
-            checkedChildren={<SunOutlined />}
-            unCheckedChildren={<MoonOutlined />}
-            checked={darkMode}
-            style={{ background: !darkMode && colorText }}
-          />
-          {auth ? (
-            <>
-              <Tooltip title={profile.email ? profile.email : "Пользователь"}>
-                <UserOutlined style={{ fontSize: "20px", color: colorText, cursor: "pointer" }} />
-              </Tooltip>
-              <Button type="primary" onClick={handleLogout}>
-                Выйти
-              </Button>
-            </>
-          ) : (
-            <Button type="primary" onClick={handlerChangeAuth}>
-              Войти
-            </Button>
-          )}
-        </Space>
-      ),
-      key: "auth",
     },
   ];
 
@@ -256,7 +232,6 @@ export default function AppHeader() {
           className={styles.mainMenu}
           theme="light"
           mode="horizontal"
-          overflowedIndicator={<MenuOutlined />}
           selectedKeys={[currentPage]}
           onClick={({ key }) => {
             setCurrentPage(key);
@@ -272,17 +247,9 @@ export default function AppHeader() {
 
         {/* Мобильное меню */}
         <div className={styles.mobileMenu}>
-          <Menu
-            mode="horizontal"
-            overflowedIndicator={<MenuOutlined style={{ fontSize: "24px" }} />}
-            items={[
-              {
-                key: "menu",
-                icon: <MenuOutlined style={{ fontSize: "24px" }} />,
-                onTitleClick: () => setDrawerVisible(true),
-              },
-            ]}
-            selectable={false}
+          <MenuOutlined
+            style={{ fontSize: "24px", cursor: "pointer", color: colorText }}
+            onClick={showMenuDrawer}
           />
         </div>
       </Header>
@@ -291,26 +258,62 @@ export default function AppHeader() {
       <Drawer
         title="Меню"
         placement="left"
-        onClose={() => setDrawerVisible(false)}
-        open={drawerVisible}
+        onClose={closeMenuDrawer}
+        open={menuDrawerVisible}
       >
         <Menu
           mode="inline"
           selectedKeys={[currentPage]}
           onClick={({ key }) => {
             setCurrentPage(key);
-            setDrawerVisible(false);
+            setMenuDrawerVisible(false);
           }}
           items={itemsMobile}
         />
+        {/* Ваш блок с иконками и кнопками вне Menu */}
+        <div style={{ marginTop: 16 }}>
+          <Space size="middle">
+            <QuestionCircleOutlined
+              style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
+              onClick={() => setChatModalVisible(true)}
+            />
+            <Switch
+              onChange={handlerDarkMode}
+              checkedChildren={<SunOutlined />}
+              unCheckedChildren={<MoonOutlined />}
+              checked={darkMode}
+              style={{ background: !darkMode && colorText }}
+            />
+            {auth ? (
+              <>
+                <Tooltip title={profile.email ? profile.email : "Пользователь"}>
+                  <UserOutlined
+                    style={{
+                      fontSize: "20px",
+                      color: colorText,
+                      cursor: "pointer",
+                    }}
+                  />
+                </Tooltip>
+                <Button type="primary" onClick={handleLogout}>
+                  Выйти
+                </Button>
+              </>
+            ) : (
+              <Button type="primary" onClick={handlerChangeAuth}>
+                Войти
+              </Button>
+            )}
+          </Space>
+        </div>
       </Drawer>
 
       {/* Drawer для уведомлений */}
       <Drawer
         title="Уведомления"
         placement="right"
-        onClose={closeDrawer}
-        open={drawerVisible}
+        onClose={closeNotificationDrawer}
+        open={notificationDrawerVisible}
       >
         <NotificationList />
       </Drawer>
@@ -324,7 +327,6 @@ export default function AppHeader() {
     </>
   );
 }
-
 // import React, { useEffect, useState } from "react";
 // import {
 //   Layout,
@@ -466,11 +468,8 @@ export default function AppHeader() {
 //       </Badge>
 //       {auth ? (
 //         <div className={styles.userInfo}>
-//           <Tooltip title={profile.email}>
-//             <UserOutlined style={{ fontSize: "20px", color: colorText }} />
-//             <span className={styles.userEmail}>
-//               {profile.email ? profile.email : "Пользователь"}
-//             </span>
+//           <Tooltip title={profile.email ? profile.email : "Пользователь"}>
+//             <UserOutlined style={{ fontSize: "20px", color: colorText, cursor: "pointer" }} />
 //           </Tooltip>
 //           <Button type="primary" onClick={handleLogout}>
 //             Выйти
@@ -519,16 +518,26 @@ export default function AppHeader() {
 //     {
 //       label: (
 //         <Space size="middle">
+//           <QuestionCircleOutlined
+//             style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
+//             onClick={() => setChatModalVisible(true)}
+//           />
 //           <Switch
 //             onChange={handlerDarkMode}
 //             checkedChildren={<SunOutlined />}
 //             unCheckedChildren={<MoonOutlined />}
 //             checked={darkMode}
+//             style={{ background: !darkMode && colorText }}
 //           />
 //           {auth ? (
-//             <Button type="primary" onClick={handleLogout}>
-//               Выйти
-//             </Button>
+//             <>
+//               <Tooltip title={profile.email ? profile.email : "Пользователь"}>
+//                 <UserOutlined style={{ fontSize: "20px", color: colorText, cursor: "pointer" }} />
+//               </Tooltip>
+//               <Button type="primary" onClick={handleLogout}>
+//                 Выйти
+//               </Button>
+//             </>
 //           ) : (
 //             <Button type="primary" onClick={handlerChangeAuth}>
 //               Войти
@@ -589,19 +598,43 @@ export default function AppHeader() {
 //         />
 
 //         <div className={styles.rightMenu}>{rightMenuArea}</div>
+
+//         {/* Мобильное меню */}
 //         <div className={styles.mobileMenu}>
 //           <Menu
 //             mode="horizontal"
-//             overflowedIndicator={<MenuOutlined />}
-//             items={itemsMobile}
-//             selectedKeys={[currentPage]}
-//             onClick={({ key }) => {
-//               if (key !== "auth") setCurrentPage(key);
-//             }}
+//             overflowedIndicator={<MenuOutlined style={{ fontSize: "24px" }} />}
+//             items={[
+//               {
+//                 key: "menu",
+//                 icon: <MenuOutlined style={{ fontSize: "24px" }} />,
+//                 onTitleClick: () => setDrawerVisible(true),
+//               },
+//             ]}
+//             selectable={false}
 //           />
 //         </div>
 //       </Header>
 
+//       {/* Боковая панель для мобильного меню */}
+//       <Drawer
+//         title="Меню"
+//         placement="left"
+//         onClose={() => setDrawerVisible(false)}
+//         open={drawerVisible}
+//       >
+//         <Menu
+//           mode="inline"
+//           selectedKeys={[currentPage]}
+//           onClick={({ key }) => {
+//             setCurrentPage(key);
+//             setDrawerVisible(false);
+//           }}
+//           items={itemsMobile}
+//         />
+//       </Drawer>
+
+//       {/* Drawer для уведомлений */}
 //       <Drawer
 //         title="Уведомления"
 //         placement="right"

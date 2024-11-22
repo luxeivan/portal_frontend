@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, theme, Input, InputNumber, message, Space, Select, Flex, Typography } from 'antd';
+import { Button, Form, theme, Flex, Typography } from 'antd';
 import TextInput from '../../components/FormComponentsNew/TextInput'
 import NumberInput from '../../components/FormComponentsNew/NumberInput'
 import SliderInput from '../../components/FormComponentsNew/SliderInput'
@@ -12,6 +12,7 @@ import FormulaInput from './FormulaInput';
 import PriceInput from './PriceInput';
 import PhoneInput from './phoneComponent/PhoneInput';
 import styles from './GroupInput.module.css'
+import WrapperComponent from './WrapperComponent';
 
 
 
@@ -26,7 +27,8 @@ export default function TableInput({
     dependOf = false,
     howDepend = false,
     backgroundColorHex = false,
-    fields: Fields = []
+    fields: Fields = [],
+    span = false
 }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
@@ -138,5 +140,5 @@ export default function TableInput({
     //     form.setFieldValue(name, '')
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return formElement
+    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

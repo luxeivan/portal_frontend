@@ -7,6 +7,78 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
+/* Подключаем Arial Custom */
+@font-face {
+  font-family: "ArialCustom";
+  src: url("./assets/fonts/arial.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Arial Custom Bold */
+@font-face {
+  font-family: "ArialCustom";
+  src: url("./assets/fonts/arialbd.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Arial Custom Italic */
+@font-face {
+  font-family: "ArialCustom";
+  src: url("./assets/fonts/ariali.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* Arial Custom Bold Italic */
+@font-face {
+  font-family: "ArialCustom";
+  src: url("./assets/fonts/arialbi.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* Arial Narrow */
+@font-face {
+  font-family: "ArialNarrowCustom";
+  src: url("./assets/fonts/ARIALN.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Arial Narrow Bold */
+@font-face {
+  font-family: "ArialNarrowCustom";
+  src: url("./assets/fonts/ARIALNB.TTF") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Arial Narrow Italic */
+@font-face {
+  font-family: "ArialNarrowCustom";
+  src: url("./assets/fonts/ARIALNI.TTF") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* Arial Narrow Bold Italic */
+@font-face {
+  font-family: "ArialNarrowCustom";
+  src: url("./assets/fonts/ARIALNBI.TTF") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* Arial Black */
+@font-face {
+  font-family: "ArialBlackCustom";
+  src: url("./assets/fonts/ariblk.ttf") format("truetype");
+  font-weight: 900; 
+  font-style: normal;
+}
+
 h1,
 h2,
 h3,
@@ -56,33 +128,34 @@ button,
   margin: 64px 0 0 186px;
 }
 
-/* .formElement -----------------------*/
 .formElement {
-  /* width: calc(33.33% - 20px); */
-  /* min-width: 500px; */
   padding: 10px;
   border-radius: 10px;
   height: 100%;
+  transition: box-shadow .3s ease-in-out;
+}
+.formElement:hover {
+  /* transform: scale(1.01); */
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 .formElement .formElement {
-  /* width: calc(33.33% - 20px); */
-  /* width: 100% ; */
-  /* min-width: inherit; */
   padding: 10px;
   border-radius: 10px;
 }
-@media(max-width:1800px){
+.formElement .formElement:hover {
+  transform: none;
+  box-shadow: none;
+}
+@media (max-width: 1800px) {
   .formElement {
-    /* width: calc(50% - 10px); */
   }
 }
-@media(max-width:1300px){
+@media (max-width: 1300px) {
   .formElement {
-    width: 100% ;
+    width: 100%;
     min-width: 300px;
   }
 }
-/* .formElement ---------------------------*/
 
 @media (max-width: 1199px) {
   html {

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Form, Flex, Descriptions, Typography, theme, Col, Row } from "antd";
-import moment from "moment";
-import styles from './GroupInput.module.css'
-import  SelectComponent  from "../SelectComponent";
+import React from "react";
+import { Form,  Typography, theme,  Row } from "antd";
+// import moment from "moment";
+// import styles from './GroupInput.module.css'
+import selectComponent from "../selectComponent";
+import WrapperComponent from "./WrapperComponent";
 
 export default function GroupInput({
   name = "name",
@@ -17,7 +18,7 @@ export default function GroupInput({
   // layout = "vertical",
   // backgroundColorHex = false,
   border = true,
-  // span = 12
+  span = false
 }) {
   const { colorBgBase, colorBgContainer, colorBorder } = theme.useToken().token
   // const [openModal, setOpenModal] = useState(false)
@@ -86,30 +87,33 @@ export default function GroupInput({
   // }))
   // console.log(theme.useToken().token)
   const formElement = (
-    <div style={{
-      backgroundColor: colorBgContainer,
-      border: border ? `1px solid ${colorBorder}` : undefined
-    }}
-      className={'formElement'}
-    >
-      <Typography.Title level={5} style={{ margin: "0 0 10px 0" }}>{label}</Typography.Title>
+    <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>
 
-      {/* {items &&
+      <div style={{
+        backgroundColor: colorBgContainer,
+        border: border ? `1px solid ${colorBorder}` : undefined
+      }}
+        className={'formElement'}
+      >
+        <Typography.Title level={5} style={{ margin: "0 0 10px 0" }}>{label}</Typography.Title>
+
+        {/* {items &&
         <Descriptions size="small" style={{ width: "100%", marginBottom: "10px", border: 0 }} items={items} column={1} bordered />
-      } */}
-      {/* <Flex
+        } */}
+        {/* <Flex
         vertical={layout === 'vertical' ? true : undefined}
         gap={layout === 'vertical' ? 0 : 10}
         align={layout === 'vertical' ? undefined : "flex-end"}
-      > */}
-      <Row 
-      gutter={[20,20]} 
-      align={"stretch"}
-      >        
-          {Fields.map((item,index)=><SelectComponent key={index} item={item} index={index}/>)}        
-      </Row>
-      {/* </Flex> */}
-    </div>
+        > */}
+        <Row
+          gutter={[20, 20]}
+          align={"stretch"}
+        >
+          {Fields.map(selectComponent)}
+        </Row>
+        {/* </Flex> */}
+      </div>
+    </WrapperComponent>
   );
 
   // if (!dependOf) return formElement;

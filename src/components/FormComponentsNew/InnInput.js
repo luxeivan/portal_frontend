@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { AutoComplete, Form, Button, Flex, Input } from "antd";
+import { AutoComplete, Form } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
+import WrapperComponent from './WrapperComponent';
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
@@ -17,7 +18,8 @@ export default function InnInput({
     lenght = false,
     specialField: type = false,
     properties = false,
-    inGroup = false
+    inGroup = false,
+    span = false
 }) {
     const form = Form.useFormInstance();
     // let fieldDepends = Form.useWatch(dependOf, form);
@@ -74,7 +76,7 @@ export default function InnInput({
         form.setFieldValue(name, currentData.data.inn)
         // console.log(value)
     }
-    return (
+    const formElement =  (
         <Form.Item
             name={name}
             label={label}
@@ -94,4 +96,6 @@ export default function InnInput({
             />
         </Form.Item>
     )
+
+    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

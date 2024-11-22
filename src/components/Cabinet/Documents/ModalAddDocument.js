@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, message, Form, Select, Input } from "antd";
+import { Modal, Button, message, Form, Select, Input,ConfigProvider } from "antd";
 import axios from "axios";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
 import UploaderInput from "../../FormComponents/UploaderInput";
@@ -151,123 +151,135 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
         footer={null}
         destroyOnClose={true}
       >
-        <Form form={form} onFinish={handleSaveDocument}>
-          <Form.Item
-            label="Категория"
-            name="category"
-            rules={[
-              {
-                required: true,
-                message: "Пожалуйста, выберите категорию документа",
+        <ConfigProvider
+          theme={{
+            components: {
+              Form: {
+                itemMarginBottom: 20
               },
-            ]}
-          >
-            <Select
-            showSearch
-              placeholder="Выберите категорию"
-              disabled={isCategoryDisabled}
-              onChange={(value) => {
-                const selectedCategoryItem = categoriesData.find(
-                  (item) => item.Description === value
-                );
-                if (selectedCategoryItem) {
-                  const selectedCategory =
-                    selectedCategoryItem.Description;
-                  form.setFieldsValue({
-                    documentName: selectedCategory,
-                    categoryKey: selectedCategoryItem.Ref_Key,
-                  });
-                  // const extensions = JSON.parse(
-                  //   selectedCategoryItem.availableExtensionsJSON
-                  // );
-                  // setAllowedExtensions(extensions);
-                  console.log(selectedCategoryItem.maximumSize)
-                  setMaxFileSize(Number(selectedCategoryItem.maximumSize) === 0 ? 10 : parseInt(selectedCategoryItem.maximumSize));
-                }
-              }}
+            },
+          }}
+        >
+
+
+          <Form form={form} onFinish={handleSaveDocument} layout="vertical">
+            <Form.Item
+              label="Категория"
+              name="category"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, выберите категорию документа",
+                },
+              ]}
             >
-              {categories.map((category, index) => (
-                <Option key={index} value={category}>
-                  {category}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+              <Select
+                showSearch
+                placeholder="Выберите категорию"
+                disabled={isCategoryDisabled}
+                onChange={(value) => {
+                  const selectedCategoryItem = categoriesData.find(
+                    (item) => item.Description === value
+                  );
+                  if (selectedCategoryItem) {
+                    const selectedCategory =
+                      selectedCategoryItem.Description;
+                    form.setFieldsValue({
+                      documentName: selectedCategory,
+                      categoryKey: selectedCategoryItem.Ref_Key,
+                    });
+                    // const extensions = JSON.parse(
+                    //   selectedCategoryItem.availableExtensionsJSON
+                    // );
+                    // setAllowedExtensions(extensions);
+                    console.log(selectedCategoryItem.maximumSize)
+                    setMaxFileSize(Number(selectedCategoryItem.maximumSize) === 0 ? 10 : parseInt(selectedCategoryItem.maximumSize));
+                  }
+                }}
+              >
+                {categories.map((category, index) => (
+                  <Option key={index} value={category}>
+                    {category}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-          <Form.Item
-            noStyle
-            shouldUpdate={(prevValues, currentValues) =>
-              prevValues.category !== currentValues.category ||
-              prevValues.documentName !== currentValues.documentName
-            }
-          >
-            {() => {
-              const selectedCategory = form.getFieldValue("category");
-              const documentName = form.getFieldValue("documentName");
+            <Form.Item
+              noStyle
+              shouldUpdate={(prevValues, currentValues) =>
+                prevValues.category !== currentValues.category ||
+                prevValues.documentName !== currentValues.documentName
+              }
+            >
+              {() => {
+                const selectedCategory = form.getFieldValue("category");
+                const documentName = form.getFieldValue("documentName");
 
-              return (
-                <>
-                  {(selectedCategory || isCategoryDisabled) && (
-                    <>
-                      <Form.Item
-                        label="Название"
-                        name="documentName"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Пожалуйста, введите название документа",
-                          },
-                        ]}
-                      >
-                        <Input />
-                      </Form.Item>
-
-                      <Form.Item name="categoryKey" hidden>
-                        <input type="hidden" />
-                      </Form.Item>
-                    </>
-                  )}
-                </>
-              );
-            }}
-          </Form.Item>
-
-          <Form.Item
-            noStyle
-            shouldUpdate={(prevValues, currentValues) =>
-              prevValues.documentName !== currentValues.documentName
-            }
-          >
-            {() => {
-              const documentName = form.getFieldValue("documentName");
-
-              return (
-                <>
-                  {(documentName || isCategoryDisabled) && (
-                    <>
-                      <UploaderInput
-                        resetTrigger={uploaderKey}
-                        allowedExtensions={allowedExtensions}
-                        maxFileSize={maxFileSize}
-                        loading={loading}
-                      />
-
-                      <Form.Item>
-                        <Button
-                          type="primary"
-                          htmlType="submit"
-                          disabled={loading}
+                return (
+                  <>
+                    {(selectedCategory || isCategoryDisabled) && (
+                      <>
+                        <Form.Item
+                          label="Название"
+                          name="documentName"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Пожалуйста, введите название документа",
+                            },
+                          ]}
                         >
-                          Сохранить файлы
-                        </Button>
-                      </Form.Item>
-                    </>
-                  )}
-                </>
-              );
-            }}
-          </Form.Item>
-        </Form>
+                          <Input />
+                        </Form.Item>
+
+                        <Form.Item name="categoryKey" hidden>
+                          <input type="hidden" />
+                        </Form.Item>
+                      </>
+                    )}
+                  </>
+                );
+              }}
+            </Form.Item>
+
+            <Form.Item
+              noStyle
+              shouldUpdate={(prevValues, currentValues) =>
+                prevValues.documentName !== currentValues.documentName
+              }
+            >
+              {() => {
+                const documentName = form.getFieldValue("documentName");
+
+                return (
+                  <>
+                    {(documentName || isCategoryDisabled) && (
+                      <>
+                        <UploaderInput
+                          resetTrigger={uploaderKey}
+                          allowedExtensions={allowedExtensions}
+                          maxFileSize={maxFileSize}
+                          loading={loading}
+                        />
+
+                        <Form.Item>
+                          <Button
+                            type="primary"
+                            htmlType="submit"
+                            disabled={loading}
+                          >
+                            Сохранить файлы
+                          </Button>
+                        </Form.Item>
+                      </>
+                    )}
+                  </>
+                );
+              }}
+            </Form.Item>
+          </Form>
+        </ConfigProvider>
         {loading && (
           <div className={styles.overlay}>
             <Preloader />

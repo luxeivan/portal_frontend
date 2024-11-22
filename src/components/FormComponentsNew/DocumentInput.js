@@ -1,8 +1,9 @@
-import React, { useEffect,useState,useCallback } from "react";
+import React, { useState,useCallback } from "react";
 import { Form, Card, Button, Tag, theme, Flex } from "antd";
 import axios from "axios";
 import { FileTextOutlined, EyeOutlined } from "@ant-design/icons";
 import DocumentSelectModal from "./DocumentSelectModal";
+import WrapperComponent from "./WrapperComponent";
 
 export default function DocumentInput({
     name = "name",
@@ -14,7 +15,8 @@ export default function DocumentInput({
     howDepend = false,
     defaultValue = false,
     length = false,
-    category_Key = null
+    category_Key = null,
+    span = false
 }) {
     const [documentModalVisible, setDocumentModalVisible] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -197,6 +199,6 @@ export default function DocumentInput({
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
     //         return formElement;
     // }
-    return formElement
+    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }
 

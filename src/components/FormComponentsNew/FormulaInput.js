@@ -1,13 +1,13 @@
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
     Form,
-    Input,
     InputNumber,
     theme
 } from "antd";
 import { evaluate } from "mathjs";
 import useTemp from "../../stores/Cabinet/useTemp";
+import WrapperComponent from "./WrapperComponent";
 
 function truncated(num, decimalPlaces) {
     let numPowerConverter = Math.pow(10, decimalPlaces);
@@ -29,7 +29,8 @@ export default function FormulaInput({
     formula = '',
     ractionDigits = undefined,
     digits = false,
-    valueValidate = false
+    valueValidate = false,
+    span = false
 }) {
     // const [propertiesValue, setPropertiesValue] = useState({})
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
@@ -148,5 +149,5 @@ export default function FormulaInput({
     // if (dependOf && howDepend && howDepend.max) {
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return formElement
+    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }
