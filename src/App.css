@@ -132,10 +132,19 @@ button,
   padding: 10px;
   border-radius: 10px;
   height: 100%;
+  transition: box-shadow .3s ease-in-out;
+}
+.formElement:hover {
+  /* transform: scale(1.01); */
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 .formElement .formElement {
   padding: 10px;
   border-radius: 10px;
+}
+.formElement .formElement:hover {
+  transform: none;
+  box-shadow: none;
 }
 @media (max-width: 1800px) {
   .formElement {

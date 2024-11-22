@@ -38,7 +38,13 @@ const AddressModal = forwardRef(
         // cancelText="Отмена"
       >
         {fieldConfig.map((field) => (
-          <Form.Item name={field.name} label={field.label} key={field.name} layout="vertical">
+          <Form.Item 
+          name={field.name} 
+          label={field.label} 
+          key={field.name} 
+          // layout="vertical" 
+          labelCol={{span:8}}
+          >
             {field.type==="textArea"?<Input.TextArea placeholder={`Введите ${field.label.toLowerCase()}`} />:<Input placeholder={`Введите ${field.label.toLowerCase()}`} />}
           </Form.Item>
         ))}

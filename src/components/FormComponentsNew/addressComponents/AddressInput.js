@@ -145,7 +145,7 @@ const AddressInput = ({
       <Form.List name={name}>
         {(fields, { add, remove }) => (
           <>
-            <Flex align="center"
+            <Flex align="flex-start"
             // wrap="wrap" 
             // style={{ maxWidth: "100%", marginBottom: 20 }} 
             >
@@ -163,12 +163,21 @@ const AddressInput = ({
                   placeholder={placeholder}
                 >
                   <Input.TextArea
+                  // suffix={<EditOutlined onClick={openModal} />}                  
                   // addonAfter={<EditOutlined onClick={openModal} />}
                   // placeholder={placeholder}
-                  />
+                  />                  
                 </AutoComplete>
               </Form.Item>
-              <div style={{ cursor: "pointer", color: "green", padding: 5 }} onClick={openModal}>Заполнить</div>
+              <div style={{
+                cursor: "pointer",
+                // color: "green",
+                padding: 5,
+                paddingTop:25
+              }} onClick={openModal}>
+                <EditOutlined />
+                {/* Заполнить */}
+              </div>
               {/* <Button type="primary" onClick={openModal} >
               Моего адреса нет в списке
             </Button> */}

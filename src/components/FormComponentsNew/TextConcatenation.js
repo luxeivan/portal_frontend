@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { evaluate } from "mathjs";
 import useTemp from "../../stores/Cabinet/useTemp";
-import { SettingOutlined } from "@ant-design/icons";
+import { CarryOutOutlined, EditOutlined, SettingOutlined } from "@ant-design/icons";
 
 function truncated(num, decimalPlaces) {
     let numPowerConverter = Math.pow(10, decimalPlaces);
@@ -96,7 +96,7 @@ export default function TextConcatenation({
         // return form.setFieldValue(name, temp.formula)
     }
     const formElement = (
-        <Flex align="center">
+        <Flex align="flex-start">
 
             <Form.Item
                 style={{ flex: 1 }}
@@ -115,20 +115,25 @@ export default function TextConcatenation({
                         },
                     }),
                 ]}
+
             >
                 <Input.TextArea
-
+                    // disabled={auto}
+                    // readOnly={auto}
                     // validateTrigger="onBlur"
                     // suffix={objectProp?.currency?.position === "suffix" ? currency[objectProp.currency.idLine] : false}
-                    addonAfter={<div style={{ cursor: "pointer", color: auto ? "green" : "red" }} onClick={() => {
-                        setAuto(!auto)
-                    }}>{auto ? 'Автоматически' : 'Вручную'}</div>}
+                    // addonAfter={<div style={{ cursor: "pointer", color: auto ? "green" : "red" }} onClick={() => {
+                    //     setAuto(!auto)
+                    // }}>{auto ? 'Автоматически' : 'Вручную'}</div>}
                     placeholder={placeholder}
                 />
             </Form.Item>
-            <div style={{ cursor: "pointer", color: auto ? "green" : "red", padding: 5 }} onClick={() => {
+            <div style={{ cursor: "pointer", color: auto ? "green" : "red", padding: 5, paddingTop: 25 }} onClick={() => {
                 setAuto(!auto)
-            }}>{auto ? 'Автоматически' : 'Вручную'}</div>
+            }}>
+                {/* <EditOutlined /> */}
+                {auto ? 'Автоматически' : 'Вручную'}
+            </div>
         </Flex>
 
     );

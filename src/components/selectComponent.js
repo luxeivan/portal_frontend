@@ -22,11 +22,13 @@ import TextConcatenation from "./FormComponentsNew/TextConcatenation";
 import TextInput from "./FormComponentsNew/TextInput";
 
 export default function SelectComponent ({item, index}) {
+  // const dependOf = false
   const dependOf = item.dependIdLine
   const name = item.idLine
   const howDepend = item.dependСondition
   const mainForm = Form.useFormInstance()
   let fieldDepends = Form.useWatch(dependOf, mainForm);
+  
   const formElement = (<Col xxl={item.component_Expanded?.span ? item.component_Expanded.span : 24} xs={24}>
     {selectComponentChildren(item, index)}
   </Col>)
