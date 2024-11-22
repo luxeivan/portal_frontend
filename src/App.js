@@ -2,15 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { ConfigProvider, Flex, Layout, theme } from "antd";
 import "./App.css";
-import {
-  Route,
-  BrowserRouter,
-  Routes,
-  redirect,
-  Navigate,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { Route, BrowserRouter, Routes, redirect } from "react-router-dom";
 import Main from "./pages/Main";
 import AppHeader from "./components/Global/AppHeader";
 import AppFooter from "./components/Global/AppFooter";
@@ -26,7 +18,6 @@ import ServiceItem from "./pages/ServiceItem/ServiceItem";
 import Page404 from "./pages/Page404";
 import Container from "./components/Container";
 import NewClaim from "./pages/Cabinet/NewClaim";
-// import NewServicetest from "./pages/Cabinet/NewServicetest";
 import Profile from "./pages/Cabinet/Profile/Profile";
 import Subjects from "./pages/Cabinet/Subjects/Subjects";
 import Objects from "./pages/Cabinet/Objects/Objects";
@@ -38,16 +29,13 @@ import Game from "./pages/Games/Game";
 import Contacts from "./pages/Contacts/Contacts";
 import Claimers from "./pages/Cabinet/Claims/Claimers/Claimers";
 import Archives from "./pages/Cabinet/Claims/Archives";
-import Law from "./pages/Documentation/Law";
 import Documentation from "./pages/Documentation/Documentation";
 import FormOneC from "./components/test/FormOneC";
-// import ServiceItemTest from "./pages/ServicesItemTest/ServiceItemTest";
-// import ServicesTest from "./pages/ServicesTest/ServicesTest";
 import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 import AddressInputTest from "./components/FormComponentsNew/addressComponents/AddressInputTest";
 
-// import JumpGame from "./pages/Game/JumpGame";
+
 
 const { Content } = Layout;
 
@@ -58,7 +46,6 @@ export default function App() {
   const toggleModal = useAuth((state) => state.toggleModal);
   const logout = useAuth((state) => state.logout);
 
-  //Надо проверить как работает(должен срабатывать на просроченный JWT
   useEffect(() => {
     const interceptorId = axios.interceptors.response.use(
       (response) => response,
@@ -94,30 +81,14 @@ export default function App() {
     }
     return null;
   };
-  // const router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     element: <Main />,
-  //     loader: ({ request }) => {
-  //       console.log(request)
-  //     },
-  //     children: [
-  //       {
-  //         path: "servicestest",
-  //         element: <ServicesTest />,
-  //         loader: ({ request }) => {
-  //           console.log(request)
-  //         },
-  //       },
-  //     ],
-  //   },
-  // ]);
+
 
   return (
     <ConfigProvider
       theme={{
         algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
         token: {
+          fontFamily: 'ArialCustom, sans-serif',
           fontSizeHeading1: "2.5rem",
           fontSizeHeading2: "2.1rem",
           fontSizeHeading3: "1.8rem",
@@ -139,27 +110,12 @@ export default function App() {
               {auth && <CabinetMenu />}
               <Content
                 className={`${auth ? "mainContentAuth" : "mainContent"}`}
-                // style={{ margin: `64px 0 0 ${auth && document.documentElement.clientWidth > 575 ? "186px" : "0px"}` }}
               >
                 <Routes>
                   <Route path="/" element={<Main />} />
                   <Route path="/formonec" element={<FormOneC />} />
-                  <Route
-                    path="/services"
-                    element={
-                      // <Container>
-                      <Services />
-                      // </Container>
-                    }
-                  />
-                  <Route
-                    path="/services/:level2"
-                    element={
-                      // <Container>
-                      <Services />
-                      // </Container>
-                    }
-                  />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/services/:level2" element={<Services />} />
                   <Route
                     path="/services/:level2/:key"
                     element={
@@ -169,32 +125,6 @@ export default function App() {
                     }
                   />
 
-                  {/* ---Тестовая база-------------------------------------------------------------------- */}
-                  {/* <Route
-                    path="/servicestest"
-                    element={
-                      // <Container>
-                      <ServicesTest />
-                      // </Container>
-                    }
-                  />
-                  <Route
-                    path="/servicestest/:level2"
-                    element={
-                      // <Container>
-                      <ServicesTest />
-                      // </Container>
-                    }
-                  />
-                  <Route
-                    path="/servicestest/:level2/:key"
-                    element={
-                      <Container>
-                        <ServiceItemTest />
-                      </Container>
-                    }
-                  /> */}
-                  {/* ----------------------------------------------------------------------- */}
                   <Route path="/about" element={<About />} />
                   <Route path="/calc" element={<Calc />} />
                   <Route path="/contacts" element={<Contacts />} />
@@ -202,15 +132,8 @@ export default function App() {
                   <Route path="/docs" element={<Documentation />} />
                   <Route path="/test" element={<AddressInputTest />} />
                   <Route path="/login" element={<Login />} />
-                  {/* ----------------------------------------- */}
 
-                  <Route
-                    path="cabinet"
-                    // action={() => {
-                    //   console.log(123123)
-                    // }}
-                    element={<PrivateRoute />}
-                  >
+                  <Route path="cabinet" element={<PrivateRoute />}>
                     <Route
                       path="new-claim/:id"
                       element={
@@ -219,7 +142,7 @@ export default function App() {
                         </Container>
                       }
                     />
-                    {/* <Route path="new-claimtest/:id" element={<Container><NewServicetest /></Container>} /> */}
+
                     <Route path="profile" element={<Profile />} />
                     <Route path="subjects" element={<Subjects />} />
                     <Route path="documents" element={<Documents />} />
@@ -231,10 +154,8 @@ export default function App() {
                     <Route path="archives" element={<Archives />} />
                   </Route>
 
-                  {/* ----------------------------------------- */}
                   <Route path="/game" element={<Game />} />
                   <Route path="*" element={<Page404 />} />
-                  {/* <Route path="/jump-game" element={<JumpGame />} /> */}
                 </Routes>
               </Content>
             </Flex>

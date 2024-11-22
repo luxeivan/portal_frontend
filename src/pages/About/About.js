@@ -98,7 +98,7 @@ export default function About() {
         <Title level={1}>О компании Мособлэнерго</Title>
         <Preloader />
         <div></div>
-        <Form
+        {/* <Form
           onFinish={(values) => {
             console.log('values: ', values)
           }}
@@ -340,7 +340,7 @@ export default function About() {
             }
           ]} />
           <Button htmlType="submit">Save</Button>
-        </Form>
+        </Form> */}
         {/* <Form.Provider
           onFormFinish={async (name, { forms, values }) => {
             console.log("forms", forms)

@@ -64,16 +64,16 @@ export default function CabinetMenu() {
       type: 'group',
       label: 'Мои данные',
     },
-    {
-      key: "/cabinet/subjects",
-      icon: <UserOutlined className={styles.icon} style={iconStyle} />,
-      label: <Link to={"/cabinet/subjects"} className={styles.labelSizeMobile}>Субъекты</Link>,
-    },
-    {
-      key: "/cabinet/objects",
-      icon: <EnvironmentOutlined className={styles.icon} style={iconStyle} />,
-      label: <Link to={"/cabinet/objects"} className={styles.labelSizeMobile}>Объекты</Link>,
-    },
+    // {
+    //   key: "/cabinet/subjects",
+    //   icon: <UserOutlined className={styles.icon} style={iconStyle} />,
+    //   label: <Link to={"/cabinet/subjects"} className={styles.labelSizeMobile}>Субъекты</Link>,
+    // },
+    // {
+    //   key: "/cabinet/objects",
+    //   icon: <EnvironmentOutlined className={styles.icon} style={iconStyle} />,
+    //   label: <Link to={"/cabinet/objects"} className={styles.labelSizeMobile}>Объекты</Link>,
+    // },
     {
       key: "/cabinet/documents",
       icon: <FileOutlined className={styles.icon} style={iconStyle} />,
