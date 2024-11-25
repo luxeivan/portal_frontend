@@ -7,6 +7,7 @@ import {
 import axios from "axios";
 import useTemp from "../../stores/Cabinet/useTemp";
 import WrapperComponent from "./WrapperComponent";
+import InfoDrawer from "../InfoDrawer";
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
@@ -24,7 +25,8 @@ export default function PriceInput({
     defaultValue = false,
     properties = false,
     priceType_Key = "00000000-0000-0000-0000-000000000000",
-    span = false
+    span = false,
+    fullDescription = false
 }) {
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
@@ -72,7 +74,7 @@ export default function PriceInput({
     const formElement = (
         <Form.Item
             name={name}
-            label={label}
+            label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
         >
             <Input
                 disabled={true}

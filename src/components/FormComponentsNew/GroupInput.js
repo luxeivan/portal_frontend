@@ -87,13 +87,15 @@ export default function GroupInput({
   // }))
   // console.log(theme.useToken().token)
   const formElement = (
-    <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>
+    
 
       <div style={{
         backgroundColor: colorBgContainer,
-        border: border ? `1px solid ${colorBorder}` : undefined
+        // border: border ? `1px solid ${colorBorder}` : undefined,
+        borderColor: colorBorder,
+        color:colorBorder
       }}
-        className={'formElement'}
+        className={'formElement groupInput'}
       >
         <Typography.Title level={5} style={{ margin: "0 0 10px 0" }}>{label}</Typography.Title>
 
@@ -113,7 +115,6 @@ export default function GroupInput({
         </Row>
         {/* </Flex> */}
       </div>
-    </WrapperComponent>
   );
 
   // if (!dependOf) return formElement;
@@ -132,5 +133,5 @@ export default function GroupInput({
   //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
   //     return formElement;
   // }
-  return formElement
+  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

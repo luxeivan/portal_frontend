@@ -28,7 +28,7 @@ import TextInput from "./FormComponentsNew/TextInput";
 //   const howDepend = item.dependСondition
 //   const mainForm = Form.useFormInstance()
 //   let fieldDepends = Form.useWatch(dependOf, mainForm);
-  
+
 //   const formElement = (<Col xxl={item.component_Expanded?.span ? item.component_Expanded.span : 24} xs={24}>
 //     {selectComponentChildren(item, index)}
 //   </Col>)
@@ -49,7 +49,7 @@ import TextInput from "./FormComponentsNew/TextInput";
 //       return formElement;
 //   }
 // }
-export default function selectComponent (item, index) {
+export default function selectComponent(item, index) {
   if (item.component_Type.includes("Divider"))
     return (
       <DividerForm
@@ -65,6 +65,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -77,6 +78,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -89,6 +91,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -101,6 +104,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -113,6 +117,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -127,6 +132,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -139,6 +145,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -151,6 +158,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -167,6 +175,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -190,6 +199,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -202,6 +212,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -214,6 +225,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -225,6 +237,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -239,6 +252,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -252,6 +266,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -265,6 +280,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -276,6 +292,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -287,6 +304,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}
@@ -298,6 +316,7 @@ export default function selectComponent (item, index) {
         key={index}
         {...item.component_Expanded}
         {...item}
+        fullDescription={item.name?.fullDescription}
         name={item.idLine}
         dependOf={item.dependIdLine}
         howDepend={item.dependСondition}

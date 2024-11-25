@@ -1,6 +1,7 @@
 import React from "react";
 import { Input, Form } from "antd";
 import WrapperComponent from "./WrapperComponent";
+import InfoDrawer from "../InfoDrawer";
 
 export default function SnilsInput({
   name = "snils",
@@ -8,7 +9,8 @@ export default function SnilsInput({
   required = false,
   dependOf = false,
   howDepend = false,
-  span = false
+  span = false,
+  fullDescription = false
 }) {
   const form = Form.useFormInstance();
 
@@ -53,7 +55,7 @@ export default function SnilsInput({
 
   const formElement = (
     <Form.Item
-      label={label}
+      label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
       name={name}
       rules={[{
         required: required,

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form,  Select,Typography  } from "antd";
 import WrapperComponent from "./WrapperComponent";
+import InfoDrawer from "../InfoDrawer";
 
 export default function SelectInput({
   name = "name",
@@ -11,7 +12,8 @@ export default function SelectInput({
   options = [],
   dependOf = false,
   howDepend = false,
-  span = false
+  span = false,
+  fullDescription = false
 }) {
 
   const [optionsAuto, setOptionsAuto] = useState();
@@ -27,7 +29,7 @@ export default function SelectInput({
   const formElement = (
     <Form.Item
       name={name}
-      label={label}
+      label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
       rules={[
         {
           required: required,
