@@ -79,17 +79,17 @@ const ModalBot = ({ visible, onClose }) => {
   };
 
   // Обработчик для горячих вопросов
-  const handleHotQuestionClick = (question) => {
+  const handleHotQuestionClick = (questionObj) => {
     // Добавляем вопрос пользователя
     setChatMessages((prevMessages) => [
       ...prevMessages,
-      { sender: "user", text: question.text, timestamp: new Date() },
+      { sender: "user", text: questionObj.question, timestamp: new Date() },
     ]);
 
     // Добавляем предопределенный ответ бота
     setChatMessages((prevMessages) => [
       ...prevMessages,
-      { sender: "bot", text: question.response, timestamp: new Date() },
+      { sender: "bot", text: questionObj.answer, timestamp: new Date() },
     ]);
   };
 
@@ -101,8 +101,6 @@ const ModalBot = ({ visible, onClose }) => {
       footer={null}
       width={600}
     >
-      
-
       {/* Область сообщений */}
       <div
         ref={messagesContainerRef}
@@ -160,8 +158,8 @@ const ModalBot = ({ visible, onClose }) => {
           </div>
         )}
       </div>
-{/* Кнопки горячих вопросов */}
-<HotQuestions onQuestionClick={handleHotQuestionClick} />
+      {/* Кнопки горячих вопросов */}
+      <HotQuestions onQuestionClick={handleHotQuestionClick} />
 
       {/* Поле ввода и кнопка отправки */}
       <div style={{ display: "flex", gap: "8px" }}>
@@ -176,8 +174,6 @@ const ModalBot = ({ visible, onClose }) => {
           Отправить
         </Button>
       </div>
-
-      
     </Modal>
   );
 };
