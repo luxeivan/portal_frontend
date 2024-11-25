@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { debounce } from "lodash";
 import axios from "axios";
 import WrapperComponent from "./WrapperComponent";
+import InfoDrawer from "../InfoDrawer";
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
 const listTypeForDadata = [
@@ -29,7 +30,8 @@ export default function TextInput({
   inputMask = false,
   length = false,
   specialField: type = false,
-  span = false
+  span = false,
+  fullDescription = false
 }) {
   const { token } = theme.useToken();
   const [value, setValue] = useState("");
@@ -90,7 +92,12 @@ export default function TextInput({
   ];
 
   const autoComplete = (
-    <Form.Item name={name} label={label} rules={formItemRules} initialValue={defaultValue}>
+    <Form.Item 
+    name={name} 
+    label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label} 
+    rules={formItemRules} 
+    initialValue={defaultValue}
+    >
       <AutoComplete
         options={suggestions.map((suggestion) => ({ value: suggestion }))}
         onChange={handlerOnChange}
@@ -105,7 +112,7 @@ export default function TextInput({
   const email = (
     <Form.Item
       name={name}
-      label={label}
+      label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
       rules={[
         ...formItemRules,
         {
@@ -126,7 +133,7 @@ export default function TextInput({
   const simpleInput = (
     <Form.Item
     name={name}
-    label={label}
+    label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
     rules={formItemRules}
     initialValue={defaultValue}
     >

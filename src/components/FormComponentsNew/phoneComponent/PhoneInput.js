@@ -1,11 +1,22 @@
 import React from 'react'
-import {  Form, theme } from 'antd';
+import { Form, theme } from 'antd';
 import ReactInputMask from 'react-input-mask';
 import styles from './Phone.module.css'
 import WrapperComponent from '../WrapperComponent';
+import InfoDrawer from '../../InfoDrawer';
 
-export default function PhoneInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, dependOf = false, howDepend = false,span = false }) {
-    const { colorBorderBg, colorText,colorBorder } = theme.useToken().token;
+export default function PhoneInput({
+    name = 'name',
+    label = 'Label',
+    disabled = false,
+    placeholder = 'placeholder',
+    required = false,
+    dependOf = false,
+    howDepend = false,
+    span = false,
+    fullDescription = false
+}) {
+    const { colorBorderBg, colorText, colorBorder } = theme.useToken().token;
     // console.log(theme.useToken().token)
     const form = Form.useFormInstance();
     // console.log(dependOf)
@@ -13,7 +24,7 @@ export default function PhoneInput({ name = 'name', label = 'Label', disabled = 
     const formElement = (
         <Form.Item
             name={name}
-            label={label}
+            label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
             rules={[
                 {
                     required: required,
@@ -25,7 +36,7 @@ export default function PhoneInput({ name = 'name', label = 'Label', disabled = 
                 mask="+7 (999) 999-99-99"
                 placeholder="+7 (XXX) XXX-XX-XX"
                 className={`ant-input ant-input-outlined ant-input-status-success ${styles.inputMask}`}
-                style={{ backgroundColor: colorBorderBg, color: colorText, border:`1px solid ${colorBorder}` }}
+                style={{ backgroundColor: colorBorderBg, color: colorText, border: `1px solid ${colorBorder}` }}
             />
         </Form.Item>
     )

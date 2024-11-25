@@ -1,4 +1,4 @@
-import React, { useState,useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { Form, Card, Button, Tag, theme, Flex } from "antd";
 import axios from "axios";
 import { FileTextOutlined, EyeOutlined } from "@ant-design/icons";
@@ -40,7 +40,7 @@ export default function DocumentInput({
             document
         );
 
-        form.setFieldValue(`document_${selectedCategory}`, document );
+        form.setFieldValue(`document_${selectedCategory}`, document);
 
         setDocumentModalVisible(false);
     };
@@ -80,8 +80,8 @@ export default function DocumentInput({
 
     const attachedDocument = form.getFieldValue(
         `document_${category_Key}`
-      );
-      const isAttached = !!attachedDocument;
+    );
+    const isAttached = !!attachedDocument;
 
     const formElement = (
         <>
@@ -103,10 +103,12 @@ export default function DocumentInput({
                         display: "flex",
                         flexDirection: "column",
                         borderRadius: "8px",
+                        color: token.colorBorder,
                         backgroundColor: isAttached
                             ? token.colorSuccessBg
                             : token.colorBgContainer,
                     }}
+                    className={'formElement'}
                 >
                     {/* Иконка глаза в верхнем правом углу */}
                     {isAttached && (

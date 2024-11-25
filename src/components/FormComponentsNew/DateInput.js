@@ -4,10 +4,23 @@ import moment from "moment";
 import "moment/locale/ru";
 import locale from "antd/es/locale/ru_RU";
 import WrapperComponent from './WrapperComponent';
+import InfoDrawer from '../InfoDrawer';
 
 moment.locale("ru");
 
-export default function DateInput({ name = 'name', part = 'Дата', label = 'Label', defaultValue = false, disabled = false, placeholder = 'Пример', required = false, dependOf = false, howDepend = false,span = false }) {
+export default function DateInput({ 
+    name = 'name', 
+    part = 'Дата', 
+    label = 'Label', 
+    defaultValue = false, 
+    disabled = false, 
+    placeholder = 'Пример', 
+    required = false, 
+    dependOf = false, 
+    howDepend = false,
+    span = false,
+    fullDescription = false
+}) {
     const form = Form.useFormInstance()
     // const fieldDepends = Form.useWatch(dependOf, form)
     // console.log(part)
@@ -16,7 +29,7 @@ export default function DateInput({ name = 'name', part = 'Дата', label = 'L
 
             <Form.Item
                 name={name}
-                label={label}
+                label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
                 rules={[
                     {
                         required: required,

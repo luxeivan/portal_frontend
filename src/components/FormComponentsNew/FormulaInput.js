@@ -8,6 +8,7 @@ import {
 import { evaluate } from "mathjs";
 import useTemp from "../../stores/Cabinet/useTemp";
 import WrapperComponent from "./WrapperComponent";
+import InfoDrawer from "../InfoDrawer";
 
 function truncated(num, decimalPlaces) {
     let numPowerConverter = Math.pow(10, decimalPlaces);
@@ -30,7 +31,8 @@ export default function FormulaInput({
     ractionDigits = undefined,
     digits = false,
     valueValidate = false,
-    span = false
+    span = false,
+    fullDescription = false
 }) {
     // const [propertiesValue, setPropertiesValue] = useState({})
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
@@ -107,7 +109,7 @@ export default function FormulaInput({
     const formElement = (
         <Form.Item
             name={name}
-            label={label}
+            label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
 
             rules={valueValidate ? [
                 () => ({

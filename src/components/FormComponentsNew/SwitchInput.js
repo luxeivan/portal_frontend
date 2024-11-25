@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Switch } from "antd";
 import WrapperComponent from "./WrapperComponent";
+import InfoDrawer from "../InfoDrawer";
 
 export default function SwitchInput({
   name = "name",
@@ -9,7 +10,8 @@ export default function SwitchInput({
   required = false,
   dependOf = false,
   howDepend = false,
-  span = false
+  span = false,
+  fullDescription = false
 }) {
 
   if (defaultValue && defaultValue === "true") {
@@ -26,7 +28,8 @@ export default function SwitchInput({
   const formElement = (
     <Form.Item
       name={name}
-      label={label}
+      label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
+
       rules={[
         {
           required: required,

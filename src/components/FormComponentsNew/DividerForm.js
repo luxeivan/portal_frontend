@@ -3,8 +3,9 @@ import { Divider, Drawer, Typography, Flex, theme } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../MarkDownText/MarkDownText";
 import styles from './divider.module.css'
+import WrapperComponent from "./WrapperComponent";
 
-function DividerForm({ label, fullDescription, variant = "solid", borderColor = "gray", dashed = false, type = "horizontal", orientation = "center", }) {
+function DividerForm({ name = "name", label, fullDescription, variant = "solid", borderColor = "gray", dashed = false, type = "horizontal", orientation = "center", span = false, dependOf = false, howDepend = false, }) {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const { token } = theme.useToken();
   // console.log(token);
@@ -12,11 +13,14 @@ function DividerForm({ label, fullDescription, variant = "solid", borderColor = 
   const dividerWrapColor = token.colorBorder
   const showDrawer = () => setDrawerVisible(true);
   const onClose = () => setDrawerVisible(false);
+  // if (fullDescription) {
+  //   return
+  // }
+
+
+  let formElement = <></>
   if (fullDescription) {
-    return
-  }
-  if (fullDescription) {
-    return (
+    formElement = (
       <>
         <Divider
           style={{
@@ -49,8 +53,8 @@ function DividerForm({ label, fullDescription, variant = "solid", borderColor = 
       </>
     );
   } else {
-    return <>
-      {/* <Divider
+
+    {/* <Divider
       style={{
         borderColor: "gray",
         margin: 0,
@@ -62,14 +66,16 @@ function DividerForm({ label, fullDescription, variant = "solid", borderColor = 
       variant={variant}
       type={type}
       /> */}
-      <Flex style={{ width: "100%" }} align="center" justify="space-between">
-        {!orientation==="left" && <div className={styles.dividerWrap} style={{ backgroundColor: dividerWrapColor }}></div>}
-        {label && <div className={styles.dividerTitle} style={{paddingLeft:orientation==="left"? 0 : false}}>{label}</div>}
-        <div className={styles.dividerWrap} style={{ backgroundColor: dividerWrapColor }}></div>
+    formElement = <Flex style={{ width: "100%" }} align="center" justify="space-between">
+      {!orientation === "left" && <div className={styles.dividerWrap} style={{ backgroundColor: dividerWrapColor }}></div>}
+      {label && <div className={styles.dividerTitle} style={{ paddingLeft: orientation === "left" ? 0 : false }}>{label}</div>}
+      <div className={styles.dividerWrap} style={{ backgroundColor: dividerWrapColor }}></div>
 
-      </Flex>
-    </>
+    </Flex>
+
   }
+
+  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }
 
 export default DividerForm;

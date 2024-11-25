@@ -3,6 +3,7 @@ import { Form, InputNumber } from "antd";
 import useServices from "../../stores/useServices";
 import useTemp from "../../stores/Cabinet/useTemp";
 import WrapperComponent from "./WrapperComponent";
+import InfoDrawer from "../InfoDrawer";
 
 export default function NumberInput({
   name = "name",
@@ -19,7 +20,8 @@ export default function NumberInput({
   length = false,
   properties = false,
   ractionDigits = undefined,
-  span = false
+  span = false,
+  fullDescription = false
 }) {
   const [stepMain, setStepMain] = useState(step)
   const serviceItem = useServices((state) => state.serviceItem);
@@ -30,8 +32,8 @@ export default function NumberInput({
 
   let objectProp = null;
   if (properties) objectProp = JSON.parse(properties);
-  console.log("objectProp",objectProp);
-  console.log("objectProp?.unit?.idLine",objectProp?.unit?.idLine);
+  // console.log("objectProp",objectProp);
+  // console.log("objectProp?.unit?.idLine",objectProp?.unit?.idLine);
   
   let idLine = Form.useWatch(objectProp?.unit?.idLine || '', form);
   // let idLine = false
@@ -57,7 +59,7 @@ export default function NumberInput({
   const formElement = (
     <Form.Item
       name={name}
-      label={label}
+      label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
       rules={[
         {
           required: required,

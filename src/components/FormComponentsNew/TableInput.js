@@ -32,16 +32,18 @@ export default function TableInput({
 }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
-    const { colorBgBase, colorBgContainer } = theme.useToken().token
+    const { colorBgBase,colorBorder, colorBgContainer } = theme.useToken().token
     const nameTable = name
     // let fieldDepends = Form.useWatch(dependOf, form);
     const formElement = (
         <>
             <div style={{
                 backgroundColor: colorBgContainer,
-                width: "100%"
+                width: "100%",
+                color:colorBorder
             }}
-                className={styles.formElement}
+            // className={'formElement'}
+                className={`formElement ${styles.formElement}`}
             >
 
                 <Typography.Title level={5} style={{ margin: "0 0 10px 0" }}>{label}</Typography.Title>

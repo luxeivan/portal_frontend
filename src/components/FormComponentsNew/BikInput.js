@@ -3,6 +3,7 @@ import { AutoComplete, Form, Button, Flex, Input } from "antd";
 import debounce from "lodash/debounce";
 import axios from "axios";
 import WrapperComponent from './WrapperComponent';
+import InfoDrawer from '../InfoDrawer';
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
@@ -19,7 +20,8 @@ export default function BikInput({
     specialField: type = false,
     properties = false,
     inGroup = false,
-    span = false
+    span = false,
+    fullDescription = false
 }) {
     const form = Form.useFormInstance();
     // let fieldDepends = Form.useWatch(dependOf, form);
@@ -79,7 +81,7 @@ export default function BikInput({
     const formElement = (
         <Form.Item
             name={name}
-            label={label}
+            label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
             rules={[{ required: required, message: "Это поле обязательное" }]}
             style={{
                 flex: 1,
@@ -92,7 +94,7 @@ export default function BikInput({
                 onSelect={(value, option) => onSelect(value, option)}
                 onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
                 placeholder={placeholder}
-                                              
+
             />
         </Form.Item>
     )
