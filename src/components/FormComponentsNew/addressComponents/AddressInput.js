@@ -134,7 +134,6 @@ const AddressInput = ({
 
     form.setFieldValue(name, formattedAddress);
   };
-  console.log(token)
   const formElement = (
     <ConfigProvider
       theme={{

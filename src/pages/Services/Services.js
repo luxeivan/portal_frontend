@@ -129,11 +129,12 @@ export default function Services() {
                         >
                           {!item.IsFolder &&
                             <Flex vertical gap={10} >
-                              <Tag className={styles.tags} color="red">до 15 кВт</Tag>
+                              {item.tags.map((item,index)=>(<Tag key={index} className={styles.tags} color={item.tag?.color?.Имя}>{item.tag?.Description}</Tag>))}
+                              {/* <Tag className={styles.tags} color="red">до 15 кВт</Tag>
                               <Tag className={styles.tags} color="blue">I Категории</Tag>
                               <Tag className={styles.tags} color="blue">II Категории</Tag>
                               <Tag className={styles.tags} color="blue">III Категории</Tag>
-                              <Tag className={styles.tags} color="green">для бытовых нужд</Tag>
+                              <Tag className={styles.tags} color="green">для бытовых нужд</Tag> */}
                             </Flex>
                           }
                           <Flex align="center" justify="center" style={{ width: !item.IsFolder ? "50%" : "20%" }}>
