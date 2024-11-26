@@ -88,12 +88,12 @@ export default function DocumentInput({
             <Form.Item
                 name={name}
 
-                rules={[
-                    {
-                        required: required,
-                        message: "Это поле обязательное",
-                    },
-                ]}
+                // rules={[
+                //     {
+                //         required: required,
+                //         message: "Это поле обязательное",
+                //     },
+                // ]}
             >
                 <Card
                     bordered

@@ -11,6 +11,10 @@ import Preloader from "../../components/Main/Preloader";
 import ErrorModal from "../../components/ErrorModal";
 import { IconConnect } from "../../components/icons/IconConnect";
 import { IconHandEnergy } from "../../components/icons/IconHandEnergy";
+import { IconPowerUp } from "../../components/icons/IconPowerUp";
+import { IconPowerUpArrow } from "../../components/icons/IconPowerUpArrow";
+import { IconConnectNew } from "../../components/icons/IconConnectNew";
+import { IconDocument } from "../../components/icons/IconDocument";
 
 const { Title } = Typography;
 const backPhotoServer = process.env.REACT_APP_BACK_API_SERVER;
@@ -117,7 +121,7 @@ export default function Services() {
                       // styles={{ body: { backgroundImage: folder } }}
                       //styles={{body:{ backgroundImage: `url(${item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)})` }}}
                       >
-                        <Title level={4} className={styles.cardTitle}>{item.Description}</Title>
+                        <Title level={4} className={styles.cardTitle}>{item.label}</Title>
 
                         <Flex
                           justify={!item.IsFolder ? "space-between" : "flex-end"}
@@ -138,7 +142,7 @@ export default function Services() {
                               <Tag className={styles.tags} color="green">для бытовых нужд</Tag> */}
                             </Flex>
                           }
-                          <Flex align="center" justify="center" style={{ width: !item.IsFolder ? "35%" : "20%",alignSelf:"flex-end" }}>
+                          <Flex align="center" justify="center" style={{ width: !item.IsFolder ? "35%" : "20%", alignSelf: "flex-end" }}>
                             {/* <Flex
                               align="center"
                               justify="center"
@@ -157,11 +161,12 @@ export default function Services() {
                               </div>
                             </Flex> */}
                             {!item.IsFolder && <div className={styles.iconDiv}>
-                              {index % 2 == 0 ? <IconConnect
-                                isHover={isHoverCard[index]}
-                              /> : <IconHandEnergy
-                                isHover={isHoverCard[index]}
-                              />}
+                              {index === 0 && <IconDocument isHover={isHoverCard[index]} />}
+                              {index === 1 && <IconPowerUpArrow isHover={isHoverCard[index]} />}
+                              {index === 2 && <IconConnectNew isHover={isHoverCard[index]} />}
+                              {index === 3 && <IconConnect isHover={isHoverCard[index]} />}
+                              {index === 4 && <IconHandEnergy isHover={isHoverCard[index]} />}
+                              {index === 5 && <IconPowerUp isHover={isHoverCard[index]} />}
                             </div>
                             }
                             {item.IsFolder && <Image

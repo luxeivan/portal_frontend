@@ -193,7 +193,7 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
                     // );
                     // setAllowedExtensions(extensions);
                     console.log(selectedCategoryItem.maximumSize)
-                    setMaxFileSize(Number(selectedCategoryItem.maximumSize) === 0 ? 10 : parseInt(selectedCategoryItem.maximumSize));
+                    setMaxFileSize(Number(selectedCategoryItem.maximumSize) === 0 ? 10 : Number(selectedCategoryItem.maximumSize));
                   }
                 }}
               >
