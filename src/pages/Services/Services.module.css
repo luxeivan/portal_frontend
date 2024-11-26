@@ -14,7 +14,7 @@
  .styleCard {
     position: relative;
     display: block;
-    
+    min-height: 300px;
     width: 100%;
     height: 100%;
     /* background-size: contain;
@@ -63,10 +63,15 @@
     fill: none;
  }
  .iconDiv{
+   position: absolute;
+   bottom: 0;
+   right: 0;
    text-align: center;
    width: 150px;
    height: 150px;
    opacity: .8;
+   padding: 10px;
+   
  }
 
  @media (max-width: 1900px) {
