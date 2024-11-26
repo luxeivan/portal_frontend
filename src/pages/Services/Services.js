@@ -53,6 +53,7 @@ export default function Services() {
         {serviceItem && (
           <>
             <Breadcrumb
+              separator=">"
               itemRender={(currentRoute) => {
                 return <Link to={currentRoute.href}>{currentRoute.title}</Link>
               }}
@@ -120,7 +121,7 @@ export default function Services() {
 
                         <Flex
                           justify={!item.IsFolder ? "space-between" : "flex-end"}
-                          align="center"
+                          align="flex-start"
 
                           //  justify="flex-end"
                           gap={20}
@@ -129,7 +130,7 @@ export default function Services() {
                         >
                           {!item.IsFolder &&
                             <Flex vertical gap={10} >
-                              {item.tags.map((item,index)=>(<Tag key={index} className={styles.tags} color={item.tag?.color?.Имя}>{item.tag?.Description}</Tag>))}
+                              {item.tags.map((item, index) => (<Tag key={index} className={styles.tags} color={item.tag?.color?.Имя}>{item.tag?.Description}</Tag>))}
                               {/* <Tag className={styles.tags} color="red">до 15 кВт</Tag>
                               <Tag className={styles.tags} color="blue">I Категории</Tag>
                               <Tag className={styles.tags} color="blue">II Категории</Tag>
@@ -137,7 +138,7 @@ export default function Services() {
                               <Tag className={styles.tags} color="green">для бытовых нужд</Tag> */}
                             </Flex>
                           }
-                          <Flex align="center" justify="center" style={{ width: !item.IsFolder ? "50%" : "20%" }}>
+                          <Flex align="center" justify="center" style={{ width: !item.IsFolder ? "35%" : "20%",alignSelf:"flex-end" }}>
                             {/* <Flex
                               align="center"
                               justify="center"
@@ -164,7 +165,7 @@ export default function Services() {
                             </div>
                             }
                             {item.IsFolder && <Image
-                              style={{ textAlign: "center", width: "100%" }}
+                              style={{ textAlign: "center", width: "100%", opacity: .5 }}
                               // width={"50%"}
                               src={item.IsFolder ? folder : (item.picture ? `${backPhotoServer}/public/${item.picture['ПутьКФайлу']}` : element)}
                               preview={false}
@@ -186,6 +187,7 @@ export default function Services() {
             )}
           </>
         )}
+        {/* <Typography.Text>* - Является обязательным</Typography.Text> */}
       </Container>
     </>
   );

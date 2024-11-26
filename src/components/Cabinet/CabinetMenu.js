@@ -27,43 +27,43 @@ export default function CabinetMenu() {
     color: "gray"
   }
   const menuItems = [
-    {
-      type: 'group',
-      label: 'Услуги',
-    },
+    // {
+    //   type: 'group',
+    //   label: 'Услуги',
+    // },
     {
       key: "/services",
       icon: <FileAddOutlined className={styles.icon} style={iconStyle} />,
-      label: <Link to={"/services"} className={styles.labelSizeMobile}>Новая</Link>,
+      label: <Link to={"/services"} className={styles.labelSizeMobile}>Новая услуга</Link>,
     },
     {
       key: "/cabinet/claimers",
       icon: <FileSyncOutlined className={styles.icon} style={iconStyle} />,
-      label: <Link to={"/cabinet/claimers"} className={styles.labelSizeMobile}>В работе</Link>,
+      label: <Link to={"/cabinet/claimers"} className={styles.labelSizeMobile}>Заявки</Link>,
     },
-    {
-      key: "/cabinet/archives",
-      icon: <FileZipOutlined className={styles.icon} style={iconStyle} />,
-      label: <Link to={"/cabinet/archives"} className={styles.labelSizeMobile}>Архив</Link>,
-    },
-    {
-      type: 'group',
-      label: 'Заявки',
-    },
-    {
-      key: "/cabinet/drafts",
-      icon: <FileUnknownOutlined className={styles.icon} style={iconStyle} />,
-      label: <Link to={"/cabinet/drafts"} className={styles.labelSizeMobile}>Черновики</Link>,
-    },
-    {
-      key: "/cabinet/checking",
-      icon: <FileSearchOutlined className={styles.icon} style={iconStyle} />,
-      label: <Link to={"/cabinet/checking"} className={styles.labelSizeMobile}>На проверке</Link>,
-    },
-    {
-      type: 'group',
-      label: 'Мои данные',
-    },
+    // {
+    //   key: "/cabinet/archives",
+    //   icon: <FileZipOutlined className={styles.icon} style={iconStyle} />,
+    //   label: <Link to={"/cabinet/archives"} className={styles.labelSizeMobile}>Архив</Link>,
+    // },
+    // {
+    //   type: 'group',
+    //   label: 'Заявки',
+    // },
+    // {
+    //   key: "/cabinet/drafts",
+    //   icon: <FileUnknownOutlined className={styles.icon} style={iconStyle} />,
+    //   label: <Link to={"/cabinet/drafts"} className={styles.labelSizeMobile}>Черновики</Link>,
+    // },
+    // {
+    //   key: "/cabinet/checking",
+    //   icon: <FileSearchOutlined className={styles.icon} style={iconStyle} />,
+    //   label: <Link to={"/cabinet/checking"} className={styles.labelSizeMobile}>На проверке</Link>,
+    // },
+    // {
+    //   type: 'group',
+    //   label: 'Мои данные',
+    // },
     // {
     //   key: "/cabinet/subjects",
     //   icon: <UserOutlined className={styles.icon} style={iconStyle} />,
@@ -77,16 +77,16 @@ export default function CabinetMenu() {
     {
       key: "/cabinet/documents",
       icon: <FileOutlined className={styles.icon} style={iconStyle} />,
-      label: <Link to={"/cabinet/documents"} className={styles.labelSizeMobile}>Документы</Link>,
+      label: <Link to={"/cabinet/documents"} className={styles.labelSizeMobile}>Мои документы</Link>,
     },
-    {
-      type: 'group',
-      label: 'Настройки',
-    },
+    // {
+    //   type: 'group',
+    //   label: 'Настройки',
+    // },
     {
       key: "/cabinet/profile",
       icon: <ProfileOutlined className={styles.icon} style={iconStyle} />,
-      label: <Link to={"/cabinet/profile"} className={styles.labelSizeMobile}>Профиль</Link>,
+      label: <Link to={"/cabinet/profile"} className={styles.labelSizeMobile}>Мой профиль</Link>,
     },
   ];
   const menuItemsMobile = menuItems.map(item => {
