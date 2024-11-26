@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, Typography, Skeleton, Descriptions } from "antd";
+import { Card, Typography, Skeleton, Descriptions, theme } from "antd";
 import { Link } from "react-router-dom";
 import AppHelmet from "../../../../components/Global/AppHelmet";
 import useClaims from "../../../../stores/Cabinet/useClaims";
@@ -11,6 +11,8 @@ const { Title } = Typography;
 export default function Claimers() {
   const claims = useClaims((state) => state.claims);
   const fetchClaims = useClaims((state) => state.fetchClaims);
+
+  const { token } = theme.useToken();
 
   useEffect(() => {
     fetchClaims();
@@ -34,8 +36,8 @@ export default function Claimers() {
             {claims.map((item, index) => (
               <motion.div
                 key={index}
-                whileHover={{ scale: 1.05 }} // Анимация при наведении
-                whileTap={{ scale: 0.95 }} // Анимация при клике
+                // whileHover={{ scale: 1.05, transition: { duration: .2 } }} // Анимация при наведении
+                // whileTap={{ scale: 0.95, transition: { duration: .2 } }} // Анимация при клике
               >
                 <Link
                   to={`/cabinet/claimers/${item.element2_Expanded.Ref_Key}`}
@@ -44,6 +46,9 @@ export default function Claimers() {
                     className={styles.styleCard}
                     hoverable
                     title={`Заявка №${item.element2_Expanded.Number}`}
+                    style={{
+                      border: `1px solid ${token.colorBorder}`
+                    }}
                   >
                     <Descriptions column={1}>
                       <Descriptions.Item label="Создана">
