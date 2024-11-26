@@ -10,6 +10,7 @@ import {
   Typography,
   theme,
   Breadcrumb,
+  Tag,
 } from "antd";
 import styles from "./ServicesItem.module.css";
 import { motion } from "framer-motion";
@@ -49,7 +50,7 @@ export default function ServiceItem() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchServiceItem(key, {  withChain: true, withFields: false });
+        await fetchServiceItem(key, { withChain: true, withFields: false });
       } catch (err) {
         setError(
           err.message || "Произошла ошибка при загрузке данных об услуге"
@@ -67,15 +68,16 @@ export default function ServiceItem() {
   const onClose = () => {
     setOpen(false);
   };
-console.log(serviceItem)
+  console.log(serviceItem)
   return (
     <div>
       {serviceItem && (
         <>
           <Breadcrumb
-          itemRender={(currentRoute) => {
-            return <Link to={currentRoute.href}>{currentRoute.title}</Link>
-          }}
+            separator=">"
+            itemRender={(currentRoute) => {
+              return <Link to={currentRoute.href}>{currentRoute.title}</Link>
+            }}
             items={
               chain &&
               chain.map((item) => ({
@@ -87,6 +89,9 @@ console.log(serviceItem)
           <Title level={1} style={{ marginTop: "10px" }}>
             {serviceItem.Description}
           </Title>
+          <Flex gap={5} style={{ marginBottom: "1.2rem" }}>
+            {serviceItem.tags.map((item, index) => (<Tag key={index} style={{ fontSize: "1.2rem", lineHeight: "1.8rem" }} color={item.tag?.color?.Имя}>{item.tag?.Description}</Tag>))}
+          </Flex>
         </>
       )}
       {isLoading && (

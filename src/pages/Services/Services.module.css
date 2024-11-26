@@ -50,7 +50,11 @@
 
  .tags {
     font-size: 1.2rem;
-    line-height: 2rem;
+    line-height: 1.8rem;
+    max-width: 300px;
+    /* width: 50%; */
+    flex: 1;
+    overflow: hidden;
  }
 
  .svg {
@@ -61,6 +65,7 @@
  .iconDiv{
    text-align: center;
    width: 150px;
+   opacity: .8;
  }
 
  @media (max-width: 1900px) {

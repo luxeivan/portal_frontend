@@ -1,4 +1,4 @@
-import { Form, Typography, Button, Drawer, Flex, Breadcrumb, ConfigProvider, Col, Row } from "antd";
+import { Form, Typography, Button, Drawer, Flex, Breadcrumb, ConfigProvider, Col, Row, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useClaims from "../../stores/Cabinet/useClaims";
@@ -29,7 +29,7 @@ import InnInput from "../../components/FormComponentsNew/InnInput";
 import BikInput from "../../components/FormComponentsNew/BikInput";
 import DocumentInput from "../../components/FormComponentsNew/DocumentInput";
 
-import selectComponent  from "../../components/selectComponent";
+import selectComponent from "../../components/selectComponent";
 
 
 
@@ -150,6 +150,7 @@ export default function NewClaim() {
       {!isLoading && serviceItem && (
         <>
           <Breadcrumb
+            separator=">"
             itemRender={(currentRoute) => {
               return <Link to={currentRoute.href}>{currentRoute.title}</Link>;
             }}
@@ -180,13 +181,16 @@ export default function NewClaim() {
                   /* here is your component tokens */
                   labelFontSize: 16,
                   verticalLabelPadding: "0 0 4px",
-                  itemMarginBottom:0
+                  itemMarginBottom: 0
                 },
               },
             }}
           >
 
             <Title>{serviceItem.Description}</Title>
+            <Flex gap={5} style={{ marginBottom: "1.2rem" }}>
+              {serviceItem.tags.map((item, index) => (<Tag key={index} style={{ fontSize: "1.2rem", lineHeight: "1.8rem" }} color={item.tag?.color?.Имя}>{item.tag?.Description}</Tag>))}
+            </Flex>
 
             <Form
               scrollToFirstError
@@ -200,7 +204,7 @@ export default function NewClaim() {
                 width: "100%",
                 margin: "0 auto"
               }}
-              
+
               labelWrap
               validateTrigger={["onSubmit", "onChange"]}
             // onValuesChange={handlerChange}
@@ -210,18 +214,18 @@ export default function NewClaim() {
                 gap={20}
                 // justify="space-between"
               > */}
-              <Row 
-              gutter={[20,20]} 
-              align={"stretch"}
+              <Row
+                gutter={[20, 20]}
+                align={"stretch"}
               >
-                  {serviceItem.fields
-                    ?.sort((a, b) => a.lineNum - b.lineNum)
+                {serviceItem.fields
+                  ?.sort((a, b) => a.lineNum - b.lineNum)
 
-                    .map(selectComponent)}
+                  .map(selectComponent)}
               </Row>
 
               {/* </Flex> */}
-{/* 
+              {/* 
               <DocumentAttachments
                 form={form}
                 categoriesFiles={serviceItem.categoriesFiles}

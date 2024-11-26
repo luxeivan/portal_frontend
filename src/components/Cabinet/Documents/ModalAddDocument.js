@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, message, Form, Select, Input,ConfigProvider } from "antd";
+import { Modal, Button, message, Form, Select, Input, ConfigProvider } from "antd";
 import axios from "axios";
 import useDocuments from "../../../stores/Cabinet/useDocuments";
 import UploaderInput from "../../FormComponents/UploaderInput";
@@ -197,7 +197,15 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
                   }
                 }}
               >
-                {categories.map((category, index) => (
+                {categories.sort((a, b) => {
+                  if (a.toLowerCase() < b.toLowerCase()) {
+                    return -1;
+                  }
+                  if (a.toLowerCase() > b.toLowerCase()) {
+                    return 1;
+                  }
+                  return 0;
+                }).map((category, index) => (
                   <Option key={index} value={category}>
                     {category}
                   </Option>
