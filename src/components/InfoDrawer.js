@@ -9,7 +9,7 @@ const InfoDrawer = ({ fullDescription, children: label }) => {
     const [drawerVisible, setDrawerVisible] = useState(false);
     const showDrawer = () => setDrawerVisible(true);
     const onClose = () => setDrawerVisible(false);
-    console.log("fullDescription: ",fullDescription)
+    // console.log("fullDescription: ",fullDescription)
     return (
         <>
             {label}

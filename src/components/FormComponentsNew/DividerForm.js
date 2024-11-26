@@ -19,7 +19,7 @@ function DividerForm({ name = "name", label, fullDescription, variant = "solid",
 
 
   let formElement = <></>
-  if (fullDescription) {
+  if (fullDescription !=="") {
     formElement = (
       <>
         <Divider

@@ -4,7 +4,7 @@ import { draw, unDraw } from './paramsForIcon'
 export const IconHandEnergy = ({ isHover = false }) => {
 
     return (
-        <motion.div>
+        <motion.div style={{width:"100%",height:"100%"}}>
             <motion.svg
                 width={"100%"}
                 height={"100%"}
