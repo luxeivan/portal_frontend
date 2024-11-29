@@ -4,8 +4,8 @@ import { ConfigProvider, Flex, Layout, theme } from "antd";
 import "./App.css";
 import { Route, BrowserRouter, Routes, redirect } from "react-router-dom";
 import Main from "./pages/Main";
-import AppHeader from "./components/Global/AppHeader";
-import AppFooter from "./components/Global/AppFooter";
+import AppHeader from "./components/Global/AppHeader/AppHeader";
+import AppFooter from "./components/Global/AppFooter/AppFooter";
 import Calc from "./pages/Calc/Calc";
 import About from "./pages/About/About";
 import Services from "./pages/Services/Services";
@@ -34,8 +34,6 @@ import FormOneC from "./components/test/FormOneC";
 import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 import AddressInputTest from "./components/FormComponentsNew/addressComponents/AddressInputTest";
-
-
 
 const { Content } = Layout;
 
@@ -81,7 +79,6 @@ export default function App() {
     }
     return null;
   };
-
 
   return (
     <ConfigProvider

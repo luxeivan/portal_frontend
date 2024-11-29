@@ -19,16 +19,16 @@ import {
   QuestionCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import logoWhite from "../../img/header/logoWhite.svg";
-import logoBlue from "../../img/header/logoBlue.svg";
-import useGlobal from "../../stores/useGlobal";
-import useAuth from "../../stores/useAuth";
-import useNotifications from "../../stores/useNotifications";
-import useProfile from "../../stores/Cabinet/useProfile";
-import NotificationList from "../../components/FormComponentsNew/Notifications/NotificationPanel";
-import ModalBot from "./ModalBot";
+import logoWhite from "../../../img/header/logoWhite.svg";
+import logoBlue from "../../../img/header/logoBlue.svg";
+import useGlobal from "../../../stores/useGlobal";
+import useAuth from "../../../stores/useAuth";
+import useNotifications from "../../../stores/useNotifications";
+import useProfile from "../../../stores/Cabinet/useProfile";
+import NotificationList from "../../FormComponentsNew/Notifications/NotificationPanel";
+// import ModalBot from "../ModalBot";
 import styles from "./AppHeader.module.css";
-import ErrorModal from "../ErrorModal";
+import ErrorModal from "../../ErrorModal";
 
 const { Header } = Layout;
 
@@ -134,10 +134,15 @@ export default function AppHeader() {
 
   const rightMenuArea = (
     <div className={styles.rightMenu}>
-      <QuestionCircleOutlined
+      <Link to="/answers">
+        <QuestionCircleOutlined
+          style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
+        />
+      </Link>
+      {/* <QuestionCircleOutlined
         style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
         onClick={() => setChatModalVisible(true)}
-      />
+      /> */}
       <Switch
         onChange={handlerDarkMode}
         checkedChildren={<SunOutlined />}
@@ -273,10 +278,20 @@ export default function AppHeader() {
         {/* Ваш блок с иконками и кнопками вне Menu */}
         <div style={{ marginTop: 16 }}>
           <Space size="middle">
-            <QuestionCircleOutlined
+            <Link to="/answers">
+              <QuestionCircleOutlined
+                style={{
+                  fontSize: "20px",
+                  cursor: "pointer",
+                  color: colorText,
+                }}
+              />
+            </Link>
+
+            {/* <QuestionCircleOutlined
               style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
               onClick={() => setChatModalVisible(true)}
-            />
+            /> */}
             <Switch
               onChange={handlerDarkMode}
               checkedChildren={<SunOutlined />}
@@ -318,10 +333,10 @@ export default function AppHeader() {
         <NotificationList />
       </Drawer>
 
-      <ModalBot
+      {/* <ModalBot
         visible={chatModalVisible}
         onClose={() => setChatModalVisible(false)}
-      />
+      /> */}
 
       <ErrorModal visible={errorVisible} error={error} onClose={closeModal} />
     </>
