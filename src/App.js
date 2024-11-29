@@ -34,6 +34,7 @@ import FormOneC from "./components/test/FormOneC";
 import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 import AddressInputTest from "./components/FormComponentsNew/addressComponents/AddressInputTest";
+import Answers from "./pages/Answers/Answers";
 
 const { Content } = Layout;
 
@@ -151,6 +152,7 @@ export default function App() {
                     <Route path="archives" element={<Archives />} />
                   </Route>
 
+                  <Route path="/answers" element={<Answers />} /> 
                   <Route path="/game" element={<Game />} />
                   <Route path="*" element={<Page404 />} />
                 </Routes>

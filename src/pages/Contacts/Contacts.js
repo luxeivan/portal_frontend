@@ -1,15 +1,6 @@
 import React, { useState } from "react";
-import {
-  Collapse,
-  Button,
-  Card,
-  Alert,
-  FloatButton,
-  Image,
-  Typography,
-  Input,
-} from "antd";
-import { createFromIconfontCN } from "@ant-design/icons";
+import { Collapse, Button, Card, Alert, Image, Typography, Input } from "antd";
+
 import {
   EnvironmentOutlined,
   PhoneOutlined,
@@ -23,7 +14,6 @@ import Rekvizity from "../../components/Rekvizity/Rekvizity";
 
 const { Text, Title } = Typography;
 const { Search } = Input;
-
 
 const Contacts = () => {
   const { contactCenters, loading } = useContacts();
@@ -54,12 +44,11 @@ const Contacts = () => {
 
   return (
     <div className={styles.container}>
-
       <Rekvizity />
 
       {/* <IconFont type="green-energy" /> */}
       <Title level={2}>Контакты Центров обслуживания клиентов</Title>
-      
+
       <p>
         Центры обслуживания клиентов предоставляют услуги по технологическому
         присоединению и иным видам деятельности (подача заявок, обращений,
@@ -163,8 +152,6 @@ const Contacts = () => {
           ),
         }))}
       />
-
-      <FloatButton />
     </div>
   );
 };
