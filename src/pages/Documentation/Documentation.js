@@ -1,6 +1,5 @@
 import React from 'react'
-import { Typography, Tabs, Flex, Image } from 'antd'
-import mistakesImg from '../../img/docs/mistakes.jpg'
+import { Typography, Tabs} from 'antd'
 import Law from '../../components/Documentation/Law'
 import Rekvizity from '../../components/Rekvizity/Rekvizity'
 import Instructions from '../../components/Documentation/Instructions'
@@ -20,18 +19,12 @@ const items = [
         label: 'Законодательство',
         children: <Law/>,
     },
-    {
-        key: '3',
-        label: 'Реквизиты',
-        children: <Rekvizity />,
-    },
     // {
     //     key: '3',
-    //     label: 'Не повторять ошибки',
-    //     children: <Flex>
-    //         <Image src={mistakesImg} preview={false} />
-    //     </Flex>,
+    //     label: 'Реквизиты',
+    //     children: <Rekvizity />,
     // },
+
 ];
 export default function Documentation() {
     return (
