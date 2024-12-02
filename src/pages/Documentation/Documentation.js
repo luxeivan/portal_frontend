@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography, Tabs} from 'antd'
 import Law from '../../components/Documentation/Law'
-import Rekvizity from '../../components/Rekvizity/Rekvizity'
+import Rekvizity from '../../components/Contacts/Rekvizity'
 import Instructions from '../../components/Documentation/Instructions'
 import AppHelmet from '../../components/Global/AppHelmet'
 
