@@ -117,6 +117,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
         }
         if (column.dataIndex === "consumedPower") {
           return (
+            
             <span>{calculatedData[record.key]?.consumedPower || "0.00"}</span>
           );
         }

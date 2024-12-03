@@ -13,6 +13,7 @@ import Preloader from "../../components/Main/Preloader";
 import Rekvizity from "../../components/Contacts/Rekvizity";
 import ContactInfo from "../../components/Contacts/ContactInfo";
 import AppHelmet from "../../components/Global/AppHelmet";
+import Container from "../../components/Container";
 
 const { Text, Title } = Typography;
 const { Search } = Input;
@@ -45,7 +46,7 @@ const Contacts = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <Container>
       <AppHelmet title={"Контакты"} desc={"Контакты"} />
       <Title level={1}>Контакты</Title>
       <Row gutter={[15, 15]} wrap>
@@ -178,7 +179,7 @@ const Contacts = () => {
           </Card>
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 };
 

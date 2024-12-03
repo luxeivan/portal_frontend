@@ -3,18 +3,17 @@
   overflow: hidden;
   min-height: 100vh;
   color: #000;
-  background-color: #f0f2f5; /* Светлый фон по умолчанию */
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .container.darkMode {
-  background-color: #141414; /* Тёмный фон для тёмной темы */
-  color: #fff; /* Светлый текст для тёмной темы */
 }
 
-.content {
+/* .content {
   position: relative;
   padding: 100px 50px;
-}
+} */
 
 .title {
   font-size: 3em;
@@ -32,6 +31,7 @@
 }
 
 .mosoblikArea {
+  /* padding: 150px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,8 +49,9 @@
 
 .actionButton {
   margin-top: 30px;
-  padding: 10px 30px;
+  /* padding: 10px 30px; */
   font-size: 1.2em;
+  line-height: 1.2em;
   transition: background-color 0.3s;
 }
 

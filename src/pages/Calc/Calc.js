@@ -12,6 +12,7 @@ import { formItemLayoutForCalc } from "../../components/configSizeForm";
 import CalcTable from "./CalcTable";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import pdf from "../../../src/img/pdf.svg";
+import Container from "../../components/Container";
 
 TweenOne.plugins.push(Children);
 
@@ -43,6 +44,8 @@ export default function Calc() {
 
   return (
     <>
+    <Container>
+
       <AppHelmet title={"Калькулятор"} desc={"Калькулятор мощности"} />
       <div className={styles.container}>
         <span>
@@ -118,6 +121,7 @@ export default function Calc() {
           </a>
         </div>
       </div>
+    </Container>
     </>
   );
 }
