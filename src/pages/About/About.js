@@ -36,7 +36,7 @@ export default function About() {
           <Title level={1} className={styles.title}>
             О компании Мособлэнерго
           </Title>
-          <Row gutter={[32, 32]} align="middle">
+          <Row gutter={[32, 32]} align={"top"} >
             <Col xs={24} md={12}>
               <div className={styles.textBlock}>
                 <Paragraph>
@@ -136,9 +136,9 @@ export default function About() {
             <Col xs={24} md={12}>
               <div
                 className={styles.mosoblikArea}
-                style={{
-                  backgroundImage: `url(${darkMode ? mosoblikShadow : ""})`,
-                }}
+                // style={{
+                //   backgroundImage: `url(${darkMode ? mosoblikShadow : ""})`,
+                // }}
               >
                 <img
                   src={mosoblik}
