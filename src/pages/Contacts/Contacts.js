@@ -12,6 +12,7 @@ import styles from "./Contacts.module.css";
 import Preloader from "../../components/Main/Preloader";
 import Rekvizity from "../../components/Contacts/Rekvizity";
 import ContactInfo from "../../components/Contacts/ContactInfo";
+import AppHelmet from "../../components/Global/AppHelmet";
 
 const { Text, Title } = Typography;
 const { Search } = Input;
@@ -45,6 +46,7 @@ const Contacts = () => {
 
   return (
     <div className={styles.container}>
+      <AppHelmet title={"Контакты"} desc={"Контакты"} />
       <Title level={1}>Контакты</Title>
       <Row gutter={[15, 15]} wrap>
         <Col order={1} span={24} xl={{ order: 2, span: 8 }} >
