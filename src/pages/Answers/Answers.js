@@ -25,8 +25,12 @@ export default function Answers() {
     fetchQuestions();
   }, []);
 
+  const sortedQuestions = [...questions].sort((a, b) =>
+    a.question.localeCompare(b.question)
+  );
+
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", maxWidth:"1600px" }}>
       <Title level={2}>Часто задаваемые вопросы</Title>
 
       <Card>
@@ -38,7 +42,7 @@ export default function Answers() {
           )}
           expandIconPosition="right"
         >
-          {questions.map((q, index) => (
+          {sortedQuestions.map((q, index) => (
             <Panel
               header={<Text strong>{q.question}</Text>}
               key={index}
@@ -69,12 +73,11 @@ export default function Answers() {
 
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
-// import { Collapse, Button, Typography } from "antd";
+// import { Collapse, Button, Typography, Card } from "antd";
 // import { RightOutlined } from "@ant-design/icons";
 // import ModalBot from "../../components/Global/ModalBot";
 
-// const { Text, Title } = Typography;
-
+// const { Title, Text, Paragraph } = Typography;
 // const { Panel } = Collapse;
 
 // const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
@@ -96,32 +99,39 @@ export default function Answers() {
 //   }, []);
 
 //   return (
-//     <div style={{ padding: "20px" }}>
+//     <div style={{ padding: "20px", maxWidth:"1600px" }}>
 //       <Title level={2}>Часто задаваемые вопросы</Title>
 
-//       <Collapse
-//         accordion
-//         expandIcon={({ isActive }) => (
-//           <RightOutlined rotate={isActive ? 90 : 0} />
-//         )}
-//       >
-//         {questions.map((q, index) => (
-//           <Panel header={q.question} key={index}>
-//             <Text>{q.answer}</Text>
-//           </Panel>
-//         ))}
-//       </Collapse>
+//       <Card>
+//         <Collapse
+//           accordion
+//           bordered={false}
+//           expandIcon={({ isActive }) => (
+//             <RightOutlined rotate={isActive ? 90 : 0} />
+//           )}
+//           expandIconPosition="right"
+//         >
+//           {questions.map((q, index) => (
+//             <Panel
+//               header={<Text strong>{q.question}</Text>}
+//               key={index}
+//               style={{ borderBottom: "1px solid #f0f0f0" }}
+//             >
+//               <Paragraph>{q.answer}</Paragraph>
+//             </Panel>
+//           ))}
+//         </Collapse>
+//       </Card>
 
-//       {/* Кнопка для открытия чат-бота */}
 //       <Button
 //         type="primary"
 //         onClick={() => setChatModalVisible(true)}
 //         style={{ marginTop: "20px" }}
+//         size="large"
 //       >
 //         Задать вопрос
 //       </Button>
 
-//       {/* Модальное окно чат-бота */}
 //       <ModalBot
 //         visible={chatModalVisible}
 //         onClose={() => setChatModalVisible(false)}
