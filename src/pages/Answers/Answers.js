@@ -31,31 +31,30 @@ export default function Answers() {
     a.question.localeCompare(b.question)
   );
 
+  const items = sortedQuestions.map((q, index) => (
+    {
+      key: index,
+      label: q.question,
+      children: <MarkDownText>{q.answer}</MarkDownText>,
+    })
+  )
+
   return (
-    <div style={{ padding: "20px", maxWidth:"1600px" }}>
+    <div style={{ padding: "20px", maxWidth: "1600px",margin:"0 auto" }}>
       <AppHelmet title={"Часто задаваемые вопросы"} desc={"Часто задаваемые вопросы"} />
       <Title level={2}>Часто задаваемые вопросы</Title>
 
-      <Card>
+      
         <Collapse
           accordion
-          bordered={false}
-          expandIcon={({ isActive }) => (
-            <RightOutlined rotate={isActive ? 90 : 0} />
-          )}
-          expandIconPosition="right"
-        >
-          {sortedQuestions.map((q, index) => (
-            <Panel
-              header={<Text strong>{q.question}</Text>}
-              key={index}
-              style={{ borderBottom: "1px solid #f0f0f0" }}
-            >
-              <MarkDownText>{q.answer}</MarkDownText>
-            </Panel>
-          ))}
-        </Collapse>
-      </Card>
+          // bordered={false}
+          // expandIcon={({ isActive }) => (
+          //   <RightOutlined rotate={isActive ? 90 : 0} />
+          // )}
+          // expandIconPosition="right"
+          items={items}
+        />
+         
 
       <Button
         type="primary"
