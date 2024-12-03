@@ -10,7 +10,7 @@ import {
   Tooltip,
   theme,
 } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   MenuOutlined,
   MoonOutlined,
@@ -26,7 +26,6 @@ import useAuth from "../../../stores/useAuth";
 import useNotifications from "../../../stores/useNotifications";
 import useProfile from "../../../stores/Cabinet/useProfile";
 import NotificationList from "../../FormComponentsNew/Notifications/NotificationPanel";
-// import ModalBot from "../ModalBot";
 import styles from "./AppHeader.module.css";
 import ErrorModal from "../../ErrorModal";
 
@@ -62,6 +61,7 @@ export default function AppHeader() {
   const { profile, fetchProfile } = useProfile();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Раздельные состояния для Drawer
   const [menuDrawerVisible, setMenuDrawerVisible] = useState(false);
@@ -77,6 +77,16 @@ export default function AppHeader() {
       fetchProfile();
     }
   }, [auth, fetchProfile]);
+
+  useEffect(() => {
+    // Проверяем, соответствует ли текущий путь какому-либо ключу в меню
+    const matchingItem = items.find((item) => item.key === location.pathname);
+    if (matchingItem) {
+      setCurrentPage(location.pathname);
+    } else {
+      setCurrentPage(""); // Или null, если текущий путь не соответствует ни одному пункту меню
+    }
+  }, [location.pathname, setCurrentPage]);
 
   const handleLogout = () => {
     try {
@@ -292,10 +302,6 @@ export default function AppHeader() {
               />
             </Link>
 
-            {/* <QuestionCircleOutlined
-              style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
-              onClick={() => setChatModalVisible(true)}
-            /> */}
             <Switch
               onChange={handlerDarkMode}
               checkedChildren={<SunOutlined />}
@@ -336,11 +342,6 @@ export default function AppHeader() {
       >
         <NotificationList />
       </Drawer>
-
-      {/* <ModalBot
-        visible={chatModalVisible}
-        onClose={() => setChatModalVisible(false)}
-      /> */}
 
       <ErrorModal visible={errorVisible} error={error} onClose={closeModal} />
     </>
