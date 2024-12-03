@@ -144,8 +144,12 @@ export default function AppHeader() {
 
   const rightMenuArea = (
     <div className={styles.rightMenu}>
-      <Link to="/answers">
+      <Link to="/answers" >
         <QuestionCircleOutlined
+        onClick={()=>{
+          // console.log("/answers");
+          setCurrentPage("/answers")
+        }}
           style={{ fontSize: "20px", cursor: "pointer", color: colorText }}
         />
       </Link>

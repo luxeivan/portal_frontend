@@ -3,6 +3,8 @@ import axios from "axios";
 import { Collapse, Button, Typography, Card } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import ModalBot from "../../components/Global/ModalBot";
+import MarkDownText from "../../components/MarkDownText/MarkDownText";
+import AppHelmet from "../../components/Global/AppHelmet";
 
 const { Title, Text, Paragraph } = Typography;
 const { Panel } = Collapse;
@@ -31,6 +33,7 @@ export default function Answers() {
 
   return (
     <div style={{ padding: "20px", maxWidth:"1600px" }}>
+      <AppHelmet title={"Часто задаваемые вопросы"} desc={"Часто задаваемые вопросы"} />
       <Title level={2}>Часто задаваемые вопросы</Title>
 
       <Card>
@@ -48,7 +51,7 @@ export default function Answers() {
               key={index}
               style={{ borderBottom: "1px solid #f0f0f0" }}
             >
-              <Paragraph>{q.answer}</Paragraph>
+              <MarkDownText>{q.answer}</MarkDownText>
             </Panel>
           ))}
         </Collapse>
