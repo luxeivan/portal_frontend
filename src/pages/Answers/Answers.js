@@ -9,8 +9,8 @@ import AppHelmet from "../../components/Global/AppHelmet";
 
 import mosoblikImage from "../../img/about/mosoblik.png";
 
-import useGlobal from "../../stores/useGlobal"; // Импортируем useGlobal из zustand
-import styles from "./Answers.module.css"; // Импортируем CSS-модуль
+import useGlobal from "../../stores/useGlobal"; 
+import styles from "./Answers.module.css"; 
 
 const { Title } = Typography;
 
@@ -19,7 +19,7 @@ const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 export default function Answers() {
   const [questions, setQuestions] = useState([]);
   const [chatModalVisible, setChatModalVisible] = useState(false);
-  const { darkMode } = useGlobal(); // Получаем значение darkMode из zustand
+  const { darkMode } = useGlobal(); 
 
   useEffect(() => {
     const fetchQuestions = async () => {

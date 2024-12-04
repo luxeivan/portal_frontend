@@ -1,43 +1,88 @@
 .imageContainer {
-    position: relative;
-    text-align: center;
-  }
-  
-  .flashlight {
-    position: absolute;
-    bottom: 42%; /* Настройте по вашему усмотрению */
-    left: 35%; /* Центрирование по горизонтали */
-    transform: translateX(-50%);
-    font-size: 48px; /* Размер иконки фонарика */
-    color: #ffd700; /* Цвет фонарика */
+  position: relative;
+  text-align: center;
+  animation: fadeInRight 1s ease-in-out; 
+}
 
-    animation: shine 2s infinite;
+.flashlight {
+  position: absolute;
+  bottom: 42%; 
+  left: 35%; 
+  transform: translateX(-50%);
+  font-size: 48px; 
+  color: #ffd700; 
+
+  animation: shine 2s infinite;
+}
+
+.flashlight::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.4) 0%,
+    rgba(255, 215, 0, 0) 70%
+  );
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: blur(8px);
+}
+
+.title {
+  font-size: 2em;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  color: inherit;
+  animation: fadeInDown 1s ease-in-out;
+}
+
+.questionsBlock {
+  animation: fadeInLeft 1s ease-in-out;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+/* Анимации */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
   }
-  
-  .flashlight::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(255, 215, 0, 0) 70%);
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    filter: blur(8px);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  @keyframes shine {
-    0% {
-      opacity: 0.8;
-      transform: translateX(-50%) rotate(0deg);
-    }
-    50% {
-      opacity: 1;
-      transform: translateX(-50%) rotate(10deg);
-    }
-    100% {
-      opacity: 0.8;
-      transform: translateX(-50%) rotate(0deg);
-    }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
   }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Темная тема */
+.darkMode {
+  background-color: #1f1f1f;
+  color: #ffffff;
+}
