@@ -1,16 +1,14 @@
 import React, { useEffect, useRef } from "react";
-import { Typography, Button, Row, Col, List } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Typography, Row, Col, List } from "antd";
 import styles from "./About.module.css";
 import AppHelmet from "../../components/Global/AppHelmet";
 import mosoblik from "../../img/about/mosoblik.png";
-import mosoblikShadow from "../../img/about/mosoblik_shadow.png";
+
 import useGlobal from "../../stores/useGlobal";
 
 const { Title, Paragraph } = Typography;
 
 export default function About() {
-  const navigate = useNavigate();
   const { darkMode } = useGlobal();
   const containerRef = useRef(null);
 
@@ -24,10 +22,6 @@ export default function About() {
     }
   }, [darkMode]);
 
-  const handleGameClick = () => {
-    navigate("/game");
-  };
-
   return (
     <>
       <AppHelmet title="О нас" desc="Информация о компании" />
@@ -36,7 +30,7 @@ export default function About() {
           <Title level={1} className={styles.title}>
             О компании Мособлэнерго
           </Title>
-          <Row gutter={[32, 32]} align={"top"} >
+          <Row gutter={[32, 32]} align={"top"}>
             <Col xs={24} md={12}>
               <div className={styles.textBlock}>
                 <Paragraph>
@@ -72,65 +66,57 @@ export default function About() {
                 </Paragraph>
 
                 <Title level={4}>Основные направления деятельности:</Title>
-              <List>
-                <List.Item>
-                  Оказание услуг по передаче электроэнергии;
-                </List.Item>
+                <List>
+                  <List.Item>
+                    Оказание услуг по передаче электроэнергии;
+                  </List.Item>
 
-                <List.Item>
-                  Технологическое присоединение энергопринимающих устройств
-                  (энергетических установок) юридических и физических лиц к
-                  электрическим сетям Общества;
-                </List.Item>
+                  <List.Item>
+                    Технологическое присоединение энергопринимающих устройств
+                    (энергетических установок) юридических и физических лиц к
+                    электрическим сетям Общества;
+                  </List.Item>
 
-                <List.Item>
-                  Обеспечение надежности и бесперебойности энергоснабжения,
-                  обеспечение энергобезопасности;
-                </List.Item>
+                  <List.Item>
+                    Обеспечение надежности и бесперебойности энергоснабжения,
+                    обеспечение энергобезопасности;
+                  </List.Item>
 
-                <List.Item>
-                  Повышение качества обслуживания, обеспечение удовлетворенности
-                  потребителей;
-                </List.Item>
+                  <List.Item>
+                    Повышение качества обслуживания, обеспечение
+                    удовлетворенности потребителей;
+                  </List.Item>
 
-                <List.Item>
-                  Обеспечение доступности инфраструктуры и создание условий для
-                  экономического роста;
-                </List.Item>
+                  <List.Item>
+                    Обеспечение доступности инфраструктуры и создание условий
+                    для экономического роста;
+                  </List.Item>
 
-                <List.Item>
-                  Повышение эффективности функционирования электросетевого
-                  комплекса;
-                </List.Item>
+                  <List.Item>
+                    Повышение эффективности функционирования электросетевого
+                    комплекса;
+                  </List.Item>
 
-                <List.Item>
-                  Реализация программы консолидации электросетевых активов на
-                  территории Московской области (в том числе бесхозяйных сетей);
-                </List.Item>
+                  <List.Item>
+                    Реализация программы консолидации электросетевых активов на
+                    территории Московской области (в том числе бесхозяйных
+                    сетей);
+                  </List.Item>
 
-                <List.Item>
-                  Повышение уровня корпоративного управления;
-                </List.Item>
+                  <List.Item>
+                    Повышение уровня корпоративного управления;
+                  </List.Item>
 
-                <List.Item>
-                  Обеспечение рациональной организации труда производственного
-                  персонала, повышение его лояльности;
-                </List.Item>
+                  <List.Item>
+                    Обеспечение рациональной организации труда производственного
+                    персонала, повышение его лояльности;
+                  </List.Item>
 
-                <List.Item>
-                  Снижение рисков травматизма персонала и сторонних лиц на
-                  объектах электросетевого комплекса.
-                </List.Item>
-              </List>
-
-                <Button
-                  type="primary"
-                  size="large"
-                  onClick={handleGameClick}
-                  className={styles.actionButton}
-                >
-                  Сыграть в игру
-                </Button>
+                  <List.Item>
+                    Снижение рисков травматизма персонала и сторонних лиц на
+                    объектах электросетевого комплекса.
+                  </List.Item>
+                </List>
               </div>
             </Col>
             <Col xs={24} md={12}>
