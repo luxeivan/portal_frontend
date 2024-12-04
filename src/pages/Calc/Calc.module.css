@@ -24,11 +24,9 @@
 .container {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   max-width: 100%;
   overflow-x: auto;
   padding: 16px;
-  /* background-color: #ffffff; */
 }
 
 .table {
@@ -63,7 +61,18 @@
 }
 
 .customForm {
-  max-width: none; /* Убирает ограничение по ширине */
+  max-width: none;
+}
+
+.columnHeader {
+  display: inline-flex;
+  align-items: center;
+  /* white-space: nowrap; */
+}
+
+.tooltipIcon {
+  margin-left: 5px;
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {
