@@ -1,0 +1,43 @@
+.imageContainer {
+    position: relative;
+    text-align: center;
+  }
+  
+  .flashlight {
+    position: absolute;
+    bottom: 42%; /* Настройте по вашему усмотрению */
+    left: 35%; /* Центрирование по горизонтали */
+    transform: translateX(-50%);
+    font-size: 48px; /* Размер иконки фонарика */
+    color: #ffd700; /* Цвет фонарика */
+
+    animation: shine 2s infinite;
+  }
+  
+  .flashlight::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(255, 215, 0, 0) 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    filter: blur(8px);
+  }
+  
+  @keyframes shine {
+    0% {
+      opacity: 0.8;
+      transform: translateX(-50%) rotate(0deg);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(-50%) rotate(10deg);
+    }
+    100% {
+      opacity: 0.8;
+      transform: translateX(-50%) rotate(0deg);
+    }
+  }

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Collapse, Button, Typography, Row, Col, Image } from "antd";
+import { GiFlashlight } from "react-icons/gi"; 
 
 import ModalBot from "../../components/Global/ModalBot";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
 import AppHelmet from "../../components/Global/AppHelmet";
 
 import mosoblikImage from "../../img/about/mosoblik.png";
+
+import useGlobal from "../../stores/useGlobal"; // Импортируем useGlobal из zustand
+import styles from "./Answers.module.css"; // Импортируем CSS-модуль
 
 const { Title } = Typography;
 
@@ -15,6 +19,7 @@ const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 export default function Answers() {
   const [questions, setQuestions] = useState([]);
   const [chatModalVisible, setChatModalVisible] = useState(false);
+  const { darkMode } = useGlobal(); // Получаем значение darkMode из zustand
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -62,14 +67,15 @@ export default function Answers() {
           </Button>
         </Col>
 
-        {/* Правая колонка: Изображение */}
-        <Col xs={24} md={8}>
+        {/* Правая колонка: Изображение и Фонарик */}
+        <Col xs={24} md={8} className={styles.imageContainer}>
           <Image
             src={mosoblikImage}
             alt="Мособлик"
             style={{ width: "70%", height: "auto" }}
             preview={false}
           />
+          {darkMode && <GiFlashlight className={styles.flashlight} />}
         </Col>
       </Row>
 
@@ -80,4 +86,3 @@ export default function Answers() {
     </div>
   );
 }
-
