@@ -6,13 +6,9 @@ body {
   font-family: "Helvetica Neue", Arial, sans-serif;
   transition: background-color 0.3s, color 0.3s;
 }
-p{
+.ant-typography,p{
   text-indent: 20px; 
 }
-/* .ant-select-selector{
-  font-size: 18px;
-} */
-
 .ant-select-selection-search-input {
   font-size: 18px;
 }
