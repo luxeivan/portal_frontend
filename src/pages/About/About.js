@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Typography, Row, Col, List } from "antd";
 import styles from "./About.module.css";
 import AppHelmet from "../../components/Global/AppHelmet";
-import mosoblik from "../../img/answers/ЭлектроСтанция.png"; 
+import mosoblik from "../../img/about/ЭлектроСтанция.png"; 
 
 import useGlobal from "../../stores/useGlobal";
 
