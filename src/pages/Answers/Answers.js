@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Collapse, Button, Typography, Row, Col, Image } from "antd";
-import { GiFlashlight } from "react-icons/gi";
 
 import ModalBot from "../../components/Global/ModalBot";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
