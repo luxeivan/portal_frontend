@@ -86,6 +86,9 @@ export default function App() {
       theme={{
         algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
         token: {
+          fontSize: 18,
+          lineHeight:1.5,
+          
           // fontFamily: 'ArialCustom, sans-serif',
           fontSizeHeading1: "2.5rem",
           fontSizeHeading2: "2.1rem",
@@ -152,7 +155,7 @@ export default function App() {
                     <Route path="archives" element={<Archives />} />
                   </Route>
 
-                  <Route path="/answers" element={<Answers />} /> 
+                  <Route path="/answers" element={<Answers />} />
                   <Route path="/game" element={<Game />} />
                   <Route path="*" element={<Page404 />} />
                 </Routes>
