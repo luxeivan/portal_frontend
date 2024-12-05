@@ -24,11 +24,9 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   max-width: 100%;
   overflow-x: auto;
   padding: 16px;
-  /* background-color: #ffffff; */
 }
 
 .table {
@@ -50,7 +48,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .downloadButton {
@@ -59,7 +57,22 @@
 
 .documentsSection ul {
   list-style-type: none;
-  padding-left: 0; 
+  padding-left: 0;
+}
+
+.customForm {
+  max-width: none;
+}
+
+.columnHeader {
+  display: inline-flex;
+  align-items: center;
+  /* white-space: nowrap; */
+}
+
+.tooltipIcon {
+  margin-left: 5px;
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {
