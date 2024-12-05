@@ -36,7 +36,7 @@ export default function PhoneInput({
                 mask="+7 (999) 999-99-99"
                 placeholder="+7 (XXX) XXX-XX-XX"
                 className={`ant-input ant-input-outlined ant-input-status-success ${styles.inputMask}`}
-                style={{ backgroundColor: colorBorderBg, color: colorText, border: `1px solid ${colorBorder}` }}
+                style={{ backgroundColor: colorBorderBg, color: colorText, border: `1px solid ${colorBorder}`,fontSize:18 }}
             />
         </Form.Item>
     )
