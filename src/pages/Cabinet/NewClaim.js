@@ -166,20 +166,20 @@ export default function NewClaim() {
             theme={{
               token: {
                 /* here is your global tokens */
-                fontSize: 16,
-                fontSizeHeading1: 24
+                // fontSize: 16,
+                // fontSizeHeading1: 24
               },
               components: {
                 Select: {
-                  optionFontSize: 16,
-                  fontSize: 16
+                  optionFontSize: 18,
+                  fontSize: 18
                 },
                 Input: {
-                  fontSize: 16,
+                  fontSize: 18,
                 },
                 Form: {
                   /* here is your component tokens */
-                  labelFontSize: 16,
+                  labelFontSize: 18,
                   verticalLabelPadding: "0 0 4px",
                   itemMarginBottom: 0
                 },

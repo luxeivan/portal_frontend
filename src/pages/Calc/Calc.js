@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import AppHelmet from "../../components/Global/AppHelmet";
-import { Typography, Button, Form, Tooltip, Flex } from "antd";
+import { Typography, Button, Form, Flex } from "antd";
 import TweenOne from "rc-tween-one";
 import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
-import { topTooltipText, additionalInfoText, mainParagraphText } from "./textConstants";
+import { additionalInfoText, mainParagraphText } from "./textConstants";
 import { prepareDataSource } from "./helpers";
 import useCalc from "../../stores/useCalc";
 import styles from "./Calc.module.css";
 import lawStyles from "../../components/Documentation/Law.module.css"; // Импортируем стили для документов
 import { formItemLayoutForCalc } from "../../components/configSizeForm";
 import CalcTable from "./CalcTable";
-import { InfoCircleOutlined } from "@ant-design/icons";
 import pdf from "../../../src/img/pdf.svg";
 import Container from "../../components/Container";
 
@@ -60,7 +59,7 @@ export default function Calc() {
         <Paragraph style={{ textAlign: "justify", marginBottom: "20px" }}>
           {mainParagraphText}
         </Paragraph>
-        <Form form={form} onFinish={handleFinishWithLock} onValuesChange={onValuesChange} {...formItemLayout} labelWrap>
+        <Form form={form} onFinish={handleFinishWithLock} onValuesChange={onValuesChange} {...formItemLayout} labelWrap style={{ maxWidth: 'none' }}>
           <CalcTable dataSource={dataSource} calculatedData={calculatedData} onValuesChange={onValuesChange} />
           <Form.Item className={styles.buttonContainer}>
             <Flex gap={10}>

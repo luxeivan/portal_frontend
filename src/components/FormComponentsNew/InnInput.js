@@ -94,7 +94,7 @@ export default function InnInput({
                 onSelect={(value, option) => onSelect(value, option)}
                 onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
                 placeholder={placeholder}
-
+style={{fontSize:18}}
             />
         </Form.Item>
     )

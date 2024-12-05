@@ -18,7 +18,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import MarkDownText from "../../components/MarkDownText/MarkDownText";
 import Preloader from "../../components/Main/Preloader";
 import Law from "../../components/Documentation/Law";
-import ErrorModal from "../../components/ErrorModal"; // Подключаем модалку с ошибкой
+import ErrorModal from "../../components/ErrorModal"; 
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -212,7 +212,7 @@ export default function ServiceItem() {
             >
               <Link to={`/cabinet/new-claim/${serviceItem.Ref_Key}`}>
                 <Button type="primary" size="large" onClick={showDrawer}>
-                  {serviceItem.buttonText || "Получить услугу"}
+                  {"Заполнить заявку"}
                 </Button>
               </Link>
             </motion.div>
