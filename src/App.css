@@ -9,7 +9,11 @@ body {
 p{
   text-indent: 20px; 
 }
-.ant-select-selector{
+/* .ant-select-selector{
+  font-size: 18px;
+} */
+
+.ant-select-selection-search-input {
   font-size: 18px;
 }
 
