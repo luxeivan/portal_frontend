@@ -15,11 +15,7 @@ export const prepareDataSource = () => {
         formula: item.formula,
         description: item.description,
         fixedUnit: !!item.unit,
-        consumedPower: (
-          item.defaultValue *
-          1 *
-          (section.section.includes("инженерного") ? 0.6 : 0.3)
-        ).toFixed(2), // Вычисление требуемой мощности
+        consumedPower: 0.0,
       }));
     return [
       ...acc,

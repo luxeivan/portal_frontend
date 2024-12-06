@@ -64,6 +64,7 @@
       }
     ]
   },
+
   {
     "section": "Электроприборы бытового назначения",
     "items": [
@@ -147,24 +148,26 @@
       }
     ]
   },
+
+
   {
     "section": "Прочие электроприборы",
     "items": [
       {
         "name": "Дополнительное электрооборудование тип 1",
-        "formula": "count * 0.0",
+        "formula": "value * count * 0.03",
         "defaultValue": 0,
         "defaultUnit": "Штук"
       },
       {
         "name": "Дополнительное электрооборудование тип 2",
-        "formula": "count * 0.0",
+        "formula": "value * count * 0.3",
         "defaultValue": 0,
         "defaultUnit": "Погонные метры"
       },
       {
         "name": "Дополнительное электрооборудование тип 3",
-        "formula": "count * 0.0",
+        "formula": "value * count * 0.3",
         "defaultValue": 0,
         "defaultUnit": "Квадратные метры"
       }

@@ -69,7 +69,6 @@ export default function Calc() {
               Для заявителей - физических лиц. Только для некоммерческого
               применения
             </b>
-            .
           </Paragraph>
           <Paragraph style={{ textAlign: "justify", marginBottom: "20px" }}>
             {mainParagraphText}
