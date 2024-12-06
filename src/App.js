@@ -86,7 +86,7 @@ export default function App() {
       theme={{
         algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
         token: {
-          fontSize: 18,
+          fontSize: 16,
           lineHeight:1.5,
           
           // fontFamily: 'ArialCustom, sans-serif',

@@ -1,10 +1,13 @@
 import React from "react";
 import { Typography, Tabs } from "antd";
+
 import Law from "../../components/Documentation/Law";
 import AppHelmet from "../../components/Global/AppHelmet";
 import Container from "../../components/Container";
 import PoliciesAndRegulations from "../../components/Documentation/PoliciesAndRegulations";
 import UserGuide from "../../components/Documentation/UserGuide";
+
+import styles from "./Documentation.module.css"
 
 const onChange = (key) => {
   console.log(key);
@@ -34,8 +37,8 @@ export default function Documentation() {
         desc={"Портал цифровых услуг АО Мособлэнерго - Документация"}
       />
       <Container>
-        <Typography.Title level={1}>Документация</Typography.Title>
-        <div style={{ margin: "0 auto" }}>
+        <Typography.Title level={1} className={styles.title}>Документация</Typography.Title>
+        <div style={{ margin: "0 auto" }} className={styles.content}>
           <Tabs
             style={{ maxWidth: "80vw" }}
             defaultActiveKey="1"
