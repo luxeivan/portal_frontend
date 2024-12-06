@@ -14,14 +14,10 @@ import PhoneInput from './phoneComponent/PhoneInput';
 import styles from './GroupInput.module.css'
 import WrapperComponent from './WrapperComponent';
 
-
-
-
 export default function TableInput({
     name = 'name',
-    label = 'Label',
+    label = 'Поле',
     disabled = false,
-    placeholder = 'placeholder',
     required = false,
     options = [],
     dependOf = false,
@@ -70,41 +66,41 @@ export default function TableInput({
                                         // console.log('item.name_Key: ', item.name_Key)
                                         // console.log('---------------')
                                         // selectComponent(item)
-                                        if (item.component_Type.includes("Divider"))
-                                            return <DividerForm key={index} {...item.component_Expanded} label={item.label} />
-                                        if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'Телефон')
-                                            return <PhoneInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
-                                        if (item.component_Type.includes("TextInput"))
-                                            return <TextInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
-                                        if (item.component_Type.includes("NumberInput"))
-                                            return <NumberInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
-                                        if (item.component_Type.includes("SliderInput"))
-                                            return <SliderInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
-                                        if (item.component_Type.includes("LinkInput") ||
-                                            item.component_Type.includes("EnumInput") ||
-                                            item.component_Type.includes("SelectInput")
+                                        if (item.component.Ref_Type.includes("Divider"))
+                                            return <DividerForm key={index} {...item.component} label={item.label} />
+                                        if (item.component.Ref_Type.includes("TextInput") && item.component?.specialField === 'Телефон')
+                                            return <PhoneInput key={index} {...item.component} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
+                                        if (item.component.Ref_Type.includes("TextInput"))
+                                            return <TextInput key={index} {...item.component} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
+                                        if (item.component.Ref_Type.includes("NumberInput"))
+                                            return <NumberInput key={index} {...item.component} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
+                                        if (item.component.Ref_Type.includes("SliderInput"))
+                                            return <SliderInput key={index} {...item.component} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
+                                        if (item.component.Ref_Type.includes("LinkInput") ||
+                                            item.component.Ref_Type.includes("EnumInput") ||
+                                            item.component.Ref_Type.includes("SelectInput")
                                         )
-                                            return <SelectInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [nameTable, name, item.dependIdLine] : false} howDepend={item.dependСondition} />
-                                        if (item.component_Type.includes("DateInput"))
-                                            return <DateInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
-                                        if (item.component_Type.includes("SwitchInput"))
-                                            return <SwitchInput key={index} {...item.component_Expanded} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
-                                        if (item.component_Type.includes("PriceInput"))
+                                            return <SelectInput key={index} {...item.component} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [nameTable, name, item.dependIdLine] : false} howDepend={item.dependСondition} />
+                                        if (item.component.Ref_Type.includes("DateInput"))
+                                            return <DateInput key={index} {...item.component} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
+                                        if (item.component.Ref_Type.includes("SwitchInput"))
+                                            return <SwitchInput key={index} {...item.component} {...item} name={[name, item.idLine]} dependOf={item.dependIdLine ? [name, item.dependIdLine] : false} howDepend={item.dependСondition} />
+                                        if (item.component.Ref_Type.includes("PriceInput"))
                                             return (
                                                 <PriceInput
                                                     key={index}
-                                                    {...item.component_Expanded}
+                                                    {...item.component}
                                                     {...item}
                                                     name={[name, item.idLine]}
                                                     dependOf={item.dependIdLine ? [name, item.dependIdLine] : false}
                                                     howDepend={item.dependСondition}
                                                 />
                                             );
-                                        if (item.component_Type.includes("componentsFormula"))
+                                        if (item.component.Ref_Type.includes("componentsFormula"))
                                             return (
                                                 <FormulaInput
                                                     key={index}
-                                                    {...item.component_Expanded}
+                                                    {...item.component}
                                                     {...item}
                                                     name={[name, item.idLine]}
                                                     dependOf={item.dependIdLine ? [name, item.dependIdLine] : false}

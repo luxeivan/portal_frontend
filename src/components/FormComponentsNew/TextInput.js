@@ -20,10 +20,10 @@ const listTypeForDadata = [
 
 export default function TextInput({
   name = "name",
-  label = "Label",
+  label = "Поле",
   disabled = false,
-  placeholder = "Пример",
-  defaultValue = false,
+  placeholder = "",
+  defaultValue = "",
   required = false,
   dependOf = false,
   howDepend = false,

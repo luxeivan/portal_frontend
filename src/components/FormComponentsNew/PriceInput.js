@@ -13,9 +13,9 @@ const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
 export default function PriceInput({
     name = "name",
-    label = "Label",
+    label = "Поле",
     disabled = false,
-    placeholder = "placeholder",
+    placeholder = "",
     required = false,
     dependOf = false,
     howDepend = false,

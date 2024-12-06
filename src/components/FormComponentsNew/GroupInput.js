@@ -7,7 +7,7 @@ import WrapperComponent from "./WrapperComponent";
 
 export default function GroupInput({
   name = "name",
-  label = "Label",
+  label = "Поле",
   // disabled = false,
   // placeholder = "placeholder",
   // required = false,
@@ -18,74 +18,15 @@ export default function GroupInput({
   // layout = "vertical",
   // backgroundColorHex = false,
   border = true,
+  stylesField_key = false,
   span = false
 }) {
   const { colorBgBase, colorBgContainer, colorBorder } = theme.useToken().token
   // const [openModal, setOpenModal] = useState(false)
   // const [items, setItems] = useState(false)
   const mainForm = Form.useFormInstance()
-  // const form = Form.useFormInstance();
-  //console.log(Fields)
-  // const nameTable = name;
-  // let fieldDepends = Form.useWatch(dependOf, mainForm);
-  // const handlerOpenModal = () => {
-  //   setOpenModal(true)
-  // }
-  // const handlerOnClose = () => {
-  //   setOpenModal(false)
-  // }
-  // const handlerOnOK = (values) => {
-  //   // console.log('values', values[name])
-  //   mainForm.setFieldValue(name, values[name])
-  //   setOpenModal(false)
-  //   setItems(Fields.filter(item => !item.component_Type.includes('HiddenInput')).map(item => {
-  //     let val = values[item.idLine]
-  //     if (item.component_Type.includes('LinkInput')) {
-  //       // console.log(item.component_Expanded.options.find(option => option.value === val))
-  //       val = item.component_Expanded.options.find(option => option.value === val)?.label
-  //     }
-  //     if (item.component_Type.includes('DateInput')) {
-  //       val = moment(val).format('DD.MM.YYYY');
-  //       // values[key] = moment(value).format();
-  //     }
-  //     if (item.component_Type.includes('AddressInput')) {
-  //       // console.log('val',val)
-  //       if (val) val = val.fullAddress
-  //       // values[key] = moment(value).format();
-  //     }
-  //     if (item.component_Type.includes('SwitchInput')) {
-  //       // console.log('val',val)
-  //       if (val) {
-  //         val = 'Да'
-
-  //       } else {
-  //         val = 'Нет'
-
-  //       }
-  //       // values[key] = moment(value).format();
-  //     }
-  //     return {
-  //       key: item.idLine,
-  //       label: <div style={{ marginLeft: 20 }}>{item.required ? <span style={{ color: "red" }}>*&ensp;</span> : <span>&ensp;&ensp;</span>}{item.label}</div>,
-  //       children: val,
-  //     }
-  //   }
-  //   ))
-  // }
-  // const handleKeyDown = (event) => {
-  //   if (event.keyCode === 13) {
-  //     event.preventDefault();
-  //   }
-  // };
-  // const data = false
-  // if (typeof mainForm.getFieldValue(name) === "object")  data = Object.entries(mainForm.getFieldValue(name)).map(item=>({
-
-  //     key: item[0],
-  //     label: 'UserName',
-  //     children: <p>Zhou Maomao</p>,
-
-  // }))
-  // console.log(theme.useToken().token)
+  /
+  console.log(stylesField_key)
   const formElement = (
     
 
@@ -133,5 +74,5 @@ export default function GroupInput({
   //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
   //     return formElement;
   // }
-  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+  return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

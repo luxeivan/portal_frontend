@@ -29,7 +29,7 @@ import TextInput from "./FormComponentsNew/TextInput";
 //   const mainForm = Form.useFormInstance()
 //   let fieldDepends = Form.useWatch(dependOf, mainForm);
 
-//   const formElement = (<Col xxl={item.component_Expanded?.span ? item.component_Expanded.span : 24} xs={24}>
+//   const formElement = (<Col xxl={item.component?.span ? item.component.span : 24} xs={24}>
 //     {selectComponentChildren(item, index)}
 //   </Col>)
 //   if (!dependOf) return formElement;
@@ -50,20 +50,20 @@ import TextInput from "./FormComponentsNew/TextInput";
 //   }
 // }
 export default function selectComponent(item, index) {
-  if (item.component_Type.includes("Divider"))
+  if (item.component.Ref_Type.includes("Divider"))
     return (
       <DividerForm
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         label={item.label}
       />
     );
-  if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'Телефон')
+  if (item.component.Ref_Type.includes("TextInput") && item.component?.specialField === 'Телефон')
 
     return (
       <PhoneInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -71,12 +71,12 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'ИНН')
+  if (item.component.Ref_Type.includes("TextInput") && item.component?.specialField === 'ИНН')
 
     return (
       <InnInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -84,12 +84,12 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'БИК')
+  if (item.component.Ref_Type.includes("TextInput") && item.component?.specialField === 'БИК')
 
     return (
       <BikInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -97,12 +97,12 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component_Type.includes("TextInput") && item.component_Expanded?.specialField === 'Комментарий')
+  if (item.component.Ref_Type.includes("TextInput") && item.component?.specialField === 'Комментарий')
 
     return (
       <CommentInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -111,11 +111,11 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component_Type.includes("TextInput"))
+  if (item.component.Ref_Type.includes("TextInput"))
     return (
       <TextInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -124,13 +124,13 @@ export default function selectComponent(item, index) {
       />
     );
   if (
-    item.component_Type.includes("TextInput") &&
-    item.component_Expanded.specialField === "СНИЛС"
+    item.component.Ref_Type.includes("TextInput") &&
+    item.component.specialField === "СНИЛС"
   )
     return (
       <SnilsInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -139,11 +139,11 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component_Type.includes("NumberInput"))
+  if (item.component.Ref_Type.includes("NumberInput"))
     return (
       <NumberInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -152,11 +152,11 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component_Type.includes("SliderInput"))
+  if (item.component.Ref_Type.includes("SliderInput"))
     return (
       <SliderInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -166,14 +166,14 @@ export default function selectComponent(item, index) {
     );
 
   if (
-    item.component_Type.includes("LinkInput") ||
-    item.component_Type.includes("EnumInput") ||
-    item.component_Type.includes("SelectInput")
+    item.component.Ref_Type.includes("LinkInput") ||
+    item.component.Ref_Type.includes("EnumInput") ||
+    item.component.Ref_Type.includes("SelectInput")
   )
     return (
       <SelectInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -182,22 +182,22 @@ export default function selectComponent(item, index) {
       />
     );
 
-  // if (item.component_Type.includes("TableInput"))
+  // if (item.component.Ref_Type.includes("TableInput"))
   //   return (
   //     <TableInputNew
   //       key={index}
-  //       {...item.component_Expanded}
+  //       {...item.component}
   //       {...item}
   //       name={item.idLine}
   //       dependOf={item.dependIdLine}
   //       howDepend={item.dependСondition}
   //     />
   //   );
-  if (item.component_Type.includes("TableInput"))
+  if (item.component.Ref_Type.includes("TableInput"))
     return (
       <TableInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -206,11 +206,11 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component_Type.includes("DateInput"))
+  if (item.component.Ref_Type.includes("DateInput"))
     return (
       <DateInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -219,11 +219,11 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component_Type.includes("SwitchInput"))
+  if (item.component.Ref_Type.includes("SwitchInput"))
     return (
       <SwitchInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -231,11 +231,11 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component_Type.includes("AddressInput"))
+  if (item.component.Ref_Type.includes("AddressInput"))
     return (
       <AddressInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -245,12 +245,12 @@ export default function selectComponent(item, index) {
     );
 
   if (
-    item.component_Type.includes("ConfirmationDocumentNewInput")
+    item.component.Ref_Type.includes("ConfirmationDocumentNewInput")
   )
     return (
       <ConfirmationDocumentNewInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -259,12 +259,12 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component_Type.includes("GroupFieldsInput"))
+  if (item.component.Ref_Type.includes("GroupFieldsInput"))
     return (
 
       <GroupInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -274,11 +274,11 @@ export default function selectComponent(item, index) {
       />
 
     );
-  if (item.component_Type.includes("PriceInput"))
+  if (item.component.Ref_Type.includes("PriceInput"))
     return (
       <PriceInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -286,11 +286,11 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component_Type.includes("componentsFormula"))
+  if (item.component.Ref_Type.includes("componentsFormula"))
     return (
       <FormulaInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -298,11 +298,11 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component_Type.includes("TextConcatenation"))
+  if (item.component.Ref_Type.includes("TextConcatenation"))
     return (
       <TextConcatenation
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
@@ -310,11 +310,11 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component_Type.includes("FileInput"))
+  if (item.component.Ref_Type.includes("FileInput"))
     return (
       <DocumentInput
         key={index}
-        {...item.component_Expanded}
+        {...item.component}
         {...item}
         fullDescription={item.name?.fullDescription}
         name={item.idLine}
