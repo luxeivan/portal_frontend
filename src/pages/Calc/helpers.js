@@ -12,9 +12,11 @@ export const prepareDataSource = () => {
         unit: item.unit || item.defaultUnit || "Штук",
         // Ищем usageCoefficient по названию секции, если надо.
         usageCoefficient:
-          section.section === "Электроприборы инженерного назначения" ? 0.6 :
-          section.section === "Электроприборы бытового назначения" ? 0.3 :
-          0.3,
+          section.section === "Электроприборы инженерного назначения"
+            ? 0.6
+            : section.section === "Электроприборы бытового назначения"
+            ? 0.3
+            : 0.3,
         formula: item.formula,
         description: item.description,
         fixedUnit: !!item.unit,
