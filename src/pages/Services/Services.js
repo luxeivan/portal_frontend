@@ -117,6 +117,7 @@ export default function Services() {
                           <Card
                             onMouseEnter={() => setIsHoverCard((prev) => ({ ...prev, [index]: true }))}
                             onMouseLeave={() => setIsHoverCard((prev) => ({ ...prev, [index]: false }))}
+                            onClick={() => setIsHoverCard((prev) => ({ ...prev, [index]: false }))}
                             className={styles.styleCard}
                             style={{
                               border: `1px solid ${token.colorBorder}`

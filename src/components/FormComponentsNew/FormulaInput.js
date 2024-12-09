@@ -40,7 +40,7 @@ export default function FormulaInput({
     const form = Form.useFormInstance();
     const currency = useTemp((state) => state.currency);
     let objectProp = {}
-    if (properties) objectProp = JSON.parse(properties)
+    if (properties) objectProp = properties
     // console.log("objectProp",objectProp);
     // console.log("unit",unit);
 
