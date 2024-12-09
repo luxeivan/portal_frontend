@@ -5,7 +5,7 @@ import InfoDrawer from "../InfoDrawer";
 
 export default function SelectInput({
   name = "name",
-  label = "Label",
+  label = "Поле",
   autoComplete = false,
   defaultValue = false,
   required = false,

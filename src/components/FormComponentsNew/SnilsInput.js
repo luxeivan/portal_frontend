@@ -5,7 +5,7 @@ import InfoDrawer from "../InfoDrawer";
 
 export default function SnilsInput({
   name = "snils",
-  label = "Label",
+  label = "Поле",
   required = false,
   dependOf = false,
   howDepend = false,

@@ -11,10 +11,10 @@ moment.locale("ru");
 export default function DateInput({ 
     name = 'name', 
     part = 'Дата', 
-    label = 'Label', 
+    label = 'Поле', 
     defaultValue = false, 
     disabled = false, 
-    placeholder = 'Пример', 
+    placeholder = "", 
     required = false, 
     dependOf = false, 
     howDepend = false,

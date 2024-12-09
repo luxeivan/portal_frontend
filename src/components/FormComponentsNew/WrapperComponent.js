@@ -1,16 +1,28 @@
-import { Col,Form } from 'antd'
+import { Col, Form } from 'antd'
 import React from 'react'
+import useServices from '../../stores/useServices';
 
-export default function WrapperComponent({ children, span, dependOf, name, howDepend }) {
+export default function WrapperComponent({ children, dependOf, name, howDepend, stylesField_key }) {
+    const serviceItem = useServices((state) => state.serviceItem);
+    const styles = serviceItem.styles[stylesField_key]
     // const dependOf = item.dependIdLine
     // const name = item.idLine
     // const howDepend = item.dependСondition
     const mainForm = Form.useFormInstance()
     let fieldDepends = Form.useWatch(dependOf, mainForm);
 
+    // console.log("styles: ", styles);
+    if (dependOf) {
+        console.log("name: ", name);
+        console.log("dependOf: ", dependOf);
+        console.log("howDepend: ", howDepend);
+    }
+
     const formElement =
         <Col
-            xxl={span ? span : 24} xs={24}>
+            {...styles}
+            xxl={styles?.span ? styles.span : 24} xs={24}
+        >
             {children}
         </Col>
     if (!dependOf) return formElement;

@@ -13,7 +13,7 @@ export default function CommentInput({
     name = "name",
     label = "Label",
     disabled = false,
-    placeholder = "placeholder",
+    placeholder = "",
     required = false,
     dependOf = false,
     howDepend = false,

@@ -7,9 +7,9 @@ import InfoDrawer from "../InfoDrawer";
 
 export default function NumberInput({
   name = "name",
-  label = "Label",
+  label = "Поле",
   disabled = false,
-  placeholder = "placeholder",
+  placeholder = "",
   required = false,
   dependOf = false,
   howDepend = false,

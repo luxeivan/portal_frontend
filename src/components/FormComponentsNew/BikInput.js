@@ -9,9 +9,9 @@ const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
 export default function BikInput({
     name = "name",
-    label = "Label",
+    label = "Поле",
     disabled = false,
-    placeholder = "Пример",
+    placeholder = "",
     required = false,
     dependOf = false,
     howDepend = false,
