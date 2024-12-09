@@ -31,7 +31,7 @@ export default function NumberInput({
   // let fieldDepends = Form.useWatch(dependOf, form);
 
   let objectProp = null;
-  if (properties) objectProp = JSON.parse(properties);
+  if (properties) objectProp = properties;
   // console.log("objectProp",objectProp);
   // console.log("objectProp?.unit?.idLine",objectProp?.unit?.idLine);
   
