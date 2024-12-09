@@ -3,6 +3,7 @@ import { Typography, Row, Col, List } from "antd";
 import styles from "./About.module.css";
 import AppHelmet from "../../components/Global/AppHelmet";
 import mosoblik from "../../img/about/ЭлектроСтанция.png"; 
+import TP from "../../img/about/TP3.png"; 
 
 import useGlobal from "../../stores/useGlobal";
 
@@ -27,7 +28,7 @@ export default function About() {
       <AppHelmet title="О нас" desc="Информация о компании" />
       <div className={styles.container} ref={containerRef}>
         <div className={styles.content}>
-          <Title level={1} className={styles.title}>
+          <Title level={1} >
             О компании Мособлэнерго
           </Title>
           <Row gutter={[32, 32]} align={"top"}>
@@ -122,7 +123,7 @@ export default function About() {
             <Col xs={24} md={12}>
               <div className={styles.mosoblikArea}>
                 <img
-                  src={mosoblik}
+                  src={TP}
                   alt="Мособлэнерго"
                   className={styles.companyImage}
                 />

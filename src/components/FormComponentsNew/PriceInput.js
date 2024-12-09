@@ -36,7 +36,7 @@ export default function PriceInput({
     // console.log(theme.useToken().token)
     const form = Form.useFormInstance();
     let objectProp = null
-    if (properties) objectProp = JSON.parse(properties)
+    if (properties) objectProp = properties
     Form.useWatch(objectProp["ТипЦены"], form);
     let typePrice = form.getFieldValue(objectProp["ТипЦены"]);
 
