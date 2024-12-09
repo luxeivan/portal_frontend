@@ -1,4 +1,47 @@
- .styleLink {
+/* Анимации */
+@keyframes fadeInDown {
+   from {
+     opacity: 0;
+     transform: translateY(-50px);
+   }
+   to {
+     opacity: 1;
+     transform: translateY(0);
+   }
+ }
+ 
+ @keyframes fadeInLeft {
+   from {
+     opacity: 0;
+     transform: translateX(-50px);
+   }
+   to {
+     opacity: 1;
+     transform: translateX(0);
+   }
+ }
+ 
+ @keyframes fadeInRight {
+   from {
+     opacity: 0;
+     transform: translateX(50px);
+   }
+   to {
+     opacity: 1;
+     transform: translateX(0);
+   }
+ }
+ 
+ .title {
+   animation: fadeInDown 1s ease-in-out;
+ }
+ 
+ .content {
+   animation: fadeInLeft 1s ease-in-out;
+ }
+
+
+.styleLink {
     display: block;
     width: 30%;
     /* min-height: 250px; */
@@ -21,6 +64,7 @@
     background-repeat: no-repeat;
     background-position: bottom 0 right 0;
     padding: 0; */
+    animation: fadeInLeft 1s ease-in-out;
  }
 
  .cardTitle {
