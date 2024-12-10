@@ -10,14 +10,14 @@ export default function SelectInput({
   autoComplete = false,
   defaultValue = false,
   required = false,
-  optionsId = false,
+  Ref_Key = false,
   dependOf = false,
   howDepend = false,
   span = false,
   fullDescription = false
 }) {
   const serviceItem = useServices((state) => state.serviceItem);
-  const options = serviceItem.links[optionsId]?.options
+  const options = serviceItem.links[Ref_Key]?.options
   // const [optionsAuto, setOptionsAuto] = useState();
   // const form = Form.useFormInstance();
   // let fieldDepends = Form.useWatch(dependOf, form);

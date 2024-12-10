@@ -37,6 +37,7 @@ export default function Profile() {
       window.location.href = "/";
     }, 2000);
   };
+console.log(profile);
 
   return (
     <div
@@ -52,7 +53,7 @@ export default function Profile() {
               duration: 800,
               ease: "easeOutCubic",
             }}
-            style={{ opacity: 0, transform: "translateX(-50px)" }}
+            style={{ opacity: 0, transform: "translateX(-50px)",height:"100%" }}
           >
             <Card
               className={`${styles.profileCard} ${
@@ -76,7 +77,7 @@ export default function Profile() {
                   className={styles.avatar}
                 />
                 <Title level={3} className={styles.emailTitle}>
-                  {profile.email || "Имя пользователя"}
+                  {profile.email || "Почта"}
                 </Title>
               </TweenOne>
             </Card>
@@ -91,27 +92,27 @@ export default function Profile() {
               duration: 800,
               ease: "easeOutCubic",
             }}
-            style={{ opacity: 0, transform: "translateX(50px)" }}
+            style={{ opacity: 0, transform: "translateX(50px)", height:"100%" }}
           >
             <Card
-              className={`${styles.profileDetailsCard} ${
+              className={`${styles.profileCard} ${
                 darkMode ? styles.profileDetailsCardDark : ""
               }`}
               bordered={false}
             >
               <Row gutter={16} align="middle">
                 <Col span={24}>
-                  <Text strong>Email</Text>
-                  <div className={styles.emailDisplay}>
-                    {profile.email || ""}
-                  </div>
+                  <Text strong>Email: </Text>
+                  <Text>{profile.email || ""}</Text>
+                    
+                  
                 </Col>
 
                 <Col span={24} style={{ marginTop: "20px" }}>
-                  <Text strong>Телефон</Text>
-                  <div className={styles.phoneDisplay}>
-                    {profile.phone || ""}
-                  </div>
+                  <Text strong>Телефон: </Text>
+                  <Text >{profile.phone || ""}</Text>
+                    
+                  
                 </Col>
 
                 <Col span={24} style={{ marginTop: "20px" }}>

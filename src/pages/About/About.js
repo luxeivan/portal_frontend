@@ -2,8 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { Typography, Row, Col, List } from "antd";
 import styles from "./About.module.css";
 import AppHelmet from "../../components/Global/AppHelmet";
-import mosoblik from "../../img/about/ЭлектроСтанция.png"; 
-import TP from "../../img/about/TP3.png"; 
+import mosoblik from "../../img/about/ЭлектроСтанция.png";
+import TP from "../../img/about/TP.png";
+import TPDark from "../../img/about/TP_dark.png";
 
 import useGlobal from "../../stores/useGlobal";
 
@@ -123,7 +124,7 @@ export default function About() {
             <Col xs={24} md={12}>
               <div className={styles.mosoblikArea}>
                 <img
-                  src={TP}
+                  src={darkMode ? TPDark : TP}
                   alt="Мособлэнерго"
                   className={styles.companyImage}
                 />
