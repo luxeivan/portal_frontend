@@ -10,13 +10,14 @@ import Container from "../../components/Container";
 import Preloader from "../../components/Main/Preloader";
 import ErrorModal from "../../components/ErrorModal";
 import { motion, MotionConfig } from "framer-motion";
-import { IconConnect } from "../../components/icons/IconConnect";
-import { IconHandEnergy } from "../../components/icons/IconHandEnergy";
+import { IconConnect } from "../../components/icons/IconConnect_old";
+import { IconHandEnergy } from "../../components/icons/IconHandEnergy_old";
 import { IconPowerUp } from "../../components/icons/IconPowerUp";
 import { IconPowerUpArrow } from "../../components/icons/IconPowerUpArrow";
 import { IconConnectNew } from "../../components/icons/IconConnectNew";
 import { IconDocument } from "../../components/icons/IconDocument";
 import { IconFolder } from "../../components/icons/IconFolder";
+import { IconService } from "../../components/icons/IconService";
 
 const { Title } = Typography;
 const backPhotoServer = process.env.REACT_APP_BACK_API_SERVER;
@@ -182,6 +183,7 @@ export default function Services() {
                                   {/* {index === 3 && <IconConnect isHover={isHoverCard[index]} />}
                                   {index === 4 && <IconHandEnergy isHover={isHoverCard[index]} />} */}
                                   {index === 3 && <IconPowerUp isHover={isHoverCard[index]} />}
+                                  {index === 4 && <IconService isHover={isHoverCard[index]} />}
                                 </div>
                                 }
                                 {item.IsFolder && <div className={styles.iconDiv}><IconFolder isHover={isHoverCard[index]} /></div>}

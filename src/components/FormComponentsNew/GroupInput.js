@@ -7,7 +7,7 @@ import WrapperComponent from "./WrapperComponent";
 
 export default function GroupInput({
   name = "name",
-  label = "Поле",
+  label = "",
   // disabled = false,
   // placeholder = "placeholder",
   // required = false,

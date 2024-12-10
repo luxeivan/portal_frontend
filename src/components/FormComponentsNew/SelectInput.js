@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Form,  Select,Typography  } from "antd";
+import { Form, Select, Typography } from "antd";
 import WrapperComponent from "./WrapperComponent";
 import InfoDrawer from "../InfoDrawer";
+import useServices from "../../stores/useServices";
 
 export default function SelectInput({
   name = "name",
-  label = "Поле",
+  label = "",
   autoComplete = false,
   defaultValue = false,
   required = false,
-  options = [],
+  optionsId = false,
   dependOf = false,
   howDepend = false,
   span = false,
   fullDescription = false
 }) {
-
-  const [optionsAuto, setOptionsAuto] = useState();
-  const form = Form.useFormInstance();
+  const serviceItem = useServices((state) => state.serviceItem);
+  const options = serviceItem.links[optionsId]?.options
+  // const [optionsAuto, setOptionsAuto] = useState();
+  // const form = Form.useFormInstance();
   // let fieldDepends = Form.useWatch(dependOf, form);
 
-  useEffect(() => {
-    if (autoComplete) {
-      setOptionsAuto(options);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (autoComplete) {
+  //     setOptionsAuto(options);
+  //   }
+  // }, []);
 
   const formElement = (
     <Form.Item
@@ -36,7 +38,7 @@ export default function SelectInput({
           message: "Это поле обязательное",
         },
       ]}
-      style={{ maxWidth: "100%",overflow:"hidden" }}
+      style={{ maxWidth: "100%", overflow: "hidden" }}
       initialValue={defaultValue}
     >
       <Select

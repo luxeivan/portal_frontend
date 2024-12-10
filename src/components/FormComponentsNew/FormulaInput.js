@@ -16,7 +16,7 @@ function truncated(num, decimalPlaces) {
 }
 export default function FormulaInput({
     name = "name",
-    label = "Поле",
+    label = "",
     disabled = false,
     placeholder = "",
     required = false,

@@ -15,7 +15,7 @@ function truncated(num, decimalPlaces) {
 }
 export default function TextConcatenation({
     name = "name",
-    label = "Поле",
+    label = "",
     disabled = false,
     placeholder = "",
     required = false,
