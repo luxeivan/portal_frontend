@@ -1,15 +1,8 @@
-
-.submitButton {
-  display: inline-block;
-  min-width: 160px;
-  white-space: normal;
-  width: auto;
-  padding: 0 16px; 
-}
-
-
 /* .submitButton {
-  min-width: 160px;
-  white-space: normal;
-}
- */
+  white-space: normal; 
+  word-wrap: break-word;
+  text-align: center;
+  width: auto; 
+  max-width: 100%;
+  padding: 10px 20px;
+} */
