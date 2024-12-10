@@ -13,7 +13,7 @@
 .dark {
   background-color: #1e1e1e;
   color: #ffffff;
-}
+} */
 
 .profileCard {
   text-align: center;
@@ -21,9 +21,10 @@
   padding: 20px;
   border-radius: 10px;
   transition: background-color 0.5s ease;
+  height: 100%;
 }
 
-.profileCardDark {
+/*.profileCardDark {
   background-color: #333333;
 }
 
@@ -116,5 +117,5 @@
 .emailTitle {
   white-space: nowrap; 
 }
-
- */
+*/
+ 
