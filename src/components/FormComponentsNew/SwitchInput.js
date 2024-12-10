@@ -5,7 +5,7 @@ import InfoDrawer from "../InfoDrawer";
 
 export default function SwitchInput({
   name = "name",
-  label = "Поле",
+  label = "",
   defaultValue = false,
   required = false,
   dependOf = false,

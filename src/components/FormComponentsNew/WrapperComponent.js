@@ -12,11 +12,11 @@ export default function WrapperComponent({ children, dependOf, name, howDepend, 
     let fieldDepends = Form.useWatch(dependOf, mainForm);
 
     // console.log("styles: ", styles);
-    if (dependOf) {
-        console.log("name: ", name);
-        console.log("dependOf: ", dependOf);
-        console.log("howDepend: ", howDepend);
-    }
+    // if (dependOf) {
+    //     console.log("name: ", name);
+    //     console.log("dependOf: ", dependOf);
+    //     console.log("howDepend: ", howDepend);
+    // }
 
     const formElement =
         <Col

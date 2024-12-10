@@ -50,7 +50,7 @@ import TextInput from "./FormComponentsNew/TextInput";
 //   }
 // }
 export default function selectComponent(item, index) {
-  if (item.component.Ref_Type.includes("Divider"))
+  if (item.component?.Ref_Type?.includes("Divider"))
     return (
       <DividerForm
         key={index}
@@ -58,7 +58,7 @@ export default function selectComponent(item, index) {
         label={item.label}
       />
     );
-  if (item.component.Ref_Type.includes("TextInput") && item.component?.specialField === 'Телефон')
+  if (item.component?.Ref_Type?.includes("TextInput") && item.component?.specialField === 'Телефон')
 
     return (
       <PhoneInput
@@ -71,7 +71,7 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component.Ref_Type.includes("TextInput") && item.component?.specialField === 'ИНН')
+  if (item.component?.Ref_Type?.includes("TextInput") && item.component?.specialField === 'ИНН')
 
     return (
       <InnInput
@@ -84,7 +84,7 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component.Ref_Type.includes("TextInput") && item.component?.specialField === 'БИК')
+  if (item.component?.Ref_Type?.includes("TextInput") && item.component?.specialField === 'БИК')
 
     return (
       <BikInput
@@ -97,7 +97,7 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component.Ref_Type.includes("TextInput") && item.component?.specialField === 'Комментарий')
+  if (item.component?.Ref_Type?.includes("TextInput") && item.component?.specialField === 'Комментарий')
 
     return (
       <CommentInput
@@ -111,7 +111,7 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component.Ref_Type.includes("TextInput"))
+  if (item.component?.Ref_Type?.includes("TextInput"))
     return (
       <TextInput
         key={index}
@@ -124,7 +124,7 @@ export default function selectComponent(item, index) {
       />
     );
   if (
-    item.component.Ref_Type.includes("TextInput") &&
+    item.component?.Ref_Type?.includes("TextInput") &&
     item.component.specialField === "СНИЛС"
   )
     return (
@@ -139,7 +139,7 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component.Ref_Type.includes("NumberInput"))
+  if (item.component?.Ref_Type?.includes("NumberInput"))
     return (
       <NumberInput
         key={index}
@@ -152,7 +152,7 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component.Ref_Type.includes("SliderInput"))
+  if (item.component?.Ref_Type?.includes("SliderInput"))
     return (
       <SliderInput
         key={index}
@@ -166,9 +166,9 @@ export default function selectComponent(item, index) {
     );
 
   if (
-    item.component.Ref_Type.includes("LinkInput") ||
-    item.component.Ref_Type.includes("EnumInput") ||
-    item.component.Ref_Type.includes("SelectInput")
+    item.component?.Ref_Type?.includes("LinkInput") ||
+    item.component?.Ref_Type?.includes("EnumInput") ||
+    item.component?.Ref_Type?.includes("SelectInput")
   )
     return (
       <SelectInput
@@ -182,7 +182,7 @@ export default function selectComponent(item, index) {
       />
     );
 
-  // if (item.component.Ref_Type.includes("TableInput"))
+  // if (item.component?.Ref_Type?.includes("TableInput"))
   //   return (
   //     <TableInputNew
   //       key={index}
@@ -193,7 +193,7 @@ export default function selectComponent(item, index) {
   //       howDepend={item.dependСondition}
   //     />
   //   );
-  if (item.component.Ref_Type.includes("TableInput"))
+  if (item.component?.Ref_Type?.includes("TableInput"))
     return (
       <TableInput
         key={index}
@@ -206,7 +206,7 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component.Ref_Type.includes("DateInput"))
+  if (item.component?.Ref_Type?.includes("DateInput"))
     return (
       <DateInput
         key={index}
@@ -219,7 +219,7 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component.Ref_Type.includes("SwitchInput"))
+  if (item.component?.Ref_Type?.includes("SwitchInput"))
     return (
       <SwitchInput
         key={index}
@@ -231,7 +231,7 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component.Ref_Type.includes("AddressInput"))
+  if (item.component?.Ref_Type?.includes("AddressInput"))
     return (
       <AddressInput
         key={index}
@@ -245,7 +245,7 @@ export default function selectComponent(item, index) {
     );
 
   if (
-    item.component.Ref_Type.includes("ConfirmationDocumentNewInput")
+    item.component?.Ref_Type?.includes("ConfirmationDocumentNewInput")
   )
     return (
       <ConfirmationDocumentNewInput
@@ -259,7 +259,7 @@ export default function selectComponent(item, index) {
       />
     );
 
-  if (item.component.Ref_Type.includes("GroupFieldsInput"))
+  if (item.component?.Ref_Type?.includes("GroupFieldsInput"))
     return (
 
       <GroupInput
@@ -274,7 +274,7 @@ export default function selectComponent(item, index) {
       />
 
     );
-  if (item.component.Ref_Type.includes("PriceInput"))
+  if (item.component?.Ref_Type?.includes("PriceInput"))
     return (
       <PriceInput
         key={index}
@@ -286,7 +286,7 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component.Ref_Type.includes("componentsFormula"))
+  if (item.component?.Ref_Type?.includes("componentsFormula"))
     return (
       <FormulaInput
         key={index}
@@ -298,7 +298,7 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component.Ref_Type.includes("TextConcatenation"))
+  if (item.component?.Ref_Type?.includes("TextConcatenation"))
     return (
       <TextConcatenation
         key={index}
@@ -310,7 +310,7 @@ export default function selectComponent(item, index) {
         howDepend={item.dependСondition}
       />
     );
-  if (item.component.Ref_Type.includes("FileInput"))
+  if (item.component?.Ref_Type?.includes("FileInput"))
     return (
       <DocumentInput
         key={index}
