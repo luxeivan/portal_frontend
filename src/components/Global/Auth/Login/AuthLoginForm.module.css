@@ -1,8 +1,31 @@
-/* .submitButton {
-  white-space: normal; 
-  word-wrap: break-word;
-  text-align: center;
-  width: auto; 
-  max-width: 100%;
-  padding: 10px 20px;
-} */
+.formContainer {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.submitButton {
+  margin-top: 16px;
+  background: linear-gradient(90deg, #0061aa 0%, #1890ff 100%);
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submitButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(24, 144, 255, 0.5);
+}
+
+.submitButton:disabled {
+  background: #ccc !important;
+  cursor: not-allowed;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+}
+
+.tooltipIcon {
+  margin-left: 5px;
+  font-size: 14px;
+}
