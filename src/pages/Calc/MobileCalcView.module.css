@@ -1,0 +1,11 @@
+/* .mobileContainer {
+  padding: 1px;
+} */
+
+.itemBlock {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 16px;
+  background-color: #f7f7f7;
+}
