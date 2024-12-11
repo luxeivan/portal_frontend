@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Input, Alert, Typography } from "antd";
 import useAuth from "../../../../stores/useAuth";
 import CodeForm from "./CodeForm";
@@ -8,6 +8,8 @@ import {
   tailFormItemLayout,
 } from "../../../../components/configSizeForm";
 import ErrorModal from "../../../../components/ErrorModal";
+import { MailTwoTone, LockTwoTone } from "@ant-design/icons";
+import { motion } from "framer-motion";
 
 export default function AuthLoginForm() {
   const {
@@ -17,8 +19,11 @@ export default function AuthLoginForm() {
     isCodeRequested,
     authTimer,
     startAuthTimer,
-    showErrorModal, // Используем состояние ошибки
+    showErrorModal,
   } = useAuth();
+
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
 
   const onFinish = async (values) => {
     login(values.email, values.password);
@@ -29,6 +34,12 @@ export default function AuthLoginForm() {
     console.log("Failed:", errorFields);
   };
 
+  const focusAnimation = {
+    initial: { scale: 1, boxShadow: "0 0 0px rgba(0,0,0,0)" },
+    focused: { scale: 1.05, boxShadow: "0 0 8px rgba(0,97,170,0.5)" },
+    unfocused: { scale: 1, boxShadow: "0 0 0px rgba(0,0,0,0)" },
+  };
+
   return (
     <>
       {loginError && (
@@ -37,6 +48,7 @@ export default function AuthLoginForm() {
           type="error"
           showIcon
           closable
+          style={{ marginBottom: "16px" }}
           onClose={() => toggleModal("isAuthModalOpen", false)}
         />
       )}
@@ -50,7 +62,12 @@ export default function AuthLoginForm() {
         autoComplete="off"
       >
         <Form.Item
-          label="Email"
+          label={
+            <span>
+              Email
+              <MailTwoTone style={{ marginLeft: 5 }} />
+            </span>
+          }
           name="email"
           validateTrigger="onBlur"
           rules={[
@@ -64,11 +81,25 @@ export default function AuthLoginForm() {
             },
           ]}
         >
-          <Input />
+          <motion.div
+            variants={focusAnimation}
+            animate={emailFocused ? "focused" : "unfocused"}
+            initial="initial"
+          >
+            <Input
+              onFocus={() => setEmailFocused(true)}
+              onBlur={() => setEmailFocused(false)}
+            />
+          </motion.div>
         </Form.Item>
 
         <Form.Item
-          label="Пароль"
+          label={
+            <span>
+              Пароль
+              <LockTwoTone style={{ marginLeft: 5 }} />
+            </span>
+          }
           name="password"
           validateTrigger="onBlur"
           rules={[
@@ -82,7 +113,16 @@ export default function AuthLoginForm() {
             },
           ]}
         >
-          <Input.Password />
+          <motion.div
+            variants={focusAnimation}
+            animate={passwordFocused ? "focused" : "unfocused"}
+            initial="initial"
+          >
+            <Input.Password
+              onFocus={() => setPasswordFocused(true)}
+              onBlur={() => setPasswordFocused(false)}
+            />
+          </motion.div>
         </Form.Item>
         <Typography.Text>
           Забыли пароль или поменялся номер телефона - пройдите регистрацию
@@ -101,33 +141,55 @@ export default function AuthLoginForm() {
             </Button>
           )}
           {isCodeRequested && (
-            <Button
-              type="primary"
-              htmlType="submit"
-              className={styles.submitButton}
-              disabled={authTimer > 0}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              {authTimer > 0
-                ? `Повторить через ${authTimer} секунд(ы)`
-                : "Отправить СМС еще раз"}
-            </Button>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{
+                  padding: "25px 35px",
+                  fontSize: "16px",
+                  lineHeight: "1.5",
+                  whiteSpace: "normal",
+                  wordWrap: "break-word",
+                  textAlign: "center",
+                  width: "auto",
+                  minWidth: "200px",
+                }}
+                disabled={authTimer > 0}
+              >
+                {authTimer > 0 ? (
+                  <>
+                    Повторить через
+                    <br />
+                    {`${authTimer} секунд(ы)`}
+                  </>
+                ) : (
+                  "Отправить СМС еще раз"
+                )}
+              </Button>
+            </div>
           )}
         </Form.Item>
       </Form>
       {isCodeRequested && <CodeForm />}
-      {showErrorModal && ( // Используем состояние showErrorModal для отображения модального окна
+      {showErrorModal && (
         <ErrorModal
           visible={showErrorModal}
           error={"Ошибка соединения с сервером 1С"}
-          onClose={() => toggleModal("isAuthModalOpen", false)} // Закрываем модалку через toggleModal
+          onClose={() => toggleModal("isAuthModalOpen", false)}
         />
       )}
     </>
   );
 }
-
-// import React, { useState } from "react";
-// import { Button, Form, Input, Alert, Space, Flex, Typography } from "antd";
+// import React from "react";
+// import { Button, Form, Input, Alert, Typography } from "antd";
 // import useAuth from "../../../../stores/useAuth";
 // import CodeForm from "./CodeForm";
 // import styles from "./AuthLoginForm.module.css";
@@ -145,17 +207,12 @@ export default function AuthLoginForm() {
 //     isCodeRequested,
 //     authTimer,
 //     startAuthTimer,
+//     showErrorModal,
 //   } = useAuth();
 
-//   const [error, setError] = useState(null); // Состояние для хранения ошибок
-
 //   const onFinish = async (values) => {
-//     try {
-//       login(values.email, values.password);
-//       startAuthTimer();
-//     } catch (err) {
-//       setError(err.message); // Устанавливаем ошибку в состояние
-//     }
+//     login(values.email, values.password);
+//     startAuthTimer();
 //   };
 
 //   const onFinishFailed = ({ values, errorFields }) => {
@@ -230,29 +287,52 @@ export default function AuthLoginForm() {
 //               className={styles.submitButton}
 //               disabled={authTimer > 0}
 //             >
-//               {"Вход"}
+//               Вход
 //             </Button>
 //           )}
 //           {isCodeRequested && (
-//             <Button
-//               type="primary"
-//               htmlType="submit"
-//               className={styles.submitButton}
-//               disabled={authTimer > 0}
+//             <div
+//               style={{
+//                 display: "flex",
+//                 justifyContent: "center",
+//                 alignItems: "center",
+//               }}
 //             >
-//               {authTimer > 0
-//                 ? `Повторить через ${authTimer} секунд(ы)`
-//                 : "Отправить СМС еще раз"}
-//             </Button>
+//               <Button
+//                 type="primary"
+//                 htmlType="submit"
+//                 style={{
+//                   padding: "25px 35px",
+//                   fontSize: "16px",
+//                   lineHeight: "1.5",
+//                   whiteSpace: "normal",
+//                   wordWrap: "break-word",
+//                   textAlign: "center",
+//                   width: "auto",
+//                   minWidth: "200px",
+//                 }}
+//                 disabled={authTimer > 0}
+//               >
+//                 {authTimer > 0 ? (
+//                   <>
+//                     Повторить через
+//                     <br />
+//                     {`${authTimer} секунд(ы)`}
+//                   </>
+//                 ) : (
+//                   "Отправить СМС еще раз"
+//                 )}
+//               </Button>
+//             </div>
 //           )}
 //         </Form.Item>
 //       </Form>
 //       {isCodeRequested && <CodeForm />}
-//       {error && (
+//       {showErrorModal && (
 //         <ErrorModal
-//           visible={true}
-//           error={error}
-//           onClose={() => setError(null)}
+//           visible={showErrorModal}
+//           error={"Ошибка соединения с сервером 1С"}
+//           onClose={() => toggleModal("isAuthModalOpen", false)}
 //         />
 //       )}
 //     </>

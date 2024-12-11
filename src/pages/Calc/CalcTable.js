@@ -1,19 +1,18 @@
 import React from "react";
 import { Form, Select, Table, Tooltip, Slider, InputNumber } from "antd";
 import styles from "./Calc.module.css";
-import tableData from "./tableData.json";
+import calcData from "./calcData.json";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
 const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
   const renderColumns = [
-    // Столбец для названий
     {
       title: "Название электрооборудования",
       dataIndex: "name",
       key: "name",
-      width: '20%',
+      width: "20%",
       render: (text, record) =>
         record.isSection ? (
           <strong className={styles.sectionHeader}>{record.section}</strong>
@@ -28,8 +27,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
           </Tooltip>
         ),
     },
-    // Остальные столбцы
-    ...tableData.columns.map((column) => ({
+    ...calcData.columns.map((column) => ({
       title: (
         <span className={styles.columnHeader}>
           {column.title}
@@ -40,7 +38,7 @@ const CalcTable = ({ dataSource, calculatedData, onValuesChange }) => {
       ),
       dataIndex: column.dataIndex,
       key: column.dataIndex,
-      width: column.width || '16%',
+      width: column.width || "16%",
       render: (_, record) => {
         if (record.isSection) return null;
         if (column.dataIndex === "unit") {
@@ -152,17 +150,16 @@ export default CalcTable;
 //       title: "Название электрооборудования",
 //       dataIndex: "name",
 //       key: "name",
+//       width: '20%',
 //       render: (text, record) =>
 //         record.isSection ? (
 //           <strong className={styles.sectionHeader}>{record.section}</strong>
 //         ) : (
 //           <Tooltip title={record.description || ""}>
-//             <span>
-//               {text}{" "}
+//             <span className={styles.columnHeader}>
+//               {text}
 //               {record.description && (
-//                 <span>
-//                   <InfoCircleOutlined />
-//                 </span>
+//                 <InfoCircleOutlined className={styles.tooltipIcon} />
 //               )}
 //             </span>
 //           </Tooltip>
@@ -171,15 +168,16 @@ export default CalcTable;
 //     // Остальные столбцы
 //     ...tableData.columns.map((column) => ({
 //       title: (
-//         <Tooltip title={column.tooltip}>
-//           <span>
-//             {column.title}
-//             <InfoCircleOutlined />
-//           </span>
-//         </Tooltip>
+//         <span className={styles.columnHeader}>
+//           {column.title}
+//           <Tooltip title={column.tooltip}>
+//             <InfoCircleOutlined className={styles.tooltipIcon} />
+//           </Tooltip>
+//         </span>
 //       ),
 //       dataIndex: column.dataIndex,
 //       key: column.dataIndex,
+//       width: column.width || '16%',
 //       render: (_, record) => {
 //         if (record.isSection) return null;
 //         if (column.dataIndex === "unit") {
@@ -255,7 +253,6 @@ export default CalcTable;
 //         }
 //         if (column.dataIndex === "consumedPower") {
 //           return (
-
 //             <span>{calculatedData[record.key]?.consumedPower || "0.00"}</span>
 //           );
 //         }
