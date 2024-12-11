@@ -35,6 +35,7 @@ import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 import AddressInputTest from "./components/FormComponentsNew/addressComponents/AddressInputTest";
 import Answers from "./pages/Answers/Answers";
+import Calc1 from "./pages/Calc1/Calc";
 
 const { Content } = Layout;
 
@@ -127,7 +128,7 @@ export default function App() {
                   />
 
                   <Route path="/about" element={<About />} />
-                  <Route path="/calc" element={<Calc />} />
+                  <Route path="/calc" element={<Calc1 />} />
                   <Route path="/contacts" element={<Contacts />} />
 
                   <Route path="/docs" element={<Documentation />} />
