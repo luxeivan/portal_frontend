@@ -94,6 +94,7 @@ const CalcTable1 = ({ dataSource, calculatedData, onValuesChange }) => {
                 marks={{ 0: "0", 1: "1" }}
                 tooltip={{
                   open: true,
+                  placement: "bottom"
                 }}
               />
             </Form.Item>
@@ -150,7 +151,7 @@ const CalcTable1 = ({ dataSource, calculatedData, onValuesChange }) => {
     <>
       {jsonData.map((item, index) => <>
         <Divider orientation="left">{item.section}</Divider>
-        {}
+        { }
         <List
           style={{ marginBottom: 20 }}
           header={<div>{item.section}</div>}
@@ -159,7 +160,7 @@ const CalcTable1 = ({ dataSource, calculatedData, onValuesChange }) => {
           dataSource={item.items}
           renderItem={(item) => (
             <>
-            
+
               <Flex>
                 <Form.Item
                   name={"Мощность"}

@@ -10,6 +10,7 @@ export const prepareDataSource = () => {
         value: item.defaultValue,
         count: 1,
         unit: item.unit || item.defaultUnit || "Штук",
+        unitShort: item.unitShort || item.defaultUnit || "Штук",
         // Ищем usageCoefficient по названию секции, если надо.
         usageCoefficient:
           section.section === "Электроприборы инженерного назначения"

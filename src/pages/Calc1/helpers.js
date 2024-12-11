@@ -1,8 +1,7 @@
-import jsonData from "./powerData.json";
+import calcData from "./calcData.json";
 
-// Подготавливаем данные для таблицы и сортируем элементы в каждом разделе по алфавиту
 export const prepareDataSource = () => {
-  return jsonData.reduce((acc, section, sectionIndex) => {
+  return calcData.sections.reduce((acc, section, sectionIndex) => {
     const sectionItems = section.items
       .sort((a, b) => a.name.localeCompare(b.name))
       .map((item, itemIndex) => ({
@@ -12,15 +11,17 @@ export const prepareDataSource = () => {
         count: 1,
         unit: item.unit || item.defaultUnit || "Штук",
         unitShort: item.unitShort || item.defaultUnit || "Штук",
-        usageCoefficient: section.section.includes("инженерного") ? 0.6 : 0.3, // Уточнение логики коэффициента
+        // Ищем usageCoefficient по названию секции, если надо.
+        usageCoefficient:
+          section.section === "Электроприборы инженерного назначения"
+            ? 0.6
+            : section.section === "Электроприборы бытового назначения"
+            ? 0.3
+            : 0.3,
         formula: item.formula,
         description: item.description,
         fixedUnit: !!item.unit,
-        consumedPower: (
-          item.defaultValue *
-          1 *
-          (section.section.includes("инженерного") ? 0.6 : 0.3)
-        ).toFixed(2), // Вычисление требуемой мощности
+        consumedPower: 0.0,
       }));
     return [
       ...acc,

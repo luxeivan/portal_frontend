@@ -110,7 +110,7 @@ export default function AppHeader() {
           position: "fixed",
           left: 0,
           right: 0,
-          zIndex: 1000,
+          zIndex: 10000,
         }}
       >
         <div className="demo-logo" style={{ padding: 10, marginRight: 20 }}>

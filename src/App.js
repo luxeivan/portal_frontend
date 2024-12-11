@@ -108,7 +108,7 @@ export default function App() {
           <CodeModal />
           <AppHeader />
           <Layout>
-            <Flex>
+            {/* <Flex> */}
               {auth && <CabinetMenu />}
               <Content
                 className={`${auth ? "mainContentAuth" : "mainContent"}`}
@@ -128,7 +128,7 @@ export default function App() {
                   />
 
                   <Route path="/about" element={<About />} />
-                  <Route path="/calc" element={<Calc1 />} />
+                  <Route path="/calc" element={<Calc />} />
                   <Route path="/contacts" element={<Contacts />} />
 
                   <Route path="/docs" element={<Documentation />} />
@@ -161,7 +161,7 @@ export default function App() {
                   <Route path="*" element={<Page404 />} />
                 </Routes>
               </Content>
-            </Flex>
+            {/* </Flex> */}
           </Layout>
           <AppFooter />
         </BrowserRouter>

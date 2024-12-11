@@ -220,21 +220,21 @@
       "section": "Прочие электроприборы",
       "items": [
         {
-          "name": "Доп. оборудование 1",
+          "name": "Дополнительное электрооборудование тип 1",
           "formula": "value * count * usageCoefficient",
           "defaultValue": 0,
           "defaultUnit": "Штук",
           "unitShort": "шт."
         },
         {
-          "name": "Доп. оборудование 2",
+          "name": "Дополнительное электрооборудование тип 2",
           "formula": "value * count * usageCoefficient",
           "defaultValue": 0,
           "defaultUnit": "Погонные метры",
           "unitShort": "пог.м."
         },
         {
-          "name": "Доп. оборудование 3",
+          "name": "Дополнительное электрооборудование тип 3",
           "formula": "value * count * usageCoefficient",
           "defaultValue": 0,
           "defaultUnit": "Квадратные метры",

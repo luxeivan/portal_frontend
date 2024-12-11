@@ -53,14 +53,8 @@ export default function MobileCalcView() {
         Калькулятор мощности
       </Title>
 
-      <Paragraph>
+      <Paragraph style={{ textAlign: "justify", marginBottom: "20px" }}>
         {calcData.texts.mainParagraphText}
-      </Paragraph>
-      <Paragraph>
-      <b>
-        Для заявителей - физических лиц. Только для некоммерческого
-        применения.
-      </b>
       </Paragraph>
 
       <Form
@@ -70,7 +64,6 @@ export default function MobileCalcView() {
         onValuesChange={onValuesChange}
       >
         {dataSource.map((item) => {
-          // console.log(item)
           if (item.isSection) {
             return (
               <Title key={item.key} level={4} style={{ marginTop: 24 }}>
@@ -80,7 +73,7 @@ export default function MobileCalcView() {
           }
 
           return (
-            <div key={item.key}>
+            <>
               <Card title={item.name} style={{ marginBottom: 20 }} styles={{ body: { padding: 10 } }}>
                 <Flex gap={10}>
                   <Form.Item
@@ -132,7 +125,7 @@ export default function MobileCalcView() {
                 </Form.Item>
               </Card>
 
-            </div>
+            </>
 
           );
         })}

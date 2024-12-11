@@ -188,7 +188,7 @@
         "unitShort": "пог.м."
       },
       {
-        "name": "Доп. ооборудование 3",
+        "name": "Доп. оборудование 3",
         "formula": "count * 0.0",
         "defaultValue": 0,
         "defaultUnit": "Квадратные метры",
