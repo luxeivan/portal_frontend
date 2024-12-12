@@ -7,16 +7,12 @@ import WrapperComponent from "./WrapperComponent";
 
 export default function DocumentInput({
     name = "name",
-    label = "Label",
-    disabled = false,
-    placeholder = "placeholder",
-    required = false,
+    label = "",
     dependOf = false,
     howDepend = false,
-    defaultValue = false,
-    length = false,
-    category_Key = null,
-    span = false
+    category_key = null,
+    span = false,
+    stylesField_key = false
 }) {
     const [documentModalVisible, setDocumentModalVisible] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -26,22 +22,17 @@ export default function DocumentInput({
     const form = Form.useFormInstance();
     // let fieldDepends = Form.useWatch(dependOf, form);
 
-    const handlerSelectDocument = (categoryKey) => {
-
-        setSelectedCategory(categoryKey);
+    const handlerSelectDocument = (category_key) => {
+        setSelectedCategory(category_key);
         setDocumentModalVisible(true);
     };
 
-
     const handlerDocumentSelected = (document) => {
-
-        console.log(
-            `Пользователь выбрал документ для категории ${selectedCategory}:`,
-            document
-        );
-
+        // console.log(
+        //     `Пользователь выбрал документ для категории ${selectedCategory}:`,
+        //     document
+        // );
         form.setFieldValue(`document_${selectedCategory}`, document);
-
         setDocumentModalVisible(false);
     };
 
@@ -79,34 +70,33 @@ export default function DocumentInput({
     }, []);
 
     const attachedDocument = form.getFieldValue(
-        `document_${category_Key}`
+        `document_${category_key}`
     );
     const isAttached = !!attachedDocument;
+    console.log(span);
 
     const formElement = (
-        <>
-            <Form.Item
-                name={name}
-
-                // rules={[
-                //     {
-                //         required: required,
-                //         message: "Это поле обязательное",
-                //     },
-                // ]}
-            >
+        <div style={{ height: "100%", }}>
+            <Form.Item name={name} style={{ height: "100%", }}>
                 <Card
                     bordered
                     style={{
                         // margin:10,
-                        height: 200,
-                        display: "flex",
-                        flexDirection: "column",
-                        borderRadius: "8px",
+                        // minHeight: 200,
+                        height: "300px",
+
+                        // borderRadius: "8px",
                         color: token.colorBorder,
                         backgroundColor: isAttached
                             ? token.colorSuccessBg
                             : token.colorBgContainer,
+                    }}
+                    styles={{
+                        body: {
+                            height: "100%", display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                        }
                     }}
                     className={'formElement'}
                 >
@@ -145,9 +135,7 @@ export default function DocumentInput({
                         {/* Отображение названия выбранного документа */}
                         {isAttached && (
                             <div style={{ marginBottom: 16 }}>
-
                                 <strong>Документ:</strong> {attachedDocument.label}
-
                             </div>
                         )}
                     </div>
@@ -164,9 +152,7 @@ export default function DocumentInput({
                         )}
                         <Button
                             type="primary"
-
-                            onClick={() => handlerSelectDocument(category_Key)}
-
+                            onClick={() => handlerSelectDocument(category_key)}
                         >
                             {isAttached ? "Изменить" : "Выбрать"}
                         </Button>
@@ -177,30 +163,10 @@ export default function DocumentInput({
                 visible={documentModalVisible}
                 onClose={() => setDocumentModalVisible(false)}
                 categoryKey={selectedCategory}
-
                 onSelectDocument={handlerDocumentSelected}
-
             />
-        </>
+        </div>
     );
-
-    // if (!dependOf) return formElement;
-
-    // if (dependOf && howDepend && howDepend.options?.length > 0) {
-    //     let show = false;
-    //     if (typeof fieldDepends === "undefined") fieldDepends = false;
-    //     howDepend.options.forEach((item) => {
-    //         if (item.value === "true") item.value = true;
-    //         if (item.value === "false") item.value = false;
-    //         if (item.value == fieldDepends) show = true;
-    //     });
-    //     if (show) return formElement;
-    // }
-
-    // if (dependOf && howDepend && howDepend.max) {
-    //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
-    //         return formElement;
-    // }
-    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+    return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }
 

@@ -21,7 +21,8 @@ export default function NumberInput({
   properties = false,
   ractionDigits = undefined,
   span = false,
-  fullDescription = false
+  fullDescription = false,
+  stylesField_key = false
 }) {
   const [stepMain, setStepMain] = useState(step)
   const serviceItem = useServices((state) => state.serviceItem);
@@ -57,7 +58,7 @@ export default function NumberInput({
       setUnit(name, objectProp?.unit?.value);
     }
   }, [idLine]);
-console.log(unit)
+// console.log(unit)
   const formElement = (
     <Form.Item
       name={name}
@@ -105,7 +106,7 @@ console.log(unit)
   //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
   //     return formElement;
   // }
-  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+  return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
   // return null;
 }
 
