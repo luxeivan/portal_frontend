@@ -9,7 +9,8 @@ import {
   Flex,
   Divider,
   Tooltip,
-  theme
+  theme,
+  ConfigProvider
 } from "antd";
 import calcData from "./calcData.json";
 import useCalc from "../../stores/useCalc";
@@ -99,7 +100,7 @@ export default function MobileCalcView() {
         {dataSource.map((item) => {
           if (item.isSection) {
             return (
-              <Divider key={item.key}>
+              <Divider key={item.key} style={{fontSize:14}}>
 
                 {item.section}
               </Divider>
@@ -119,46 +120,56 @@ export default function MobileCalcView() {
                 style={{ marginBottom: 20 }}
                 styles={{ body: { padding: 10 } }}
               >
-                <Flex gap={10} wrap justify="space-around">
-                  <Form.Item
-                    name={[item.key, "value"]}
-                    initialValue={item.value}
-                    // label="Мощность"
+                <ConfigProvider
+                  theme={{
+                    components: {
+                      InputNumber: {
+                        inputFontSize: 14
+                      },
+                    },
+                  }}>
 
-                    className={styles.formItem}
-                    style={{ marginBottom: 20 }}
-                  >
-                    <InputNumber
-                      min={0}
-                      step={0.01}
-                      addonAfter={"кВт"}
-                      addonBefore={
-                        <Tooltip title="Мощность" color={token.colorPrimary}>
-                          <InfoCircleOutlined />
-                        </Tooltip>
-                      }
-                    />
-                  </Form.Item>
+                  <Flex gap={10} wrap justify="space-around">
+                    <Form.Item
+                      name={[item.key, "value"]}
+                      initialValue={item.value}
+                      // label="Мощность"
 
-                  <Form.Item
-                    name={[item.key, "count"]}
-                    initialValue={1}
-                    // label="Количество"
-                    className={styles.formItem}
-                    style={{ marginBottom: 20 }}
-                  >
-                    <InputNumber
-                      min={0}
-                      step={1}
-                      addonAfter={item.unitShort}
-                      addonBefore={
-                        <Tooltip title="Количество" color={token.colorPrimary}>
-                          <InfoCircleOutlined />
-                        </Tooltip>
-                      }
-                    />
-                  </Form.Item>
-                </Flex>
+                      className={styles.formItem}
+                      style={{ marginBottom: 20 }}
+                    >
+                      <InputNumber
+                        min={0}
+                        step={0.01}
+                        addonAfter={"кВт"}
+                        addonBefore={
+                          <Tooltip title="Мощность" color={token.colorPrimary}>
+                            <InfoCircleOutlined />
+                          </Tooltip>
+                        }
+                      />
+                    </Form.Item>
+
+                    <Form.Item
+                      name={[item.key, "count"]}
+                      initialValue={1}
+                      // label="Количество"
+                      className={styles.formItem}
+                      style={{ marginBottom: 20 }}
+                    >
+                      <InputNumber
+                        min={0}
+                        step={1}
+                        addonAfter={item.unitShort}
+                        addonBefore={
+                          <Tooltip title="Количество" color={token.colorPrimary}>
+                            <InfoCircleOutlined />
+                          </Tooltip>
+                        }
+                      />
+                    </Form.Item>
+                  </Flex>
+                </ConfigProvider>
 
                 <Form.Item
                   name={[item.key, "usageCoefficient"]}
