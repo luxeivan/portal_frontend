@@ -24,10 +24,11 @@ export default function PriceInput({
     step = 1,
     defaultValue = false,
     properties = false,
-    priceType_Key = "00000000-0000-0000-0000-000000000000",
+    priceType = false,
     span = false,
     fullDescription = false
 }) {
+     
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
     // const [currency, setCurrency] = useState(null)
@@ -40,9 +41,9 @@ export default function PriceInput({
     Form.useWatch(objectProp["ТипЦены"], form);
     let typePrice = form.getFieldValue(objectProp["ТипЦены"]);
 
-    // console.log('priceType_Key', priceType_Key)
-    if (priceType_Key !== "00000000-0000-0000-0000-000000000000") {
-        typePrice = priceType_Key;
+    // console.log('objectProp', objectProp["price"]["Номенклатура"])
+    if (priceType&& priceType !== "00000000-0000-0000-0000-000000000000") {
+        typePrice = priceType.Ref_Key;
     }
 
     let nomenclature = Form.useWatch(objectProp["price"]["Номенклатура"], form);

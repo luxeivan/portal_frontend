@@ -29,7 +29,7 @@ export const items = [
   },
   {
     key: "/docs",
-    label: <Link to={"/docs"}>Документация</Link>,
+    label: <Link to={"/docs"}>Информация</Link>,
   },
 ];
 

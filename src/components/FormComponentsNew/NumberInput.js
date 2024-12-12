@@ -32,7 +32,6 @@ export default function NumberInput({
 
   let objectProp = null;
   if (properties) objectProp = properties;
-  // console.log("objectProp",objectProp);
   // console.log("objectProp?.unit?.idLine",objectProp?.unit?.idLine);
   
   let idLine = Form.useWatch(objectProp?.unit?.idLine || '', form);
@@ -43,10 +42,13 @@ export default function NumberInput({
         const field = serviceItem.fields.find(
           (item) => item.idLine === objectProp?.unit?.idLine
         );
-        if (field?.component_Expanded?.options) {
-          setUnit({
-            [name]: field.component_Expanded.options.find((item) => item.value === form.getFieldValue(objectProp?.unit?.idLine))?.unit,
+        if (serviceItem.links[field?.component?.Ref_Key]) {
+          console.log("field",{
+            [name]: serviceItem.links[field?.component?.Ref_Key].options.find((item) => item.value === form.getFieldValue(objectProp?.unit?.idLine))?.ЕдиницаИзмеренияНаименование,
           });
+          console.log("name",name);
+          setUnit(name, serviceItem.links[field?.component?.Ref_Key].options.find((item) => item.value === form.getFieldValue(objectProp?.unit?.idLine))?.ЕдиницаИзмеренияНаименование,
+          );
           // setStepMain()
         }
       }
@@ -55,7 +57,7 @@ export default function NumberInput({
       setUnit(name, objectProp?.unit?.value);
     }
   }, [idLine]);
-
+console.log(unit)
   const formElement = (
     <Form.Item
       name={name}

@@ -53,7 +53,7 @@ export default function Services() {
   return (
     <>
       <AppHelmet
-        title={serviceItem ? serviceItem.Description : "Каталог услуг"}
+        title={ location.pathname === "/services" || location.pathname === "/services/" ? "Каталог услуг": serviceItem?.Description }
         desc="Услуги компании"
       />
       <Container>

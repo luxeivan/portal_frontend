@@ -7,6 +7,7 @@ import Container from "../../components/Container";
 import PoliciesAndRegulations from "../../components/Documentation/PoliciesAndRegulations";
 import UserGuide from "../../components/Documentation/UserGuide";
 import styles from "./Documentation.module.css";
+import QuickAnswers from "../../components/Answers/QuickAnswers";
 
 const onChange = (key) => {
   console.log(key);
@@ -19,16 +20,21 @@ export default function Documentation() {
   const items = [
     {
       key: "1",
+      label: "Вопрос - Ответ",
+      children: <QuickAnswers />,
+    },
+    {
+      key: "2",
       label: "Политики и регламенты",
       children: <PoliciesAndRegulations />,
     },
     {
-      key: "2",
+      key: "3",
       label: "Руководства пользователя",
       children: <UserGuide />,
     },
     {
-      key: "3",
+      key: "4",
       label: "Законодательство",
       children: <Law />,
     },
@@ -37,12 +43,12 @@ export default function Documentation() {
   return (
     <>
       <AppHelmet
-        title={"Документация"}
-        desc={"Портал цифровых услуг АО Мособлэнерго - Документация"}
+        title={"Информация"}
+        desc={"Портал цифровых услуг АО Мособлэнерго - Информация"}
       />
       <Container>
         <Typography.Title level={1} className={styles.title}>
-          Документация
+          Информация
         </Typography.Title>
         <div style={{ margin: "0 auto" }} className={styles.content}>
           <Tabs
