@@ -7,14 +7,20 @@ import {
   Slider,
   Card,
   Flex,
+  Divider,
+  Tooltip,
+  theme
 } from "antd";
 import calcData from "./calcData.json";
 import useCalc from "../../stores/useCalc";
 import { prepareDataSource } from "./helpers";
+import styles from './MobileCalcView.module.css'
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 const { Title, Paragraph } = Typography;
 
 export default function MobileCalcView() {
+  const token = theme.useToken().token
   const [form] = Form.useForm();
   const {
     totalPower,
@@ -73,12 +79,30 @@ export default function MobileCalcView() {
         onFinish={onFinish}
         onValuesChange={onValuesChange}
       >
+        <Flex gap={10} justify="center">
+          <Form.Item style={{ marginBottom: 0 }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={isCalculateButtonDisabled}
+            >
+              Рассчитать
+            </Button>
+          </Form.Item>
+          <Button
+            type="default"
+            onClick={() => generatePDF(prepareDataSource(), totalPower)}
+          >
+            Выгрузить PDF
+          </Button>
+        </Flex>
         {dataSource.map((item) => {
           if (item.isSection) {
             return (
-              <Title key={item.key} level={4} style={{ marginTop: 24 }}>
+              <Divider key={item.key}>
+
                 {item.section}
-              </Title>
+              </Divider>
             );
           }
 
@@ -90,31 +114,49 @@ export default function MobileCalcView() {
             <div key={item.key}>
               {/* Заголовок карточки с дополнительным текстом справа */}
               <Card
-                title={
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <span>{item.name}</span>
-                    <span style={{ fontWeight: "bold" }}>{consumedPower}</span>
-                  </div>
-                }
+                title={item.name}
+                extra={<span>{consumedPower} кВт</span>}
                 style={{ marginBottom: 20 }}
+                styles={{ body: { padding: 10 } }}
               >
-                <Flex gap={10} wrap>
+                <Flex gap={10} wrap justify="space-around">
                   <Form.Item
                     name={[item.key, "value"]}
                     initialValue={item.value}
-                    label="Мощность (кВт)"
+                    // label="Мощность"
+
+                    className={styles.formItem}
+                    style={{ marginBottom: 20 }}
                   >
-                    <InputNumber min={0} step={0.01} addonAfter={"кВт"} />
+                    <InputNumber
+                      min={0}
+                      step={0.01}
+                      addonAfter={"кВт"}
+                      addonBefore={
+                        <Tooltip title="Мощность" color={token.colorPrimary}>
+                          <InfoCircleOutlined />
+                        </Tooltip>
+                      }
+                    />
                   </Form.Item>
 
                   <Form.Item
                     name={[item.key, "count"]}
                     initialValue={1}
-                    label="Количество"
+                    // label="Количество"
+                    className={styles.formItem}
+                    style={{ marginBottom: 20 }}
                   >
-                    <InputNumber min={0} step={1} addonAfter={item.unitShort} />
+                    <InputNumber
+                      min={0}
+                      step={1}
+                      addonAfter={item.unitShort}
+                      addonBefore={
+                        <Tooltip title="Количество" color={token.colorPrimary}>
+                          <InfoCircleOutlined />
+                        </Tooltip>
+                      }
+                    />
                   </Form.Item>
                 </Flex>
 
@@ -122,18 +164,20 @@ export default function MobileCalcView() {
                   name={[item.key, "usageCoefficient"]}
                   label="Коэффициент использования"
                   initialValue={item.usageCoefficient}
+                  style={{ marginBottom: 0 }}
                 >
                   <Slider
                     min={0}
                     max={1}
                     step={0.1}
-                    marks={{ 0: "0", 1: "1" }}
-                    tooltip={{
-                      open: true,
-                      placement: "bottom",
-                      color: "#fff",
-                      overlayInnerStyle: { color: "#000" } 
-                    }}
+                    marks={{ 0: "0", 0.5: "0,5", 1: "1" }}
+                    dots={true}
+                  // tooltip={{
+                  //   open: true,
+                  //   placement: "bottom",
+                  //   color: "#fff",
+                  //   overlayInnerStyle: { color: "#000" }
+                  // }}
                   />
                 </Form.Item>
               </Card>

@@ -9,3 +9,6 @@
   margin-bottom: 16px;
   background-color: #f7f7f7;
 }
+.formItem{
+  max-width: 45%;
+}
