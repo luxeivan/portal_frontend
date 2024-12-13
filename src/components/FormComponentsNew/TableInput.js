@@ -24,11 +24,12 @@ export default function TableInput({
     howDepend = false,
     backgroundColorHex = false,
     fields: Fields = [],
-    span = false
+    span = false,
+    stylesField_key = false
 }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
-    const { colorBgBase,colorBorder, colorBgContainer } = theme.useToken().token
+    const { colorBgBase, colorBorder, colorBgContainer } = theme.useToken().token
     const nameTable = name
     // let fieldDepends = Form.useWatch(dependOf, form);
     const formElement = (
@@ -36,9 +37,9 @@ export default function TableInput({
             <div style={{
                 backgroundColor: colorBgContainer,
                 width: "100%",
-                color:colorBorder
+                color: colorBorder
             }}
-            // className={'formElement'}
+                // className={'formElement'}
                 className={`formElement ${styles.formElement}`}
             >
 
@@ -138,5 +139,5 @@ export default function TableInput({
     //     form.setFieldValue(name, '')
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+    return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

@@ -14,7 +14,8 @@ export default function PhoneInput({
     dependOf = false,
     howDepend = false,
     span = false,
-    fullDescription = false
+    fullDescription = false,
+    stylesField_key=false
 }) {
     const { colorBorderBg, colorText, colorBorder } = theme.useToken().token;
     // console.log(theme.useToken().token)
@@ -56,5 +57,5 @@ export default function PhoneInput({
     //     // form.setFieldValue(name, '')
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+    return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

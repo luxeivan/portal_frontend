@@ -57,6 +57,7 @@ export default function MobileCalcView() {
 
   const onFinish = (values) => {
     setIsCalculateButtonDisabled(true);
+    // setIsPdfButtonDisabled(false);
     handleFinish(values);
   };
 
@@ -101,7 +102,6 @@ export default function MobileCalcView() {
           if (item.isSection) {
             return (
               <Divider key={item.key} style={{fontSize:14}}>
-
                 {item.section}
               </Divider>
             );

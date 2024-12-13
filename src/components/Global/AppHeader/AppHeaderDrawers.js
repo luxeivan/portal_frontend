@@ -1,6 +1,6 @@
 import React from "react";
 import { Drawer, Menu } from "antd";
-import NotificationList from "../../FormComponentsNew/Notifications/NotificationPanel";
+import NotificationList from "../../Notifications/NotificationPanel";
 import { MobileExtraMenu } from "./AppHeaderMenus";
 
 export function MobileMenuDrawer({
