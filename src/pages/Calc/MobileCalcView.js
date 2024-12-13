@@ -10,18 +10,18 @@ import {
   Divider,
   Tooltip,
   theme,
-  ConfigProvider
+  ConfigProvider,
 } from "antd";
 import calcData from "./calcData.json";
 import useCalc from "../../stores/useCalc";
 import { prepareDataSource } from "./helpers";
-import styles from './MobileCalcView.module.css'
+import styles from "./MobileCalcView.module.css";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
 const { Title, Paragraph } = Typography;
 
 export default function MobileCalcView() {
-  const token = theme.useToken().token
+  const token = theme.useToken().token;
   const [form] = Form.useForm();
   const {
     totalPower,
@@ -35,7 +35,7 @@ export default function MobileCalcView() {
     useState(false);
 
   const dataSource = prepareDataSource();
-
+  
   useEffect(() => {
     const initialValues = {};
     dataSource.forEach((item) => {
@@ -49,7 +49,7 @@ export default function MobileCalcView() {
       }
     });
     form.setFieldsValue(initialValues);
-  }, [dataSource, form]);
+  }, []);
 
   const onValuesChange = () => {
     setIsCalculateButtonDisabled(false);
@@ -92,7 +92,7 @@ export default function MobileCalcView() {
           </Form.Item>
           <Button
             type="default"
-            onClick={() => generatePDF(prepareDataSource(), totalPower)}
+            onClick={() => generatePDF(dataSource, totalPower)}
           >
             Выгрузить PDF
           </Button>
@@ -100,20 +100,17 @@ export default function MobileCalcView() {
         {dataSource.map((item) => {
           if (item.isSection) {
             return (
-              <Divider key={item.key} style={{fontSize:14}}>
-
+              <Divider key={item.key} style={{ fontSize: 14 }}>
                 {item.section}
               </Divider>
             );
           }
 
-          // Получаем текущее значение мощности
           const consumedPower =
             calculatedData[item.key]?.consumedPower || "0.00";
 
           return (
             <div key={item.key}>
-              {/* Заголовок карточки с дополнительным текстом справа */}
               <Card
                 title={item.name}
                 extra={<span>{consumedPower} кВт</span>}
@@ -124,17 +121,14 @@ export default function MobileCalcView() {
                   theme={{
                     components: {
                       InputNumber: {
-                        inputFontSize: 14
+                        inputFontSize: 14,
                       },
                     },
-                  }}>
-
+                  }}
+                >
                   <Flex gap={10} wrap justify="space-around">
                     <Form.Item
                       name={[item.key, "value"]}
-                      initialValue={item.value}
-                      // label="Мощность"
-
                       className={styles.formItem}
                       style={{ marginBottom: 20 }}
                     >
@@ -152,8 +146,6 @@ export default function MobileCalcView() {
 
                     <Form.Item
                       name={[item.key, "count"]}
-                      initialValue={1}
-                      // label="Количество"
                       className={styles.formItem}
                       style={{ marginBottom: 20 }}
                     >
@@ -162,7 +154,10 @@ export default function MobileCalcView() {
                         step={1}
                         addonAfter={item.unitShort}
                         addonBefore={
-                          <Tooltip title="Количество" color={token.colorPrimary}>
+                          <Tooltip
+                            title="Количество"
+                            color={token.colorPrimary}
+                          >
                             <InfoCircleOutlined />
                           </Tooltip>
                         }
@@ -174,7 +169,6 @@ export default function MobileCalcView() {
                 <Form.Item
                   name={[item.key, "usageCoefficient"]}
                   label="Коэффициент использования"
-                  initialValue={item.usageCoefficient}
                   style={{ marginBottom: 0 }}
                 >
                   <Slider
@@ -183,12 +177,6 @@ export default function MobileCalcView() {
                     step={0.1}
                     marks={{ 0: "0", 0.5: "0,5", 1: "1" }}
                     dots={true}
-                  // tooltip={{
-                  //   open: true,
-                  //   placement: "bottom",
-                  //   color: "#fff",
-                  //   overlayInnerStyle: { color: "#000" }
-                  // }}
                   />
                 </Form.Item>
               </Card>
@@ -207,14 +195,13 @@ export default function MobileCalcView() {
           </Form.Item>
           <Button
             type="default"
-            onClick={() => generatePDF(prepareDataSource(), totalPower)}
+            onClick={() => generatePDF(dataSource, totalPower)}
           >
             Выгрузить PDF
           </Button>
         </Flex>
       </Form>
 
-      {/* Итог */}
       <div style={{ textAlign: "center", marginTop: 20 }}>
         <Typography.Text>
           <b>
@@ -223,16 +210,15 @@ export default function MobileCalcView() {
           </b>
         </Typography.Text>
         {showAdditionalInfo && (
-          <>
-            <Paragraph style={{ textAlign: "justify", marginTop: "20px" }}>
-              {calcData.texts.additionalInfoText}
-            </Paragraph>
-          </>
+          <Paragraph style={{ textAlign: "justify", marginTop: "20px" }}>
+            {calcData.texts.additionalInfoText}
+          </Paragraph>
         )}
       </div>
     </div>
   );
 }
+
 // import React, { useState, useEffect } from "react";
 // import {
 //   Typography,
@@ -242,17 +228,29 @@ export default function MobileCalcView() {
 //   Slider,
 //   Card,
 //   Flex,
+//   Divider,
+//   Tooltip,
+//   theme,
+//   ConfigProvider
 // } from "antd";
 // import calcData from "./calcData.json";
 // import useCalc from "../../stores/useCalc";
 // import { prepareDataSource } from "./helpers";
+// import styles from './MobileCalcView.module.css'
+// import { InfoCircleOutlined } from "@ant-design/icons";
 
 // const { Title, Paragraph } = Typography;
 
 // export default function MobileCalcView() {
+//   const token = theme.useToken().token
 //   const [form] = Form.useForm();
-//   const { totalPower, handleFinish, showAdditionalInfo, generatePDF } =
-//     useCalc();
+//   const {
+//     totalPower,
+//     handleFinish,
+//     showAdditionalInfo,
+//     generatePDF,
+//     calculatedData,
+//   } = useCalc();
 
 //   const [isCalculateButtonDisabled, setIsCalculateButtonDisabled] =
 //     useState(false);
@@ -303,48 +301,109 @@ export default function MobileCalcView() {
 //         onFinish={onFinish}
 //         onValuesChange={onValuesChange}
 //       >
+//         <Flex gap={10} justify="center">
+//           <Form.Item style={{ marginBottom: 0 }}>
+//             <Button
+//               type="primary"
+//               htmlType="submit"
+//               disabled={isCalculateButtonDisabled}
+//             >
+//               Рассчитать
+//             </Button>
+//           </Form.Item>
+//           <Button
+//             type="default"
+//             onClick={() => generatePDF(prepareDataSource(), totalPower)}
+//           >
+//             Выгрузить PDF
+//           </Button>
+//         </Flex>
 //         {dataSource.map((item) => {
 //           if (item.isSection) {
 //             return (
-//               <Title key={item.key} level={4} style={{ marginTop: 24 }}>
+//               <Divider key={item.key} style={{fontSize:14}}>
+
 //                 {item.section}
-//               </Title>
+//               </Divider>
 //             );
 //           }
 
+//           // Получаем текущее значение мощности
+//           const consumedPower =
+//             calculatedData[item.key]?.consumedPower || "0.00";
+
 //           return (
 //             <div key={item.key}>
+//               {/* Заголовок карточки с дополнительным текстом справа */}
 //               <Card
 //                 title={item.name}
+//                 extra={<span>{consumedPower} кВт</span>}
 //                 style={{ marginBottom: 20 }}
 //                 styles={{ body: { padding: 10 } }}
 //               >
-//                 <Flex gap={10}>
-//                   <Form.Item
-//                     name={[item.key, "value"]}
-//                     initialValue={item.value}
-//                   >
-//                     <InputNumber min={0} step={0.01} addonAfter={"кВт"} />
-//                   </Form.Item>
+//                 <ConfigProvider
+//                   theme={{
+//                     components: {
+//                       InputNumber: {
+//                         inputFontSize: 14
+//                       },
+//                     },
+//                   }}>
 
-//                   <Form.Item name={[item.key, "count"]} initialValue={1}>
-//                     <InputNumber min={0} step={1} addonAfter={item.unitShort} />
-//                   </Form.Item>
-//                 </Flex>
+//                   <Flex gap={10} wrap justify="space-around">
+//                     <Form.Item
+//                       name={[item.key, "value"]}
+//                       initialValue={item.value}
+//                       // label="Мощность"
+
+//                       className={styles.formItem}
+//                       style={{ marginBottom: 20 }}
+//                     >
+//                       <InputNumber
+//                         min={0}
+//                         step={0.01}
+//                         addonAfter={"кВт"}
+//                         addonBefore={
+//                           <Tooltip title="Мощность" color={token.colorPrimary}>
+//                             <InfoCircleOutlined />
+//                           </Tooltip>
+//                         }
+//                       />
+//                     </Form.Item>
+
+//                     <Form.Item
+//                       name={[item.key, "count"]}
+//                       initialValue={1}
+//                       // label="Количество"
+//                       className={styles.formItem}
+//                       style={{ marginBottom: 20 }}
+//                     >
+//                       <InputNumber
+//                         min={0}
+//                         step={1}
+//                         addonAfter={item.unitShort}
+//                         addonBefore={
+//                           <Tooltip title="Количество" color={token.colorPrimary}>
+//                             <InfoCircleOutlined />
+//                           </Tooltip>
+//                         }
+//                       />
+//                     </Form.Item>
+//                   </Flex>
+//                 </ConfigProvider>
 
 //                 <Form.Item
 //                   name={[item.key, "usageCoefficient"]}
 //                   label="Коэффициент использования"
 //                   initialValue={item.usageCoefficient}
+//                   style={{ marginBottom: 0 }}
 //                 >
 //                   <Slider
 //                     min={0}
 //                     max={1}
 //                     step={0.1}
-//                     marks={{ 0: "0", 1: "1" }}
-//                     tooltip={{
-//                       open: true,
-//                     }}
+//                     marks={{ 0: "0", 0.5: "0,5", 1: "1" }}
+//                     dots={true}
 //                   />
 //                 </Form.Item>
 //               </Card>
