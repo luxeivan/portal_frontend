@@ -35,7 +35,7 @@ export default function MobileCalcView() {
     useState(false);
 
   const dataSource = prepareDataSource();
-  
+
   useEffect(() => {
     const initialValues = {};
     dataSource.forEach((item) => {
@@ -57,6 +57,7 @@ export default function MobileCalcView() {
 
   const onFinish = (values) => {
     setIsCalculateButtonDisabled(true);
+    // setIsPdfButtonDisabled(false);
     handleFinish(values);
   };
 
@@ -141,6 +142,12 @@ export default function MobileCalcView() {
                             <InfoCircleOutlined />
                           </Tooltip>
                         }
+                        formatter={(value) => {
+                          if (!value) return "";
+                          const num = parseFloat(value);
+                          return Number.isNaN(num) ? "" : num.toString();
+                        }}
+                        parser={(value) => value.replace(/[^\d.]/g, "")}
                       />
                     </Form.Item>
 

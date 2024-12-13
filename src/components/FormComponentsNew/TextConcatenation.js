@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import {
     Form,
-    Input,    
-    theme,    
+    Input,
+    theme,
     Flex
 } from "antd";
 import useTemp from "../../stores/Cabinet/useTemp";
@@ -28,7 +28,8 @@ export default function TextConcatenation({
     ractionDigits = 10,
     digits = false,
     valueValidate = false,
-    span = false
+    span = false,
+    stylesField_key = false
 }) {
     const [auto, setAuto] = useState(true)
     const { colorTextHeading } = theme.useToken().token
@@ -149,5 +150,5 @@ export default function TextConcatenation({
     // if (dependOf && howDepend && howDepend.max) {
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+    return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

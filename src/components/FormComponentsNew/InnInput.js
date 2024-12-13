@@ -21,7 +21,8 @@ export default function InnInput({
     properties = false,
     inGroup = false,
     span = false,
-    fullDescription = false
+    fullDescription = false,
+    stylesField_key = false
 }) {
     const form = Form.useFormInstance();
     // let fieldDepends = Form.useWatch(dependOf, form);
@@ -94,10 +95,10 @@ export default function InnInput({
                 onSelect={(value, option) => onSelect(value, option)}
                 onSearch={(text) => fetchSuggestions(text, "АдресПолный")}
                 placeholder={placeholder}
-style={{fontSize:18}}
+                style={{ fontSize: 18 }}
             />
         </Form.Item>
     )
 
-    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+    return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

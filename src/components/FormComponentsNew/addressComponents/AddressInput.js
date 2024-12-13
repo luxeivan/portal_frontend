@@ -22,7 +22,8 @@ const AddressInput = ({
   lenght = false,
   specialField: type = false,
   span = false,
-  fullDescription = false
+  fullDescription = false,
+  stylesField_key = false
 }) => {
   const { token } = theme.useToken()
   // console.log(theme.useToken().token)
@@ -212,7 +213,7 @@ const AddressInput = ({
   // if (dependOf && howDepend && howDepend.min && howDepend.max) {
   //   if (fieldDepends >= howDepend.min && howDepend.max) return formElement;
   // }
-  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+  return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 };
 
 export default AddressInput;
