@@ -8,7 +8,7 @@ import WrapperComponent from "./WrapperComponent";
 function DividerForm({
   name = "name",
   label,
-  fullDescription,
+  fullDescription=false,
   variant = "solid",
   borderColor = "gray",
   dashed = false,
@@ -32,15 +32,16 @@ function DividerForm({
 
 
   let formElement = <></>
-  if (fullDescription !== "") {
+  if (fullDescription !== false ) {
     formElement = (
       <>
         <Divider
           style={{
             borderColor: token.dividerWrapColor,
             margin: 0,
-            whiteSpace: "pre-wrap"
+            // whiteSpace: "pre-wrap"
           }}
+          className={styles.divider}
           dashed={dashed}
           variant={variant}
           type={type}

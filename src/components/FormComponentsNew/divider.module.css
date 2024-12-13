@@ -1,6 +1,7 @@
 .divider {
-    display: inline-block;
+    /* display: inline-block; */
     /* width: 750px; */
+
 }
 
 .dividerTitle {
@@ -38,6 +39,7 @@
 @media(max-width:450px) {
     .divider {
         width: 250px;
+        font-size: 14px;
     }
 }
 
