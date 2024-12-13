@@ -8,6 +8,7 @@ import {
   Button,
   Modal,
   message,
+  theme,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import AppHelmet from "../../../components/Global/AppHelmet";
@@ -17,12 +18,14 @@ import useAuth from "../../../stores/useAuth";
 import styles from "./Profile.module.css";
 import TweenOne from "rc-tween-one";
 import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
+import moment from "moment";
 
 TweenOne.plugins.push(Children);
 
 const { Title, Text, Paragraph } = Typography;
 
 export default function Profile() {
+  const token = theme.useToken().token
   const profile = useProfile((store) => store.profile);
   const fetchProfile = useProfile((store) => store.fetchProfile);
   const logout = useAuth((state) => state.logout);
@@ -75,9 +78,7 @@ export default function Profile() {
             }}
           >
             <Card
-              className={`${styles.profileCard} ${
-                darkMode ? styles.profileCardDark : ""
-              }`}
+              className={styles.profileCard}
               bordered={false}
             >
               <TweenOne
@@ -95,9 +96,16 @@ export default function Profile() {
                   icon={<UserOutlined />}
                   className={styles.avatar}
                 />
+                {profile.email&&                
                 <Title level={3} className={styles.emailTitle}>
-                  {profile.email || "Почта"}
+                  {profile.email}
                 </Title>
+                }
+                {profile.dateСreate &&
+                <Paragraph style={{fontSize:18,color:token.colorTextPlaceholder}}>
+                  Профиль создан: {moment(profile.dateСreate).format('DD.MM.YYYY')}
+                </Paragraph>
+                }
               </TweenOne>
             </Card>
           </TweenOne>
@@ -118,9 +126,7 @@ export default function Profile() {
             }}
           >
             <Card
-              className={`${styles.profileCard} ${
-                darkMode ? styles.profileDetailsCardDark : ""
-              }`}
+               className={styles.profileCard}
               bordered={false}
             >
               <Row gutter={16} align="middle">
