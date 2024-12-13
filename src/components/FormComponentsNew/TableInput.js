@@ -29,7 +29,7 @@ export default function TableInput({
 }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
-    const { colorBgBase, colorBorder, colorBgContainer } = theme.useToken().token
+    const { colorBgBase, colorBorder, colorBgContainer,colorPrimary } = theme.useToken().token
     const nameTable = name
     // let fieldDepends = Form.useWatch(dependOf, form);
     const formElement = (
@@ -58,9 +58,10 @@ export default function TableInput({
                                 <Flex key={key}
                                     gap={10}
                                     wrap={true}
-                                    style={{ border: "1px solid lightgray", borderRadius: "10px", padding: "10px", margin: "5px" }}
+                                    style={{ border: `1px solid ${colorBorder}`, borderRadius: "10px", padding: "10px 10px 10px 20px", margin: "5px",position:'relative' }}
                                     // style={{ display: 'flex', marginBottom: 8, alignItems: "center", padding: 10 }} 
                                     align="baseline">
+                                        <Typography.Text style={{position:'absolute',top:3,left:-12,fontSize:18,fontWeight:700,color:colorBorder}}>{key+1}</Typography.Text>
                                     {/* if (required && fields.length < 1)  */}
                                     {Fields.map((item, index) => {
                                         // console.log('name: ', name)
