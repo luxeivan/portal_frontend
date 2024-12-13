@@ -21,7 +21,8 @@ export default function BikInput({
     properties = false,
     inGroup = false,
     span = false,
-    fullDescription = false
+    fullDescription = false,
+    stylesField_key=false
 }) {
     const form = Form.useFormInstance();
     // let fieldDepends = Form.useWatch(dependOf, form);
@@ -98,5 +99,5 @@ export default function BikInput({
             />
         </Form.Item>
     )
-    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+    return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

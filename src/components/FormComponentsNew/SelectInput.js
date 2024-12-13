@@ -14,7 +14,8 @@ export default function SelectInput({
   dependOf = false,
   howDepend = false,
   span = false,
-  fullDescription = false
+  fullDescription = false,
+  stylesField_key = false,
 }) {
   const serviceItem = useServices((state) => state.serviceItem);
   const options = serviceItem.links[Ref_Key]?.options
@@ -73,5 +74,5 @@ export default function SelectInput({
   //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
   //     return formElement;
   // }
-  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+  return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

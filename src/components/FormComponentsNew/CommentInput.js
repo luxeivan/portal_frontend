@@ -17,7 +17,8 @@ export default function CommentInput({
     required = false,
     dependOf = false,
     howDepend = false,
-    span = false
+    span = false,
+    stylesField_key=false
 }) {
     const { colorTextHeading } = theme.useToken().token
     const form = Form.useFormInstance();
@@ -58,5 +59,5 @@ export default function CommentInput({
     // if (dependOf && howDepend && howDepend.max) {
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+    return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

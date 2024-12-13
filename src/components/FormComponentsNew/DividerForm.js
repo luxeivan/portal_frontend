@@ -5,7 +5,20 @@ import MarkDownText from "../MarkDownText/MarkDownText";
 import styles from './divider.module.css'
 import WrapperComponent from "./WrapperComponent";
 
-function DividerForm({ name = "name", label, fullDescription, variant = "solid", borderColor = "gray", dashed = false, type = "horizontal", orientation = "center", span = false, dependOf = false, howDepend = false, }) {
+function DividerForm({
+  name = "name",
+  label,
+  fullDescription,
+  variant = "solid",
+  borderColor = "gray",
+  dashed = false,
+  type = "horizontal",
+  orientation = "center",
+  span = false,
+  dependOf = false,
+  howDepend = false,
+  stylesField_key = false
+}) {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const { token } = theme.useToken();
   // console.log(token);
@@ -19,7 +32,7 @@ function DividerForm({ name = "name", label, fullDescription, variant = "solid",
 
 
   let formElement = <></>
-  if (fullDescription !=="") {
+  if (fullDescription !== "") {
     formElement = (
       <>
         <Divider
@@ -75,7 +88,7 @@ function DividerForm({ name = "name", label, fullDescription, variant = "solid",
 
   }
 
-  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+  return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }
 
 export default DividerForm;

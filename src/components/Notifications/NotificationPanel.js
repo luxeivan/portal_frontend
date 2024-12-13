@@ -2,8 +2,8 @@ import React from "react";
 import { Timeline, Typography, Button, Space } from "antd";
 import { NotificationOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import useNotifications from "../../../stores/useNotifications";
-import useAuth from "../../../stores/useAuth"; // Импортируем auth
+import useNotifications from "../../stores/useNotifications";
+import useAuth from "../../stores/useAuth"; // Импортируем auth
 
 const { Text } = Typography;
 

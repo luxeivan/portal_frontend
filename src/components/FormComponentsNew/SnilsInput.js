@@ -10,7 +10,8 @@ export default function SnilsInput({
   dependOf = false,
   howDepend = false,
   span = false,
-  fullDescription = false
+  fullDescription = false,
+  stylesField_key=false
 }) {
   const form = Form.useFormInstance();
 
@@ -89,5 +90,5 @@ export default function SnilsInput({
     </Form.Item>
   );
 
-  return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+  return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

@@ -26,9 +26,10 @@ export default function PriceInput({
     properties = false,
     priceType = false,
     span = false,
-    fullDescription = false
+    fullDescription = false,
+    stylesField_key = false
 }) {
-     
+
     // "{"ТипЦены": "f6e1ac07-8fab-49e2-9d34-f859a2a8dcf8","Номенклатура": "2406f62a-2998-4578-9fa2-b2582dcc7a26"}"
     const { colorTextHeading } = theme.useToken().token
     // const [currency, setCurrency] = useState(null)
@@ -42,7 +43,7 @@ export default function PriceInput({
     let typePrice = form.getFieldValue(objectProp["ТипЦены"]);
 
     // console.log('objectProp', objectProp["price"]["Номенклатура"])
-    if (priceType&& priceType !== "00000000-0000-0000-0000-000000000000") {
+    if (priceType && priceType !== "00000000-0000-0000-0000-000000000000") {
         typePrice = priceType.Ref_Key;
     }
 
@@ -100,5 +101,5 @@ export default function PriceInput({
     // if (dependOf && howDepend && howDepend.max) {
     //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
     // }
-    return <WrapperComponent span={span} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
+    return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

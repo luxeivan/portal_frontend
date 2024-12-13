@@ -1,7 +1,18 @@
 import React from 'react'
 import { Button, Form, Input, InputNumber, message, Space, Col, Row, Slider } from 'antd';
 
-export default function CoordinateInput({ name = 'name', label = 'Label', disabled = false, placeholder = 'placeholder', required = false, depend = false, min = -365, max = 365, step = 0.000001 }) {
+export default function CoordinateInput({ 
+    name = 'name', 
+    label = 'Label', 
+    disabled = false, 
+    placeholder = 'placeholder', 
+    required = false, 
+    depend = false, 
+    min = -365, 
+    max = 365, 
+    step = 0.000001,
+    stylesField_key=false
+}) {
     const form = Form.useFormInstance()
     const fieldDepends = Form.useWatch(depend && depend.field, form)
     return (
