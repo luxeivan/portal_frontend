@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Card, Col, Row, Typography, Button, message } from "antd";
+import { Avatar, Card, Col, Row, Typography, Button, message,theme } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import useProfile from "../../../stores/Cabinet/useProfile";
@@ -8,12 +8,14 @@ import useAuth from "../../../stores/useAuth"; // Импортируем хук 
 import styles from "./Profile.module.css";
 import TweenOne from "rc-tween-one";
 import Children from "rc-tween-one/lib/plugin/ChildrenPlugin";
+import moment from "moment";
 
 TweenOne.plugins.push(Children);
 
 const { Title, Text, Paragraph } = Typography;
 
 export default function Profile() {
+  const token = theme.useToken().token
   const profile = useProfile((store) => store.profile);
   const fetchProfile = useProfile((store) => store.fetchProfile);
   const logout = useAuth((state) => state.logout); // Метод логаута
@@ -37,7 +39,7 @@ export default function Profile() {
       window.location.href = "/";
     }, 2000);
   };
-console.log(profile);
+console.log(token);
 
   return (
     <div
@@ -56,9 +58,7 @@ console.log(profile);
             style={{ opacity: 0, transform: "translateX(-50px)",height:"100%" }}
           >
             <Card
-              className={`${styles.profileCard} ${
-                darkMode ? styles.profileCardDark : ""
-              }`}
+              className={styles.profileCard}
               bordered={false}
             >
               <TweenOne
@@ -76,9 +76,16 @@ console.log(profile);
                   icon={<UserOutlined />}
                   className={styles.avatar}
                 />
+                {profile.email&&                
                 <Title level={3} className={styles.emailTitle}>
-                  {profile.email || "Почта"}
+                  {profile.email}
                 </Title>
+                }
+                {profile.dateСreate &&
+                <Paragraph style={{fontSize:18,color:token.colorTextPlaceholder}}>
+                  Профиль создан: {moment(profile.dateСreate).format('DD.MM.YYYY')}
+                </Paragraph>
+                }
               </TweenOne>
             </Card>
           </TweenOne>
@@ -95,9 +102,7 @@ console.log(profile);
             style={{ opacity: 0, transform: "translateX(50px)", height:"100%" }}
           >
             <Card
-              className={`${styles.profileCard} ${
-                darkMode ? styles.profileDetailsCardDark : ""
-              }`}
+               className={styles.profileCard}
               bordered={false}
             >
               <Row gutter={16} align="middle">

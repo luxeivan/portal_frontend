@@ -85,8 +85,8 @@ export default function NewClaim() {
       }
     }
     try {
-      console.log("Пытаюсь понять откуда что приходит", values);
-      await createClaim({ service: serviceItem.Ref_Key, values });
+      console.log("Данные для создания заявки: ", values);
+      // await createClaim({ service: serviceItem.Ref_Key, values });
     } catch (err) {
       console.log(err.message || "Ошибка при создании заявки.");
       // setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
