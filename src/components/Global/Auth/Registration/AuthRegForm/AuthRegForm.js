@@ -17,7 +17,7 @@ const AuthRegForm = () => {
   const navigate = useNavigate(); 
 
   const handleClick = () => {
-    navigate("/docs?tab=2");
+    navigate("/docs?tab=3");
   };
 
   return (
