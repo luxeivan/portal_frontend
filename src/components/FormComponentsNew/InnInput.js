@@ -27,7 +27,7 @@ export default function InnInput({
     const form = Form.useFormInstance();
     // let fieldDepends = Form.useWatch(dependOf, form);
     const [options, setOptions] = useState([])
-    const objProperties = JSON.parse(properties).externalService
+    const objProperties = properties.externalService
 
 
     const fetchSuggestions = debounce((inn) => {
