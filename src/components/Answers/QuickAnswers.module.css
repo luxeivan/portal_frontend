@@ -46,6 +46,9 @@
     margin: 0 auto;
     text-align: justify;
   }
+  .btn:hover { 
+    animation: effect 0.3s infinite; 
+} 
   
   /* Анимации */
   @keyframes fadeInDown {
@@ -80,6 +83,31 @@
       transform: translateX(0);
     }
   }
+  @keyframes effect { 
+    0% { 
+        transform: translateX(0px) rotate(0deg); 
+    } 
+
+    20% { 
+        transform: translateX(-2px) rotate(-2deg); 
+    } 
+
+    40% { 
+        transform: translateX(-1px) rotate(-1deg); 
+    } 
+
+    60% { 
+        transform: translateX(2px) rotate(2deg); 
+    } 
+
+    80% { 
+        transform: translateX(1px) rotate(1deg); 
+    } 
+
+    100% { 
+        transform: translateX(0px) rotate(0deg); 
+    } 
+} 
   
   /* Темная тема */
   .darkMode {
