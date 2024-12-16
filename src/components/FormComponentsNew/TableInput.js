@@ -114,9 +114,9 @@ export default function TableInput({
                                                 />
                                             );
                                     })}
-                                    {required && fields.length !== 1 &&
+                                    {!required || (required && fields.length !== 1) ?
 
-                                        <MinusCircleOutlined onClick={() => remove(name)} style={{ position: 'absolute', top: 7, right: 7, fontSize: 18, fontWeight: 700, color: colorBorder }} />
+                                        <MinusCircleOutlined onClick={() => remove(name)} style={{ position: 'absolute', top: 7, right: 7, fontSize: 18, fontWeight: 700, color: colorBorder }} />:false
                                     }
                                 </Flex>
                             ))}

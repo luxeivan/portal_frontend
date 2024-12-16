@@ -32,15 +32,15 @@ export default function TextConcatenation({
     stylesField_key = false
 }) {
     const [auto, setAuto] = useState(true)
-    const { colorTextHeading } = theme.useToken().token
+    // const { colorTextHeading } = theme.useToken().token
     const form = Form.useFormInstance();
-    const currency = useTemp((state) => state.currency);
+    // const currency = useTemp((state) => state.currency);
     useEffect(() => {
         autoSend(form.getFieldValue(name))
     }, [auto])
     let objectProp = {}
-    if (properties) objectProp = JSON.parse(properties)
-    // console.log(name)
+    if (properties) objectProp = properties
+    // console.log(objectProp)
     let keys = []
     for (let key in objectProp.formulaDetails) {
         if (objectProp.formulaDetails.hasOwnProperty(key)) {
@@ -136,19 +136,5 @@ export default function TextConcatenation({
         </Flex>
 
     );
-    // if (!dependOf) return formElement
-    // if (dependOf && howDepend && howDepend.options?.length > 0) {
-    //     let show = false
-    //     if (typeof fieldDepends === "undefined") fieldDepends = false
-    //     howDepend.options.forEach(item => {
-    //         if (item.value === "true") item.value = true
-    //         if (item.value === "false") item.value = false;
-    //         if (item.value == fieldDepends) show = true
-    //     })
-    //     if (show) return formElement
-    // }
-    // if (dependOf && howDepend && howDepend.max) {
-    //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
-    // }
     return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }
