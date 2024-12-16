@@ -110,7 +110,7 @@ export default function TableInput({
                                                 />
                                             );
                                     })}
-                                    <MinusCircleOutlined onClick={() => remove(name)} />
+                                    <MinusCircleOutlined onClick={() => remove(name)} style={{position:'absolute',top:7,right:7,fontSize:18,fontWeight:700,color:colorBorder}}/>
                                 </Flex>
                             ))}
                             <Form.Item>
