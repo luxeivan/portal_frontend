@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Avatar, Card, Col, Row, Typography, Button, message, theme, ConfigProvider, Flex } from "antd";
+import { Avatar, Card, Col, Row, Typography, Button, message, theme, ConfigProvider, Flex,Modal } from "antd";
 
 import { UserOutlined } from "@ant-design/icons";
 import AppHelmet from "../../../components/Global/AppHelmet";
