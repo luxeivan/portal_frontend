@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  Avatar,
-  Card,
-  Col,
-  Row,
-  Typography,
-  Button,
-  Modal,
-  message,
-  theme,
-} from "antd";
+
+import { Avatar, Card, Col, Row, Typography, Button, message, theme, ConfigProvider, Flex } from "antd";
+
 import { UserOutlined } from "@ant-design/icons";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import useProfile from "../../../stores/Cabinet/useProfile";
@@ -57,6 +49,7 @@ export default function Profile() {
     });
   };
 
+
   return (
     <div
       className={`${styles.container} ${darkMode ? styles.dark : styles.light}`}
@@ -71,11 +64,8 @@ export default function Profile() {
               duration: 800,
               ease: "easeOutCubic",
             }}
-            style={{
-              opacity: 0,
-              transform: "translateX(-50px)",
-              height: "100%",
-            }}
+            style={{ opacity: 0, transform: "translateX(-50px)", height: "100%" }}
+
           >
             <Card
               className={styles.profileCard}
@@ -96,15 +86,15 @@ export default function Profile() {
                   icon={<UserOutlined />}
                   className={styles.avatar}
                 />
-                {profile.email&&                
-                <Title level={3} className={styles.emailTitle}>
-                  {profile.email}
-                </Title>
+                {profile.email &&
+                  <Title level={3} className={styles.emailTitle}>
+                    {profile.email}
+                  </Title>
                 }
                 {profile.dateСreate &&
-                <Paragraph style={{fontSize:18,color:token.colorTextPlaceholder}}>
-                  Профиль создан: {moment(profile.dateСreate).format('DD.MM.YYYY')}
-                </Paragraph>
+                  <Paragraph style={{ fontSize: 18, color: token.colorTextPlaceholder }}>
+                    Профиль создан: {moment(profile.dateСreate).format('DD.MM.YYYY')}
+                  </Paragraph>
                 }
               </TweenOne>
             </Card>
@@ -119,39 +109,54 @@ export default function Profile() {
               duration: 800,
               ease: "easeOutCubic",
             }}
-            style={{
-              opacity: 0,
-              transform: "translateX(50px)",
-              height: "100%",
-            }}
+            style={{ opacity: 0, transform: "translateX(50px)", height: "100%" }}
+
           >
             <Card
-               className={styles.profileCard}
+              className={styles.profileCard}
               bordered={false}
+              styles={{ body: {height:"100%"} }}
             >
-              <Row gutter={16} align="middle">
-                <Col span={24}>
+              <ConfigProvider
+                theme={{
+                  token: {
+                    fontSize: 18
+                  },
+                }}
+              >
+                <Flex style={{height:"100%"}} vertical justify="center">
+
+                  <Row gutter={16} align="middle">
+                    {/* <Col span={24}>
                   <Text strong>Email: </Text>
                   <Text>{profile.email || ""}</Text>
-                </Col>
 
-                <Col span={24} style={{ marginTop: "20px" }}>
-                  <Text strong>Телефон: </Text>
-                  <Text>{profile.phone || ""}</Text>
-                </Col>
+                  
+                  
+                  </Col> */}
 
-                <Col span={24} style={{ marginTop: "20px" }}>
-                  <Paragraph>
-                    Если вы хотите <strong>изменить телефон или пароль</strong>,
-                    просто заново пройдите регистрацию с тем же email, нажав на
-                    кнопку ниже.
-                  </Paragraph>
 
-                  <Button type="primary" onClick={handleLogout}>
-                    Пройти регистрацию заново
-                  </Button>
-                </Col>
-              </Row>
+                    <Col span={24} >
+                      <Text strong>Телефон: </Text>
+                      <Text>{profile.phone || ""}</Text>
+
+
+                    </Col>
+
+                    <Col span={24} style={{ marginTop: "20px" }}>
+                      <Paragraph>
+                        Если вы хотите <strong>изменить телефон или пароль</strong>,
+                        повторно пройдите регистрацию с тем же адресом электронной почты, нажав на
+                        кнопку ниже.
+                      </Paragraph>
+
+                      <Button type="primary" onClick={handleLogout}>
+                        Регистрация
+                      </Button>
+                    </Col>
+                  </Row>
+                </Flex>
+              </ConfigProvider>
             </Card>
           </TweenOne>
         </Col>

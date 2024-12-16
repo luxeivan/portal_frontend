@@ -114,9 +114,9 @@ export default function TableInput({
                                                 />
                                             );
                                     })}
-                                    {required && fields.length !== 1 &&
+                                    {!required || (required && fields.length !== 1) ?
 
-                                        <MinusCircleOutlined onClick={() => remove(name)} style={{ position: 'absolute', top: 7, right: 7, fontSize: 18, fontWeight: 700, color: colorBorder }} />
+                                        <MinusCircleOutlined onClick={() => remove(name)} style={{ position: 'absolute', top: 7, right: 7, fontSize: 18, fontWeight: 700, color: colorBorder }} />:false
                                     }
                                 </Flex>
                             ))}
@@ -126,9 +126,8 @@ export default function TableInput({
                                 </Button>
                             </Form.Item>
                             {Fields && Fields.filter(item => item.typeTotal).length > 0 && <>
-                                {/* <Divider style={{ margin: 5, color:"black"}} /> */}
-                                <Flex vertical align='center' >
-
+                                {/* <Divider style={{ margin: 10, }} /> */}
+                                <Flex vertical align='flex-end' style={{ marginTop: 10, }}>
                                     {Fields.filter(item => item.typeTotal).map((item, index) => (
                                         <TableResults key={index} typeTotal={item.typeTotal} table={name} field={item.idLine} label={item.label} />
                                     ))}

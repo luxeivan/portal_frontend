@@ -34,7 +34,7 @@ export default function NumberInput({
   let objectProp = null;
   if (properties) objectProp = properties;
   // console.log("objectProp?.unit?.idLine",objectProp?.unit?.idLine);
-  
+
   let idLine = Form.useWatch(objectProp?.unit?.idLine || '', form);
   // let idLine = false
   useEffect(() => {
@@ -44,10 +44,6 @@ export default function NumberInput({
           (item) => item.idLine === objectProp?.unit?.idLine
         );
         if (serviceItem.links[field?.component?.Ref_Key]) {
-          console.log("field",{
-            [name]: serviceItem.links[field?.component?.Ref_Key].options.find((item) => item.value === form.getFieldValue(objectProp?.unit?.idLine))?.ЕдиницаИзмеренияНаименование,
-          });
-          console.log("name",name);
           setUnit(name, serviceItem.links[field?.component?.Ref_Key].options.find((item) => item.value === form.getFieldValue(objectProp?.unit?.idLine))?.ЕдиницаИзмеренияНаименование,
           );
           // setStepMain()
@@ -58,7 +54,16 @@ export default function NumberInput({
       setUnit(name, objectProp?.unit?.value);
     }
   }, [idLine]);
-// console.log(unit)
+  // console.log(unit)
+  if (unit[name] === "шт") {
+    ractionDigits = 0
+  } else if (unit[name] === "км") {
+    ractionDigits = 3
+
+  } else if (unit[name] === "м") {
+    ractionDigits = 2
+
+  }
   const formElement = (
     <Form.Item
       name={name}
@@ -76,7 +81,7 @@ export default function NumberInput({
         max={max}
         step={stepMain}
         decimalSeparator=","
-        precision={ractionDigits > 0 ? ractionDigits : undefined}
+        precision={ractionDigits}
         maxLength={length || undefined} // Убираем `false`, если `length` не задано
         disabled={disabled}
         suffix={

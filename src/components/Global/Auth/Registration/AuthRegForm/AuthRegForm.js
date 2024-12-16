@@ -53,7 +53,7 @@ const AuthRegForm = () => {
       {registrationStep === 1 && <EmailVerification />}
       {registrationStep === 2 && <PasswordRegForm />}
       <Button type="link" onClick={handleClick}>
-        *Инструкция по регистрации
+        Инструкция по регистрации
       </Button>
     </div>
   );

@@ -16,7 +16,7 @@ const AuthModal = () => {
 
   const tabItems = [
     {
-      label: "Войти",
+      label: "Вход",
       key: "1",
       children: <AuthLoginForm />,
     },
@@ -29,7 +29,7 @@ const AuthModal = () => {
 
   return (
     <Drawer
-      title="Авторизация/Регистрация"
+      title="Вход/Регистрация"
       open={isAuthModalOpen}
       onClose={() => toggleModal("isAuthModalOpen", false)}
     >
