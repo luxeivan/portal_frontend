@@ -54,14 +54,14 @@ export default function TableInput({
                             "fieldKey": 0
                         });
                         return <>
-                            {fields.map(({ key, name, }) => (
+                            {fields.map(({ key, name, },index) => (
                                 <Flex key={key}
                                     gap={10}
                                     wrap={true}
                                     style={{ border: `1px solid ${colorBorder}`, borderRadius: "10px", padding: "10px 10px 10px 20px", margin: "5px",position:'relative' }}
                                     // style={{ display: 'flex', marginBottom: 8, alignItems: "center", padding: 10 }} 
                                     align="baseline">
-                                        <Typography.Text style={{position:'absolute',top:3,left:-12,fontSize:18,fontWeight:700,color:colorBorder}}>{key+1}</Typography.Text>
+                                        <Typography.Text style={{position:'absolute',top:3,left:-12,fontSize:18,fontWeight:700,color:colorBorder}}>{index+1}</Typography.Text>
                                     {/* if (required && fields.length < 1)  */}
                                     {Fields.map((item, index) => {
                                         // console.log('name: ', name)
