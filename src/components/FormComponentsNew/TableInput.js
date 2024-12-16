@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, theme, Flex, Typography } from 'antd';
+import { Button, Form, theme, Flex, Typography, Divider } from 'antd';
 import TextInput from '../../components/FormComponentsNew/TextInput'
 import NumberInput from '../../components/FormComponentsNew/NumberInput'
 import SliderInput from '../../components/FormComponentsNew/SliderInput'
@@ -13,6 +13,7 @@ import PriceInput from './PriceInput';
 import PhoneInput from './phoneComponent/PhoneInput';
 import styles from './GroupInput.module.css'
 import WrapperComponent from './WrapperComponent';
+import TableResults from './TableResults';
 
 export default function TableInput({
     name = 'name',
@@ -25,13 +26,16 @@ export default function TableInput({
     backgroundColorHex = false,
     fields: Fields = [],
     span = false,
-    stylesField_key = false
+    stylesField_key = false,
+    properties = false
 }) {
     const form = Form.useFormInstance();
     // console.log(dependOf)
-    const { colorBgBase, colorBorder, colorBgContainer,colorPrimary } = theme.useToken().token
+    const { colorBgBase, colorBorder, colorBgContainer, colorPrimary } = theme.useToken().token
     const nameTable = name
     // let fieldDepends = Form.useWatch(dependOf, form);
+    // console.log("properties", properties);
+
     const formElement = (
         <>
             <div style={{
@@ -54,14 +58,14 @@ export default function TableInput({
                             "fieldKey": 0
                         });
                         return <>
-                            {fields.map(({ key, name, },index) => (
+                            {fields.map(({ key, name, }, index) => (
                                 <Flex key={key}
                                     gap={10}
                                     wrap={true}
-                                    style={{ border: `1px solid ${colorBorder}`, borderRadius: "10px", padding: "10px 10px 10px 20px", margin: "5px",position:'relative' }}
+                                    style={{ border: `1px solid ${colorBorder}`, borderRadius: "10px", padding: "10px 10px 10px 20px", margin: "5px", position: 'relative' }}
                                     // style={{ display: 'flex', marginBottom: 8, alignItems: "center", padding: 10 }} 
                                     align="baseline">
-                                        <Typography.Text style={{position:'absolute',top:3,left:-12,fontSize:18,fontWeight:700,color:colorBorder}}>{index+1}</Typography.Text>
+                                    <Typography.Text style={{ position: 'absolute', top: 3, left: -12, fontSize: 18, fontWeight: 700, color: colorBorder }}>{index + 1}</Typography.Text>
                                     {/* if (required && fields.length < 1)  */}
                                     {Fields.map((item, index) => {
                                         // console.log('name: ', name)
@@ -110,7 +114,10 @@ export default function TableInput({
                                                 />
                                             );
                                     })}
-                                    <MinusCircleOutlined onClick={() => remove(name)} style={{position:'absolute',top:7,right:7,fontSize:18,fontWeight:700,color:colorBorder}}/>
+                                    {required && fields.length !== 1 &&
+
+                                        <MinusCircleOutlined onClick={() => remove(name)} style={{ position: 'absolute', top: 7, right: 7, fontSize: 18, fontWeight: 700, color: colorBorder }} />
+                                    }
                                 </Flex>
                             ))}
                             <Form.Item>
@@ -118,6 +125,17 @@ export default function TableInput({
                                     Добавить
                                 </Button>
                             </Form.Item>
+                            {Fields && Fields.filter(item => item.typeTotal).length > 0 && <>
+                                {/* <Divider style={{ margin: 5, color:"black"}} /> */}
+                                <Flex vertical align='center' >
+
+                                    {Fields.filter(item => item.typeTotal).map((item, index) => (
+                                        <TableResults key={index} typeTotal={item.typeTotal} table={name} field={item.idLine} label={item.label} />
+                                    ))}
+                                </Flex>
+                            </>
+                            }
+
                         </>
                     }
                     }
@@ -125,20 +143,6 @@ export default function TableInput({
             </div>
         </>
     )
-    // if (!dependOf) return formElement
-    // if (dependOf && howDepend && howDepend.options?.length > 0) {
-    //     let show = false
-    //     if (typeof fieldDepends === "undefined") fieldDepends = false
-    //     howDepend.options.forEach(item => {
-    //         if (item.value === "true") item.value = true
-    //         if (item.value === "false") item.value = false;
-    //         if (item.value == fieldDepends) show = true
-    //     })
-    //     if (show) return formElement
-    // }
-    // if (dependOf && howDepend && howDepend.max) {
-    //     form.setFieldValue(name, '')
-    //     if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max) return formElement
-    // }
+
     return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
 }

@@ -33,7 +33,7 @@ export default function QuickAnswers() {
         label: q.question,
         children: <MarkDownText>{q.answer}</MarkDownText>,
     }));
-    console.log(questions);
+    // console.log(questions);
 
     return (
         <div>
