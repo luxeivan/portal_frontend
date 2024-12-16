@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
+
 const useAuth = create((set, get) => {
   return {
     auth: false,
@@ -13,7 +14,8 @@ const useAuth = create((set, get) => {
     isCodeRequested: false,
     authTimer: 0,
     redirection: "",
-    showErrorModal: false, // Состояние для отображения модального окна
+    showErrorModal: false,
+    authTab: "1", // Новое состояние для выбора вкладки
 
     toggleAuth: (value) => {
       set((state) => ({
@@ -69,20 +71,20 @@ const useAuth = create((set, get) => {
               password,
               isCodeRequested: true,
               loginError: "",
-              showErrorModal: false, // Скрываем модальное окно при успешной авторизации
+              showErrorModal: false,
             };
           });
         }
       } catch (error) {
         if (error.message === "Network Error" || error.code === "ERR_NETWORK") {
           set(() => ({
-            showErrorModal: true, // Показываем модальное окно при сетевой ошибке
+            showErrorModal: true,
           }));
         } else {
           set(() => ({
             loginError: error.response?.data?.message || "Ошибка авторизации.",
             authTimer: 0,
-            showErrorModal: false, // Скрываем модальное окно, если другая ошибка
+            showErrorModal: false,
           }));
         }
       }
@@ -111,8 +113,7 @@ const useAuth = create((set, get) => {
       } catch (error) {
         set(() => ({
           loginError:
-            error.response?.data?.message ||
-            "Ошибка при подтверждении пинкода.",
+            error.response?.data?.message || "Ошибка при подтверждении пинкода.",
         }));
       }
     },
@@ -127,7 +128,7 @@ const useAuth = create((set, get) => {
         loginError: "",
         isAuthModalOpen: false,
         isCodeModalOpen: false,
-        showErrorModal: false, // Скрываем модальное окно при логауте
+        showErrorModal: false,
       }));
     },
 
@@ -156,14 +157,20 @@ const useAuth = create((set, get) => {
     resetCodeRequest: () => {
       set({ isCodeRequested: false });
     },
+
+    // Новый метод для установки вкладки
+    setAuthTab: (tabKey) => {
+      set({ authTab: tabKey });
+    },
   };
 });
 
 export default useAuth;
 
+
 // import { create } from "zustand";
 // import axios from "axios";
-// import { redirect } from "react-router-dom";
+
 // const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 // const useAuth = create((set, get) => {
 //   return {
@@ -176,6 +183,7 @@ export default useAuth;
 //     isCodeRequested: false,
 //     authTimer: 0,
 //     redirection: "",
+//     showErrorModal: false, // Состояние для отображения модального окна
 
 //     toggleAuth: (value) => {
 //       set((state) => ({
@@ -231,14 +239,22 @@ export default useAuth;
 //               password,
 //               isCodeRequested: true,
 //               loginError: "",
+//               showErrorModal: false, // Скрываем модальное окно при успешной авторизации
 //             };
 //           });
 //         }
 //       } catch (error) {
-//         set(() => ({
-//           loginError: error.response?.data?.message || "Ошибка авторизации.",
-//           authTimer: 0,
-//         }));
+//         if (error.message === "Network Error" || error.code === "ERR_NETWORK") {
+//           set(() => ({
+//             showErrorModal: true, // Показываем модальное окно при сетевой ошибке
+//           }));
+//         } else {
+//           set(() => ({
+//             loginError: error.response?.data?.message || "Ошибка авторизации.",
+//             authTimer: 0,
+//             showErrorModal: false, // Скрываем модальное окно, если другая ошибка
+//           }));
+//         }
 //       }
 //     },
 
@@ -277,25 +293,16 @@ export default useAuth;
 //         auth: false,
 //         email: "",
 //         password: "",
-//         isCodeRequested: false, // Обнуляем флаг запроса кода
-//         loginError: "", // Очищаем сообщения об ошибках
-//         isAuthModalOpen: false, // Закрываем модальное окно аутентификации, если оно открыто
-//         isCodeModalOpen: false, // Закрываем модальное окно ввода кода, если оно открыто
+//         isCodeRequested: false,
+//         loginError: "",
+//         isAuthModalOpen: false,
+//         isCodeModalOpen: false,
+//         showErrorModal: false, // Скрываем модальное окно при логауте
 //       }));
 //     },
 
-//     // logout: () => {
-//     //   localStorage.removeItem("jwt");
-//     //   set(() => ({
-//     //     auth: false,
-//     //     email: "",
-//     //     password: "",
-//     //   }));
-//     // },
-
 //     checkJWT: async () => {
 //       let validJwt = false;
-//       //console.log(validJwt)
 //       if (localStorage.getItem("jwt")) {
 //         try {
 //           const res = await axios.post(`${backServer}/api/auth/checkjwt`, {
@@ -309,12 +316,10 @@ export default useAuth;
 //       }
 //       if (!get().auth && validJwt) {
 //         set((state) => ({
-//           // ...state,
 //           auth: true,
 //         }));
 //         return true;
 //       }
-//       // get().toggleModal('isAuthModalOpen', true);
 //       return false;
 //     },
 
