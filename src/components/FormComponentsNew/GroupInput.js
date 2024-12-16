@@ -24,9 +24,7 @@ export default function GroupInput({
   const { colorBgBase, colorBgContainer, colorBorder } = theme.useToken().token
   // const [openModal, setOpenModal] = useState(false)
   // const [items, setItems] = useState(false)
-  const mainForm = Form.useFormInstance()
-  /
-  console.log(stylesField_key)
+  // const mainForm = Form.useFormInstance()
   const formElement = (
     
 

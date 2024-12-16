@@ -73,7 +73,7 @@ export default function DocumentInput({
         `document_${category_key}`
     );
     const isAttached = !!attachedDocument;
-    console.log(span);
+    // console.log(span);
 
     const formElement = (
         <div style={{ height: "100%", }}>
@@ -81,11 +81,7 @@ export default function DocumentInput({
                 <Card
                     bordered
                     style={{
-                        // margin:10,
-                        // minHeight: 200,
                         height: "300px",
-
-                        // borderRadius: "8px",
                         color: token.colorBorder,
                         backgroundColor: isAttached
                             ? token.colorSuccessBg
