@@ -4,6 +4,7 @@ import { debounce } from "lodash";
 import axios from "axios";
 import WrapperComponent from "./WrapperComponent";
 import InfoDrawer from "../InfoDrawer";
+import useServices from "../../stores/useServices";
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
 const listTypeForDadata = [
@@ -34,11 +35,25 @@ export default function TextInput({
   fullDescription = false,
   stylesField_key = false,
 }) {
+  const serviceItem = useServices((state) => state.serviceItem);
   const { token } = theme.useToken();
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]); // Состояние для подсказок
   const form = Form.useFormInstance();
   // let fieldDepends = Form.useWatch(dependOf, form);
+  const locations = {}
+  if (serviceItem?.externalService?.DaData[name]?.in) {
+    const dependencies = serviceItem.externalService.DaData[name].in
+    const objDep = Object.entries(dependencies).map(item => ({
+      value: form.getFieldValue(item[0]),
+      key: item[1].split('.')[item[1].split('.').length - 1]
+    }));
+    objDep.forEach(item => { 
+      if(item.value) locations[item.key] = item.value 
+    })
+    console.log(locations);
+    console.log(dependencies);
+  }
 
   const fetchSuggestions = async (searchText) => {
     if (searchText) {
@@ -54,9 +69,12 @@ export default function TextInput({
             params: {
               type,
               query: searchText,
+              locations: [locations]
             },
           }
         );
+        console.log(response.data.data);
+        
         setSuggestions(
           response.data.data.map((suggestion) => suggestion.value)
         );
