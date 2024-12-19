@@ -86,7 +86,7 @@ export default function NewClaim() {
     }
     try {
       console.log("Данные для создания заявки: ", values);
-      // await createClaim({ service: serviceItem.Ref_Key, values });
+      await createClaim({ versionId: serviceItem.versionId, serviceId: serviceItem.Ref_Key, values });
     } catch (err) {
       console.log(err.message || "Ошибка при создании заявки.");
       // setError(err.message || "Ошибка при создании заявки."); // Обработка ошибки
@@ -134,7 +134,7 @@ export default function NewClaim() {
     }
   };
 
-  console.log(serviceItem);
+  // console.log(serviceItem);
 
   return (
     <div style={{ maxWidth: "100%", margin: "0 auto" }}>

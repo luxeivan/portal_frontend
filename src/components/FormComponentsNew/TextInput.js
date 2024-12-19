@@ -51,8 +51,8 @@ export default function TextInput({
     objDep.forEach(item => { 
       if(item.value) locations[item.key] = item.value 
     })
-    console.log(locations);
-    console.log(dependencies);
+    // console.log(locations);
+    // console.log(dependencies);
   }
 
   const fetchSuggestions = async (searchText) => {

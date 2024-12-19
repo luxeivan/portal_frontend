@@ -51,7 +51,7 @@ const useNewClaim = create((set) => ({
       }
     );
     set((state) => {
-      console.log(res.data);
+      // console.log(res.data);
       return {
         newClaim: res.data,
       };
