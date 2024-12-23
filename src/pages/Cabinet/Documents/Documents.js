@@ -56,16 +56,15 @@ const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
       });
   }, []);
 
-  const handleDocumentClick = useCallback(
-    (document) => {
-      if (onSelectDocument) {
-        onSelectDocument(document);
-      } else {
-        openDocument(document);
-      }
-    },
-    [onSelectDocument, openDocument]
-  );
+  const handleDocumentClick = (document) => {
+    if (onSelectDocument) {
+      onSelectDocument(document);
+      console.log("onSelectDocument", onSelectDocument);
+    } else {
+      openDocument(document);
+    }
+  }
+
 
   const confirmDelete = useCallback(
     (id) => {
@@ -135,6 +134,7 @@ const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
         </Card>
       </div>
       <ModalAddDocument
+
         visible={openModalAdd}
         onClose={handleCloseModal}
         categoryKey={modalCategoryKey}
