@@ -65,7 +65,7 @@ export default function TableInput({
                                     style={{ border: `1px solid ${colorBorder}`, borderRadius: "10px", padding: "10px 10px 10px 20px", margin: "5px", position: 'relative' }}
                                     // style={{ display: 'flex', marginBottom: 8, alignItems: "center", padding: 10 }} 
                                     align="baseline">
-                                    <Typography.Text style={{ position: 'absolute', top: 3, left: -12, fontSize: 18, fontWeight: 700, color: colorBorder }}>{index + 1}</Typography.Text>
+                                    <Typography.Text style={{ position: 'absolute', top: 3, left: 6, fontSize: 18, fontWeight: 700, color: colorBorder }}>{index + 1}</Typography.Text>
                                     {/* if (required && fields.length < 1)  */}
                                     {Fields.map((item, index) => {
                                         // console.log('name: ', name)
@@ -127,7 +127,7 @@ export default function TableInput({
                             </Form.Item>
                             {Fields && Fields.filter(item => item.typeTotal).length > 0 && <>
                                 {/* <Divider style={{ margin: 10, }} /> */}
-                                <Flex vertical align='flex-end' style={{ marginTop: 10, }}>
+                                <Flex vertical  style={{ marginTop: 10, }}>
                                     {Fields.filter(item => item.typeTotal).map((item, index) => (
                                         <TableResults key={index} typeTotal={item.typeTotal} table={name} field={item.idLine} label={item.label} />
                                     ))}
