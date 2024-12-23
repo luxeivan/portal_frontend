@@ -28,11 +28,11 @@ export default function DocumentInput({
     };
 
     const handlerDocumentSelected = (document) => {
-        // console.log(
-        //     `Пользователь выбрал документ для категории ${selectedCategory}:`,
-        //     document
-        // );
-        form.setFieldValue(`document_${selectedCategory}`, document);
+        console.log(
+            `Пользователь выбрал документ для категории ${selectedCategory}:`,
+            document
+        );
+        form.setFieldValue(name, document);
         setDocumentModalVisible(false);
     };
 
@@ -69,9 +69,7 @@ export default function DocumentInput({
             });
     }, []);
 
-    const attachedDocument = form.getFieldValue(
-        `document_${category_key}`
-    );
+    const attachedDocument = form.getFieldValue(name);
     const isAttached = !!attachedDocument;
     // console.log(span);
 
@@ -130,8 +128,8 @@ export default function DocumentInput({
                         />
                         {/* Отображение названия выбранного документа */}
                         {isAttached && (
-                            <div style={{ marginBottom: 16 }}>
-                                <strong>Документ:</strong> {attachedDocument.label}
+                            <div style={{ color: token.colorText, }}>
+                                <strong>Документ:</strong> {attachedDocument.Description}
                             </div>
                         )}
                     </div>

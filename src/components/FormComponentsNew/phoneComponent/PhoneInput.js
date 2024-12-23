@@ -15,12 +15,14 @@ export default function PhoneInput({
     howDepend = false,
     span = false,
     fullDescription = false,
-    stylesField_key=false
+    stylesField_key = false
 }) {
-    const { colorBorderBg, colorText, colorBorder } = theme.useToken().token;
+    const { colorBorderBg, colorText, colorBorder, colorError } = theme.useToken().token;
     // console.log(theme.useToken().token)
     const form = Form.useFormInstance();
-    // console.log(dependOf)
+    Form.useWatch(name, form);
+    const isError = form.getFieldError(name)
+    console.log("isError", !isError && isError.length > 0)
     // let fieldDepends = Form.useWatch(dependOf, form);
     const formElement = (
         <Form.Item
@@ -37,7 +39,12 @@ export default function PhoneInput({
                 mask="+7 (999) 999-99-99"
                 placeholder="+7 (XXX) XXX-XX-XX"
                 className={`ant-input ant-input-outlined ant-input-status-success ${styles.inputMask}`}
-                style={{ backgroundColor: colorBorderBg, color: colorText, border: `1px solid ${colorBorder}`,fontSize:18 }}
+                style={{
+                    backgroundColor: colorBorderBg,
+                    color: colorText,
+                    border: `1px solid ${isError && isError.length > 0 ? "red" : colorBorder}`,
+                    fontSize: 18
+                }}
             />
         </Form.Item>
     )
