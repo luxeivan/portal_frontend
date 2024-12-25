@@ -5,11 +5,13 @@ import styles from "./Phone.module.css";
 import WrapperComponent from "../WrapperComponent";
 import InfoDrawer from "../../InfoDrawer";
 
+import useProfile from "../../../../src/stores/Cabinet/useProfile";
+
 export default function PhoneInput({
-  name = "name",
-  label = "Label",
+  name = "mobilePhone",
+  label = "Мобильный телефон",
   disabled = false,
-  placeholder = "placeholder",
+  placeholder = "+7 (XXX) XXX-XX-XX",
   required = false,
   dependOf = false,
   howDepend = false,
@@ -18,6 +20,14 @@ export default function PhoneInput({
   stylesField_key = false,
 }) {
   const { colorBorderBg, colorText, colorBorder } = theme.useToken().token;
+  const { profile } = useProfile();
+
+  const isAdditionalPhone = name === "dc284366-c637-441d-b552-dcf24ad603af";
+  const phoneFromProfile = isAdditionalPhone ? "" : profile.phone || "";
+
+  console.log("[PhoneInput] prop name:", name);
+  console.log("[PhoneInput] profile.phone:", profile.phone);
+  console.log("[PhoneInput] Подставляем в initialValue:", phoneFromProfile);
 
   return (
     <WrapperComponent
@@ -50,19 +60,18 @@ export default function PhoneInput({
                   message: "Это поле обязательное",
                 },
               ]}
-
+              initialValue={phoneFromProfile}
               validateStatus={hasError ? "error" : ""}
               help={hasError ? errors[0] : undefined}
             >
               <ReactInputMask
                 mask="+7 (999) 999-99-99"
                 disabled={disabled}
-                placeholder="+7 (XXX) XXX-XX-XX"
+                placeholder={placeholder}
                 className={`ant-input ant-input-outlined ${styles.inputMask}`}
                 style={{
                   backgroundColor: colorBorderBg,
                   color: colorText,
-
                   border: hasError
                     ? "1px solid red"
                     : `1px solid ${colorBorder}`,
@@ -77,6 +86,7 @@ export default function PhoneInput({
   );
 }
 
+//Старый
 // import React from "react";
 // import { Form, theme } from "antd";
 // import ReactInputMask from "react-input-mask";
