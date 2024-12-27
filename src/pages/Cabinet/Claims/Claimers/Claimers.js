@@ -34,7 +34,7 @@ console.log("claims",claims)
         <div className={styles.claimsContainer}>
           <Title level={1}>Список поданных заявок</Title>
           <div className={styles.cardsContainer}>
-            {claims.claimsProject.map((item, index) => (
+            {claims.claimsProject?.map((item, index) => (
               <motion.div
                 key={index}
                 // whileHover={{ scale: 1.05, transition: { duration: .2 } }} // Анимация при наведении
