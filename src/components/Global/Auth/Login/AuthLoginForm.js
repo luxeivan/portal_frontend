@@ -81,16 +81,10 @@ export default function AuthLoginForm() {
             },
           ]}
         >
-          <motion.div
-            variants={focusAnimation}
-            animate={emailFocused ? "focused" : "unfocused"}
-            initial="initial"
-          >
             <Input
               onFocus={() => setEmailFocused(true)}
               onBlur={() => setEmailFocused(false)}
             />
-          </motion.div>
         </Form.Item>
 
         <Form.Item
@@ -113,28 +107,23 @@ export default function AuthLoginForm() {
             },
           ]}
         >
-          <motion.div
-            variants={focusAnimation}
-            animate={passwordFocused ? "focused" : "unfocused"}
-            initial="initial"
-          >
+         
             <Input.Password
               onFocus={() => setPasswordFocused(true)}
               onBlur={() => setPasswordFocused(false)}
             />
-          </motion.div>
         </Form.Item>
-        <Typography.Text>
+        <Typography.Paragraph>
           Забыли пароль или поменялся номер телефона - пройдите регистрацию
           повторно с тем же адресом электронной почты, указаным при регистрации.
-        </Typography.Text>
+        </Typography.Paragraph>
 
         <Form.Item {...tailFormItemLayout}>
           {!isCodeRequested && (
             <Button
               type="primary"
               htmlType="submit"
-              className={styles.submitButton}
+              // className={styles.submitButton}
               disabled={authTimer > 0}
             >
               Вход

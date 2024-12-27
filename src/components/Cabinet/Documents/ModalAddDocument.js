@@ -150,6 +150,7 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
         onCancel={handleModalClose}
         footer={null}
         destroyOnClose={true}
+        keyboard={false}
       >
         <ConfigProvider
           theme={{

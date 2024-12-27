@@ -17,7 +17,7 @@ export default function Claimers() {
   useEffect(() => {
     fetchClaims();
   }, [fetchClaims]);
-
+console.log("claims",claims)
   return (
     <>
       {!claims ? (
@@ -33,29 +33,29 @@ export default function Claimers() {
         <div className={styles.claimsContainer}>
           <Title level={1}>Список поданных заявок</Title>
           <div className={styles.cardsContainer}>
-            {claims.map((item, index) => (
+            {claims.claimsProject.map((item, index) => (
               <motion.div
                 key={index}
                 // whileHover={{ scale: 1.05, transition: { duration: .2 } }} // Анимация при наведении
                 // whileTap={{ scale: 0.95, transition: { duration: .2 } }} // Анимация при клике
               >
                 <Link
-                  to={`/cabinet/claimers/${item.element2_Expanded.Ref_Key}`}
+                  to={`/cabinet/claimers/${item.Ref_Key}`}
                 >
                   <Card
                     className={styles.styleCard}
                     hoverable
-                    title={`Заявка №${item.element2_Expanded.Number}`}
+                    title={`Заявка №${item.number}`}
                     style={{
                       border: `1px solid ${token.colorBorder}`
                     }}
                   >
                     <Descriptions column={1}>
                       <Descriptions.Item label="Создана">
-                        {item.element2_Expanded.Date}
+                        {item.date}
                       </Descriptions.Item>
                       <Descriptions.Item label="По услуге">
-                        {item.element2_Expanded.template.Description}
+                        {item.service.description}
                       </Descriptions.Item>
                     </Descriptions>
                   </Card>
