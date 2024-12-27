@@ -5,6 +5,7 @@ import AppHelmet from "../../../../components/Global/AppHelmet";
 import useClaims from "../../../../stores/Cabinet/useClaims";
 import styles from "./Claimers.module.css";
 import { motion } from "framer-motion";
+import moment from "moment/moment";
 
 const { Title } = Typography;
 
@@ -52,7 +53,7 @@ console.log("claims",claims)
                   >
                     <Descriptions column={1}>
                       <Descriptions.Item label="Создана">
-                        {item.date}
+                        {moment(item.date).format('DD.MM.YYYY HH:mm')}
                       </Descriptions.Item>
                       <Descriptions.Item label="По услуге">
                         {item.service.description}
