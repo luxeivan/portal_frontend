@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Typography, Button, Steps, message } from "antd";
 import { useParams } from "react-router-dom";
 import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
 import useClaims from "../../../../stores/Cabinet/useClaims";
 import ChatComponent from "../ChatComponent/ChatComponent";
 import styles from "./ClaimItem.module.css";
@@ -12,7 +11,6 @@ import zayavka from "../../../../assets/zayavka.pdf";
 const { Title } = Typography;
 const { Step } = Steps;
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default function ClaimItem() {
   const [pdfLoading, setPdfLoading] = useState(false);
