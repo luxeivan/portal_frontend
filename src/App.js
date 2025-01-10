@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { ConfigProvider, Flex, Layout, theme } from "antd";
+import { ConfigProvider, Layout, theme } from "antd";
 import "./App.css";
 import { Route, BrowserRouter, Routes, redirect } from "react-router-dom";
 import Main from "./pages/Main";
@@ -25,7 +25,6 @@ import Documents from "./pages/Cabinet/Documents/Documents";
 import Drafts from "./pages/Cabinet/Drafts/Drafts";
 import Checking from "./pages/Cabinet/Checking/Checking";
 import ClaimItem from "./pages/Cabinet/Claims/ClaimItem/ClaimItem";
-import Game from "./pages/Games/Game";
 import Contacts from "./pages/Contacts/Contacts";
 import Claimers from "./pages/Cabinet/Claims/Claimers/Claimers";
 import Archives from "./pages/Cabinet/Claims/Archives";
@@ -35,7 +34,6 @@ import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 import AddressInputTest from "./components/FormComponentsNew/addressComponents/AddressInputTest";
 import Answers from "./pages/Answers/Answers";
-import Calc1 from "./pages/Calc1/Calc";
 
 const { Content } = Layout;
 
@@ -157,7 +155,6 @@ export default function App() {
                   </Route>
 
                   <Route path="/answers" element={<Answers />} />
-                  <Route path="/game" element={<Game />} />
                   <Route path="*" element={<Page404 />} />
                 </Routes>
               </Content>
