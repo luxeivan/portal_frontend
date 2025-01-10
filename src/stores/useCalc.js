@@ -4,6 +4,8 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import calcData from "../pages/Calc/calcData.json";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+console.log("!!!!!!!!!!!!!!", pdfFonts.pdfMake.vfs);
+
 
 const usageCoefficients = {
   "Электроприборы инженерного назначения": 0.6,
