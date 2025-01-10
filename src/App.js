@@ -18,7 +18,6 @@ import Page404 from "./pages/Page404";
 import Container from "./components/Container";
 import NewClaim from "./pages/Cabinet/NewClaim";
 import Profile from "./pages/Cabinet/Profile/Profile";
-import Subjects from "./pages/Cabinet/Subjects/Subjects";
 import Objects from "./pages/Cabinet/Objects/Objects";
 import Documents from "./pages/Cabinet/Documents/Documents";
 import Drafts from "./pages/Cabinet/Drafts/Drafts";
@@ -133,7 +132,6 @@ export default function App() {
                   />
 
                   <Route path="profile" element={<Profile />} />
-                  <Route path="subjects" element={<Subjects />} />
                   <Route path="documents" element={<Documents />} />
                   <Route path="objects" element={<Objects />} />
                   <Route path="drafts" element={<Drafts />} />
