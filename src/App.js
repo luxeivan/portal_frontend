@@ -19,7 +19,6 @@ import Container from "./components/Container";
 import NewClaim from "./pages/Cabinet/NewClaim";
 import Profile from "./pages/Cabinet/Profile/Profile";
 import Documents from "./pages/Cabinet/Documents/Documents";
-import Drafts from "./pages/Cabinet/Drafts/Drafts";
 import Checking from "./pages/Cabinet/Checking/Checking";
 import ClaimItem from "./pages/Cabinet/Claims/ClaimItem/ClaimItem";
 import Contacts from "./pages/Contacts/Contacts";
@@ -132,7 +131,6 @@ export default function App() {
 
                   <Route path="profile" element={<Profile />} />
                   <Route path="documents" element={<Documents />} />
-                  <Route path="drafts" element={<Drafts />} />
                   <Route path="checking" element={<Checking />} />
                   <Route path="claimers" element={<Claimers />} />
                   <Route path="claimers/:id" element={<ClaimItem />} />
