@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { ConfigProvider, Layout, theme } from "antd";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import "./App.css";
-import { Route, BrowserRouter, Routes, redirect } from "react-router-dom";
+
 import Main from "./pages/Main";
 import AppHeader from "./components/Global/AppHeader/AppHeader";
 import AppFooter from "./components/Global/AppFooter/AppFooter";
 import Calc from "./pages/Calc/Calc";
 import About from "./pages/About/About";
 import Services from "./pages/Services/Services";
-import useGlobal from "./stores/useGlobal";
-import useAuth from "./stores/useAuth";
 import CabinetMenu from "./components/Cabinet/CabinetMenu";
 import AuthModal from "./components/Global/Auth/AuthModal/AuthModal";
 import CodeModal from "./components/Global/Auth/Login/CodeModal";
@@ -34,6 +33,9 @@ import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 import AddressInputTest from "./components/FormComponentsNew/addressComponents/AddressInputTest";
 import Answers from "./pages/Answers/Answers";
+
+import useGlobal from "./stores/useGlobal";
+import useAuth from "./stores/useAuth";
 
 const { Content } = Layout;
 
@@ -72,23 +74,13 @@ export default function App() {
 
   const { colorPrimary } = theme.useToken().token;
 
-  const loader = () => {
-    console.log(1);
-    if (!auth) {
-      return redirect("/");
-    }
-    return null;
-  };
-
   return (
     <ConfigProvider
       theme={{
         algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
         token: {
           fontSize: 16,
-          lineHeight:1.5,
-          
-          // fontFamily: 'ArialCustom, sans-serif',
+          lineHeight: 1.5,
           fontSizeHeading1: "2.5rem",
           fontSizeHeading2: "2.1rem",
           fontSizeHeading3: "1.8rem",
@@ -106,59 +98,55 @@ export default function App() {
           <CodeModal />
           <AppHeader />
           <Layout>
-            {/* <Flex> */}
-              {auth && <CabinetMenu />}
-              <Content
-                className={`${auth ? "mainContentAuth" : "mainContent"}`}
-              >
-                <Routes>
-                  <Route path="/" element={<Main />} />
-                  <Route path="/formonec" element={<FormOneC />} />
-                  <Route path="/services" element={<Services />} />
-                  <Route path="/services/:level2" element={<Services />} />
+            {auth && <CabinetMenu />}
+            <Content className={`${auth ? "mainContentAuth" : "mainContent"}`}>
+              <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/formonec" element={<FormOneC />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/services/:level2" element={<Services />} />
+                <Route
+                  path="/services/:level2/:key"
+                  element={
+                    <Container>
+                      <ServiceItem />
+                    </Container>
+                  }
+                />
+
+                <Route path="/about" element={<About />} />
+                <Route path="/calc" element={<Calc />} />
+                <Route path="/contacts" element={<Contacts />} />
+
+                <Route path="/docs" element={<Documentation />} />
+                <Route path="/test" element={<AddressInputTest />} />
+                <Route path="/login" element={<Login />} />
+
+                <Route path="cabinet" element={<PrivateRoute />}>
                   <Route
-                    path="/services/:level2/:key"
+                    path="new-claim/:id"
                     element={
                       <Container>
-                        <ServiceItem />
+                        <NewClaim />
                       </Container>
                     }
                   />
 
-                  <Route path="/about" element={<About />} />
-                  <Route path="/calc" element={<Calc />} />
-                  <Route path="/contacts" element={<Contacts />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="subjects" element={<Subjects />} />
+                  <Route path="documents" element={<Documents />} />
+                  <Route path="objects" element={<Objects />} />
+                  <Route path="drafts" element={<Drafts />} />
+                  <Route path="checking" element={<Checking />} />
+                  <Route path="claimers" element={<Claimers />} />
+                  <Route path="claimers/:id" element={<ClaimItem />} />
+                  <Route path="archives" element={<Archives />} />
+                </Route>
 
-                  <Route path="/docs" element={<Documentation />} />
-                  <Route path="/test" element={<AddressInputTest />} />
-                  <Route path="/login" element={<Login />} />
-
-                  <Route path="cabinet" element={<PrivateRoute />}>
-                    <Route
-                      path="new-claim/:id"
-                      element={
-                        <Container>
-                          <NewClaim />
-                        </Container>
-                      }
-                    />
-
-                    <Route path="profile" element={<Profile />} />
-                    <Route path="subjects" element={<Subjects />} />
-                    <Route path="documents" element={<Documents />} />
-                    <Route path="objects" element={<Objects />} />
-                    <Route path="drafts" element={<Drafts />} />
-                    <Route path="checking" element={<Checking />} />
-                    <Route path="claimers" element={<Claimers />} />
-                    <Route path="claimers/:id" element={<ClaimItem />} />
-                    <Route path="archives" element={<Archives />} />
-                  </Route>
-
-                  <Route path="/answers" element={<Answers />} />
-                  <Route path="*" element={<Page404 />} />
-                </Routes>
-              </Content>
-            {/* </Flex> */}
+                <Route path="/answers" element={<Answers />} />
+                <Route path="*" element={<Page404 />} />
+              </Routes>
+            </Content>
           </Layout>
           <AppFooter />
         </BrowserRouter>
