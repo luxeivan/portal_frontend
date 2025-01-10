@@ -25,7 +25,6 @@ import Contacts from "./pages/Contacts/Contacts";
 import Claimers from "./pages/Cabinet/Claims/Claimers/Claimers";
 import Archives from "./pages/Cabinet/Claims/Archives";
 import Documentation from "./pages/Documentation/Documentation";
-import FormOneC from "./components/test/FormOneC";
 import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 import AddressInputTest from "./components/FormComponentsNew/addressComponents/AddressInputTest";
@@ -99,7 +98,7 @@ export default function App() {
             <Content className={`${auth ? "mainContentAuth" : "mainContent"}`}>
               <Routes>
                 <Route path="/" element={<Main />} />
-                <Route path="/formonec" element={<FormOneC />} />
+
                 <Route path="/services" element={<Services />} />
                 <Route path="/services/:level2" element={<Services />} />
                 <Route
