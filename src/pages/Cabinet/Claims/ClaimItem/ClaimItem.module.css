@@ -11,7 +11,7 @@
 }
 
 .steps {
-  margin-bottom: 20px; /* Уменьшил отступ */
+  margin-bottom: 20px; 
 }
 
 @media (max-width: 768px) {

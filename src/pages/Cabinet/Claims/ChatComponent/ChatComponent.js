@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Input, Button, List, theme } from "antd";
-import axios from "axios";
 import styles from "./ChatComponent.module.css";
 import moment from "moment";
 import "moment/locale/ru";
@@ -9,7 +8,6 @@ import { SendOutlined } from "@ant-design/icons";
 const { useToken } = theme;
 
 export default function ChatComponent({
-  claimId,
   statuses,
   currentStatusIndex,
 }) {

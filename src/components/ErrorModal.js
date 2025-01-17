@@ -9,7 +9,6 @@ const ErrorModal = ({ visible, error, onClose }) => {
     <Modal
       closable={false}
       open={visible}
-      // onCancel={onClose}
       footer={null}
       centered
       styles={{ body: { textAlign: "center" } }}

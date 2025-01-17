@@ -1,20 +1,21 @@
 import React from "react";
-import { Typography, Card, Row, Col, message, Collapse, theme } from "antd";
+import { Typography, Card, message, theme } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 
 export default function Rekvizity() {
   const handleCopy = (fieldName) => {
     message.success(`${fieldName} скопирован`);
   };
-  const {token} = theme.useToken()
+  const { token } = theme.useToken();
 
   return (
-    <Card
-      // type="inner"
-      title={"Реквизиты"}
-      style={{ height: "100%" }}
-    >
-      <Typography.Title level={5} style={{ marginTop: 0, color: token.colorInfo }}>Основные реквизиты</Typography.Title>
+    <Card title={"Реквизиты"} style={{ height: "100%" }}>
+      <Typography.Title
+        level={5}
+        style={{ marginTop: 0, color: token.colorInfo }}
+      >
+        Основные реквизиты
+      </Typography.Title>
       <p>
         <b>ИНН: </b>
         <Typography.Text
@@ -101,7 +102,12 @@ export default function Rekvizity() {
 
       {/* ---------------------------------------------------------------------------------------------------------------------------- */}
 
-      <Typography.Title level={5} style={{ marginTop: 20,color: token.colorPrimary }}>Для департамента технологических присоединений</Typography.Title>
+      <Typography.Title
+        level={5}
+        style={{ marginTop: 20, color: token.colorPrimary }}
+      >
+        Для департамента технологических присоединений
+      </Typography.Title>
 
       <p>
         <b>Р/сч: </b>

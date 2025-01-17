@@ -10,8 +10,8 @@ import useNotifications from "../../../stores/useNotifications";
 import useProfile from "../../../stores/Cabinet/useProfile";
 import styles from "./AppHeader.module.css";
 import ErrorModal from "../../ErrorModal";
-import { items, itemsMobile, RightMenuArea } from "./AppHeaderMenus"; //определение массивов меню items, itemsMobile, а также rightMenuArea.
-import { MobileMenuDrawer, NotificationDrawer } from "./AppHeaderDrawers"; //рендер боковых панелей (Drawer) для меню и уведомлений.
+import { items, itemsMobile, RightMenuArea } from "./AppHeaderMenus";
+import { MobileMenuDrawer, NotificationDrawer } from "./AppHeaderDrawers"; 
 
 const { Header } = Layout;
 
