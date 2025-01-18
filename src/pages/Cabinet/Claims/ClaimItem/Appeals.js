@@ -27,7 +27,7 @@ const appeals = [
 ]
 export default function Appeals() {
     const token = theme.useToken().token
-    console.log(token);
+    // console.log(token);
 
     return (
         <div>

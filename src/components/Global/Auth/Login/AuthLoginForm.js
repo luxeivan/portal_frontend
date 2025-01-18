@@ -107,7 +107,7 @@ export default function AuthLoginForm() {
         </Form.Item>
         <Typography.Paragraph>
           Забыли пароль или поменялся номер телефона - пройдите регистрацию
-          повторно с тем же адресом электронной почты, указаным при регистрации.
+          повторно с тем же адресом электронной почты, указанным при регистрации.
         </Typography.Paragraph>
 
         <Form.Item {...tailFormItemLayout}>

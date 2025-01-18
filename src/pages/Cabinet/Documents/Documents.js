@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { Typography, Card, Modal } from "antd";
+import { Typography, Card, Modal, Divider, Flex, Button } from "antd";
 import AppHelmet from "../../../components/Global/AppHelmet";
 import { PlusOutlined } from "@ant-design/icons";
 import SceletonCard from "../../../components/SceletonCard";
@@ -14,6 +14,7 @@ const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
   const [modalCategoryKey, setModalCategoryKey] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const documents = useDocuments((state) => state.documents);
+  const categories = useDocuments((state) => state.categories);
   const loadingDocuments = useDocuments((state) => state.loadingDocuments);
   const openModalAdd = useDocuments((state) => state.openModalAdd);
   const setOpenModalAdd = useDocuments((state) => state.setOpenModalAdd);
@@ -97,41 +98,53 @@ const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
   };
 
   const documentCards = useMemo(() => {
-    return documents.map((document, index) => (
-      <DocumentCard
-        key={index}
-        document={document}
-        isModal={isModal}
-        handleDocumentClick={handleDocumentClick}
-        confirmDelete={confirmDelete}
-        openDocument={openDocument}
-      />
+    return documents.map((category, indexcategory) => (
+      <>
+        <Divider key={indexcategory}>{category.Description}</Divider>
+        <Flex gap={20}>
+
+          {category.docs.map((doc, indexdoc) => (
+
+            <DocumentCard
+              key={indexdoc}
+              document={doc}
+              isModal={isModal}
+              handleDocumentClick={handleDocumentClick}
+              confirmDelete={confirmDelete}
+              openDocument={openDocument}
+            />
+          ))}
+        </Flex>
+      </>
     ));
   }, [documents, isModal, handleDocumentClick, confirmDelete, openDocument]);
+  // console.log(documents);
 
   return (
     <div>
       <AppHelmet title={"Документы"} desc={"Документы"} />
+      <Flex align="center" justify="space-between">
+
       <Title level={1}>Документы</Title>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-        {loadingDocuments && <SceletonCard />}
-        {documentCards}
-        <Card
-          hoverable={!isModalOpen}
-          style={{
-            width: 250,
-            height: 250,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            opacity: isModalOpen ? 0.5 : 1,
-            cursor: isModalOpen ? "not-allowed" : "pointer",
-          }}
-          onClick={!isModalOpen ? handleAddDocument : undefined}
+      <Button type="primary" onClick={!isModalOpen ? handleAddDocument : undefined}>Добавить документ</Button>
+      </Flex>
+      {loadingDocuments && <SceletonCard />}
+      {/* <Card
+        hoverable={!isModalOpen}
+        style={{
+          width: 250,
+          height: 250,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          opacity: isModalOpen ? 0.5 : 1,
+          cursor: isModalOpen ? "not-allowed" : "pointer",
+        }}
+        onClick={!isModalOpen ? handleAddDocument : undefined}
         >
-          <PlusOutlined style={{ fontSize: "24px" }} />
-        </Card>
-      </div>
+        <PlusOutlined style={{ fontSize: "24px" }} />
+      </Card> */}
+        {documentCards}
       <ModalAddDocument
         visible={openModalAdd}
         onClose={handleCloseModal}
