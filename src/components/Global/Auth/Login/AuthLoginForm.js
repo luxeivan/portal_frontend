@@ -74,10 +74,12 @@ export default function AuthLoginForm() {
             },
           ]}
         >
+
           <Input
             onFocus={() => setEmailFocused(true)}
             onBlur={() => setEmailFocused(false)}
           />
+
         </Form.Item>
 
         <Form.Item
@@ -100,6 +102,7 @@ export default function AuthLoginForm() {
             },
           ]}
         >
+
           <Input.Password
             onFocus={() => setPasswordFocused(true)}
             onBlur={() => setPasswordFocused(false)}
@@ -108,6 +111,7 @@ export default function AuthLoginForm() {
         <Typography.Paragraph>
           Забыли пароль или поменялся номер телефона - пройдите регистрацию
           повторно с тем же адресом электронной почты, указанным при регистрации.
+
         </Typography.Paragraph>
 
         <Form.Item {...tailFormItemLayout}>

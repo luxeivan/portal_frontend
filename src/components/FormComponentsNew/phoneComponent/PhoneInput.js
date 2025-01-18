@@ -8,6 +8,7 @@ import InfoDrawer from "../../InfoDrawer";
 import useProfile from "../../../../src/stores/Cabinet/useProfile";
 
 export default function PhoneInput({
+
   name = "mobilePhone",
   label = "Мобильный телефон",
   disabled = false,
@@ -55,6 +56,7 @@ export default function PhoneInput({
                 )
               }
               rules={[
+
                 {
                   required: required,
                   message: "Это поле обязательное",
@@ -66,6 +68,7 @@ export default function PhoneInput({
             >
               <ReactInputMask
                 mask="+7 (999) 999-99-99"
+
                 disabled={disabled}
                 placeholder={placeholder}
                 className={`ant-input ant-input-outlined ${styles.inputMask}`}
@@ -84,4 +87,5 @@ export default function PhoneInput({
       </Form.Item>
     </WrapperComponent>
   );
+
 }

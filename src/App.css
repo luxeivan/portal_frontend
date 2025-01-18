@@ -10,15 +10,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-.ant-typography,
-p {
-  /* text-indent: 20px;  */
-}
 .ant-select-selection-search-input {
   font-size: 18px;
 }

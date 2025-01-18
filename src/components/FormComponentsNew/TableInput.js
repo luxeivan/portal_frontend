@@ -79,6 +79,7 @@ export default function TableInput({
                       {index + 1}
                     </Typography.Text>
 
+
                     {Fields.map((item, index) => {
                       if (item.component.Ref_Type.includes("Divider"))
                         return (
@@ -102,6 +103,7 @@ export default function TableInput({
                               item.dependIdLine
                                 ? [name, item.dependIdLine]
                                 : false
+
                             }
                             howDepend={item.dependСondition}
                           />
