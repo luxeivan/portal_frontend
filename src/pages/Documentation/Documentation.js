@@ -9,9 +9,9 @@ import UserGuide from "../../components/Documentation/UserGuide";
 import styles from "./Documentation.module.css";
 import QuickAnswers from "../../components/Answers/QuickAnswers";
 
-const onChange = (key) => {
-  console.log(key);
-};
+// const onChange = (key) => {
+//   console.log(key);
+// };
 
 export default function Documentation() {
   const [searchParams] = useSearchParams();
@@ -55,7 +55,7 @@ export default function Documentation() {
             style={{ maxWidth: "80vw" }}
             defaultActiveKey={defaultTab}
             items={items}
-            onChange={onChange}
+            // onChange={onChange}
           />
         </div>
       </Container>

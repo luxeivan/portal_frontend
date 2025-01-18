@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Typography, Button, Steps, message } from "antd";
+import { Typography, Button, Steps, message,Tabs } from "antd";
 import { useParams } from "react-router-dom";
 import pdfMake from "pdfmake/build/pdfmake";
 import useClaims from "../../../../stores/Cabinet/useClaims";
@@ -7,9 +7,36 @@ import ChatComponent from "../ChatComponent/ChatComponent";
 import styles from "./ClaimItem.module.css";
 import { FileTextOutlined } from "@ant-design/icons";
 import zayavka from "../../../../assets/zayavka.pdf";
+import Story from "./Story";
+import Docs from "./Docs";
+import Billing from "./Billing";
+import Appeals from "./Appeals";
 
 const { Title } = Typography;
 const { Step } = Steps;
+
+const tabs = [
+  {
+    key: 1,
+    label: `История`,
+    children: <Story/>,
+  },
+  {
+    key: 2,
+    label: `Документы`,
+    children: <Docs/>,
+  },
+  {
+    key: 3,
+    label: `Взаиморасчеты`,
+    children: <Billing/>,
+  },
+  {
+    key: 4,
+    label: `Обращения`,
+    children: <Appeals/>,
+  },
+]
 
 
 export default function ClaimItem() {
@@ -93,7 +120,7 @@ export default function ClaimItem() {
                 type="primary"
                 icon={<FileTextOutlined />}
                 loading={pdfLoading}
-                // onClick={handleViewPDF}
+              // onClick={handleViewPDF}
               >
                 Просмотреть заявку
               </Button>
@@ -110,13 +137,17 @@ export default function ClaimItem() {
               <Step key={index} title={status} />
             ))}
           </Steps>
+          <Tabs
+            type="card"
+            items={tabs}
+          />
 
           {/* Чат с уведомлениями и возможностью отправить обращение */}
-          <ChatComponent
+          {/* <ChatComponent
             claimId={id}
             statuses={statuses}
             currentStatusIndex={currentStatusIndex}
-          />
+          /> */}
         </>
       )}
     </>

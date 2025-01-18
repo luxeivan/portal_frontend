@@ -24,7 +24,8 @@ export default function Law() {
       .get(`${siteMosoblServer}/api/tp-normativno-pravovye-akty?populate=*`)
       .then((response) => {
         if (response.data) {
-          setDocs(response.data.data.attributes.docs.data);
+          console.log(response.data)
+          setDocs(response.data.data.docs);
         }
       })
       .catch((error) => {
@@ -38,31 +39,31 @@ export default function Law() {
           docs
             .sort(
               (a, b) =>
-                Number(a.attributes.caption) - Number(b.attributes.caption)
+                Number(a.caption) - Number(b.caption)
             )
             .map((item, index) => (
               <a
                 key={index}
                 className={styles.docLine}
-                href={`${siteMosoblServer}${item.attributes.url}`}
+                href={`${siteMosoblServer}${item.url}`}
                 download=""
                 rel="noopener noreferrer"
                 target="_blank"
               >
                 <div className={styles.docLine__wrapIcon}>
                   <img
-                    src={type[item.attributes.ext.slice(1)]}
-                    alt={`icon ${item.attributes.ext.slice(1)}`}
+                    src={type[item.ext.slice(1)]}
+                    alt={`icon ${item.ext.slice(1)}`}
                   />
                 </div>
                 <div className="docLine__wrapText">
                   <span className={styles.docLine__name}>
-                    {item.attributes.name}
+                    {item.name}
                   </span>
                   <span className={styles.docLine__fileInfo}>
-                    {Number(item.attributes.size) > 1000
-                      ? `${(item.attributes.size / 1000).toFixed(2)} МБ`
-                      : `${Math.round(item.attributes.size)} КБ`}
+                    {Number(item.size) > 1000
+                      ? `${(item.size / 1000).toFixed(2)} МБ`
+                      : `${Math.round(item.size)} КБ`}
                   </span>
                 </div>
               </a>
