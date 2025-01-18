@@ -4,7 +4,6 @@ import { Layout, Space, Typography, Button, Row, Col } from "antd";
 import useAuth from "../../../stores/useAuth";
 import styles from "./AppFooter.module.css";
 
-// Импортируем локальные изображения
 import telegaIcon from "../../../img/socialMedia/telega.png";
 import vkIcon from "../../../img/socialMedia/vk.png";
 import okIcon from "../../../img/socialMedia/ok.png";

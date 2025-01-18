@@ -1,10 +1,13 @@
-import { Form, theme, Input, AutoComplete } from "antd";
+import { Form, Input, AutoComplete } from "antd";
 import { useState, useEffect, useCallback } from "react";
 import { debounce } from "lodash";
 import axios from "axios";
+
 import WrapperComponent from "./WrapperComponent";
 import InfoDrawer from "../InfoDrawer";
 import useServices from "../../stores/useServices";
+import useProfile from "../../stores/Cabinet/useProfile";
+
 const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 
 const listTypeForDadata = [
@@ -36,23 +39,25 @@ export default function TextInput({
   stylesField_key = false,
 }) {
   const serviceItem = useServices((state) => state.serviceItem);
-  const { token } = theme.useToken();
+
   const [value, setValue] = useState("");
-  const [suggestions, setSuggestions] = useState([]); // Состояние для подсказок
+  const [suggestions, setSuggestions] = useState([]); 
   const form = Form.useFormInstance();
-  // let fieldDepends = Form.useWatch(dependOf, form);
-  const locations = {}
+
+  const { profile } = useProfile();
+  const emailFromProfile = profile.email || "";
+
+  const locations = {};
+
   if (serviceItem?.externalService?.DaData[name]?.in) {
-    const dependencies = serviceItem.externalService.DaData[name].in
-    const objDep = Object.entries(dependencies).map(item => ({
+    const dependencies = serviceItem.externalService.DaData[name].in;
+    const objDep = Object.entries(dependencies).map((item) => ({
       value: form.getFieldValue(item[0]),
-      key: item[1].split('.')[item[1].split('.').length - 1]
+      key: item[1].split(".")[item[1].split(".").length - 1],
     }));
-    objDep.forEach(item => { 
-      if(item.value) locations[item.key] = item.value 
-    })
-    // console.log(locations);
-    // console.log(dependencies);
+    objDep.forEach((item) => {
+      if (item.value) locations[item.key] = item.value;
+    });
   }
 
   const fetchSuggestions = async (searchText) => {
@@ -69,12 +74,12 @@ export default function TextInput({
             params: {
               type,
               query: searchText,
-              locations: [locations]
+              locations: [locations],
             },
           }
         );
         console.log(response.data.data);
-        
+
         setSuggestions(
           response.data.data.map((suggestion) => suggestion.value)
         );
@@ -113,7 +118,13 @@ export default function TextInput({
   const autoComplete = (
     <Form.Item
       name={name}
-      label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
+      label={
+        fullDescription ? (
+          <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
+        ) : (
+          label
+        )
+      }
       rules={formItemRules}
       initialValue={defaultValue}
     >
@@ -123,7 +134,7 @@ export default function TextInput({
         value={value}
         placeholder={placeholder}
         disabled={disabled}
-        maxLength={length || undefined} // Убираем `false`, если `length` не задано
+        maxLength={length || undefined} 
       />
     </Form.Item>
   );
@@ -131,7 +142,13 @@ export default function TextInput({
   const email = (
     <Form.Item
       name={name}
-      label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
+      label={
+        fullDescription ? (
+          <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
+        ) : (
+          label
+        )
+      }
       rules={[
         ...formItemRules,
         {
@@ -139,26 +156,32 @@ export default function TextInput({
           message: "Это поле в формате Email",
         },
       ]}
-      initialValue={defaultValue}
+      initialValue={emailFromProfile}
     >
       <Input
         placeholder={placeholder}
-        maxLength={length || undefined} // Убираем `false`, если `length` не задано
-        disabled={disabled}
+        maxLength={length || undefined} 
       />
     </Form.Item>
   );
-  // console.log(`${label} - ${type}: ${defaultValue}`)
+
+
   const simpleInput = (
     <Form.Item
       name={name}
-      label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
+      label={
+        fullDescription ? (
+          <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
+        ) : (
+          label
+        )
+      }
       rules={formItemRules}
       initialValue={defaultValue}
     >
       <Input.TextArea
         placeholder={placeholder}
-        maxLength={length || undefined} // Убираем `false`, если `length` не задано
+        maxLength={length || undefined} 
         disabled={disabled}
         autoSize={{ minRows: 1, maxRows: 4 }}
       />
@@ -169,6 +192,15 @@ export default function TextInput({
   if (listTypeForDadata.includes(type)) formElement = autoComplete;
   if (type === "ЭлектронныйАдрес") formElement = email;
 
-  return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
-
+  return (
+    <WrapperComponent
+      span={span}
+      stylesField_key={stylesField_key}
+      dependOf={dependOf}
+      howDepend={howDepend}
+      name={name}
+    >
+      {formElement}
+    </WrapperComponent>
+  );
 }

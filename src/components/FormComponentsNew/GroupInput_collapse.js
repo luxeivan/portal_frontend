@@ -6,7 +6,6 @@ import SliderInput from "./SliderInput";
 import SelectInput from "./SelectInput";
 import DateInput from "./DateInput";
 import DividerForm from "./DividerForm";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import SnilsInput from "./SnilsInput";
 import PhoneInput from "./phoneComponent/PhoneInput";
 import AddressInput from "./adressComponents/AddressInput";
@@ -15,10 +14,7 @@ import ConfirmationDocumentNewInput from "./confirmationDocumentComponents/Confi
 export default function GroupInput({
   name = "name",
   label = "Label",
-  disabled = false,
-  placeholder = "placeholder",
   required = false,
-  options = [],
   dependOf = false,
   howDepend = false,
   fields: Fields = [],
@@ -27,7 +23,6 @@ export default function GroupInput({
   const [err, setErr] = useState(false)
   const [activeKey, setActiveKey] = useState()
   const [form] = Form.useForm();
-  // console.log(dependOf)
   const nameTable = name;
   let fieldDepends = Form.useWatch(dependOf, mainForm);
   const handlerOnOK = (values) => {

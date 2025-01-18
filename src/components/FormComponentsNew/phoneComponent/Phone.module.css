@@ -11,11 +11,11 @@
   font-size: 14px;
   color: rgba(0, 0, 0, 0.88);
   width: 100%;
-  /* background-color: #ffffff; */
+
 }
 
 .inputMask:focus {
   border-color: #0061aa;
-  /* box-shadow: 0 0 0 2px rgba(11, 105, 144, 0.18); */
+
   outline: 0;
 }

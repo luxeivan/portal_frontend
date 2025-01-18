@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Form, AutoComplete, Typography, DatePicker, Input } from "antd";
+import React, { useState } from "react";
+import { Form, AutoComplete, DatePicker, Input } from "antd";
 import locale from "antd/locale/ru_RU";
-import moment from "moment";
-import TextInput from "../TextInput";
 import useSubjects from "../../../stores/Cabinet/useSubjects";
 import axios from "axios";
 

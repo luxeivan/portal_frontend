@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Form, Input, Typography } from "antd";
 import useRegistration from "../../../../../stores/useRegistration";
-import styles from "./EmailCodeVerification.module.css"; // Убедитесь, что путь к CSS-файлу правильный
+import styles from "./EmailCodeVerification.module.css";
 
 const EmailCodeVerification = () => {
   const submitEmailCode = useRegistration((state) => state.submitEmailCode);
@@ -53,8 +53,6 @@ const EmailCodeVerification = () => {
 
 export default EmailCodeVerification;
 
-
-// import React, { useRef } from "react";
 // import { Form, Input,Typography } from "antd";
 // import Title from "antd/es/typography/Title";
 // import useRegistration from "../../../../../stores/useRegistration";
