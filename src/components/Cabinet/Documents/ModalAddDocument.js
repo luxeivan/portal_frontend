@@ -41,7 +41,7 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
             withCredentials: true,
           }
         );
-        console.log(response.data);
+        // console.log(response.data);
 
         setCategoriesData(response.data.categories);
         const uniqueCategories = [

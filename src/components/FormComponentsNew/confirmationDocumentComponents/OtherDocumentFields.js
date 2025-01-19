@@ -2,8 +2,6 @@ import React from "react";
 import { Form, DatePicker, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import locale from "antd/locale/ru_RU";
-import moment from "moment";
-import TextInput from "../TextInput";
 
 const OtherDocumentFields = ({ name }) => {
   const form = Form.useFormInstance();

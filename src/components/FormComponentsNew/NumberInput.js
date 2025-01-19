@@ -9,7 +9,6 @@ export default function NumberInput({
   name = "name",
   label = "",
   disabled = false,
-  placeholder = "",
   required = false,
   dependOf = false,
   howDepend = false,
@@ -22,21 +21,18 @@ export default function NumberInput({
   ractionDigits = undefined,
   span = false,
   fullDescription = false,
-  stylesField_key = false
+  stylesField_key = false,
 }) {
-  const [stepMain, setStepMain] = useState(step)
+  const [stepMain, setStepMain] = useState(step);
   const serviceItem = useServices((state) => state.serviceItem);
   const unit = useTemp((state) => state.unit);
   const setUnit = useTemp((state) => state.setUnit);
   const form = Form.useFormInstance();
-  // let fieldDepends = Form.useWatch(dependOf, form);
 
   let objectProp = null;
   if (properties) objectProp = properties;
-  // console.log("objectProp?.unit?.idLine",objectProp?.unit?.idLine);
 
-  let idLine = Form.useWatch(objectProp?.unit?.idLine || '', form);
-  // let idLine = false
+  let idLine = Form.useWatch(objectProp?.unit?.idLine || "", form);
   useEffect(() => {
     if (objectProp?.unit && objectProp?.unit?.idLine) {
       if (serviceItem.fields) {
@@ -44,9 +40,13 @@ export default function NumberInput({
           (item) => item.idLine === objectProp?.unit?.idLine
         );
         if (serviceItem.links[field?.component?.Ref_Key]) {
-          setUnit(name, serviceItem.links[field?.component?.Ref_Key].options.find((item) => item.value === form.getFieldValue(objectProp?.unit?.idLine))?.ЕдиницаИзмеренияНаименование,
+          setUnit(
+            name,
+            serviceItem.links[field?.component?.Ref_Key].options.find(
+              (item) =>
+                item.value === form.getFieldValue(objectProp?.unit?.idLine)
+            )?.ЕдиницаИзмеренияНаименование
           );
-          // setStepMain()
         }
       }
     }
@@ -54,20 +54,23 @@ export default function NumberInput({
       setUnit(name, objectProp?.unit?.value);
     }
   }, [idLine]);
-  // console.log(unit)
   if (unit[name] === "шт") {
-    ractionDigits = 0
+    ractionDigits = 0;
   } else if (unit[name] === "км") {
-    ractionDigits = 3
-
+    ractionDigits = 3;
   } else if (unit[name] === "м") {
-    ractionDigits = 2
-
+    ractionDigits = 2;
   }
   const formElement = (
     <Form.Item
       name={name}
-      label={fullDescription ? <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer> : label}
+      label={
+        fullDescription ? (
+          <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
+        ) : (
+          label
+        )
+      }
       rules={[
         {
           required: required,
@@ -82,7 +85,7 @@ export default function NumberInput({
         step={stepMain}
         decimalSeparator=","
         precision={ractionDigits}
-        maxLength={length || undefined} // Убираем `false`, если `length` не задано
+        maxLength={length || undefined}
         disabled={disabled}
         suffix={
           objectProp?.unit?.position === "suffix" ? unit[name] : undefined
@@ -94,24 +97,15 @@ export default function NumberInput({
     </Form.Item>
   );
 
-  // if (!dependOf) return formElement;
-
-  // if (dependOf && howDepend && howDepend.options?.length > 0) {
-  //   let show = false;
-  //   if (typeof fieldDepends === "undefined") fieldDepends = false;
-  //   howDepend.options.forEach((item) => {
-  //     if (item.value === "true") item.value = true;
-  //     if (item.value === "false") item.value = false;
-  //     if (item.value == fieldDepends) show = true;
-  //   });
-  //   if (show) return formElement;
-  // }
-
-  // if (dependOf && howDepend && howDepend.max) {
-  //   if (fieldDepends >= howDepend.min && fieldDepends <= howDepend.max)
-  //     return formElement;
-  // }
-  return <WrapperComponent span={span} stylesField_key={stylesField_key} dependOf={dependOf} howDepend={howDepend} name={name}>{formElement}</WrapperComponent>
-  // return null;
+  return (
+    <WrapperComponent
+      span={span}
+      stylesField_key={stylesField_key}
+      dependOf={dependOf}
+      howDepend={howDepend}
+      name={name}
+    >
+      {formElement}
+    </WrapperComponent>
+  );
 }
-

@@ -1,5 +1,4 @@
 import React from "react";
-import SelectInput from "../SelectInput";
 import { Form, Select } from "antd";
 
 const documentOptions = [

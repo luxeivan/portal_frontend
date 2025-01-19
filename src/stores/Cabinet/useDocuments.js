@@ -9,6 +9,7 @@ const useDocuments = create((set, get) => ({
   loadingDocuments: false,
   errorLoadingDocuments: false,
   openModalAdd: false,
+  categories: [],
 
   setOpenModalAdd: (status = false) => {
     set({ openModalAdd: status });
@@ -19,18 +20,45 @@ const useDocuments = create((set, get) => ({
     try {
       let url = `${backServer}/api/cabinet/documents`;
 
-      const response = await axios.get(url, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+      const response = await Promise.all([axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`
+        },
         withCredentials: true,
-      });
+      }), axios.get(
+        `${backServer}/api/cabinet/documents/categories`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+          withCredentials: true,
+        }
+      )])
 
-      if (response.data.documents && categoryKey ) {
-        response.data.documents = response.data.documents.filter(
+      if (response[0].data.documents && categoryKey) {
+        response[0].data.documents = response[0].data.documents.filter(
           (document) => document.ВидФайла_Key === categoryKey
         );
       }
+      const docsForCategory = []
+      response[0].data.documents.forEach(document => {
+        const category = response[1].data.categories.find(category => category.Ref_Key === document.ВидФайла_Key)
+        const docsForCategoryIndex = docsForCategory.findIndex(category => category.Ref_Key === document.ВидФайла_Key)
+        console.log(docsForCategoryIndex)
+        if (category && docsForCategoryIndex !== -1) {
+          docsForCategory[docsForCategoryIndex].docs.push(document)
+        }else{
+          docsForCategory.push(category)
+          docsForCategory[docsForCategory.length-1].docs = []
+          docsForCategory[docsForCategory.length-1].docs.push(document)
+        }
+        
+      })
+console.log(docsForCategory);
 
-      set({ documents: response.data.documents, loadingDocuments: false });
+
+
+set({ documents: docsForCategory, categories: response[1].data.categories, loadingDocuments: false });
     } catch (error) {
       set({
         loadingDocuments: false,

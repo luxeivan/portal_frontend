@@ -32,10 +32,6 @@ const NewForm = ({
   const showModalAdd = useSubjects((state) => state.showModalAdd);
   const [edit, setEdit] = useState(tempedit);
   const [read, setRead] = useState(tempread);
-  const [drawerVisible, setDrawerVisible] = useState(false);
-
-  const showDrawer = () => setDrawerVisible(true);
-  const onClose = () => setDrawerVisible(false);
 
   console.log("value!!!!!!!", value);
 
@@ -270,7 +266,6 @@ const NewForm = ({
 };
 
 export default NewForm;
-// import { Divider, Form, Button, Flex, Typography } from "antd";
 // import TextInput from "./FormComponents/TextInput";
 // import CheckboxInput from "./FormComponents/CheckboxInput";
 // import SelectInput from "./FormComponents/SelectInput";

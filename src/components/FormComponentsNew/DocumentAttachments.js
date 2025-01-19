@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Row, Col, Card, Button, Tag, Divider, theme, Flex } from "antd";
 import { FileTextOutlined, EyeOutlined } from "@ant-design/icons";
-import axios from "axios"; 
+import axios from "axios";
 import DocumentSelectModal from "./DocumentSelectModal";
 
 const DocumentAttachments = ({ form, categoriesFiles }) => {
@@ -57,12 +57,10 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
       });
   }, []);
 
-  // console.log("Категории в заявке categoriesFiles", categoriesFiles);
-
   return (
     <>
       <Divider>Файлы</Divider>
-      <Row align={"stretch"} gutter={[20, 20]} >
+      <Row align={"stretch"} gutter={[20, 20]}>
         {categoriesFiles &&
           categoriesFiles.map((item, index) => {
             const attachedDocument = form.getFieldValue(
@@ -75,7 +73,6 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
                 <Card
                   bordered
                   style={{
-                    // margin:10,
                     height: 200,
                     display: "flex",
                     flexDirection: "column",
@@ -84,12 +81,6 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
                       ? token.colorSuccessBg
                       : token.colorBgContainer,
                   }}
-                  // bodyStyle={{
-                  //   display: "flex",
-                  //   flexDirection: "column",
-                  //   flex: 1,
-                  //   position: "relative", // Добавлено для размещения иконки
-                  // }}
                 >
                   {/* Иконка глаза в верхнем правом углу */}
                   {isAttached && (
@@ -126,20 +117,17 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
                     {/* Отображение названия выбранного документа */}
                     {isAttached && (
                       <div style={{ marginBottom: 16 }}>
-                        <strong>Документ:</strong> {attachedDocument.Description}
+                        <strong>Документ:</strong>{" "}
+                        {attachedDocument.Description}
                       </div>
                     )}
                   </div>
                   {/* Нижняя часть карточки с плашкой и кнопкой */}
                   <Flex vertical gap={10} align="center" justify="center">
                     {isAttached ? (
-                      <Tag color="success" >
-                        Прикреплено
-                      </Tag>
+                      <Tag color="success">Прикреплено</Tag>
                     ) : (
-                      <Tag color="error">
-                        Не прикреплено
-                      </Tag>
+                      <Tag color="error">Не прикреплено</Tag>
                     )}
                     <Button
                       type="primary"
@@ -165,128 +153,3 @@ const DocumentAttachments = ({ form, categoriesFiles }) => {
 };
 
 export default DocumentAttachments;
-
-
-// import React, { useState } from "react";
-// import { Row, Col, Card, Button, Tag, Divider, theme } from "antd";
-// import { FileTextOutlined } from "@ant-design/icons";
-// import DocumentSelectModal from "./DocumentSelectModal";
-
-// const DocumentAttachments = ({ form, categoriesFiles }) => {
-//   const [documentModalVisible, setDocumentModalVisible] = useState(false);
-//   const [selectedCategory, setSelectedCategory] = useState(null);
-
-//   const { token } = theme.useToken();
-
-//   const handleSelectDocument = (categoryKey) => {
-//     setSelectedCategory(categoryKey);
-//     setDocumentModalVisible(true);
-//   };
-
-//   const handleDocumentSelected = (document) => {
-//     console.log(
-//       `Пользователь выбрал документ для категории ${selectedCategory}:`,
-//       document
-//     );
-//     form.setFieldsValue({ [`document_${selectedCategory}`]: document });
-//     setDocumentModalVisible(false);
-//   };
-
-//   console.log("Категории в заявке categoriesFiles", categoriesFiles);
-
-//   return (
-//     <>
-//       <Divider>Файлы</Divider>
-//       <Row gutter={[16, 16]}>
-//         {categoriesFiles &&
-//           categoriesFiles.map((item, index) => {
-//             const isAttached = form.getFieldValue(
-//               `document_${item.category_Key}`
-//             );
-//             return (
-//               <Col xs={24} sm={12} md={8} key={index}>
-//                 <Card
-//                   bordered
-//                   style={{
-//                     height: "100%",
-//                     display: "flex",
-//                     flexDirection: "column",
-//                     borderRadius: "8px",
-//                     backgroundColor: isAttached
-//                       ? token.colorSuccessBg
-//                       : token.colorBgContainer,
-//                     // Используем токены темы для цвета фона
-//                   }}
-//                   bodyStyle={{
-//                     display: "flex",
-//                     flexDirection: "column",
-//                     flex: 1,
-//                   }}
-//                 >
-//                   {/* Верхняя часть карточки */}
-//                   <div style={{ flex: 1 }}>
-//                     {/* Заголовок с иконкой */}
-//                     <Card.Meta
-//                       avatar={
-//                         <FileTextOutlined
-//                           style={{
-//                             fontSize: "24px",
-//                             color: token.colorPrimary,
-//                           }}
-//                         />
-//                       }
-//                       title={
-//                         <div style={{ whiteSpace: "normal" }}>
-//                           {item.categoryName}
-//                         </div>
-//                       }
-//                       description={item.shortDescription || ""}
-//                       style={{ marginBottom: 16 }}
-//                     />
-//                     {/* Отображение названия выбранного документа */}
-//                     {isAttached && (
-//                       <div style={{ marginBottom: 16 }}>
-//                         <strong>Документ:</strong>{" "}
-//                         {
-//                           form.getFieldValue(`document_${item.category_Key}`)
-//                             .Description
-//                         }
-//                       </div>
-//                     )}
-//                   </div>
-//                   {/* Нижняя часть карточки с плашкой и кнопкой */}
-//                   <div style={{ display: "flex", alignItems: "center" }}>
-//                     {isAttached ? (
-//                       <Tag color="success" style={{ marginRight: "auto" }}>
-//                         Прикреплено
-//                       </Tag>
-//                     ) : (
-//                       <Tag color="error" style={{ marginRight: "auto" }}>
-//                         Не прикреплено
-//                       </Tag>
-//                     )}
-//                     <Button
-//                       type="primary"
-//                       onClick={() => handleSelectDocument(item.category_Key)}
-//                     >
-//                       {isAttached ? "Изменить" : "Выбрать"}
-//                     </Button>
-//                   </div>
-//                 </Card>
-//               </Col>
-//             );
-//           })}
-//       </Row>
-
-//       <DocumentSelectModal
-//         visible={documentModalVisible}
-//         onClose={() => setDocumentModalVisible(false)}
-//         categoryKey={selectedCategory}
-//         onSelectDocument={handleDocumentSelected}
-//       />
-//     </>
-//   );
-// };
-
-// export default DocumentAttachments;
-
