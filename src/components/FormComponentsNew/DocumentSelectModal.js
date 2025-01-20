@@ -9,6 +9,7 @@ const DocumentSelectModal = ({
   onSelectDocument,
 }) => {
   return (
+
     <Modal
       open={visible}
       onCancel={onClose}
@@ -16,6 +17,7 @@ const DocumentSelectModal = ({
       width="80%"
       keyboard={false}
     >
+
       <Documents
         categoryKey={categoryKey}
         onSelectDocument={onSelectDocument}
