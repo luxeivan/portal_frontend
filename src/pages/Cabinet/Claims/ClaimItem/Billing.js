@@ -1,7 +1,10 @@
 import { Button, Divider, Typography } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import Law from '../../../../components/Documentation/Law'
 import FileForDownload from '../../../../components/FileForDownload'
+import axios from 'axios'
+
+const backServer = process.env.REACT_APP_BACK_BACK_SERVER;
 const docsBilling = [
     {
         type: "pdf",
@@ -22,12 +25,37 @@ const docsBilling = [
         size: "343"
     },
 ]
-export default function Billing() {
+export default function Billing({ zakaz }) {
+    // const [countPay, setCountPay] = useState(0)
+    const [isPay, setIsPay] = useState(false)
+    // console.log(zakaz);
+
+    const handlerPay = () => {
+        setIsPay(true)
+        axios.post(`${backServer}/api/cabinet/pay`, {
+            zakaz: zakaz,
+            amount: "10"
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+            withCredentials: true,
+        }).then(res => {
+            setIsPay(false)
+          
+            if (res.data?.status === "ok") {
+                console.log(res.data.formUrl)
+                window.open(res.data.formUrl, "_blank")
+            }
+        }).catch(err => {
+            setIsPay(false)
+        })
+    }
     return (
         <div>
-            <Typography.Title level={4}>Сумма оплаты по договору: 54 252 руб</Typography.Title>
-            <Button type='primary'>Оплатить картой</Button>
-            <Divider/>
+            <Typography.Title level={4}>Сумма оплаты по договору: 10 руб</Typography.Title>
+            <Button type='primary' disabled={isPay} onClick={handlerPay}>Оплатить картой</Button>
+            <Divider />
             {docsBilling.map((item, index) =>
                 <FileForDownload key={index} type={item.type} name={item.name} url={item.url} size={item.size} />
             )}

@@ -1,4 +1,4 @@
-import { Card, Divider, Typography,theme } from 'antd'
+import { Card, Divider, Typography, theme } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import moment from 'moment'
 import React from 'react'
@@ -25,15 +25,16 @@ export default function History() {
     return (
         <div>
             {history.map((item, index) =>
-                    <Card
-                        // title={item.title}
-                        style={{ maxWidth: "100%",marginBottom:20,border: `1px solid ${token.colorIcon}` }}
-                    >
-                        <Typography.Paragraph>{item.text}</Typography.Paragraph>
-                        <Meta
-                            description={moment(item.datetime).format('DD.MM.YYYY hh:mm')}
-                        />
-                    </Card>
+                <Card
+                    key={index}
+                    // title={item.title}
+                    style={{ maxWidth: "100%", marginBottom: 20, border: `1px solid ${token.colorIcon}` }}
+                >
+                    <Typography.Paragraph>{item.text}</Typography.Paragraph>
+                    <Meta
+                        description={moment(item.datetime).format('DD.MM.YYYY hh:mm')}
+                    />
+                </Card>
             )}
 
         </div>
