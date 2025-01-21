@@ -135,7 +135,7 @@ export default function ModalAddDocument({ visible, onClose, categoryKey }) {
     } catch (error) {
       if (error.response && error.response.status === 413) {
         message.error(
-          "Присоединяемые файлы слишком большие. Пожалуйста, сожмите файлы до 5 МБ."
+          "Присоединяемые файлы слишком большие. Пожалуйста, сожмите файлы до 10 МБ."
         );
       } else {
         console.error("Ошибка при сохранении документа:", error);
