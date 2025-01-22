@@ -102,7 +102,7 @@ const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
   const documentCards = useMemo(() => {
     return documents.map((category, indexcategory) => (
       <>
-        <Divider key={indexcategory}>{category.Description}</Divider>
+        <Divider key={indexcategory} orientation="left">{category.Description}</Divider>
         <Flex gap={20}>
 
           {category.docs.map((doc, indexdoc) => (
@@ -127,8 +127,8 @@ const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
       <AppHelmet title={"Документы"} desc={"Документы"} />
       <Flex align="center" justify="space-between">
 
-      <Title level={1}>Документы</Title>
-      <Button type="primary" onClick={!isModalOpen ? handleAddDocument : undefined}>Добавить документ</Button>
+        <Title level={1}>Документы</Title>
+        <Button type="primary" onClick={!isModalOpen ? handleAddDocument : undefined}>Добавить документ</Button>
       </Flex>
       {loadingDocuments && <SceletonCard />}
       {/* <Card
@@ -146,7 +146,7 @@ const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
         >
         <PlusOutlined style={{ fontSize: "24px" }} />
       </Card> */}
-        {documentCards}
+      {documentCards}
       <ModalAddDocument
 
         visible={openModalAdd}

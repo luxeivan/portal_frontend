@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Typography } from "antd";
+import { Card, Button, Typography,theme } from "antd";
 import {
   FilePdfOutlined,
   DeleteOutlined,
@@ -10,6 +10,7 @@ const { Title, Text } = Typography;
 
 const DocumentCard = React.memo(
   ({ document, isModal, handleDocumentClick, confirmDelete, openDocument }) => {
+    const token = theme.useToken().token
     return (
       <Card
         hoverable
@@ -22,9 +23,10 @@ const DocumentCard = React.memo(
           alignItems: "center",
           textAlign: "center",
           position: "relative",
+          border: `1px solid ${token.colorInfo}`,
         }}
         onClick={() => {
-          console.log("Открываем документ с ПутьКФайлу:", document.ПутьКФайлу);
+          // console.log("Открываем документ с ПутьКФайлу:", document.ПутьКФайлу);
           handleDocumentClick(document);
         }}
       >
