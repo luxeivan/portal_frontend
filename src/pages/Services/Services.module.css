@@ -111,18 +111,27 @@
  @media (max-width: 1900px) {
     .styleLink {
        width: 45%;
+       flex: 0 1 calc((100% - 24px * (3 - 1)) / 2);
     }
  }
 
  @media (max-width: 1199px) {
+   .flexContainer{
+      justify-content: center;
+   }
     .styleLink {
        width: 100%;
-    }
- }
-
- @media (max-width: 991px) {
-    .styleLink {
-       width: 100%;
+       flex: 0 1 calc((100% - 24px * (3 - 1)));
+      }
+   }
+   
+   @media (max-width: 991px) {
+      .flexContainer{
+         justify-content: center;
+      }
+      .styleLink {
+         width: 100%;
+         flex: 0 1 calc((100% - 24px * (3 - 1)));
     }
 
     .filters {
