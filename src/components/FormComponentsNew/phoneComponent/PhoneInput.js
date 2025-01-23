@@ -26,9 +26,9 @@ export default function PhoneInput({
   const isAdditionalPhone = name === "dc284366-c637-441d-b552-dcf24ad603af";
   const phoneFromProfile = isAdditionalPhone ? "" : profile.phone || "";
 
-  console.log("[PhoneInput] prop name:", name);
-  console.log("[PhoneInput] profile.phone:", profile.phone);
-  console.log("[PhoneInput] Подставляем в initialValue:", phoneFromProfile);
+  // console.log("[PhoneInput] prop name:", name);
+  // console.log("[PhoneInput] profile.phone:", profile.phone);
+  // console.log("[PhoneInput] Подставляем в initialValue:", phoneFromProfile);
 
   return (
     <WrapperComponent

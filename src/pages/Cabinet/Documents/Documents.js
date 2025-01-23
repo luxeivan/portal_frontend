@@ -101,23 +101,24 @@ const Documents = ({ categoryKey, onSelectDocument, isModal }) => {
 
   const documentCards = useMemo(() => {
     return documents.map((category, indexcategory) => (
-      <>
-        <Divider key={indexcategory} orientation="left">{category.Description}</Divider>
-        <Flex gap={20}>
+      <div key={indexcategory}>
+        <Typography.Title level={3}>{category.Description}</Typography.Title>
+        <Flex gap={20} wrap="wrap">
 
           {category.docs.map((doc, indexdoc) => (
-
+            
             <DocumentCard
-              key={indexdoc}
+            key={indexdoc}
               document={doc}
               isModal={isModal}
               handleDocumentClick={handleDocumentClick}
               confirmDelete={confirmDelete}
               openDocument={openDocument}
-            />
-          ))}
+              />
+            ))}
         </Flex>
-      </>
+            <Divider />
+      </div>
     ));
   }, [documents, isModal, handleDocumentClick, confirmDelete, openDocument]);
   // console.log(documents);
