@@ -1,9 +1,9 @@
-import { Button, Col, Collapse, Divider, Image, Row, Tooltip } from "antd";
+import { Button, Col, Collapse, Divider, Image, Row, Tooltip, Typography } from "antd";
 import React, { useState, useEffect } from "react";
 import ModalBot from "../Global/ModalBot";
 import useGlobal from "../../stores/useGlobal";
 import axios from "axios";
-import MarkDownText from "../../components/MarkDownText/MarkDownText";
+import MarkDownText from "../MarkDownText/MarkDownText";
 import mosoblikImage from "../../img/answers/mosoblik.png";
 import mosoblikDarkImage from "../../img/answers/mosoblik_dark.png";
 import styles from "./QuickAnswers.module.css";
@@ -45,9 +45,10 @@ export default function QuickAnswers() {
             .sort((a, b) => a.Description && -1)
             .map((section, index) => (
               <div key={index}>
-                <Divider orientation="left">
+                <Typography.Title level={3}>
+
                   {section.Description ? section.Description : "Прочие вопросы"}
-                </Divider>
+                </Typography.Title>
 
                 <Collapse
                   accordion
