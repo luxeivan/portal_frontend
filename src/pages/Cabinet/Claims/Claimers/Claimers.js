@@ -63,12 +63,15 @@ export default function Claimers() {
                 <Card
                   className={styles.styleCard}
                   hoverable
-                  title={`Заявка №${item.number}`}
+                  title={<Flex wrap={"wrap"} align="center" justify="space-between">
+                    <Typography.Text>Заявка №{item.number}</Typography.Text>
+                    <div><Typography.Text style={{ color: token.colorTextDescription }}>от: </Typography.Text><Typography.Text>{moment(item.create).format('DD.MM.YYYY HH:mm')}</Typography.Text></div>
+                    </Flex>}
                   style={{
                     border: `1px solid ${token.colorPrimary}`,
                     // background: "linear-gradient(00deg, rgba(0,97,170,.1) 0%, rgba(255,255,255,0) 30%)",
                   }}
-                  extra={<div><Typography.Text style={{ color: token.colorTextDescription }}>От: </Typography.Text><Typography.Text>{moment(item.create).format('DD.MM.YYYY HH:mm')}</Typography.Text></div>}
+                  // extra={<div><Typography.Text style={{ color: token.colorTextDescription }}>От: </Typography.Text><Typography.Text>{moment(item.create).format('DD.MM.YYYY HH:mm')}</Typography.Text></div>}
 
                 >
                   <Descriptions column={1}>
@@ -95,12 +98,15 @@ export default function Claimers() {
                 <Card
                   className={styles.styleCard}
                   hoverable
-                  title={`${item.Description}`}
+                  title={<Flex wrap={"wrap"} align="center" justify="space-between">
+                  <Typography.Text>{item.Description}</Typography.Text>
+                  {/* <div><Typography.Text style={{ color: token.colorTextDescription }}>От: </Typography.Text><Typography.Text>{moment(item.date).format('DD.MM.YYYY HH:mm')}</Typography.Text></div> */}
+                  </Flex>}
                   style={{
                     border: `1px solid ${token.colorInfo}`,
                     // background: "linear-gradient(0deg, rgba(243, 112, 33,.1) 0%, rgba(255,255,255,0) 30%)",
                   }}
-                  extra={<div><Typography.Text style={{ color: token.colorTextDescription }}>Создан: </Typography.Text><Typography.Text>{moment(item.date).format('DD.MM.YYYY HH:mm')}</Typography.Text></div>}
+                  // extra={<div><Typography.Text style={{ color: token.colorTextDescription }}>Создан: </Typography.Text><Typography.Text>{moment(item.date).format('DD.MM.YYYY HH:mm')}</Typography.Text></div>}
                 >
                   <Descriptions column={1}>
                     {/* <Descriptions.Item label="Создана">

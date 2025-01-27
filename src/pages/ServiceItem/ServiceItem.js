@@ -76,7 +76,7 @@ export default function ServiceItem() {
           <Title level={1} style={{ marginTop: "10px" }}>
             {serviceItem.Description}
           </Title>
-          <Flex gap={5} style={{ marginBottom: "1.2rem" }}>
+          <Flex gap={5} style={{ marginBottom: "1.2rem" }} wrap={"wrap"}>
             {serviceItem.tags.map((item, index) => (
               <Tag
                 key={index}

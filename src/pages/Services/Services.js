@@ -91,8 +91,8 @@ export default function Services() {
               {serviceItem ? serviceItem.Description : "Каталог услуг"}
             </Title>
             {services.length > 0 ? (
-              <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
                 <MotionConfig transition={{ duration: 0.2 }}>
+              <Flex wrap="wrap" gap="large" style={{ width: "100%" }} className={styles.flexContainer}>
                   {services
                     .sort((a, b) => a.order - b.order)
                     .map((item, index) => (
@@ -214,8 +214,8 @@ export default function Services() {
                         </Link>
                       </motion.div>
                     ))}
-                </MotionConfig>
               </Flex>
+                </MotionConfig>
             ) : (
               <Title
                 level={2}
