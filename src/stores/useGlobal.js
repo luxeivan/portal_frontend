@@ -16,15 +16,6 @@ const useGlobal = create((set) => ({
     });
   },
 
-  // setCurrentPage: (url) => {
-  //   console.log(url)
-  //   redirect(url)
-  //   set((state) => {
-  //     return {
-  //       currentPage: url,
-  //     };
-  //   });
-  // },
 
   toggleDarkMode: () => {
     set((state) => {

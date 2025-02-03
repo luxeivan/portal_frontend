@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, Typography, Skeleton, Descriptions, theme } from "antd";
+import { Card, Typography, Skeleton, Descriptions, theme, Divider, Flex } from "antd";
 import { Link } from "react-router-dom";
 import AppHelmet from "../../../../components/Global/AppHelmet";
 import useClaims from "../../../../stores/Cabinet/useClaims";
@@ -8,6 +8,23 @@ import { motion } from "framer-motion";
 import moment from "moment/moment";
 
 const { Title } = Typography;
+
+const listLK = [
+  {
+    Ref_Key: "kns6df-sdf67235-sdfs2-234234",
+    Description: "ИП Попов Иван Сидорович",
+    create: "2024-07-12 18:23",
+    activeClaims: 12,
+    finishedClaims:20
+  },
+  {
+    Ref_Key: "kn66df-sdfff555-sdfs2-235664",
+    Description: "Савельев Егор Васильевич",
+    create: "2024-09-23 10:29",
+    activeClaims: 1,
+    finishedClaims:3
+  },
+]
 
 export default function Claimers() {
   const claims = useClaims((state) => state.claims);
@@ -18,13 +35,14 @@ export default function Claimers() {
   useEffect(() => {
     fetchClaims();
   }, [fetchClaims]);
-console.log("claims",claims)
+  // console.log("claims",claims)
+  // console.log("token",token)
   return (
     <>
+      <AppHelmet title={"Список заявок"} desc={"Список поданных заявок"} />
+      {/* <Title level={1}>Заявки</Title> */}
       {!claims ? (
         <div>
-          <AppHelmet title={"Список заявок"} desc={"Список поданных заявок"} />
-          <Title level={1}>Список поданных заявок</Title>
           {/* Отображение скелетонов, пока данные загружаются */}
           <Skeleton active avatar paragraph={{ rows: 2 }} />
           <Skeleton active avatar paragraph={{ rows: 2 }} />
@@ -32,167 +50,81 @@ console.log("claims",claims)
         </div>
       ) : (
         <div className={styles.claimsContainer}>
-          <Title level={1}>Список поданных заявок</Title>
-          <div className={styles.cardsContainer}>
+          {claims.claimsProject?.length > 0 &&
+            <Divider orientation="left">Заявки на проверке</Divider>
+          }
+          <Flex wrap={"wrap"} gap={20} >
             {claims.claimsProject?.map((item, index) => (
-              <motion.div
+              <Link
                 key={index}
-                // whileHover={{ scale: 1.05, transition: { duration: .2 } }} // Анимация при наведении
-                // whileTap={{ scale: 0.95, transition: { duration: .2 } }} // Анимация при клике
+                to={`/cabinet/claimers/${item.Ref_Key}`}
+                className={styles.styleLink}
               >
-                <Link
-                  to={`/cabinet/claimers/${item.Ref_Key}`}
+                <Card
+                  className={styles.styleCard}
+                  hoverable
+                  title={<Flex wrap={"wrap"} align="center" justify="space-between">
+                    <Typography.Text>Заявка №{item.number}</Typography.Text>
+                    <div><Typography.Text style={{ color: token.colorTextDescription }}>от: </Typography.Text><Typography.Text>{moment(item.create).format('DD.MM.YYYY HH:mm')}</Typography.Text></div>
+                    </Flex>}
+                  style={{
+                    border: `1px solid ${token.colorPrimary}`,
+                    // background: "linear-gradient(00deg, rgba(0,97,170,.1) 0%, rgba(255,255,255,0) 30%)",
+                  }}
+                  // extra={<div><Typography.Text style={{ color: token.colorTextDescription }}>От: </Typography.Text><Typography.Text>{moment(item.create).format('DD.MM.YYYY HH:mm')}</Typography.Text></div>}
+
                 >
-                  <Card
-                    className={styles.styleCard}
-                    hoverable
-                    title={`Заявка №${item.number}`}
-                    style={{
-                      border: `1px solid ${token.colorBorder}`
-                    }}
-                  >
-                    <Descriptions column={1}>
-                      <Descriptions.Item label="Создана">
+                  <Descriptions column={1}>
+                    {/* <Descriptions.Item label="Создана">
                         {moment(item.date).format('DD.MM.YYYY HH:mm')}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="По услуге">
-                        {item.service.description}
-                      </Descriptions.Item>
-                    </Descriptions>
-                  </Card>
-                </Link>
-              </motion.div>
+                      </Descriptions.Item> */}
+                    <Descriptions.Item label="По услуге">
+                      {item.service.description}
+                    </Descriptions.Item>
+                  </Descriptions>
+                </Card>
+              </Link>
             ))}
-          </div>
+          </Flex>
+          <Divider orientation="left">Личные кабинеты</Divider>
+          <Flex wrap={"wrap"} gap={20} >
+
+            {listLK.map((item, index) => (
+              <Link
+                key={index}
+                to={`/cabinet/lk/${item.Ref_Key}`}
+                className={styles.styleLink}
+              >
+                <Card
+                  className={styles.styleCard}
+                  hoverable
+                  title={<Flex wrap={"wrap"} align="center" justify="space-between">
+                  <Typography.Text>{item.Description}</Typography.Text>
+                  {/* <div><Typography.Text style={{ color: token.colorTextDescription }}>От: </Typography.Text><Typography.Text>{moment(item.date).format('DD.MM.YYYY HH:mm')}</Typography.Text></div> */}
+                  </Flex>}
+                  style={{
+                    border: `1px solid ${token.colorInfo}`,
+                    // background: "linear-gradient(0deg, rgba(243, 112, 33,.1) 0%, rgba(255,255,255,0) 30%)",
+                  }}
+                  // extra={<div><Typography.Text style={{ color: token.colorTextDescription }}>Создан: </Typography.Text><Typography.Text>{moment(item.date).format('DD.MM.YYYY HH:mm')}</Typography.Text></div>}
+                >
+                  <Descriptions column={1}>
+                    {/* <Descriptions.Item label="Создана">
+                        {moment(item.date).format('DD.MM.YYYY HH:mm')}
+                        </Descriptions.Item> */}
+                    <Descriptions.Item label="Активных заявок" contentStyle={{color:"green",fontWeight:700}}>
+                      {item.activeClaims}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Завершенных заявок">
+                      {item.finishedClaims}
+                    </Descriptions.Item>
+                  </Descriptions>
+                </Card>
+              </Link>
+            ))}
+          </Flex>
         </div>
       )}
     </>
   );
 }
-
-// import React, { useEffect } from 'react';
-// import { Card, Typography, Skeleton, Descriptions } from 'antd';
-// import { Link } from 'react-router-dom';
-// import AppHelmet from '../../../../components/Global/AppHelmet';
-// import useClaims from '../../../../stores/Cabinet/useClaims';
-// import styles from "./Claimers.module.css";
-// import { motion } from 'framer-motion';
-
-// const { Title } = Typography;
-
-// export default function Claimers() {
-//   const claims = useClaims(state => state.claims);
-//   const fetchClaims = useClaims(state => state.fetchClaims);
-
-//   useEffect(() => {
-//     fetchClaims();
-//   }, [fetchClaims]);
-
-//   return (
-//     <>
-//       {!claims ? (
-//         <div>
-//           <AppHelmet title={"Список заявок"} desc={"Список поданных заявок"} />
-//           <Title level={1}>Список поданных заявок</Title>
-//           {/* Отображение скелетонов, пока данные загружаются */}
-//           <Skeleton active avatar paragraph={{ rows: 2 }} />
-//           <Skeleton active avatar paragraph={{ rows: 2 }} />
-//           <Skeleton active avatar paragraph={{ rows: 2 }} />
-//         </div>
-//       ) : (
-//         <div className={styles.claimsContainer}>
-//           <Title level={1}>Список поданных заявок</Title>
-//           <div className={styles.cardsContainer}>
-//             {claims.map((item, index) => (
-//               <motion.div
-//                 key={index}
-//                 whileHover={{ scale: 1.05 }} // Анимация при наведении
-//                 whileTap={{ scale: 0.95 }} // Анимация при клике
-//               >
-//                 <Link to={`/cabinet/claimers/${item.element2_Expanded.Ref_Key}`}>
-//                   <Card
-//                     className={styles.styleCard}
-//                     hoverable
-//                     title={`Заявка №${item.element2_Expanded.Number}`}
-//                   >
-//                     <Descriptions column={1}>
-//                       <Descriptions.Item label="Создана">
-//                         {item.element2_Expanded.Date}
-//                       </Descriptions.Item>
-//                       <Descriptions.Item label="По услуге">
-//                         {item.element2_Expanded.template.Description}
-//                       </Descriptions.Item>
-//                     </Descriptions>
-//                   </Card>
-//                 </Link>
-//               </motion.div>
-//             ))}
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );
-// }
-// import React, { useEffect } from 'react'
-// import { Card, Flex, Typography, Spin, theme, Image, Skeleton,Descriptions } from "antd";
-// import Title from 'antd/es/typography/Title'
-// import { Link, useParams } from 'react-router-dom'
-// import AppHelmet from '../../../components/Global/AppHelmet'
-// import useClaims from '../../../stores/Cabinet/useClaims'
-// import styles from "./Claimers.module.css";
-
-// export default function Claimers() {
-//     const claims = useClaims(state => state.claims)
-//     const fetchClaims = useClaims(state => state.fetchClaims)
-//     useEffect(() => {
-//         fetchClaims()
-//     }, [])
-//     const { id } = useParams()
-//     return (
-//         <>
-//             {!claims &&
-//                 <div>
-
-//                     <AppHelmet title={"В работе"} desc={"Список личных кабинетов заявителей"} />
-//                     <Title level={1}>Список поданных заявок</Title>
-
-//                     <Skeleton active avatar paragraph={{ rows: 2 }} />
-//                     <Skeleton active avatar paragraph={{ rows: 2 }} />
-//                     <Skeleton active avatar paragraph={{ rows: 2 }} />
-//                 </div>
-//             }
-//             {claims &&
-//                 <Flex wrap="wrap" gap="large" style={{ width: "100%" }}>
-//                     {claims.map((item, index) =>
-//                         <Link key={index} to={`/cabinet/claimers/${item.element2_Expanded.Ref_Key}`}>
-//                             <Card className={styles.styleCard} hoverable
-//                             title={`Заявка №${item.element2_Expanded.Number}`}
-//                             >
-//                                 {/* <Title level={4}>Заявка №{item.Element2_Expanded.Number}</Title> */}
-//                                 <Descriptions
-//                                 // title={`Заявка №${item.Element2_Expanded.Number}`}
-//                                 column={1} items={[
-//                                     {
-//                                         key: '1',
-//                                         label: 'Создана',
-//                                         children: item.element2_Expanded.Date,
-//                                     },
-//                                     {
-//                                         key: '2',
-//                                         label: 'По услуге',
-//                                         children: item.element2_Expanded.template.Description,
-//                                     }
-//                                 ]}/>
-//                                 {/* <Flex vertical>
-
-//                                     <Typography.Text type="secondary">Создана: {item.Element2_Expanded.Date}</Typography.Text>
-//                                     <Typography.Text type="secondary">По услуге: {item.Element2_Expanded.Template.Description}</Typography.Text>
-//                                 </Flex> */}
-//                             </Card>
-//                         </Link>
-//                     )}
-//                 </Flex>
-//             }
-//         </>
-//     )
-// }

@@ -27,7 +27,6 @@ const stylesForCard = {
 export default function Subjects() {
   const [showModalUrAdd, setShowModalUrAdd] = useState(false);
   const [showModalIPAdd, setShowModalIPAdd] = useState(false);
-  const [showModalUrView, setShowModalUrView] = useState(false);
 
   // Модалка добавления физ лица
   const showModalAdd = useSubjects((state) => state.showModalAdd);
@@ -58,15 +57,6 @@ export default function Subjects() {
     }
   }, [fetchSubjects]);
 
-  // if (isLoadingSubjects) {
-  //   return (
-  //     <>
-  //       <Title level={1}>Субъекты</Title>
-  //       <SceletonCard />
-  //     </>
-  //   );
-  // }
-
   const handleCategorySelect = (type) => {
     setShowCategoryModal(false);
     setSelectedType(type); // Сохраняем выбранный тип
@@ -95,8 +85,6 @@ export default function Subjects() {
             className={styles.subjectCard}
             onClick={() => {
               showSubject(subject.id);
-              // await fetchSubjectItem(subject.id);
-              //setShowModalView(true);
             }}
           >
             <Typography.Title level={5} className={styles.subjectCardTitle}>
@@ -131,7 +119,6 @@ export default function Subjects() {
           </Flex>
         </Card>
       </Flex>
-      {/* {subjects.length === 0 && <p>Субъекты не найдены</p>} */}
 
       <Modal
         title="Выберите тип субъекта"
@@ -243,7 +230,6 @@ export default function Subjects() {
           value={{
             ...subject,
           }}
-          //onSubmit={() => setShowModalAdd(false)}
           setShowModal={showSubject}
           type={selectedType}
         />
@@ -262,7 +248,6 @@ export default function Subjects() {
           value={{
             ...subject,
           }}
-          //onSubmit={() => setShowModalAdd(false)}
           setShowModal={showSubject}
           type={selectedType}
         />

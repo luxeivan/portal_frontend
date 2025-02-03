@@ -90,9 +90,7 @@
 
 /* Адаптивность */
 @media (max-width: 768px) {
-  /* .content {
-    padding: 80px 20px;
-  } */
+
 
   .title {
     font-size: 2em;

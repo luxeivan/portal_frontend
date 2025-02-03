@@ -1,45 +1,15 @@
 .menuItem {
   line-height: 15px;
-  /* gap: 10px; */
-  /* padding: 10px 0;
-  height: 100%; */
+
   position: fixed;
   left: 0;
   top: 64px;
   bottom: 0;
-  /* ------------------- */
-  /* width: 300px; */
-  /* background-size: cover;
-  background-position: center;
-  height: 100%;
-  padding: 20px; */
 }
-/* .menuItem::before {
-  content: '';
-  background-color: rgba(255, 255, 255, 0.9);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-} */
-
 
 .menu {
-  /* background-color: aquamarine; */
   height: 100%;
-  /* padding: 20px;  */
 }
-
-/* .menu::after {
-  content: '';
-  background-color: rgba(255, 255, 255, 0.5);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-} */
 
 .menuItemMobile {
   line-height: 15px;
@@ -51,29 +21,21 @@
   font-size: 1.5rem;
 }
 
-
 .mobile {
   display: none;
 }
 
 .desktop {
   display: block;
-  /* width: 300px; */
+
   height: 100%;
 }
 
 .menuContainer {
-  /* height: 88vh; */
   z-index: 1000;
 }
 
-
 @media only screen and (max-width: 750px) {
-  /* .labelSizeMobile {
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.88);
-  } */
-
   @keyframes pulseShadow {
     0% {
       box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
@@ -118,7 +80,4 @@
     position: inherit;
     padding: 10px 0;
   }
-
-  .menuItemMobile {}
-
 }
