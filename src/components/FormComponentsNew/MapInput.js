@@ -3,18 +3,19 @@ import { YMaps, Map, Placemark, Polygon } from "@pbe/react-yandex-maps";
 import { Button, Radio, Space, Typography } from "antd";
 
 const { Paragraph } = Typography;
-// Центр карты – Московская область
-const defaultCenter = [55.0, 37.0];
-const defaultZoom = 8;
 
 export default function MapInput({ name, value = {}, onChange, ...rest }) {
-  // Режимы: "point" — выбор точки, "polygon" — очертание области
   const [mode, setMode] = useState("point");
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [polygonPoints, setPolygonPoints] = useState([]);
   const [polygonFinished, setPolygonFinished] = useState(false);
 
-  // Если передано начальное значение, устанавливаем его
+  const [mapState, setMapState] = useState({
+    center: [55.75, 37.62],
+    zoom: 7,
+    type: "yandex#map", 
+  });
+
   useEffect(() => {
     if (value) {
       if (value.point) setSelectedPoint(value.point);
@@ -25,7 +26,6 @@ export default function MapInput({ name, value = {}, onChange, ...rest }) {
     }
   }, [value]);
 
-  // При каждом изменении данных выводим их в консоль и вызываем onChange
   useEffect(() => {
     const data = { point: selectedPoint, polygon: polygonPoints };
     console.log("MapInput data:", data);
@@ -35,7 +35,6 @@ export default function MapInput({ name, value = {}, onChange, ...rest }) {
   const handleModeChange = (e) => {
     const newMode = e.target.value;
     setMode(newMode);
-    // При переключении режима очищаем данные, не относящиеся к выбранному режиму
     if (newMode === "polygon") {
       setSelectedPoint(null);
     } else if (newMode === "point") {
@@ -66,6 +65,10 @@ export default function MapInput({ name, value = {}, onChange, ...rest }) {
 
   const clearPoint = () => {
     setSelectedPoint(null);
+  };
+
+  const changeMapType = (newType) => {
+    setMapState((prev) => ({ ...prev, type: newType }));
   };
 
   return (
@@ -100,10 +103,20 @@ export default function MapInput({ name, value = {}, onChange, ...rest }) {
             Сбросить точку
           </Button>
         )}
+        {/* Дополнительные кнопки для переключения типа карты */}
+        <Space>
+          <Button onClick={() => changeMapType("yandex#map")}>
+            Стандартный вид
+          </Button>
+          <Button onClick={() => changeMapType("yandex#hybrid")}>
+            Спутниковый вид
+          </Button>
+        </Space>
         {/* Карта */}
         <YMaps>
           <Map
-            defaultState={{ center: [55.75, 37.62], zoom: 7 }}
+            state={mapState}
+            controls={["zoomControl", "typeSelector", "scaleLine"]}
             width="100%"
             height="400px"
             onClick={handleMapClick}
