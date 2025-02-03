@@ -69,6 +69,16 @@ export default function TextInput({
           }
         }
 
+        // Добавляем логику для поиска районов по выбранному региону
+        if (type === "Район") {
+          // Получаем значения страны и региона из формы
+          const country = form.getFieldValue("Страна") || "Россия";
+          const region = form.getFieldValue("Регион") || "Московская";
+
+          // Формируем объект locations для фильтрации районов по стране и региону
+          params.locations = [{ country, region }];
+        }
+
         // Делаем запрос к серверу для получения подсказок
         const response = await axios.get(
           `${backServer}/api/cabinet/getDaData`,
@@ -97,6 +107,56 @@ export default function TextInput({
       setSuggestions([]); // Если поисковой запрос пустой, очищаем подсказки
     }
   };
+
+  // const fetchSuggestions = async (searchText) => {
+  //   if (searchText) {
+  //     try {
+  //       const params = { type, query: searchText };
+
+  //       // Если это поле "Улица" или "Город", добавляем зависимости от страны, региона и города
+  //       if (type === "Улица" || type === "Город") {
+  //         // Получаем значения страны и региона из формы (или используем значения по умолчанию)
+  //         const country = form.getFieldValue("Страна") || "Россия";
+  //         const region = form.getFieldValue("Регион") || "Московская";
+
+  //         // Если это улица, добавляем fias_id города (если он есть)
+  //         const cityFias = form.getFieldValue("cityFiasHidden");
+
+  //         // Формируем объект locations для запроса к DaData
+  //         params.locations = [{ country, region }];
+  //         if (type === "Улица" && cityFias) {
+  //           params.locations[0].fias_id = cityFias; // Добавляем fias_id города для улиц
+  //         }
+  //       }
+
+  //       // Делаем запрос к серверу для получения подсказок
+  //       const response = await axios.get(
+  //         `${backServer}/api/cabinet/getDaData`,
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  //           },
+  //           withCredentials: true,
+  //           params,
+  //         }
+  //       );
+
+  //       // Преобразуем ответ в формат, подходящий для AutoComplete
+  //       setSuggestions(
+  //         response.data.data.map((suggestion) => ({
+  //           label: suggestion.value,
+  //           value: suggestion.value,
+  //           fiasId: suggestion.data?.fias_id, // Сохраняем fias_id для городов
+  //         }))
+  //       );
+  //     } catch (error) {
+  //       console.error("Error fetching suggestions:", error);
+  //     }
+  //   } else {
+  //     setSuggestions([]); // Если поисковой запрос пустой, очищаем подсказки
+  //   }
+  // };
 
   // Используем debounce для оптимизации запросов к DaData
   const debouncedFetchSuggestions = useCallback(
@@ -225,7 +285,6 @@ export default function TextInput({
     </WrapperComponent>
   );
 }
-
 
 // import { Form, Input, AutoComplete } from "antd";
 // import { useState, useEffect, useCallback } from "react";
