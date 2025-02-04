@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { YMaps, Map, Placemark, Polygon } from "@pbe/react-yandex-maps";
+import { YMaps, Map, Placemark, Polygon,  ZoomControl } from "@pbe/react-yandex-maps";
 import { Button, Radio, Space, Typography } from "antd";
 
 const { Paragraph } = Typography;
@@ -13,7 +13,7 @@ export default function MapInput({ name, value = {}, onChange, ...rest }) {
   const [mapState, setMapState] = useState({
     center: [55.75, 37.62],
     zoom: 7,
-    type: "yandex#map", 
+    type: "yandex#map",
   });
 
   useEffect(() => {
@@ -121,6 +121,7 @@ export default function MapInput({ name, value = {}, onChange, ...rest }) {
             height="400px"
             onClick={handleMapClick}
           >
+            <ZoomControl />
             {selectedPoint && <Placemark geometry={selectedPoint} />}
             {polygonPoints.length > 0 && (
               <Polygon
