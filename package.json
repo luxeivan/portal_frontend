@@ -12,7 +12,6 @@
     "antd-mask-input": "^2.0.7",
     "axios": "^1.6.7",
     "framer-motion": "^11.2.12",
-    "html2canvas": "^1.4.1",
     "markdown-to-jsx": "^7.5.0",
     "mathjs": "^13.1.1",
     "moment": "^2.30.1",
