@@ -29,6 +29,7 @@ import PrivateRoute from "./pages/PrivateRouter";
 import Login from "./pages/Login";
 import AddressInputTest from "./components/FormComponentsNew/addressComponents/AddressInputTest";
 import Answers from "./pages/Answers/Answers";
+import Test from "./pages/Test";
 
 import useGlobal from "./stores/useGlobal";
 import useAuth from "./stores/useAuth";
@@ -137,6 +138,7 @@ export default function App() {
                 </Route>
 
                 <Route path="/answers" element={<Answers />} />
+                <Route path="/test" element={<Test />} />
                 <Route path="*" element={<Page404 />} />
               </Routes>
             </Content>

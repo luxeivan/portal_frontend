@@ -6,7 +6,6 @@ import TP from "../../img/about/TP.png";
 import TPDark from "../../img/about/TP_dark.png";
 
 import useGlobal from "../../stores/useGlobal";
-import MapInput from "../../components/FormComponentsNew/MapInput";
 
 const { Title, Paragraph } = Typography;
 
@@ -26,7 +25,6 @@ export default function About() {
 
   return (
     <>
-      <MapInput />
       <AppHelmet title="О нас" desc="Информация о компании" />
       <div className={styles.container} ref={containerRef}>
         <div className={styles.content}>
