@@ -121,10 +121,10 @@ export default function MapInput({ name, value = {}, onChange, ...rest }) {
       if (pts[0] !== pts[pts.length - 1]) {
         pts.push(pts[0]);
       }
-      const polyline = pts.join("~");
+      const polyline = pts.join(",");
       // Формат: точки, цвет линии, толщина линии, цвет заливки
       const overlayParam = `${polyline},0x0000FF,2,0x0000FF4D`;
-      overlays = `&pl=${overlayParam}`;
+      overlays = `&pl=${polyline}`;
     }
 
     const url = `${baseUrl}?ll=${ll}&z=${zoom}&size=${size}&l=${l}${overlays}`;

@@ -138,7 +138,8 @@ export default function App() {
                 </Route>
 
                 <Route path="/answers" element={<Answers />} />
-                <Route path="/tests" element={<Test />} />
+                <Route path="/tests/:id" element={<Test />} />
+
                 <Route path="*" element={<Page404 />} />
               </Routes>
             </Content>
