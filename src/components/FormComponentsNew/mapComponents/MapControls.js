@@ -20,6 +20,7 @@ const MapControls = ({
           >
             <Radio.Button value="point">Точка</Radio.Button>
             <Radio.Button value="polygon">Область на карте</Radio.Button>
+            <Radio.Button value="areaAndPoint">Область + точка</Radio.Button>
           </Radio.Group>
         </Col>
         <Col xs={24} sm={12} style={{ display: "flex", alignItems: "center" }}>
@@ -28,7 +29,7 @@ const MapControls = ({
               Сбросить точку
             </Button>
           )}
-          {mode === "polygon" && (
+          {(mode === "polygon" || mode === "areaAndPoint") && (
             <Button onClick={onClearPolygon} danger>
               Очистить область
             </Button>

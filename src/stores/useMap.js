@@ -15,26 +15,32 @@ export const useMap = (initialValue = {}) => {
     type: "yandex#map",
   });
 
-  // Переключаем режим: точка или полигон. Очищаем противоположный выбор.
+  // Переключаем режим: точка, область или область+точка.
   const handleModeChange = (newMode) => {
     setMode(newMode);
-    if (newMode === "polygon") {
-      setSelectedPoint(null); // Забываем про точку.
+    if (newMode === "polygon" || newMode === "areaAndPoint") {
+      setSelectedPoint(null); // Очищаем точку при переходе к областьу.
     } else if (newMode === "point") {
-      setPolygonPoints([]); // Забываем про полигон.
+      setPolygonPoints([]); // Очищаем область при переходе к точке.
     }
   };
 
-  // Обрабатываем клик по карте: добавляем точку или вершину полигона.
+  // Обрабатываем клик по карте: добавляем точку или вершину области.
   const handleMapClick = (coords) => {
     if (mode === "point") {
       setSelectedPoint(coords); // Выбираем точку.
     } else if (mode === "polygon") {
-      setPolygonPoints((prev) => [...prev, coords]); // Добавляем вершину полигона.
+      setPolygonPoints((prev) => [...prev, coords]); // Добавляем вершину области.
+    } else if (mode === "areaAndPoint") {
+      if (!selectedPoint) {
+        setSelectedPoint(coords); // Если точки ещё нет, ставим её.
+      } else {
+        setPolygonPoints((prev) => [...prev, coords]); // Добавляем вершину области.
+      }
     }
   };
 
-  // Очищаем полигон.
+  // Очищаем область.
   const clearPolygon = () => {
     setPolygonPoints([]);
   };
@@ -57,7 +63,10 @@ export const useMap = (initialValue = {}) => {
     mapRef,
     mapState
   ) => {
-    if (mode === "polygon" && polygonPoints.length < 3) {
+    if (
+      (mode === "polygon" || mode === "areaAndPoint") &&
+      polygonPoints.length < 3
+    ) {
       console.error("Для сохранения области нужно выбрать минимум 3 точки.");
       return;
     }
@@ -110,15 +119,51 @@ export const useMap = (initialValue = {}) => {
         .join("~");
       overlays += `&pt=${pointMarkers}`;
 
-      // Собираем текст с координатами вершин полигона.
+      // Собираем текст с координатами вершин области.
       coordinatesText =
-        "Координаты вершин полигона:\n" +
+        "Координаты вершин области:\n" +
         polygonPoints
           .map(
             ([lat, lon], index) =>
               `Точка ${index + 1}: ${lat.toFixed(5)}, ${lon.toFixed(5)}`
           )
           .join("\n");
+    } else if (mode === "areaAndPoint") {
+      if (selectedPoint) {
+        const pt = `${selectedPoint[1]},${selectedPoint[0]},pm2rdm`;
+        overlays = `&pt=${pt}`;
+        coordinatesText = `Координаты точки: ${selectedPoint[0].toFixed(
+          5
+        )}, ${selectedPoint[1].toFixed(5)}\n`;
+      }
+      if (polygonPoints.length >= 3) {
+        const formatCoord = (coord) => Number(coord).toFixed(5);
+        let pts = polygonPoints.map(
+          ([lat, lon]) => `${formatCoord(lon)},${formatCoord(lat)}`
+        );
+        if (pts[0] !== pts[pts.length - 1]) pts.push(pts[0]);
+        const polyline = pts.join(",");
+        overlays += `&pl=${polyline}`;
+
+        // Добавляем маркеры с номерами точек на карту.
+        const pointMarkers = polygonPoints
+          .map(
+            ([lat, lon], index) =>
+              `${lon.toFixed(5)},${lat.toFixed(5)},pm2rdm${index + 1}`
+          )
+          .join("~");
+        overlays += `&pt=${pointMarkers}`;
+
+        // Собираем текст с координатами вершин области.
+        coordinatesText +=
+          "Координаты вершин области:\n" +
+          polygonPoints
+            .map(
+              ([lat, lon], index) =>
+                `Точка ${index + 1}: ${lat.toFixed(5)}, ${lon.toFixed(5)}`
+            )
+            .join("\n");
+      }
     }
 
     const url = `${baseUrl}?ll=${ll}&z=${zoom}&size=${size}&l=${l}${overlays}`;
@@ -181,57 +226,3 @@ export const useMap = (initialValue = {}) => {
     generatePDF,
   };
 };
-
-// import { useState } from "react";
-
-// export const useMap = (initialValue = {}) => {
-//   const [mode, setMode] = useState("point");
-//   const [selectedPoint, setSelectedPoint] = useState(initialValue.point || null);
-//   const [polygonPoints, setPolygonPoints] = useState(initialValue.polygon || []);
-//   const [mapState, setMapState] = useState({
-//     center: [55.75, 37.62],
-//     zoom: 7,
-//     type: "yandex#map",
-//   });
-
-//   const handleModeChange = (newMode) => {
-//     setMode(newMode);
-//     if (newMode === "polygon") {
-//       setSelectedPoint(null);
-//     } else if (newMode === "point") {
-//       setPolygonPoints([]);
-//     }
-//   };
-
-//   const handleMapClick = (coords) => {
-//     if (mode === "point") {
-//       setSelectedPoint(coords);
-//     } else if (mode === "polygon") {
-//       setPolygonPoints((prev) => [...prev, coords]);
-//     }
-//   };
-
-//   const clearPolygon = () => {
-//     setPolygonPoints([]);
-//   };
-
-//   const clearPoint = () => {
-//     setSelectedPoint(null);
-//   };
-
-//   const changeMapType = (newType) => {
-//     setMapState((prev) => ({ ...prev, type: newType }));
-//   };
-
-//   return {
-//     mode,
-//     selectedPoint,
-//     polygonPoints,
-//     mapState,
-//     handleModeChange,
-//     handleMapClick,
-//     clearPolygon,
-//     clearPoint,
-//     changeMapType,
-//   };
-// };
