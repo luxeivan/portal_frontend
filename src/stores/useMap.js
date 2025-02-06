@@ -3,8 +3,12 @@ import pdfMake from "pdfmake/build/pdfmake";
 
 export const useMap = (initialValue = {}) => {
   const [mode, setMode] = useState("point");
-  const [selectedPoint, setSelectedPoint] = useState(initialValue.point || null);
-  const [polygonPoints, setPolygonPoints] = useState(initialValue.polygon || []);
+  const [selectedPoint, setSelectedPoint] = useState(
+    initialValue.point || null
+  );
+  const [polygonPoints, setPolygonPoints] = useState(
+    initialValue.polygon || []
+  );
   const [mapState, setMapState] = useState({
     center: [55.75, 37.62],
     zoom: 7,
@@ -46,7 +50,13 @@ export const useMap = (initialValue = {}) => {
   };
 
   // Генерируем PDF с картой.
-  const generatePDF = async (mode, selectedPoint, polygonPoints, mapRef, mapState) => {
+  const generatePDF = async (
+    mode,
+    selectedPoint,
+    polygonPoints,
+    mapRef,
+    mapState
+  ) => {
     if (mode === "polygon" && polygonPoints.length < 3) {
       console.error("Для сохранения области нужно выбрать минимум 3 точки.");
       return;
@@ -74,15 +84,41 @@ export const useMap = (initialValue = {}) => {
     const l = mapTypeMapping[mapState.type] || "map";
     let overlays = "";
 
+    // Формируем текст с координатами для PDF.
+    let coordinatesText = "";
     if (mode === "point" && selectedPoint) {
       const pt = `${selectedPoint[1]},${selectedPoint[0]},pm2rdm`;
       overlays = `&pt=${pt}`;
+      coordinatesText = `Координаты точки: ${selectedPoint[0].toFixed(
+        5
+      )}, ${selectedPoint[1].toFixed(5)}`;
     } else if (mode === "polygon" && polygonPoints.length >= 3) {
       const formatCoord = (coord) => Number(coord).toFixed(5);
-      let pts = polygonPoints.map(([lat, lon]) => `${formatCoord(lon)},${formatCoord(lat)}`);
+      let pts = polygonPoints.map(
+        ([lat, lon]) => `${formatCoord(lon)},${formatCoord(lat)}`
+      );
       if (pts[0] !== pts[pts.length - 1]) pts.push(pts[0]);
       const polyline = pts.join(",");
       overlays = `&pl=${polyline}`;
+
+      // Добавляем маркеры с номерами точек на карту.
+      const pointMarkers = polygonPoints
+        .map(
+          ([lat, lon], index) =>
+            `${lon.toFixed(5)},${lat.toFixed(5)},pm2rdm${index + 1}`
+        )
+        .join("~");
+      overlays += `&pt=${pointMarkers}`;
+
+      // Собираем текст с координатами вершин полигона.
+      coordinatesText =
+        "Координаты вершин полигона:\n" +
+        polygonPoints
+          .map(
+            ([lat, lon], index) =>
+              `Точка ${index + 1}: ${lat.toFixed(5)}, ${lon.toFixed(5)}`
+          )
+          .join("\n");
     }
 
     const url = `${baseUrl}?ll=${ll}&z=${zoom}&size=${size}&l=${l}${overlays}`;
@@ -110,12 +146,18 @@ export const useMap = (initialValue = {}) => {
             image: base64data,
             width: 500,
           },
+          { text: coordinatesText, style: "coordinates" }, // Добавляем текст с координатами.
         ],
         styles: {
           header: {
             fontSize: 18,
             bold: true,
             marginBottom: 15,
+          },
+          coordinates: {
+            fontSize: 12,
+            marginTop: 10,
+            marginBottom: 10,
           },
         },
       };
@@ -139,7 +181,6 @@ export const useMap = (initialValue = {}) => {
     generatePDF,
   };
 };
-
 
 // import { useState } from "react";
 
