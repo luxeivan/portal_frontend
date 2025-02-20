@@ -15,47 +15,53 @@ export const useMap = (initialValue = {}) => {
     type: "yandex#map",
   });
 
-  // Переключаем режим: точка, область или область+точка.
   const handleModeChange = (newMode) => {
     setMode(newMode);
     if (newMode === "polygon" || newMode === "areaAndPoint") {
-      setSelectedPoint(null); // Очищаем точку при переходе к областьу.
+      setSelectedPoint(null);
     } else if (newMode === "point") {
-      setPolygonPoints([]); // Очищаем область при переходе к точке.
+      setPolygonPoints([]);
     }
   };
 
-  // Обрабатываем клик по карте: добавляем точку или вершину области.
   const handleMapClick = (coords) => {
     if (mode === "point") {
-      setSelectedPoint(coords); // Выбираем точку.
+      setSelectedPoint(coords);
     } else if (mode === "polygon") {
-      setPolygonPoints((prev) => [...prev, coords]); // Добавляем вершину области.
+      setPolygonPoints((prev) => [...prev, coords]);
     } else if (mode === "areaAndPoint") {
       if (!selectedPoint) {
-        setSelectedPoint(coords); // Если точки ещё нет, ставим её.
+        setSelectedPoint(coords);
       } else {
-        setPolygonPoints((prev) => [...prev, coords]); // Добавляем вершину области.
+        setPolygonPoints((prev) => [...prev, coords]);
       }
     }
   };
 
-  // Очищаем область.
   const clearPolygon = () => {
     setPolygonPoints([]);
   };
 
-  // Очищаем точку.
   const clearPoint = () => {
     setSelectedPoint(null);
   };
 
-  // Меняем тип карты: стандартная или спутниковая.
   const changeMapType = (newType) => {
     setMapState((prev) => ({ ...prev, type: newType }));
   };
 
-  // Генерируем PDF с картой.
+  const onPolygonPointDrag = (newCoords, index) => {
+    if (index === "point") {
+      setSelectedPoint(newCoords);
+    } else {
+      setPolygonPoints((prev) => {
+        const newPoints = [...prev];
+        newPoints[index] = newCoords;
+        return newPoints;
+      });
+    }
+  };
+
   const generatePDF = async (
     mode,
     selectedPoint,
@@ -79,7 +85,6 @@ export const useMap = (initialValue = {}) => {
     const baseUrl = "https://static-maps.yandex.ru/1.x/";
     let center, zoom;
 
-    // Получаем актуальные данные карты.
     if (mapRef.current) {
       center = mapRef.current.getCenter();
       zoom = mapRef.current.getZoom();
@@ -93,7 +98,6 @@ export const useMap = (initialValue = {}) => {
     const l = mapTypeMapping[mapState.type] || "map";
     let overlays = "";
 
-    // Формируем текст с координатами для PDF.
     let coordinatesText = "";
     if (mode === "point" && selectedPoint) {
       const pt = `${selectedPoint[1]},${selectedPoint[0]},pm2rdm`;
@@ -110,7 +114,6 @@ export const useMap = (initialValue = {}) => {
       const polyline = pts.join(",");
       overlays = `&pl=${polyline}`;
 
-      // Добавляем маркеры с номерами точек на карту.
       const pointMarkers = polygonPoints
         .map(
           ([lat, lon], index) =>
@@ -119,7 +122,6 @@ export const useMap = (initialValue = {}) => {
         .join("~");
       overlays += `&pt=${pointMarkers}`;
 
-      // Собираем текст с координатами вершин области.
       coordinatesText =
         "Координаты вершин области:\n" +
         polygonPoints
@@ -145,7 +147,6 @@ export const useMap = (initialValue = {}) => {
         const polyline = pts.join(",");
         overlays += `&pl=${polyline}`;
 
-        // Добавляем маркеры с номерами точек на карту.
         const pointMarkers = polygonPoints
           .map(
             ([lat, lon], index) =>
@@ -154,7 +155,6 @@ export const useMap = (initialValue = {}) => {
           .join("~");
         overlays += `&pt=${pointMarkers}`;
 
-        // Собираем текст с координатами вершин области.
         coordinatesText +=
           "Координаты вершин области:\n" +
           polygonPoints
@@ -191,7 +191,7 @@ export const useMap = (initialValue = {}) => {
             image: base64data,
             width: 500,
           },
-          { text: coordinatesText, style: "coordinates" }, // Добавляем текст с координатами.
+          { text: coordinatesText, style: "coordinates" },
         ],
         styles: {
           header: {
@@ -204,6 +204,18 @@ export const useMap = (initialValue = {}) => {
             marginTop: 10,
             marginBottom: 10,
           },
+        },
+      };
+
+      pdfMake.fonts = {
+        Roboto: {
+          normal:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+          bold: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+          italics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+          bolditalics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
         },
       };
 
@@ -224,5 +236,6 @@ export const useMap = (initialValue = {}) => {
     clearPoint,
     changeMapType,
     generatePDF,
+    onPolygonPointDrag,
   };
 };

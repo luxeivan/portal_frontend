@@ -38,6 +38,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "stas": "git checkout main && git merge origin/Stas && git push && git checkout Stas",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
