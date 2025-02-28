@@ -111,8 +111,8 @@ export default function TextInput({
 
 const fetchSuggestions = async (searchText) => {
   if (searchText) {
-    console.log(name)
-    console.log(JSON.parse(serviceItem.properties)?.externalService?.DaData)
+    // console.log(name)
+    // console.log(JSON.parse(serviceItem.properties)?.externalService?.DaData)
     try {
       const params = { type, query: searchText };
 
