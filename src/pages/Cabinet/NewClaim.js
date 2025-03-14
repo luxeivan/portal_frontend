@@ -90,7 +90,7 @@ export default function NewClaim() {
       await createClaim({
         versionId: serviceItem.versionId,
         serviceId: serviceItem.Ref_Key,
-        newValues,
+        value: newValues,
       });
 
     } catch (err) {
