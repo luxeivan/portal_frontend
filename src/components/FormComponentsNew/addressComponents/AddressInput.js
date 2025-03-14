@@ -178,7 +178,7 @@ const AddressInput = ({
                   options={options}
                   onSelect={(value, option) => onSelect(value, option)}
                   onSearch={(text) => fetchSuggestions(text, "fullAddress")}
-                  placeholder={placeholder}
+                  placeholder={placeholder}                  
                 >
                   <Input.TextArea />
                 </AutoComplete>
