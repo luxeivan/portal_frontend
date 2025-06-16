@@ -48,66 +48,6 @@ export default function TextInput({
   const emailFromProfile = profile.email || "";
 
   // Основная функция для получения подсказок от DaData
-  const fetchSuggestions = async (searchText) => {
-    if (searchText) {
-      try {
-        const params = { type, query: searchText };
-
-        // Если это поле "Улица" или "Город", добавляем зависимости от страны, региона и города
-        if (type === "Улица" || type === "Город") {
-          // Получаем значения страны и региона из формы (или используем значения по умолчанию)
-          const country = form.getFieldValue("Страна") || "Россия";
-          const region = form.getFieldValue("Регион") || "Московская";
-
-          // Если это улица, добавляем fias_id города (если он есть)
-          const cityFias = form.getFieldValue("cityFiasHidden");
-
-          // Формируем объект locations для запроса к DaData
-          params.locations = [{ country, region }];
-          if (type === "Улица" && cityFias) {
-            params.locations[0].fias_id = cityFias; // Добавляем fias_id города для улиц
-          }
-        }
-
-        // Добавляем логику для поиска районов по выбранному региону
-        if (type === "Район") {
-          // Получаем значения страны и региона из формы
-          const country = form.getFieldValue("Страна") || "Россия";
-          const region = form.getFieldValue("Регион") || "Московская";
-
-          // Формируем объект locations для фильтрации районов по стране и региону
-          params.locations = [{ country, region }];
-        }
-
-        // Делаем запрос к серверу для получения подсказок
-        const response = await axios.get(
-          `${backServer}/api/cabinet/getDaData`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-            },
-            withCredentials: true,
-            params,
-          }
-        );
-
-        // Преобразуем ответ в формат, подходящий для AutoComplete
-        setSuggestions(
-          response.data.data.map((suggestion) => ({
-            label: suggestion.value,
-            value: suggestion.value,
-            fiasId: suggestion.data?.fias_id, // Сохраняем fias_id для городов
-          }))
-        );
-      } catch (error) {
-        console.error("Error fetching suggestions:", error);
-      }
-    } else {
-      setSuggestions([]); // Если поисковой запрос пустой, очищаем подсказки
-    }
-  };
-
   // const fetchSuggestions = async (searchText) => {
   //   if (searchText) {
   //     try {
@@ -127,6 +67,16 @@ export default function TextInput({
   //         if (type === "Улица" && cityFias) {
   //           params.locations[0].fias_id = cityFias; // Добавляем fias_id города для улиц
   //         }
+  //       }
+
+  //       // Добавляем логику для поиска районов по выбранному региону
+  //       if (type === "Район") {
+  //         // Получаем значения страны и региона из формы
+  //         const country = form.getFieldValue("Страна") || "Россия";
+  //         const region = form.getFieldValue("Регион") || "Московская";
+
+  //         // Формируем объект locations для фильтрации районов по стране и региону
+  //         params.locations = [{ country, region }];
   //       }
 
   //       // Делаем запрос к серверу для получения подсказок
@@ -157,133 +107,186 @@ export default function TextInput({
   //     setSuggestions([]); // Если поисковой запрос пустой, очищаем подсказки
   //   }
   // };
+  
 
-  // Используем debounce для оптимизации запросов к DaData
-  const debouncedFetchSuggestions = useCallback(
-    debounce(fetchSuggestions, 500),
-    []
-  );
+const fetchSuggestions = async (searchText) => {
+  if (searchText) {
+    // console.log(name)
+    // console.log(JSON.parse(serviceItem.properties)?.externalService?.DaData)
+    try {
+      const params = { type, query: searchText };
 
-  // Вызываем debouncedFetchSuggestions при изменении значения или типа поля
-  useEffect(() => {
-    if (listTypeForDadata.includes(type)) {
-      debouncedFetchSuggestions(value);
-    } else {
-      setSuggestions([]);
-    }
-  }, [value, type]);
+      // Если это поле "Улица" или "Город", добавляем зависимости от страны, региона и города
+      if (type === "Улица" || type === "Город") {
+        // Получаем значения страны и региона из формы (или используем значения по умолчанию)
+        const country = form.getFieldValue("Страна") || "Россия";
+        const region = form.getFieldValue("Регион") || "Московская";
 
-  // Обработчик выбора значения в AutoComplete
-  const onSelect = (val, opt) => {
-    setValue(val); // Устанавливаем выбранное значение
-    if (type === "Город" && opt?.fiasId) {
-      // Если выбрали город, сохраняем его fias_id в скрытое поле
-      form.setFieldValue("cityFiasHidden", opt.fiasId);
-    }
-  };
+        // Если это улица, добавляем fias_id города (если он есть)
+        const cityFias = form.getFieldValue("cityFiasHidden");
 
-  // Обработчик изменения значения в поле ввода
-  const handlerOnChange = (value) => {
-    setValue(value); // Обновляем состояние значения
-  };
-
-  // Общий шаблон для правил валидации полей
-  const formItemRules = [
-    {
-      required: required,
-      message: "Это поле обязательное",
-    },
-  ];
-
-  // Рендерим AutoComplete для полей, связанных с DaData
-  const autoComplete = (
-    <Form.Item
-      name={name}
-      label={
-        fullDescription ? (
-          <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
-        ) : (
-          label
-        )
+        // Формируем объект locations для запроса к DaData
+        params.locations = [{ country, region }];
+        if (type === "Улица" && cityFias) {
+          params.locations[0].fias_id = cityFias; // Добавляем fias_id города для улиц
+        }
       }
-      rules={formItemRules}
-      initialValue={defaultValue}
-    >
-      <AutoComplete
-        options={suggestions} // Подсказки от DaData
-        onChange={handlerOnChange} // Обработчик изменения значения
-        onSelect={onSelect} // Обработчик выбора значения
-        value={value} // Текущее значение
-        placeholder={placeholder}
-        disabled={disabled}
-        maxLength={length || undefined}
-      />
-    </Form.Item>
-  );
 
-  // Рендерим обычное поле ввода для email
-  const email = (
-    <Form.Item
-      name={name}
-      label={
-        fullDescription ? (
-          <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
-        ) : (
-          label
-        )
-      }
-      rules={[
-        ...formItemRules,
+      // Делаем запрос к серверу для получения подсказок
+      const response = await axios.get(
+        `${backServer}/api/cabinet/getDaData`,
         {
-          type: "email",
-          message: "Это поле в формате Email",
-        },
-      ]}
-      initialValue={emailFromProfile}
-    >
-      <Input placeholder={placeholder} maxLength={length || undefined} />
-    </Form.Item>
-  );
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+          withCredentials: true,
+          params,
+        }
+      );
 
-  // Рендерим текстовое поле для остальных случаев
-  const simpleInput = (
-    <Form.Item
-      name={name}
-      label={
-        fullDescription ? (
-          <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
-        ) : (
-          label
-        )
-      }
-      rules={formItemRules}
-      initialValue={defaultValue}
-    >
-      <Input.TextArea
-        placeholder={placeholder}
-        maxLength={length || undefined}
-        disabled={disabled}
-        autoSize={{ minRows: 1, maxRows: 4 }}
-      />
-    </Form.Item>
-  );
+      // Преобразуем ответ в формат, подходящий для AutoComplete
+      setSuggestions(
+        response.data.data.map((suggestion) => ({
+          label: suggestion.value,
+          value: suggestion.value,
+          fiasId: suggestion.data?.fias_id, // Сохраняем fias_id для городов
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
+    }
+  } else {
+    setSuggestions([]); // Если поисковой запрос пустой, очищаем подсказки
+  }
+};
 
-  // Выбираем, какой компонент рендерить в зависимости от типа поля
-  let formElement = simpleInput;
-  if (listTypeForDadata.includes(type)) formElement = autoComplete;
-  if (type === "ЭлектронныйАдрес") formElement = email;
+// Используем debounce для оптимизации запросов к DaData
+const debouncedFetchSuggestions = useCallback(
+  debounce(fetchSuggestions, 500),
+  []
+);
 
-  return (
-    <WrapperComponent
-      span={span}
-      stylesField_key={stylesField_key}
-      dependOf={dependOf}
-      howDepend={howDepend}
-      name={name}
-    >
-      {formElement}
-    </WrapperComponent>
-  );
+// Вызываем debouncedFetchSuggestions при изменении значения или типа поля
+useEffect(() => {
+  if (listTypeForDadata.includes(type)) {
+    debouncedFetchSuggestions(value);
+  } else {
+    setSuggestions([]);
+  }
+}, [value, type]);
+
+// Обработчик выбора значения в AutoComplete
+const onSelect = (val, opt) => {
+  setValue(val); // Устанавливаем выбранное значение
+  if (type === "Город" && opt?.fiasId) {
+    // Если выбрали город, сохраняем его fias_id в скрытое поле
+    form.setFieldValue("cityFiasHidden", opt.fiasId);
+  }
+};
+
+// Обработчик изменения значения в поле ввода
+const handlerOnChange = (value) => {
+  setValue(value); // Обновляем состояние значения
+};
+
+// Общий шаблон для правил валидации полей
+const formItemRules = [
+  {
+    required: required,
+    message: "Это поле обязательное",
+  },
+];
+
+// Рендерим AutoComplete для полей, связанных с DaData
+const autoComplete = (
+  <Form.Item
+    name={name}
+    label={
+      fullDescription ? (
+        <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
+      ) : (
+        label
+      )
+    }
+    rules={formItemRules}
+    initialValue={defaultValue}
+  >
+    <AutoComplete
+      options={suggestions} // Подсказки от DaData
+      onChange={handlerOnChange} // Обработчик изменения значения
+      onSelect={onSelect} // Обработчик выбора значения
+      value={value} // Текущее значение
+      placeholder={placeholder}
+      disabled={disabled}
+      maxLength={length || undefined}
+    />
+  </Form.Item>
+);
+
+// Рендерим обычное поле ввода для email
+const email = (
+  <Form.Item
+    name={name}
+    label={
+      fullDescription ? (
+        <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
+      ) : (
+        label
+      )
+    }
+    rules={[
+      ...formItemRules,
+      {
+        type: "email",
+        message: "Это поле в формате Email",
+      },
+    ]}
+    initialValue={emailFromProfile}
+  >
+    <Input placeholder={placeholder} maxLength={length || undefined} />
+  </Form.Item>
+);
+
+// Рендерим текстовое поле для остальных случаев
+const simpleInput = (
+  <Form.Item
+    name={name}
+    label={
+      fullDescription ? (
+        <InfoDrawer fullDescription={fullDescription}>{label}</InfoDrawer>
+      ) : (
+        label
+      )
+    }
+    rules={formItemRules}
+    initialValue={defaultValue}
+  >
+    <Input.TextArea
+      placeholder={placeholder}
+      maxLength={length || undefined}
+      disabled={disabled}
+      autoSize={{ minRows: 1, maxRows: 4 }}
+    />
+  </Form.Item>
+);
+
+// Выбираем, какой компонент рендерить в зависимости от типа поля
+let formElement = simpleInput;
+if (listTypeForDadata.includes(type)) formElement = autoComplete;
+if (type === "ЭлектронныйАдрес") formElement = email;
+
+return (
+  <WrapperComponent
+    span={span}
+    stylesField_key={stylesField_key}
+    dependOf={dependOf}
+    howDepend={howDepend}
+    name={name}
+  >
+    {formElement}
+  </WrapperComponent>
+);
 }
 
 // import { Form, Input, AutoComplete } from "antd";
